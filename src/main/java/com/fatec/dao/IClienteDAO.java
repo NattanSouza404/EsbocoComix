@@ -1,8 +1,8 @@
-package com.fatec.poo_crud_2sem_2024.dao;
+package com.fatec.dao;
 
 import java.util.List;
 
-import com.fatec.poo_crud_2sem_2024.modelo.entidades.Cliente;
+import com.fatec.modelo.entidades.Cliente;
 
 public interface IClienteDAO {
     public void inserir(Cliente c) throws Exception;

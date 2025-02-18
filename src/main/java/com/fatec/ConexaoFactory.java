@@ -1,10 +1,10 @@
-package com.fatec.poo_crud_2sem_2024;
+package com.fatec;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.fatec.poo_crud_2sem_2024.config.BancoConfig;
+import com.fatec.config.BancoConfig;
 
 public class ConexaoFactory {
 

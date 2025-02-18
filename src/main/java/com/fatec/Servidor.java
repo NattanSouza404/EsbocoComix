@@ -1,12 +1,12 @@
-package com.fatec.poo_crud_2sem_2024;
+package com.fatec;
 
 import java.io.File;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 
-import com.fatec.poo_crud_2sem_2024.controller.ClienteController;
-import com.fatec.poo_crud_2sem_2024.controller.IndexController;
+import com.fatec.controller.ClienteController;
+import com.fatec.controller.IndexController;
 
 public class Servidor {
 

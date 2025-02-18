@@ -1,10 +1,10 @@
-package com.fatec.poo_crud_2sem_2024.controller.utils;
+package com.fatec.controller.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fatec.poo_crud_2sem_2024.modelo.entidades.Cliente;
+import com.fatec.modelo.entidades.Cliente;
 
 public class ConversorJson {
 

@@ -1,4 +1,4 @@
-package com.fatec.poo_crud_2sem_2024.dao.impl;
+package com.fatec.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fatec.poo_crud_2sem_2024.ConexaoFactory;
-import com.fatec.poo_crud_2sem_2024.dao.IClienteDAO;
-import com.fatec.poo_crud_2sem_2024.modelo.entidades.Cliente;
+import com.fatec.ConexaoFactory;
+import com.fatec.dao.IClienteDAO;
+import com.fatec.modelo.entidades.Cliente;
 
 public class ClienteDAO implements IClienteDAO {
 

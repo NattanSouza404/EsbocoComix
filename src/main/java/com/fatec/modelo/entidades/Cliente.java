@@ -1,4 +1,4 @@
-package com.fatec.poo_crud_2sem_2024.modelo.entidades;
+package com.fatec.modelo.entidades;
 
 import lombok.Getter;
 import lombok.Setter;

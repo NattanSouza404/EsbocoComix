@@ -1,4 +1,4 @@
-package com.fatec.poo_crud_2sem_2024.controller;
+package com.fatec.controller;
 
 import java.io.IOException;
 
@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fatec.poo_crud_2sem_2024.controller.utils.ServletUtil;
-import com.fatec.poo_crud_2sem_2024.dao.impl.ClienteDAO;
+import com.fatec.controller.utils.ServletUtil;
+import com.fatec.dao.impl.ClienteDAO;
 
 public class ClienteController extends HttpServlet {
     private static ClienteDAO clienteDAO = new ClienteDAO();

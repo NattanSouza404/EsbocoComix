@@ -1,4 +1,4 @@
-package com.fatec.poo_crud_2sem_2024.controller.utils;
+package com.fatec.controller.utils;
 
 import java.io.IOException;
 import java.util.stream.Stream;

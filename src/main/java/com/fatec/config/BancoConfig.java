@@ -1,4 +1,4 @@
-package com.fatec.poo_crud_2sem_2024.config;
+package com.fatec.config;
 
 public class BancoConfig {
     public static final String DRIVER   = "org.postgresql.Driver";

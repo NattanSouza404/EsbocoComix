@@ -1,4 +1,4 @@
-package com.fatec.poo_crud_2sem_2024;
+package com.fatec;
 
 public class Main {
 
