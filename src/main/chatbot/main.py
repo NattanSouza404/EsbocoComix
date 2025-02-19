@@ -1,8 +1,8 @@
-from dotenv import load_dotenv
-import os
+import configparser
 
-load_dotenv(dotenv_path='.env')
-api_key = os.getenv('API_KEY')
+config = configparser.ConfigParser()
+config.read('src/main/resources/config.properties')
 
-print("Diretório de trabalho atual:", os.getcwd())
-print(f"Chave api: {api_key}")
+api_key = config['DEFAULT']['api.key']
+
+print(f"API Key: {api_key}")
