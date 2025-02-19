@@ -16,7 +16,7 @@ public class Servidor {
 
 		Context context = tomcat.addWebapp(
 			"",
-			new File("src/main/resources/static").getAbsolutePath()
+			new File("src/main/webapp").getAbsolutePath()
 		);
 
 		Tomcat.addServlet(context, "index", new IndexController());

@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import os
 
-load_dotenv(dotenv_path='src/.env')
+load_dotenv(dotenv_path='.env')
 api_key = os.getenv('API_KEY')
 
 print("Diretório de trabalho atual:", os.getcwd())
