@@ -28,9 +28,17 @@ async function retornarAllClientes() {
 
         resultados.textContent = '';
         clientes.forEach(c => {
-            const p = document.createElement('p');
+            let p = document.createElement('p');
             p.textContent = c.nome;
             resultados.append(p);
+        
+            let btn = document.createElement('button');
+            btn.textContent = "Editar";
+            resultados.append(btn);
+
+            btn = document.createElement('button');
+            btn.textContent = "Inativar cadastro";
+            resultados.append(btn);
         });
 
     } catch (error) {
