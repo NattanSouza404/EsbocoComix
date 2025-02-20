@@ -29,11 +29,19 @@ async function retornarAllClientes() {
         resultados.textContent = '';
         clientes.forEach(c => {
             let p = document.createElement('p');
+            p.textContent = c.id;
+            resultados.append(p);
+
+            p = document.createElement('p');
             p.textContent = c.nome;
             resultados.append(p);
         
             let btn = document.createElement('button');
             btn.textContent = "Editar";
+            btn.onclick = () => {
+                localStorage.setItem('id_usuario', c.id);
+                window.location.href = "../conta.html";
+            };
             resultados.append(btn);
 
             btn = document.createElement('button');
