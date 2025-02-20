@@ -1,0 +1,24 @@
+:root {
+    --cor-louca: 2;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    justify-items: center;
+    align-items: center;
+    
+    background-color: lightblue;
+}
+
+#menu-usuario {
+    justify-content: right;
+}
+
+#menu-usuario button {
+    border: 0;
+}
+
+#menu-usuario img {
+    height: 30px;
+}
