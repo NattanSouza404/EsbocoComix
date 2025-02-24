@@ -10,52 +10,113 @@
 <body>
 
     <header>
-        <div>
-            <h2>E-commerce</h2>
-        </div>
-        <div>
-            <nav>
-                <a href="clientes.html">Clientes</a>
-            </nav>
-        </div>
-            <nav id="menu-usuario">
-                <button>
-                    <img src="img/bate-papo-com-ia.png">
-                </button>
-            </nav>
-        </div>
+        <a href="clientes.html"><h2>Clientes</h2></a>
     </header>
 
-    <div id="conta">
-        <p>Nome: Maurício de Silva</p>
-        <p>Data Nascimento: 12/12/1999</p>
-        <p>CPF: 111.111.111-11</p>
-        <p>E-mail: mauricinho@ayomail.com.br</p>
-        <p>Gênero: Masculino</p>
-        <p>Ranking - 2</p>
-        
-        <button>Editar cadastro</button>
+    <div id="opcoes-conta">
+        <a href="editarConta.html"><button>Editar cadastro</button></a>
         <button onclick="toggleDisplayAlterarSenha()">Alterar senha</button>
         <button>Editar Endereços</button>
     </div>
 
-    <div class="modal">
-        <form id="alterar-senha">
-            <p>
-                A senha deve ser composta de pelo menos 8 caracteres,<br/>
-                ter letras maiúsculas e minúsculas além de conter<br/>
-                caracteres especiais. 
-            </p>
+    <div id="conta">
+        <div id="dados-pessoais">
+            <p>Nome: Maurício de Silva</p>
+            <p>Data Nascimento: 12/12/1999</p>
+            <p>CPF: 111.111.111-11</p>
+            <p>E-mail: mauricinho@ayomail.com.br</p>
+            <p>Gênero: Masculino</p>
+            <p>Ranking - 2</p>
+
+            <hr>
+            <p>Telefone: 11 99999-9999 - Fixo</p>
+        </div>
+
+        <div id="dados-endereco">
+            <div class="endereco-conta">
+                <h3>1º Endereço</h3>
+                <p>Frase curta: Casa</p>
+                <p>Tipo do endereço: Residencial</p>
+                <p>Tipo de Residência: Casa</p>
+                <p>Nº Endereço: 2</p>
+                <p>Logradouro: Jorge das Quantas</p>
+                <p>Tipo de Logradouro: Rua</p>
+                <p>CEP: XXXXX-XXX</p>
+                <p>Bairro: A</p>
+                <p>Cidade: B</p>
+                <p>Estado: C</p>
+                <p>País: A</p>
+                <p>Observações: Perto do prédio XYZ</p>
+            </div>
+
+            <div class="endereco-conta">
+                <h3>2º Endereço</h3>
+                <p>Frase curta: Casa</p>
+                <p>Tipo do endereço: Residencial</p>
+                <p>Tipo de Residência: Casa</p>
+                <p>Nº Endereço: 2</p>
+                <p>Logradouro: Jorge das Quantas</p>
+                <p>Tipo de Logradouro: Rua</p>
+                <p>CEP: XXXXX-XXX</p>
+                <p>Bairro: A</p>
+                <p>Cidade: B</p>
+                <p>Estado: C</p>
+                <p>País: A</p>
+                <p>Observações: Perto do prédio XYZ</p>
+            </div>
             
-            <label>Nova senha</label>
-            <input type="password"></textarea>
-            <label>Confirme a senha</label>
-            <input type="password"></textarea>
+        </div>
+
+        <div id="dados-cartao-credito">
+            <div class="cartao-credito-conta">
+                <h3>1º Cartão</h3>
+                <p>Número cartão: XXXX-XXXX-XXXX-XXXX</p>
+                <p>Código de segurança: XXX</p>
+                <p>Nome impresso: MAURICIO DA SILVA </p>
+                <p>Bandeira cartão: VISA</p>
+            </div>
+
+            <div class="cartao-credito-conta">
+                <h3>1º Cartão</h3>
+                <p>Número cartão: XXXX-XXXX-XXXX-XXXX</p>
+                <p>Código de segurança: XXX</p>
+                <p>Nome impresso: MAURICIO DA SILVA </p>
+                <p>Bandeira cartão: VISA</p>
+            </div>
+
+            <div class="cartao-credito-conta">
+                <h3>1º Cartão</h3>
+                <p>Número cartão: XXXX-XXXX-XXXX-XXXX</p>
+                <p>Código de segurança: XXX</p>
+                <p>Nome impresso: MAURICIO DA SILVA </p>
+                <p>Bandeira cartão: VISA</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-alterar-senha" class="modal">
+        
+        <form id="alterar-senha">
+            <button onclick="toggleDisplayAlterarSenha()" class="botao-fechar">X</button>
+
+            <div class="dados-cadastro">
+
+                <p class="aviso">
+                    A senha deve ser composta de pelo menos 8 caracteres,<br/>
+                    ter letras maiúsculas e minúsculas além de conter<br/>
+                    caracteres especiais. 
+                </p>
+
+                <label>Nova senha</label>
+                <input type="password" autocomplete="new-password"></textarea>
+                <label>Confirme a senha</label>
+                <input type="password" autocomplete="new-password"></textarea>
+            </div>
     
-            <button type="button">Salvar</button>
+            <button type="button" class="botao-salvar">Salvar</button>
         </form>
     </div>
 
-    <script type="text/javascript" src="js/crud_cliente.js"></script>
+    <script type="text/javascript" src="js/crud_clientes.js"></script>
 </body>
 </html>

@@ -2,8 +2,8 @@
 #header-clientes, #tabela-clientes {
     justify-self: center;
 
-    width: 80%;
-    max-width: 80%;
+    width: 90%;
+    max-width: 90%;
 
     margin-top: 1%;
 }
@@ -56,8 +56,6 @@
     border-radius: 2%;
 
     padding: 8px;
-    width: fit-content;
-    max-width: 80%;
 }
 
 #tabela-clientes th, #tabela-clientes td{
@@ -67,15 +65,43 @@
 }
 
 /*conta*/
-#conta {
-    padding: 16px;
+#opcoes-conta {
+    justify-self: center;
 
     margin-top: 1%;
-    width: 80%;
+}
+
+#conta {
+    display: flex;
+    margin-top: 1%;
+
+    justify-content: space-around;
+}
+
+#dados-pessoais, .endereco-conta, .cartao-credito-conta {
+    padding: 16px;
     justify-self: center;
 
     border: solid 1px black;
     border-radius: 2%;
+}
+
+#dados-pessoais {
+    width: 25%;
+    height: fit-content;
+}
+
+#dados-endereco, #dados-cartao-credito {
+    display: flex;
+    flex-direction: column;
+
+    width: 25%;
+    height: fit-content;
+    gap: 16px;
+}
+
+#dados-endereco h3, #dados-cartao-credito h3 {
+    justify-self: center;
 }
 
 .modal {
@@ -95,12 +121,22 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+#modal-alterar-senha {
+    display: none;
+}
+
 #alterar-senha {
     display: flex;
     flex-direction: column;
     width: fit-content;
 
     background-color: white;
+
+    border: solid 1px black;
+    border-radius: 2%;
+    padding: 8px;
+
+    gap: 8px;
 }
 
 
@@ -110,6 +146,9 @@
 
     justify-self: center;
     justify-items: center;
+
+    max-width: 40%;
+    width: 40%;
 }
 
 #cadastrar-cliente section {
@@ -121,10 +160,9 @@
     padding: 20px 8px;
     border-radius: 2%;
 
-    max-width: 40%;
-    width: 40%;
-
     margin: 10px 0px;
+
+    width: 100%;
 
     gap: 4px;
 }
@@ -181,4 +219,15 @@
     border: solid 1px black;
     padding: 8px;
     border-radius: 2%;
+}
+
+.botao-fechar {
+    width: fit-content;
+    align-self: self-end;
+    background-color: red;
+}
+
+.botao-salvar {
+    width: fit-content;
+    align-self: center;
 }

@@ -10,26 +10,15 @@
 <body>
 
   <header>
-    <div>
-        <h2>E-commerce</h2>
-    </div>
-    <div>
-        <nav>
-          <a href="clientes.html">Clientes</a>
-        </nav>
-    </div>
-        <nav id="menu-usuario">
-            <button onclick="chatIA.trocarDisplayChat()">
-                <img src="img/bate-papo-com-ia.png">
-            </button>
-        </nav>
-    </div>
+    <a href="clientes.html"><h2>Clientes</h2></a>
   </header>
 
   <div id="header-clientes">
     <div id="opcoes-cliente">
       <h3>Gerenciar clientes</h3>
-      <a href="cadastrar.html"><button>+ Novo cliente</button></a>
+      <a href="cadastrar.html">
+        <button style="background-color: lightgreen">+ Novo cliente</button>
+      </a>
     </div>
 
     <form id="filtro-clientes">
@@ -47,7 +36,7 @@
         </select>
     
         <label>Data nascimento</label>
-        <input type="date" placeholder="XX/XX/XXXX">
+        <input type="date">
       
         <label>CPF</label>
         <input placeholder="111.111.111-11">
@@ -82,9 +71,9 @@
       <td>1</td>
       <td>
         <button>Consultar</button>
-        <button>Consultar transições</button>
+        <button>Consultar transações</button>
         <button>Editar</button>
-        <button onclick="inativarConta()">Inativar</button>
+        <button onclick="inativarConta()" style="background-color: lightgreen;">Inativar</button>
       </td>
     </tr>
     <tr>
@@ -95,9 +84,13 @@
       <td>email02@email.com</td>
       <td>2</td>
       <td>
-        <a href="conta.html"><button>Consultar</button></a>
-        <button>Consultar transições</button>
-        <button>Editar</button>
+        <a href="conta.html"><button style="background-color: lightgreen">Consultar</button></a>
+        <a href="transações.html">
+          <button style="background-color: lightgreen">Consultar transações</button>
+        </a>
+        <a href="editarConta.html">
+          <button style="background-color: lightgreen">Editar</button>
+        </a>
         <button>Inativar</button>
       </td>
     </tr>
@@ -110,7 +103,7 @@
       <td>5</td>
       <td>
         <button>Consultar</button>
-        <button>Consultar transições</button>
+        <button>Consultar transações</button>
         <button>Editar</button>
         <button>Inativar</button>
       </td>
@@ -124,7 +117,7 @@
         <td>4</td>
         <td>
           <button>Consultar</button>
-          <button>Consultar transições</button>
+          <button>Consultar transações</button>
           <button>Editar</button>
           <button>Inativar</button>
         </td>
@@ -138,7 +131,7 @@
       <td>3</td>
       <td>
         <button>Consultar</button>
-        <button>Consultar transições</button>
+        <button>Consultar transações</button>
         <button>Editar</button>
         <button>Inativar</button>
       </td>

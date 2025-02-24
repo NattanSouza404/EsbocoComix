@@ -13,5 +13,13 @@ function inativarConta(){
 }
 
 function toggleDisplayAlterarSenha(){
-    const modalAlterarSenha = '';
+    const modalAlterarSenha = document.getElementById('modal-alterar-senha');
+
+    if (modalAlterarSenha.style.display === 'none'){
+        modalAlterarSenha.style.display = 'flex';
+    } else {
+        modalAlterarSenha.style.display = 'none';
+    }
+
+    modalAlterarSenha.style.display = "flex";
 }
