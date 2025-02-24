@@ -1,4 +1,6 @@
-# Projeto_LES
+# Esboço Comix
+
+Projeto de LES
 
 Créditos dos icones:
 - FACH
