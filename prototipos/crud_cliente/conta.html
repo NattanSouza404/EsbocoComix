@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/conta.css">
+    <link rel="stylesheet" href="css/crud_cliente.css">
 </head>
 <body>
 
@@ -16,12 +16,10 @@
         <div>
             <nav>
                 <a href="clientes.html">Clientes</a>
-                <a href="">Link 2</a>
-                <a href="">Link 3</a>
             </nav>
         </div>
             <nav id="menu-usuario">
-                <button onclick="chatIA.trocarDisplayChat()">
+                <button>
                     <img src="img/bate-papo-com-ia.png">
                 </button>
             </nav>
@@ -29,29 +27,35 @@
     </header>
 
     <div id="conta">
-        <p>Nome: Jorge</p>
-        <p>Data Nascimento: 12/12/1212</p>
-        <p>CPF: XXX.XXX.XXX-XX</p>
-        <p>E-mail: 12/12/1212</p>
+        <p>Nome: Maurício de Silva</p>
+        <p>Data Nascimento: 12/12/1999</p>
+        <p>CPF: 111.111.111-11</p>
+        <p>E-mail: mauricinho@ayomail.com.br</p>
         <p>Gênero: Masculino</p>
-
-        <button>
-            Editar Cartões de Crédito
-        </button>
-
-        <button>
-            Editar Endereços
-        </button>
-
-        <button>
-            Editar Telefones
-        </button>
+        <p>Ranking - 2</p>
+        
+        <button>Editar cadastro</button>
+        <button onclick="toggleDisplayAlterarSenha()">Alterar senha</button>
+        <button>Editar Endereços</button>
     </div>
 
-    <div id="resultados">
-
+    <div class="modal">
+        <form id="alterar-senha">
+            <p>
+                A senha deve ser composta de pelo menos 8 caracteres,<br/>
+                ter letras maiúsculas e minúsculas além de conter<br/>
+                caracteres especiais. 
+            </p>
+            
+            <label>Nova senha</label>
+            <input type="password"></textarea>
+            <label>Confirme a senha</label>
+            <input type="password"></textarea>
+    
+            <button type="button">Salvar</button>
+        </form>
     </div>
 
-    <script type="text/javascript" src="js/conta.js"></script>
+    <script type="text/javascript" src="js/crud_cliente.js"></script>
 </body>
 </html>
