@@ -65,12 +65,6 @@
 
     <section id="secao-endereco">
         <p class="titulo-dados-cadastro">Endereços</p>
-        
-        <p class="aviso">
-            Observações: Deve haver pelo menos 1
-            endereço de entrega e 1 endereço de cobrança
-            (o mesmo endereço pode servir para entrega e cobrança)
-        </p>
 
         <button type="button">Adicionar novo endereço</button>
 
@@ -84,11 +78,16 @@
                 <input>
 
                 <label>Tipo do endereço</label>
-                <select>
-                    <option>Cobrança</option>
-                    <option>Residencial</option>
-                    <option>Cobrança e Residencial</option>
-                </select>
+                <div>
+                    <input type="checkbox">
+                    <label>Residencial</label>
+
+                    <input type="checkbox">
+                    <label>Cobrança</label>
+
+                    <input type="checkbox">
+                    <label>Entrega</label>
+                </div>
 
                 <label>Tipo de Residência</label>
                 <select>
@@ -130,36 +129,16 @@
                 <button type="button">Remover</button>
             </div>
         </div>
+
+        <p class="aviso">
+            Observações: Deve haver ao menos 1 endereço de
+            residência, um de entrega e um de cobrança
+        </p>
     </section>
     
     <section id="secao-cartao-credito">
         <p class="titulo-dados-cadastro">Cartões de crédito</p>
         <button type="button">Adicionar novo cartão de crédito</button>
-
-        <div class="cartao-credito">
-            <div class="numeracao">
-                <p>1</p>
-            </div>
-
-            <div class="dados-cadastro">
-                <label>Número cartão</label>
-                <input>
-
-                <label>Código de segurança</label>
-                <input>
-    
-                <label>Nome impresso</label>
-                <input>
-
-                <label>Bandeira cartão</label>
-                <select>
-                    <option>Visa</option>
-                    <option>Mastercard</option>
-                </select>
-
-                <button type="button">Remover</button>
-            </div>
-        </div>
     </section>
     
     <button type="button">Salvar cliente</button>

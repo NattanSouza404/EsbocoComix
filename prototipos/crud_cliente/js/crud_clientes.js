@@ -1,25 +1,40 @@
 function inativarConta(){
-    const confirmacaoUsuario = confirm('Deseja mesmo inativar o cadastro de Haroldo Fonseca?');
+    const conta = document.getElementById('inative-me');
 
-    if (!confirmacaoUsuario){
+    if (conta.textContent === 'Ativo'){
+        const confirmacaoUsuario = confirm('Deseja mesmo inativar o cadastro de Maurício de Silva?');
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+    
+        conta.textContent = 'Inativo';
+
         return;
     }
 
-    const conta = document.getElementById('delete-me');
+    if (conta.textContent === 'Inativo'){
+        const confirmacaoUsuario = confirm('Deseja mesmo reativar o cadastro de Maurício de Silva?');
 
-    if (conta.parentNode){
-        conta.parentNode.removeChild(conta);
+        if (!confirmacaoUsuario){
+            return;
+        }
+    
+        conta.textContent = 'Ativo';
+
+        return;
     }
+    
 }
 
-function toggleDisplayAlterarSenha(){
-    const modalAlterarSenha = document.getElementById('modal-alterar-senha');
+function toggleDisplay(id){
+    const modal = document.getElementById(id);
 
-    if (modalAlterarSenha.style.display === 'none'){
-        modalAlterarSenha.style.display = 'flex';
+    if (modal.style.display === 'none'){
+        modal.style.display = 'flex';
     } else {
-        modalAlterarSenha.style.display = 'none';
+        modal.style.display = 'none';
     }
 
-    modalAlterarSenha.style.display = "flex";
+    modal.style.display = "flex";
 }

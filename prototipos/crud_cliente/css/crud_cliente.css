@@ -104,42 +104,6 @@
     justify-self: center;
 }
 
-.modal {
-    display: flex;
-    position: fixed;
-    z-index: 9;
-
-    left: 0;
-    top: 0;
-
-    width: 100%;
-    height: 100%;
-
-    align-items: center;
-    justify-content: center;
-
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-#modal-alterar-senha {
-    display: none;
-}
-
-#alterar-senha {
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-
-    background-color: white;
-
-    border: solid 1px black;
-    border-radius: 2%;
-    padding: 8px;
-
-    gap: 8px;
-}
-
-
 /*cadastrar*/
 #cadastrar-cliente {
     margin-top: 1%;
@@ -190,7 +154,7 @@
 }
 
 .numeracao {
-    position: absolute;
+    width: fit-content;
 }
 
 .numeracao p {
@@ -221,6 +185,10 @@
     border-radius: 2%;
 }
 
+.botao-prototipo {
+    background-color: lightgreen;
+}
+
 .botao-fechar {
     width: fit-content;
     align-self: self-end;
@@ -230,4 +198,76 @@
 .botao-salvar {
     width: fit-content;
     align-self: center;
+}
+
+/*modais*/
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#alterar-senha, #alterar-endereco, #consultar-transacoes {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+
+    background-color: white;
+
+    border: solid 1px black;
+    border-radius: 2%;
+    padding: 8px;
+
+    gap: 8px;
+}
+
+#alterar-endereco {
+    max-height: 80%;
+    width: 40%;
+    overflow-y: auto;
+
+    align-items: center;
+}
+
+#alterar-endereco::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 20px;
+    margin: 10px;
+}
+
+#alterar-endereco::-webkit-scrollbar-track {
+    border-radius: 20px;
+    margin: 10px;
+}
+
+#alterar-endereco::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background-color: white;
+    border: solid black 1px;
+}
+
+#consultar-transacoes {
+    width: 50%;
+    overflow-y: auto;
+}
+
+#consultar-transacoes h3 {
+    text-align: center;
+}
+
+#consultar-transacoes table tr th, #consultar-transacoes table tr td {
+    border: solid 1px gray;
+    padding: 8px;
+    text-align: center;
 }

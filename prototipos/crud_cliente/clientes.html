@@ -17,7 +17,7 @@
     <div id="opcoes-cliente">
       <h3>Gerenciar clientes</h3>
       <a href="cadastrar.html">
-        <button style="background-color: lightgreen">+ Novo cliente</button>
+        <button class="botao-prototipo">+ Novo cliente</button>
       </a>
     </div>
 
@@ -60,21 +60,8 @@
       <th>CPF</th>
       <th>E-mail</th>
       <th>Ranking</th>
+      <th>Status</th>
       <th>Operações</th>
-    </tr>
-    <tr id="delete-me">
-      <td id="nome-do-delete-me">Haroldo Fonseca</td>
-      <td>Masculino</td>
-      <td>01/01/2001</td>
-      <td>111.111.111-11</td>
-      <td>email01@email.com</td>
-      <td>1</td>
-      <td>
-        <button>Consultar</button>
-        <button>Consultar transações</button>
-        <button>Editar</button>
-        <button onclick="inativarConta()" style="background-color: lightgreen;">Inativar</button>
-      </td>
     </tr>
     <tr>
       <td>Maurício de Silva</td>
@@ -83,14 +70,28 @@
       <td>222.222.222-2</td>
       <td>email02@email.com</td>
       <td>2</td>
+      <td id="inative-me">Ativo</td>
       <td>
-        <a href="conta.html"><button style="background-color: lightgreen">Consultar</button></a>
-        <a href="transações.html">
-          <button style="background-color: lightgreen">Consultar transações</button>
+        <button onclick="toggleDisplay('modal-consultar-transacoes')" class="botao-prototipo">
+          Consultar transações
+        </button>
+        <a href="conta.html">
+          <button class="botao-prototipo">Editar</button>
         </a>
-        <a href="editarConta.html">
-          <button style="background-color: lightgreen">Editar</button>
-        </a>
+        <button onclick="inativarConta()" class="botao-prototipo">Inativar</button>
+      </td>
+    </tr>
+    <tr>
+      <td>Haroldo Fonseca</td>
+      <td>Masculino</td>
+      <td>01/01/2001</td>
+      <td>111.111.111-11</td>
+      <td>email01@email.com</td>
+      <td>1</td>
+      <td>Ativo</td>
+      <td>
+        <button>Consultar transações</button>
+        <button>Editar</button>
         <button>Inativar</button>
       </td>
     </tr>
@@ -101,8 +102,8 @@
       <td>333.333.333-3</td>
       <td>email03@email.com</td>
       <td>5</td>
+      <td>Ativo</td>
       <td>
-        <button>Consultar</button>
         <button>Consultar transações</button>
         <button>Editar</button>
         <button>Inativar</button>
@@ -115,8 +116,8 @@
         <td>444.444.444-4</td>
         <td>email04@email.com</td>
         <td>4</td>
+        <td>Inativo</td>
         <td>
-          <button>Consultar</button>
           <button>Consultar transações</button>
           <button>Editar</button>
           <button>Inativar</button>
@@ -129,14 +130,44 @@
       <td>555.555.555-5</td>
       <td>email05@email.com</td>
       <td>3</td>
+      <td>Ativo</td>
       <td>
-        <button>Consultar</button>
         <button>Consultar transações</button>
         <button>Editar</button>
         <button>Inativar</button>
       </td>
     </tr>
   </table>
+
+  <div id="modal-consultar-transacoes" class="modal">
+        
+    <form id="consultar-transacoes">
+      <button onclick="toggleDisplay('modal-consultar-transacoes')" class="botao-fechar">X</button>
+
+      <h3>Transações de Maurício da Silva</h3>
+
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Data e hora</th>
+          <th>Valor Transação</th>
+          <th>Status</th>
+        </tr>
+        <tr>
+          <td>876</td>
+          <td>01/03/2024 11:00:00</td>
+          <td>R$ 80,00</td>
+          <td>Entregue</td>
+        </tr>
+        <tr>
+          <td>879</td>
+          <td>01/07/2024 12:00:00</td>
+          <td>R$ 40,00</td>
+          <td>Entregue</td>
+        </tr>
+      </table>
+    </form>
+  </div>
 
   <script type="text/javascript" src="js/crud_clientes.js"></script>
   

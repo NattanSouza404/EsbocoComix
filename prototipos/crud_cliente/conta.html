@@ -14,9 +14,9 @@
     </header>
 
     <div id="opcoes-conta">
-        <a href="editarConta.html"><button>Editar cadastro</button></a>
-        <button onclick="toggleDisplayAlterarSenha()">Alterar senha</button>
-        <button>Editar Endereços</button>
+        <a href="editarConta.html"><button class="botao-prototipo">Editar cadastro</button></a>
+        <button onclick="toggleDisplay('modal-alterar-senha')" class="botao-prototipo">Alterar senha</button>
+        <button onclick="toggleDisplay('modal-alterar-endereco')" class="botao-prototipo">Editar Endereços</button>
     </div>
 
     <div id="conta">
@@ -36,23 +36,7 @@
             <div class="endereco-conta">
                 <h3>1º Endereço</h3>
                 <p>Frase curta: Casa</p>
-                <p>Tipo do endereço: Residencial</p>
-                <p>Tipo de Residência: Casa</p>
-                <p>Nº Endereço: 2</p>
-                <p>Logradouro: Jorge das Quantas</p>
-                <p>Tipo de Logradouro: Rua</p>
-                <p>CEP: XXXXX-XXX</p>
-                <p>Bairro: A</p>
-                <p>Cidade: B</p>
-                <p>Estado: C</p>
-                <p>País: A</p>
-                <p>Observações: Perto do prédio XYZ</p>
-            </div>
-
-            <div class="endereco-conta">
-                <h3>2º Endereço</h3>
-                <p>Frase curta: Casa</p>
-                <p>Tipo do endereço: Residencial</p>
+                <p>Tipo do endereço: Residencial, Cobrança, Entrega</p>
                 <p>Tipo de Residência: Casa</p>
                 <p>Nº Endereço: 2</p>
                 <p>Logradouro: Jorge das Quantas</p>
@@ -70,23 +54,7 @@
         <div id="dados-cartao-credito">
             <div class="cartao-credito-conta">
                 <h3>1º Cartão</h3>
-                <p>Número cartão: XXXX-XXXX-XXXX-XXXX</p>
-                <p>Código de segurança: XXX</p>
-                <p>Nome impresso: MAURICIO DA SILVA </p>
-                <p>Bandeira cartão: VISA</p>
-            </div>
-
-            <div class="cartao-credito-conta">
-                <h3>1º Cartão</h3>
-                <p>Número cartão: XXXX-XXXX-XXXX-XXXX</p>
-                <p>Código de segurança: XXX</p>
-                <p>Nome impresso: MAURICIO DA SILVA </p>
-                <p>Bandeira cartão: VISA</p>
-            </div>
-
-            <div class="cartao-credito-conta">
-                <h3>1º Cartão</h3>
-                <p>Número cartão: XXXX-XXXX-XXXX-XXXX</p>
+                <p>Número cartão: XXXX</p>
                 <p>Código de segurança: XXX</p>
                 <p>Nome impresso: MAURICIO DA SILVA </p>
                 <p>Bandeira cartão: VISA</p>
@@ -97,7 +65,7 @@
     <div id="modal-alterar-senha" class="modal">
         
         <form id="alterar-senha">
-            <button onclick="toggleDisplayAlterarSenha()" class="botao-fechar">X</button>
+            <button onclick="toggleDisplay('modal-alterar-senha')" class="botao-fechar">X</button>
 
             <div class="dados-cadastro">
 
@@ -112,6 +80,83 @@
                 <label>Confirme a senha</label>
                 <input type="password" autocomplete="new-password"></textarea>
             </div>
+    
+            <button type="button" class="botao-salvar">Salvar</button>
+        </form>
+    </div>
+
+    <div id="modal-alterar-endereco" class="modal">
+        <form id="alterar-endereco">
+            <button onclick="toggleDisplay('modal-alterar-endereco')" class="botao-fechar">X</button>
+
+            <button type="button">Adicionar novo endereço</button>
+
+            <div class="endereco">
+                <div class="numeracao">
+                    <p>1</p>
+                </div>
+    
+                <div class="dados-cadastro">
+                    <label>Frase curta para identificação</label>
+                    <input value="Casa">
+    
+                    <label>Tipo do endereço</label>
+                    <div>
+                        <input type="checkbox" checked>
+                        <label>Residencial</label>
+
+                        <input type="checkbox" checked>
+                        <label>Cobrança</label>
+
+                        <input type="checkbox" checked>
+                        <label>Entrega</label>
+                    </div>
+    
+                    <label>Tipo de Residência</label>
+                    <select>
+                        <option selected>Casa</option>
+                        <option>Apartamento</option>
+                    </select>
+    
+                    <label>Nº Endereço</label>
+                    <input value="2">
+    
+                    <label>Logradouro</label>
+                    <input value="Jorge das Quantas">
+    
+                    <label>Tipo de Logradouro</label>
+                    <select>
+                        <option selected>Rua</option>
+                        <option>Avenida</option>
+                        <option>Praça</option>
+                    </select>
+
+                    <label>CEP</label>
+                    <input value="XXXXX-XXX">
+    
+                    <label>Bairro</label>
+                    <input value="A">
+    
+                    <label>Cidade</label>
+                    <input value="B">
+    
+                    <label>Estado</label>
+                    <input value="C">
+    
+                    <label>País</label>
+                    <input value="A">
+    
+                    <label>Observações</label>
+                    <input value="Perto do prédio XYZ">
+    
+                    <button type="button">Remover</button>
+                </div>
+            </div>
+
+            <p class="aviso">
+                Observações: Deve haver ao menos 1 endereço de
+                residência, um de entrega e um de cobrança
+            </p>
     
             <button type="button" class="botao-salvar">Salvar</button>
         </form>
