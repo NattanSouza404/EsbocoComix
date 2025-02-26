@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fatec.ConexaoFactory;
-import com.fatec.dao.IClienteDAO;
-import com.fatec.modelo.entidades.Cliente;
+import com.fatec.dao.IDAO;
+import com.fatec.model.entidades.Cliente;
 
-public class ClienteDAO implements IClienteDAO {
+public class ClienteDAO implements IDAO<Cliente> {
 
     @Override
     public void inserir(Cliente c) throws Exception {
@@ -20,7 +20,7 @@ public class ClienteDAO implements IClienteDAO {
             "INSERT INTO clientes (cli_nome) VALUES (?);"
         );
 
-        preparedStatement.setString(0, c.getNome());
+        preparedStatement.setString(1, c.getNome());
 
         if (preparedStatement.executeUpdate() == 0){
             throw new Exception("Inserção de cliente não executada!");
@@ -80,7 +80,7 @@ public class ClienteDAO implements IClienteDAO {
     }
 
     @Override
-    public void atualizar(Cliente c) throws Exception {
+    public Cliente atualizar(Cliente c) throws Exception {
         Connection conn = ConexaoFactory.getConexao(); 
     
         PreparedStatement pstmt = conn.prepareStatement(
@@ -96,6 +96,8 @@ public class ClienteDAO implements IClienteDAO {
 
         pstmt.close();
         conn.close();
+
+        return consultarByID(c.getId());
     }
 
     @Override
