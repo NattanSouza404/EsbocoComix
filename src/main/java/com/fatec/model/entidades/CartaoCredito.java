@@ -1,10 +1,10 @@
-package com.fatec.modelo.entidades;
+package com.fatec.model.entidades;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Cartao {
+public class CartaoCredito {
     
 }
