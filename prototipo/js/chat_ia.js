@@ -1,4 +1,12 @@
 class ChatIA extends HTMLElement {
+
+    frasesProntas = [
+        'De acordo com o seu perfil, acredito que o quadrinho Ficticio, do autor Jr pode te interessar!',
+        'Vi que você tem interesse em histórias de ação. Estou correto?',
+        'De acordo com a base de dados que tenho, o livro que você deve estar procurando se chama A História Sem Começo, de Jorge Bolaños.',
+        'Caso tiver interesse em alguma recomendação, sinta-se livre para perguntar!'
+    ];
+
     constructor(){
         super();
 
@@ -52,14 +60,12 @@ class ChatIA extends HTMLElement {
         );
 
         const button = document.createElement('button');
-
+        button.onclick = () => this.enviarMsgChatIA();
+        
         const img = document.createElement('img');
         img.src = "./img/enviado.png";
-
         button.append(img);
         
-        button.onclick = () => this.enviarMsgChatIA();
-
         enviarMensagem.append(textarea);
         enviarMensagem.append(button);
     
@@ -103,19 +109,12 @@ class ChatIA extends HTMLElement {
     
         textarea.value = '';
         this.adicionarMensagem(mensagem, 'texto-usuario');
-    
-        const frasesProntas = [
-            'De acordo com o seu perfil, acredito que o quadrinho Ficticio, do autor Jr pode te interessar!',
-            'Vi que você tem interesse em histórias de ação. Estou correto?',
-            'De acordo com a base de dados que tenho, o livro que você deve estar procurando se chama A História Sem Começo, de Jorge Bolaños.',
-            'Caso tiver interesse em alguma recomendação, sinta-se livre para perguntar!'
-        ];
 
-        if (this.contador >= frasesProntas.length){
+        if (this.contador >= this.frasesProntas.length){
             this.contador = 0;
         }
     
-        this.adicionarMensagem(frasesProntas.at(this.contador), 'texto-ia');
+        this.adicionarMensagem(this.frasesProntas.at(this.contador), 'texto-ia');
         this.contador++;
     }
 }
