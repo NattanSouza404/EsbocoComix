@@ -8,31 +8,83 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fatec.controller.utils.ServletUtil;
-import com.fatec.dao.impl.ClienteDAO;
+import com.fatec.model.entidades.Cliente;
+import com.fatec.service.ClienteService;
 
 public class ClienteController extends HttpServlet {
-    private static ClienteDAO clienteDAO = new ClienteDAO();
+    private static ClienteService clienteService = new ClienteService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
+        String parametroId = req.getParameter("id"); 
+        
         try {
 
-            String parametroId = req.getParameter("id"); 
-            
             if (parametroId == null){
-                ServletUtil.retornarJson(resp, clienteDAO.consultarTodos());
+                ServletUtil.retornarRespostaJson(
+                    resp, 
+                    clienteService.consultarTodos(),
+                    HttpServletResponse.SC_OK
+                );
                 return;
             }
 
             int id = Integer.parseInt(parametroId);
 
-            ServletUtil.retornarJson(
+            ServletUtil.retornarRespostaJson(
                 resp,
-                clienteDAO.consultarByID(id)
+                clienteService.consultarByID(id),
+                HttpServletResponse.SC_OK
             );
 
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
+        Cliente clienteToAdd = ServletUtil.toCliente(req);
+
+        try {
+            clienteService.inserir(clienteToAdd);
+            resp.setStatus(HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Cliente clienteToUpdate = ServletUtil.toCliente(req);
+
+        try {
+            ServletUtil.retornarRespostaJson(
+                resp,
+                clienteService.atualizar(clienteToUpdate),
+                HttpServletResponse.SC_OK
+            );
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Cliente clienteToDelete = ServletUtil.toCliente(req);
+
+        try {
+            clienteService.deletar(clienteToDelete);
+            resp.setStatus(HttpServletResponse.SC_OK);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
