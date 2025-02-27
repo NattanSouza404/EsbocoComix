@@ -141,33 +141,34 @@
   </table>
 
   <div id="modal-consultar-transacoes" class="modal">
-        
-    <form id="consultar-transacoes">
-      <button onclick="toggleDisplay('modal-consultar-transacoes')" class="botao-fechar">X</button>
-
-      <h3>Transações de Maurício da Silva</h3>
-
-      <table>
-        <tr>
-          <th>ID</th>
-          <th>Data e hora</th>
-          <th>Valor Transação</th>
-          <th>Status</th>
-        </tr>
-        <tr>
-          <td>876</td>
-          <td>01/03/2024 11:00:00</td>
-          <td>R$ 80,00</td>
-          <td>Entregue</td>
-        </tr>
-        <tr>
-          <td>879</td>
-          <td>01/07/2024 12:00:00</td>
-          <td>R$ 40,00</td>
-          <td>Entregue</td>
-        </tr>
-      </table>
-    </form>
+    <div class="conteudo-modal">
+      <form id="consultar-transacoes">
+        <button onclick="toggleDisplay('modal-consultar-transacoes')" class="botao-fechar">X</button>
+  
+        <h3>Transações de Maurício da Silva</h3>
+  
+        <table>
+          <tr>
+            <th>ID</th>
+            <th>Data e hora</th>
+            <th>Valor Transação</th>
+            <th>Status</th>
+          </tr>
+          <tr>
+            <td>876</td>
+            <td>01/03/2024 11:00:00</td>
+            <td>R$ 80,00</td>
+            <td>Entregue</td>
+          </tr>
+          <tr>
+            <td>879</td>
+            <td>01/07/2024 12:00:00</td>
+            <td>R$ 40,00</td>
+            <td>Entregue</td>
+          </tr>
+        </table>
+      </form>
+    </div>
   </div>
 
   <script type="text/javascript" src="js/crud_clientes.js"></script>

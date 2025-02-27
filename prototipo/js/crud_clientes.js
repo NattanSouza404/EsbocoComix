@@ -35,6 +35,4 @@ function toggleDisplay(id){
     } else {
         modal.style.display = 'none';
     }
-
-    modal.style.display = "flex";
 }

@@ -13,135 +13,225 @@
         <a href="clientes.html"><h2>Clientes</h2></a>
     </header>
   
-  <form id="cadastrar-cliente">
-    <section>
-        <p class="titulo-dados-cadastro">Dados Pessoais</p>
-
-        <div class="dados-cadastro">
-            <label>Nome</label>
-            <input type="text" placeholder="Seu nome">
-    
-            <label>Gênero</label>
-            <select>
-                <option>Masculino</option>
-                <option>Feminino</option>
-                <option>Outro</option>
-                <option>Prefiro não informar</option>
-            </select>
-    
-            <label>Data de Nascimento</label>
-            <input type="date">
-    
-            <label>CPF</label>
-            <input placeholder="111.111.111-11">
-    
-            <label>E-mail</label>
-            <input type="email" placeholder="seuemail@email.com">
-    
-            <label>Senha</label>
-            <input type="password"></textarea>
-    
-            <label>Confirme a senha</label>
-            <input type="password"></textarea>
-        </div>
-    </section>
-
-    <section id="secao-telefone">
-        <p class="titulo-dados-cadastro">Telefone</p>
-
-        <div class="dados-cadastro">
-            <label>Tipo do telefone</label>
-            <select>
-                <option>Fixo</option>
-            </select>
-            
-            <label>DDD</label>
-            <input placeholder="11">
-    
-            <label>Número do telefone</label>
-            <input placeholder="11111-1111"> 
-        </div>
-    </section>
-
-    <section id="secao-endereco">
-        <p class="titulo-dados-cadastro">Endereços</p>
-
-        <button type="button">Adicionar novo endereço</button>
-
-        <div class="endereco">
-            <div class="numeracao">
-                <p>1</p>
+  <form id="form-cadastrar">
+    <div id="cadastrar-cliente">
+        <section>
+            <div class="header-dados-cadastro">
+                <p>Dados Pessoais</p>
             </div>
+            
+            <div class="dados-formulario">
+                <label>Nome</label>
+                <input type="text" placeholder="Seu nome">
+        
+                <label>Gênero</label>
+                <select>
+                    <option>Masculino</option>
+                    <option>Feminino</option>
+                    <option>Outro</option>
+                    <option>Prefiro não informar</option>
+                </select>
+        
+                <label>Data de Nascimento</label>
+                <input type="date">
+        
+                <label>CPF</label>
+                <input placeholder="111.111.111-11">
+        
+                <label>E-mail</label>
+                <input type="email" placeholder="seuemail@email.com">
+        
+                <label>Senha</label>
+                <input type="password"></textarea>
+        
+                <label>Confirme a senha</label>
+                <input type="password"></textarea>
+            </div>
+        </section>
 
-            <div class="dados-cadastro">
-                <label>Frase curta para identificação</label>
-                <input>
+        <section id="secao-telefone">
+            <p class="titulo-dados-cadastro">Telefone</p>
 
-                <label>Tipo do endereço</label>
-                <div>
-                    <input type="checkbox">
-                    <label>Residencial</label>
+            <div class="dados-formulario">
+                <label>Tipo do telefone</label>
+                <select>
+                    <option>Fixo</option>
+                </select>
+                
+                <label>DDD</label>
+                <input placeholder="11">
+        
+                <label>Número do telefone</label>
+                <input placeholder="11111-1111"> 
+            </div>
+        </section>
 
-                    <input type="checkbox">
-                    <label>Cobrança</label>
+        <section id="secao-endereco">
+            <p class="titulo-dados-cadastro">Endereços</p>
 
-                    <input type="checkbox">
-                    <label>Entrega</label>
+            <div class="endereco">
+                <div class="numeracao">
+                    <p>1</p>
+                    <p>Endereço Residencial</p>
                 </div>
 
-                <label>Tipo de Residência</label>
-                <select>
-                    <option>Casa</option>
-                    <option>Apartamento</option>
-                </select>
+                <div class="dados-endereco">
+                    <label>Frase curta para identificação</label>
+                    <input>
 
-                <label>Nº Endereço</label>
-                <input>
+                    <label>Tipo do endereço</label>
+                    <div>
+                        <input type="checkbox" checked disabled>
+                        <label>Residencial</label>
 
-                <label>Logradouro</label>
-                <input>
+                        <input type="checkbox">
+                        <label>Cobrança</label>
 
-                <label>Tipo de Logradouro</label>
-                <select>
-                    <option>Rua</option>
-                    <option>Avenida</option>
-                    <option>Praça</option>
-                </select>
+                        <input type="checkbox">
+                        <label>Entrega</label>
+                    </div>
 
-                <label>CEP</label>
-                <input>
+                    <label>Tipo de Residência</label>
+                    <select>
+                        <option>Casa</option>
+                        <option>Apartamento</option>
+                    </select>
 
-                <label>Bairro</label>
-                <input>
+                    <label>Nº Endereço</label>
+                    <input>
 
-                <label>Cidade</label>
-                <input>
+                    <label>Logradouro</label>
+                    <input>
 
-                <label>Estado</label>
-                <input>
+                    <label>Tipo de Logradouro</label>
+                    <select>
+                        <option>Rua</option>
+                        <option>Avenida</option>
+                        <option>Praça</option>
+                    </select>
 
-                <label>País</label>
-                <input>
+                    <label>CEP</label>
+                    <input>
 
-                <label>Observações</label>
-                <input>
+                    <label>Bairro</label>
+                    <input>
 
-                <button type="button">Remover</button>
+                    <label>Cidade</label>
+                    <input>
+
+                    <label>Estado</label>
+                    <input>
+
+                    <label>País</label>
+                    <input>
+
+                    <label>Observações</label>
+                    <input>
+                </div>
             </div>
-        </div>
 
-        <p class="aviso">
-            Observações: Deve haver ao menos 1 endereço de
-            residência, um de entrega e um de cobrança
-        </p>
-    </section>
-    
-    <section id="secao-cartao-credito">
-        <p class="titulo-dados-cadastro">Cartões de crédito</p>
-        <button type="button">Adicionar novo cartão de crédito</button>
-    </section>
-    
-    <button type="button">Salvar cliente</button>
+            <div class="endereco">
+                <div class="numeracao">
+                    <p>2</p>
+                </div>
+
+                <div class="dados-endereco">
+                    <label>Frase curta para identificação</label>
+                    <input>
+
+                    <label>Tipo do endereço</label>
+                    <div>
+                        <input type="checkbox">
+                        <label>Residencial</label>
+
+                        <input type="checkbox">
+                        <label>Cobrança</label>
+
+                        <input type="checkbox">
+                        <label>Entrega</label>
+                    </div>
+
+                    <label>Tipo de Residência</label>
+                    <select>
+                        <option>Casa</option>
+                        <option>Apartamento</option>
+                    </select>
+
+                    <label>Nº Endereço</label>
+                    <input>
+
+                    <label>Logradouro</label>
+                    <input>
+
+                    <label>Tipo de Logradouro</label>
+                    <select>
+                        <option>Rua</option>
+                        <option>Avenida</option>
+                        <option>Praça</option>
+                    </select>
+
+                    <label>CEP</label>
+                    <input>
+
+                    <label>Bairro</label>
+                    <input>
+
+                    <label>Cidade</label>
+                    <input>
+
+                    <label>Estado</label>
+                    <input>
+
+                    <label>País</label>
+                    <input>
+
+                    <label>Observações</label>
+                    <input>
+
+                    <button type="button">Remover endereço</button>
+                </div>
+            </div>
+
+            <button type="button">+ Novo endereço</button>
+
+            <p class="aviso">
+                Observações: Deve haver ao menos 1 endereço de
+                residência, um de entrega e um de cobrança
+            </p>
+        </section>
+        
+        <section id="secao-cartao-credito">
+            <p class="titulo-dados-cadastro">Cartões de crédito</p>
+            <button type="button">+ Novo cartão de crédito</button>
+
+            <div class="cartao-credito">
+                <div class="numeracao">
+                    <p>1</p>
+                </div>
+
+                <div class="dados-formulario">
+                    <label>Número cartão</label>
+                    <input value="XXXX-XXXX-XXXX-XXXX">
+
+                    <label>Código de segurança</label>
+                    <input value="XXX">
+        
+                    <label>Nome impresso</label>
+                    <input value="MAURICIO DA SILVA">
+
+                    <label>Bandeira cartão</label>
+                    <select>
+                        <option selected>Visa</option>
+                        <option>Mastercard</option>
+                    </select>
+
+                    <button type="button">Remover</button>
+                </div>
+            </div>
+        </section>
+    </div> 
+
+    <button type="button" class="botao-salvar">Salvar cliente</button>
   </form>
   
 </body>

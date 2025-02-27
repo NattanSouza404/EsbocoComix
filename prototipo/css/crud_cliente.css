@@ -105,40 +105,61 @@
 }
 
 /*cadastrar*/
+#form-cadastrar {
+    justify-items: center;
+}
+
 #cadastrar-cliente {
     margin-top: 1%;
+    margin-bottom: 1%;
 
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-self: center;
     justify-items: center;
 
-    max-width: 40%;
-    width: 40%;
+    gap: 20px;
+
+    max-width: 80%;
+    width: 80%;
 }
 
 #cadastrar-cliente section {
-    display: flex;
-    flex-direction: column;
     align-items: center;
 
     border: solid 1px black;
-    padding: 20px 8px;
     border-radius: 2%;
 
-    margin: 10px 0px;
-
+    justify-items: center;
     width: 100%;
 
-    gap: 4px;
+    padding-top: 8px;
+    padding-bottom: 20px;
+
+    height: fit-content;
 }
 
-#cadastrar-cliente section p {
-    align-self: center;
-    font-size: large;
+.dados-formulario {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    width: 80%;
+    max-width: 80%;
+    
+    gap: 8px 0px;
+}
+
+.dados-endereco {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    width: fit-content;
+    max-width: 80%;
+    
+    gap: 8px 0px;
 }
 
 .endereco, .cartao-credito {
-    display: flex;
-    flex-direction: column;
     margin: 10px 0px;
 
     border: solid 1px black;
@@ -154,7 +175,8 @@
 }
 
 .numeracao {
-    width: fit-content;
+    display: flex;
+    justify-content: space-between;
 }
 
 .numeracao p {
@@ -165,17 +187,6 @@
     padding: 4px;
 }
 
-.dados-cadastro {
-    display: flex;
-    flex-direction: column;
-
-    width: 80%;
-    max-width: 80%;
-    align-self: center;
-
-    gap: 4px;
-}
-
 /**/
 
 .aviso {
@@ -183,6 +194,9 @@
     border: solid 1px black;
     padding: 8px;
     border-radius: 2%;
+
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .botao-prototipo {
@@ -191,13 +205,17 @@
 
 .botao-fechar {
     width: fit-content;
-    align-self: self-end;
+    float: right;
     background-color: red;
 }
 
 .botao-salvar {
     width: fit-content;
-    align-self: center;
+
+    font-size: larger;
+    border-radius: 20%;
+    background-color: lightgreen;
+    padding: 8px;
 }
 
 /*modais*/
@@ -218,48 +236,49 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-#alterar-senha, #alterar-endereco, #consultar-transacoes {
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-
+.conteudo-modal {
     background-color: white;
 
     border: solid 1px black;
     border-radius: 2%;
     padding: 8px;
 
-    gap: 8px;
-}
-
-#alterar-endereco {
     max-height: 80%;
-    width: 40%;
-    overflow-y: auto;
+    max-width: 60%;
+    width: fit-content;
 
-    align-items: center;
+    overflow-y: auto;
 }
 
-#alterar-endereco::-webkit-scrollbar {
+.conteudo-modal::-webkit-scrollbar {
     width: 6px;
     border-radius: 20px;
     margin: 10px;
 }
 
-#alterar-endereco::-webkit-scrollbar-track {
+.conteudo-modal::-webkit-scrollbar-track {
     border-radius: 20px;
     margin: 10px;
 }
 
-#alterar-endereco::-webkit-scrollbar-thumb {
+.conteudo-modal::-webkit-scrollbar-thumb {
     border-radius: 20px;
     background-color: white;
     border: solid black 1px;
 }
 
-#consultar-transacoes {
-    width: 50%;
-    overflow-y: auto;
+#alterar-senha {
+    justify-items: center;
+}
+
+#alterar-endereco, #consultar-transacoes, #alterar-cartao-credito, #alterar-dados-pessoais {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#alterar-endereco, #alterar-cartao-credito, #alterar-dados-pessoais {
+    align-items: center;
 }
 
 #consultar-transacoes h3 {
