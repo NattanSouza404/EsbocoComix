@@ -3,6 +3,8 @@ package com.fatec.model.entidades;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,11 +13,19 @@ import lombok.Setter;
 public class Cliente {
     private int     id;
     private String  nome;
-    private Genero  genero;
+    private String  genero;
+    private LocalDate dataNascimento;
     private String  cpf;
     private String  email;
-    private LocalDate dataNascimento;
+    
     private String senha;
+    private String hashSenha;
+    private String saltSenha;
+    
+    private int ranking;
+
+    @JsonProperty("isAtivo")
+    private boolean isAtivo;
 
     private Telefone telefone;
     private List<CartaoCredito> cartoesCliente;
