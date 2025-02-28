@@ -18,6 +18,11 @@ public class ServletUtil {
         resp.setStatus(sc);
     }
 
+    public static void retornarResposta(HttpServletResponse resp, String string, int sc) throws IOException {
+        resp.getWriter().println(string);
+        resp.setStatus(sc);
+    }
+
     public static String bodyRequestToString(HttpServletRequest req) throws IOException {
         StringBuilder string = new StringBuilder();
 

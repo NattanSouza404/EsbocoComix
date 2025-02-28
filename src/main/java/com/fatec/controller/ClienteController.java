@@ -40,7 +40,7 @@ public class ClienteController extends HttpServlet {
 
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            ServletUtil.retornarResposta(resp, e.getMessage(), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -54,7 +54,7 @@ public class ClienteController extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_CREATED);
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ServletUtil.retornarResposta(resp, e.getMessage(), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -71,7 +71,7 @@ public class ClienteController extends HttpServlet {
 
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ServletUtil.retornarResposta(resp, e.getMessage(), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -84,7 +84,7 @@ public class ClienteController extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ServletUtil.retornarResposta(resp, e.getMessage(), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
