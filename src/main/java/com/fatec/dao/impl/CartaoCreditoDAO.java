@@ -8,7 +8,7 @@ import com.fatec.model.entidades.CartaoCredito;
 public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
 
     @Override
-    public void inserir(CartaoCredito c) throws Exception {
+    public CartaoCredito inserir(CartaoCredito c) throws Exception {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'inserir'");
     }

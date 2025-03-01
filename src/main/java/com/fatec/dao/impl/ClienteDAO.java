@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,14 +15,15 @@ import com.fatec.model.entidades.Cliente;
 public class ClienteDAO implements IDAO<Cliente> {
 
     @Override
-    public void inserir(Cliente c) throws Exception {
+    public Cliente inserir(Cliente c) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
         PreparedStatement preparedStatement = connection.prepareStatement(
             "INSERT INTO clientes("+
                 "cli_nome, cli_genero, cli_dt_nascimento, cli_cpf, cli_email,"+
                 "cli_hash_senha, cli_salt_senha, cli_ranking, cli_is_ativo)"+
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                Statement.RETURN_GENERATED_KEYS
         );
 
         preparedStatement.setString(1, c.getNome());
@@ -38,8 +40,16 @@ public class ClienteDAO implements IDAO<Cliente> {
             throw new Exception("Inserção de cliente não executada!");
         }
 
+        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+        Cliente clienteInserido = null;
+        if (resultSet.next()){
+            clienteInserido = consultarByID(resultSet.getInt(1));
+        }
+
         connection.close();
         preparedStatement.close();
+
+        return clienteInserido;
     }
 
     @Override
