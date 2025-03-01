@@ -8,6 +8,8 @@ import java.util.Base64;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+import com.fatec.model.entidades.Cliente;
+
 public class CriptografadorSenha {
     
     private static final int ITERACOES = 10000;
@@ -42,6 +44,12 @@ public class CriptografadorSenha {
     public static boolean validatePassword(String senhaInserida, String hashGuardado, String salt) throws Exception {
         String hashInserido = hashSenha(senhaInserida, salt);
         return hashInserido.equals(hashGuardado);
+    }
+
+    public static void inserirNovoHash(Cliente c) throws Exception {
+        String saltSenha = generateSalt();
+        c.setHashSenha(hashSenha(c.getSenha(), saltSenha));
+        c.setSaltSenha(saltSenha);
     }
 
 }

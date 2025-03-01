@@ -39,8 +39,7 @@ public class ClienteController extends HttpServlet {
             );
 
         } catch (Exception e) {
-            System.err.println(e.getMessage());
-            ServletUtil.retornarResposta(resp, e.getMessage(), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ServletUtil.estourarErro(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -50,11 +49,13 @@ public class ClienteController extends HttpServlet {
         Cliente clienteToAdd = ServletUtil.toCliente(req);
 
         try {
-            clienteService.inserir(clienteToAdd);
-            resp.setStatus(HttpServletResponse.SC_CREATED);
+            ServletUtil.retornarRespostaJson(
+                resp,
+                clienteService.inserir(clienteToAdd),
+                HttpServletResponse.SC_CREATED
+            );
         } catch (Exception e) {
-            System.err.println(e.getMessage());
-            ServletUtil.retornarResposta(resp, e.getMessage(), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ServletUtil.estourarErro(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -62,16 +63,29 @@ public class ClienteController extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Cliente clienteToUpdate = ServletUtil.toCliente(req);
 
+        String opcao = req.getParameter("opcao");
+
         try {
+            Cliente clienteAtualizado = null;
+
+            switch (opcao) {
+                case "atualizarsenha":
+                    clienteAtualizado = clienteService.atualizarSenha(clienteToUpdate);
+                    break;
+            
+                default:
+                    clienteAtualizado = clienteService.atualizar(clienteToUpdate);
+                    break;
+            }
+
             ServletUtil.retornarRespostaJson(
                 resp,
-                clienteService.atualizar(clienteToUpdate),
+                clienteAtualizado,
                 HttpServletResponse.SC_OK
             );
 
         } catch (Exception e) {
-            System.err.println(e.getMessage());
-            ServletUtil.retornarResposta(resp, e.getMessage(), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ServletUtil.estourarErro(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -83,8 +97,7 @@ public class ClienteController extends HttpServlet {
             clienteService.deletar(clienteToDelete);
             resp.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
-            ServletUtil.retornarResposta(resp, e.getMessage(), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ServletUtil.estourarErro(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 

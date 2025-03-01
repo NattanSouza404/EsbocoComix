@@ -39,4 +39,9 @@ public class ServletUtil {
         );
     }
 
+    public static void estourarErro(HttpServletResponse resp, Exception e, int scInternalServerError) throws IOException {
+        System.err.println(e.getMessage());
+        retornarResposta(resp, e.getMessage(), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+    }
+
 }

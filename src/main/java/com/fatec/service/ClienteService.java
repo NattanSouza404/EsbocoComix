@@ -10,19 +10,11 @@ public class ClienteService {
     private CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
     private ClienteValidador clienteValidador = new ClienteValidador();
 
-    public void inserir(Cliente c) throws Exception {
-        if (c.getSenha().length() < 8 || c.getSenha().length() > 64){
-            throw new Exception("Senha deve ter entre 8 e 64 caracteres!");
-        }
-
+    public Cliente inserir(Cliente c) throws Exception {
         clienteValidador.validar(c);
+        CriptografadorSenha.inserirNovoHash(c);
 
-        String saltSenha = CriptografadorSenha.generateSalt();
-        c.setHashSenha(CriptografadorSenha.hashSenha(c.getSenha(), saltSenha));
-        c.setSaltSenha(saltSenha);
-        
-        clienteDAO.inserir(c);
-        //cartaoCreditoService.inserir(c.getCartoesCliente());
+        return clienteDAO.inserir(c);
     }
 
     public List<Cliente> consultarTodos() throws Exception {
@@ -34,11 +26,13 @@ public class ClienteService {
     }
 
     public Cliente atualizar(Cliente c) throws Exception {
-        if (c.getSenha().length() < 8 || c.getSenha().length() > 64){
-            throw new Exception("Senha deve ter entre 8 e 64 caracteres!");
-        }
-
+        clienteValidador.validar(c);
         return clienteDAO.atualizar(c);
+    }
+
+    public Cliente atualizarSenha(Cliente c) throws Exception {
+        CriptografadorSenha.inserirNovoHash(c);
+        return clienteDAO.atualizarSenha(c);
     }
 
     public void deletar(Cliente c) throws Exception {
