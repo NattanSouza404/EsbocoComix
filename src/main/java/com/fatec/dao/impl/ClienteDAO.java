@@ -8,9 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fatec.ConexaoFactory;
 import com.fatec.dao.IDAO;
 import com.fatec.model.entidades.Cliente;
+import com.fatec.utils.ConexaoFactory;
 
 public class ClienteDAO implements IDAO<Cliente> {
 

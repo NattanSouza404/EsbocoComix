@@ -1,4 +1,4 @@
-package com.fatec.controller.utils;
+package com.fatec.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;

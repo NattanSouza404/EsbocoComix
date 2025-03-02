@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fatec.model.entidades.Cliente;
+import com.fatec.utils.ConversorJson;
 
 public class ServletUtil {
 
