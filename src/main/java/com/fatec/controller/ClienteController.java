@@ -39,7 +39,7 @@ public class ClienteController extends HttpServlet {
             );
 
         } catch (Exception e) {
-            ServletUtil.estourarErro(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ServletUtil.estourarErro(resp, e);
         }
     }
 
@@ -55,7 +55,7 @@ public class ClienteController extends HttpServlet {
                 HttpServletResponse.SC_CREATED
             );
         } catch (Exception e) {
-            ServletUtil.estourarErro(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ServletUtil.estourarErro(resp, e);
         }
     }
 
@@ -85,7 +85,7 @@ public class ClienteController extends HttpServlet {
             );
 
         } catch (Exception e) {
-            ServletUtil.estourarErro(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ServletUtil.estourarErro(resp, e);
         }
     }
 
@@ -97,7 +97,7 @@ public class ClienteController extends HttpServlet {
             clienteService.deletar(clienteToDelete);
             resp.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception e) {
-            ServletUtil.estourarErro(resp, e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ServletUtil.estourarErro(resp, e);
         }
     }
 

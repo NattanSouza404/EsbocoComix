@@ -1,5 +1,7 @@
 package com.fatec.utils;
 
+import java.util.Map;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,4 +25,8 @@ public class ConversorJson {
 	public static Cliente toCliente(String stringJson) throws JsonMappingException, JsonProcessingException {
 		return mapper.readValue(stringJson, Cliente.class);
 	}
+
+    public static String mapaToJson(Map<Object, Object> mapa) throws JsonProcessingException {
+		return mapper.writeValueAsString(mapa);
+    }
 }

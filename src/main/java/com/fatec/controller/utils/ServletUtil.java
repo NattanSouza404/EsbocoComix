@@ -1,6 +1,8 @@
 package com.fatec.controller.utils;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,9 +42,13 @@ public class ServletUtil {
         );
     }
 
-    public static void estourarErro(HttpServletResponse resp, Exception e, int scInternalServerError) throws IOException {
+    public static void estourarErro(HttpServletResponse resp, Exception e) throws IOException {
         System.err.println(e.getMessage());
-        retornarResposta(resp, e.getMessage(), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+
+        Map<Object, Object> mapaErro = new HashMap<>();
+        mapaErro.put("erro", e.getMessage());
+
+        retornarResposta(resp, ConversorJson.mapaToJson(mapaErro), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 
 }
