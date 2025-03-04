@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/crud_cliente.css">
+</head>
+<body>
+
+    <header>
+        <a href="clientes.html"><h2>Clientes</h2></a>
+    </header>
+
+    <div id="opcoes-conta">
+        <button onclick="modalAlterarDadosPessoais.toggleDisplay()" class="botao-prototipo">Editar cadastro</button>
+        <button onclick="toggleDisplay('modal-alterar-senha')" class="botao-prototipo">Alterar senha</button>
+        <button onclick="toggleDisplay('modal-alterar-endereco')" class="botao-prototipo">Editar Endereços</button>
+        <button onclick="toggleDisplay('modal-alterar-cartao-credito')" class="botao-prototipo">Editar Cartão de Crédito</button>
+    </div>
+
+    <div id="conta">
+        <div id="dados-endereco">
+            <div class="endereco-conta">
+                <h3>1º Endereço</h3>
+                <p>Frase curta: Casa</p>
+                <p>Tipo do endereço: Residencial, Cobrança, Entrega</p>
+                <p>Tipo de Residência: Casa</p>
+                <p>Nº Endereço: 2</p>
+                <p>Logradouro: Jorge das Quantas</p>
+                <p>Tipo de Logradouro: Rua</p>
+                <p>CEP: XXXXX-XXX</p>
+                <p>Bairro: A</p>
+                <p>Cidade: B</p>
+                <p>Estado: C</p>
+                <p>País: A</p>
+                <p>Observações: Perto do prédio XYZ</p>
+            </div>
+            
+        </div>
+
+        <div id="dados-cartao-credito">
+            <div class="cartao-credito-conta">
+                <h3>1º Cartão</h3>
+                <p>Número cartão: XXXX</p>
+                <p>Código de segurança: XXX</p>
+                <p>Nome impresso: MAURICIO DA SILVA </p>
+                <p>Bandeira cartão: VISA</p>
+                <p>Preferencial</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-alterar-endereco" class="modal">
+        <div class="conteudo-modal">
+            <button onclick="toggleDisplay('modal-alterar-endereco')" class="botao-fechar">X</button>
+
+            <form id="alterar-endereco">
+
+                <div class="endereco">
+                    <div class="numeracao">
+                        <p>1</p>
+                        <p>Endereço Residencial</p>
+                    </div>
+        
+                    <div class="dados-formulario">
+                        <label>Frase curta para identificação</label>
+                        <input value="Casa">
+        
+                        <label>Tipo do endereço</label>
+                        <div>
+                            <input type="checkbox" checked disabled>
+                            <label>Residencial</label>
+    
+                            <input type="checkbox" checked>
+                            <label>Cobrança</label>
+    
+                            <input type="checkbox" checked>
+                            <label>Entrega</label>
+                        </div>
+        
+                        <label>Tipo de Residência</label>
+                        <select>
+                            <option selected>Casa</option>
+                            <option>Apartamento</option>
+                        </select>
+        
+                        <label>Nº Endereço</label>
+                        <input value="2">
+        
+                        <label>Logradouro</label>
+                        <input value="Jorge das Quantas">
+        
+                        <label>Tipo de Logradouro</label>
+                        <select>
+                            <option selected>Rua</option>
+                            <option>Avenida</option>
+                            <option>Praça</option>
+                        </select>
+    
+                        <label>CEP</label>
+                        <input value="XXXXX-XXX">
+        
+                        <label>Bairro</label>
+                        <input value="A">
+        
+                        <label>Cidade</label>
+                        <input value="B">
+        
+                        <label>Estado</label>
+                        <input value="C">
+        
+                        <label>País</label>
+                        <input value="A">
+        
+                        <label>Observações</label>
+                        <input value="Perto do prédio XYZ">
+                    </div>
+                </div>
+
+                <button type="button">+ Novo endereço</button>
+
+                <p class="aviso">
+                    Observações: Deve haver ao menos 1 endereço de
+                    residência, um de entrega e um de cobrança
+                </p>
+
+        
+                <button type="button" class="botao-salvar">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-alterar-cartao-credito" class="modal">
+        <div class="conteudo-modal">
+            <button onclick="toggleDisplay('modal-alterar-cartao-credito')" class="botao-fechar">X</button>
+
+            <form id="alterar-cartao-credito">
+
+                <button type="button">+ Novo cartão de crédito</button>
+
+                <div class="cartao-credito">
+                    <div class="numeracao">
+                        <p>1</p>
+                    </div>
+
+                    <div class="dados-formulario">
+                        <label>Número cartão</label>
+                        <input value="XXXX-XXXX-XXXX-XXXX">
+
+                        <label>Código de segurança</label>
+                        <input value="XXX">
+            
+                        <label>Nome impresso</label>
+                        <input value="MAURICIO DA SILVA">
+
+                        <label>Bandeira cartão</label>
+                        <select>
+                            <option selected>Visa</option>
+                            <option>Mastercard</option>
+                        </select>
+
+                        <label>Preferencial</label>
+                        <select>
+                            <option selected>Sim</option>
+                            <option>Não</option>
+                        </select>
+
+                        <button type="button">Remover</button>
+                    </div>
+                </div>
+      
+                <button type="button" class="botao-salvar">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/api.js"></script>
+    <script type="text/javascript" src="js/modaisConta.js"></script>
+    <script type="text/javascript" src="js/conta.js"></script>
+</body>
+</html>
