@@ -7,7 +7,7 @@ import com.fatec.model.entidades.Cliente;
 
 public class ClienteService {
     private ClienteDAO clienteDAO = new ClienteDAO();
-    private CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
+
     private ClienteValidador clienteValidador = new ClienteValidador();
 
     public Cliente inserir(Cliente c) throws Exception {
@@ -26,11 +26,11 @@ public class ClienteService {
     }
 
     public Cliente atualizar(Cliente c) throws Exception {
-        clienteValidador.validar(c);
         return clienteDAO.atualizar(c);
     }
 
     public Cliente atualizarSenha(Cliente c) throws Exception {
+        clienteValidador.validar(c);
         CriptografadorSenha.inserirNovoHash(c);
         return clienteDAO.atualizarSenha(c);
     }
