@@ -19,17 +19,16 @@ import com.fatec.utils.ConexaoFactory;
 
 public class ClienteDAO implements IDAO<Cliente> {
 
-    private TelefoneDAO telefoneDAO = new TelefoneDAO();
-
     @Override
     public Cliente inserir(Cliente c) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
         PreparedStatement pst = connection.prepareStatement(
             "INSERT INTO clientes("+
-                "cli_nome, cli_genero, cli_dt_nascimento, cli_cpf, cli_email,"+
-                "cli_hash_senha, cli_salt_senha, cli_ranking, cli_is_ativo, cli_tel_id)"+
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                "cli_nome, cli_genero, cli_dt_nascimento, cli_cpf, cli_email, "+
+                "cli_hash_senha, cli_salt_senha, cli_ranking, "+
+                "cli_tel_tipo, cli_tel_ddd, cli_tel_numero, cli_is_ativo) "+
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
                 Statement.RETURN_GENERATED_KEYS
         );
 
@@ -41,11 +40,10 @@ public class ClienteDAO implements IDAO<Cliente> {
         pst.setString(6, c.getHashSenha());
         pst.setString(7, c.getSaltSenha());
         pst.setInt(8, c.getRanking());
-        pst.setBoolean(9, c.isAtivo());
-
-        Telefone telefoneInserido = telefoneDAO.inserir(c.getTelefone());
-        c.setTelefone(telefoneInserido);
-        pst.setInt(10, c.getTelefone().getId());
+        pst.setString(9, c.getTelefone().getTipo());
+        pst.setString(10, c.getTelefone().getDdd());
+        pst.setString(11, c.getTelefone().getNumero());
+        pst.setBoolean(12, c.isAtivo());
 
         if (pst.executeUpdate() == 0){
             throw new Exception("Inserção de cliente não executada!");
@@ -68,10 +66,17 @@ public class ClienteDAO implements IDAO<Cliente> {
         Connection conn = ConexaoFactory.getConexao();
 
         PreparedStatement pst = conn.prepareStatement(
-            "SELECT * FROM clientes;"
+            "SELECT * FROM clientes;",
+            ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_READ_ONLY
         );
 
         ResultSet rs = pst.executeQuery();
+
+        if (!rs.next()) {
+            throw new Exception("Nenhum registro encontrado de cliente.");
+        }
+        rs.beforeFirst();
 
         List<Cliente> clientes = new ArrayList<>();
 
@@ -85,7 +90,12 @@ public class ClienteDAO implements IDAO<Cliente> {
             c.setEmail(rs.getString("cli_email"));
             c.setRanking(rs.getInt("cli_ranking"));
             c.setAtivo(rs.getBoolean("cli_is_ativo"));
-            c.setTelefone(telefoneDAO.consultarByID(rs.getInt("cli_tel_id")));
+
+            Telefone telefone = new Telefone();
+            telefone.setTipo(rs.getString("cli_tel_tipo"));
+            telefone.setDdd(rs.getString("cli_tel_ddd"));
+            telefone.setNumero(rs.getString("cli_tel_numero"));
+            c.setTelefone(telefone);
             
             clientes.add(c);
         }
@@ -107,7 +117,10 @@ public class ClienteDAO implements IDAO<Cliente> {
         pst.setInt(1, id);
 
         ResultSet rs = pst.executeQuery();
-        rs.next();
+
+        if (!rs.next()){
+            throw new Exception("Cliente não encontrado!");
+        }
 
         Cliente c = new Cliente();
         c.setId(rs.getInt("cli_id"));
@@ -118,7 +131,12 @@ public class ClienteDAO implements IDAO<Cliente> {
         c.setEmail(rs.getString("cli_email"));
         c.setRanking(rs.getInt("cli_ranking"));
         c.setAtivo(rs.getBoolean("cli_is_ativo"));
-        c.setTelefone(telefoneDAO.consultarByID(rs.getInt("cli_tel_id")));
+
+        Telefone telefone = new Telefone();
+        telefone.setTipo(rs.getString("cli_tel_tipo"));
+        telefone.setDdd(rs.getString("cli_tel_ddd"));
+        telefone.setNumero(rs.getString("cli_tel_numero"));
+        c.setTelefone(telefone);
 
         connection.close();
         pst.close();
@@ -133,7 +151,7 @@ public class ClienteDAO implements IDAO<Cliente> {
         PreparedStatement pst = conn.prepareStatement(
             "UPDATE clientes set "+
                 "cli_nome = ?, cli_genero = ?, cli_dt_nascimento = ?, cli_cpf = ?, cli_email = ?,"+
-                "cli_ranking = ?, cli_is_ativo = ? "+
+                "cli_ranking = ?, cli_tel_tipo = ?, cli_tel_ddd = ?, cli_tel_numero = ?, cli_is_ativo = ? "+
                 "WHERE cli_id = ?"
         );
     
@@ -143,15 +161,15 @@ public class ClienteDAO implements IDAO<Cliente> {
         pst.setString(4, c.getCpf());
         pst.setString(5, c.getEmail());
         pst.setInt(6, c.getRanking());
-        pst.setBoolean(7, c.isAtivo());
-        
-        pst.setInt(8, c.getId());
+        pst.setString(7, c.getTelefone().getTipo());
+        pst.setString(8, c.getTelefone().getDdd());
+        pst.setString(9, c.getTelefone().getNumero());
+        pst.setBoolean(10, c.isAtivo());
+        pst.setInt(11, c.getId());
     
         if (pst.executeUpdate() == 0) {
             throw new Exception("Atualização não foi sucedida!");
         }
-
-        telefoneDAO.atualizar(c.getTelefone());
 
         pst.close();
         conn.close();
@@ -196,8 +214,6 @@ public class ClienteDAO implements IDAO<Cliente> {
         if (pst.executeUpdate() == 0) {
             throw new Exception("Deleção não realizada. Cliente de id " + c.getId() + " não encontrado.");
         }
-
-        telefoneDAO.deletar(c.getTelefone());
 
         pst.close();
         conn.close();
