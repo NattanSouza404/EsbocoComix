@@ -16,27 +16,26 @@ public class ClienteController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-        String parametroId = req.getParameter("id"); 
-        
+         
         try {
+            String parametroId = req.getParameter("id");
 
-            if (parametroId == null){
+            if (parametroId != null){
+                int id = Integer.parseInt(parametroId);
+
                 ServletUtil.retornarRespostaJson(
-                    resp, 
-                    clienteService.consultarTodos(),
+                    resp,
+                    clienteService.consultarByID(id),
                     HttpServletResponse.SC_OK
                 );
                 return;
             }
 
-            int id = Integer.parseInt(parametroId);
-
             ServletUtil.retornarRespostaJson(
-                resp,
-                clienteService.consultarByID(id),
+                resp, 
+                clienteService.consultarTodos(),
                 HttpServletResponse.SC_OK
-            );
+            ); 
 
         } catch (Exception e) {
             ServletUtil.estourarErro(resp, e);
