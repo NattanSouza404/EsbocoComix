@@ -6,6 +6,7 @@ import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 
 import com.fatec.controller.ClienteController;
+import com.fatec.controller.EnderecoController;
 import com.fatec.controller.IndexController;
 
 public class Servidor {
@@ -24,6 +25,9 @@ public class Servidor {
 
 		Tomcat.addServlet(context, "apicliente", new ClienteController());
 		context.addServletMapping("/cliente", "apicliente");
+
+		Tomcat.addServlet(context, "apiendereco", new EnderecoController());
+		context.addServletMapping("/endereco", "apiendereco");
 
 		tomcat.start();
 		tomcat.getServer().await();
