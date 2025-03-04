@@ -60,8 +60,10 @@ CREATE TABLE clientes (
     cli_hash_senha    VARCHAR2(70) NOT NULL,
     cli_salt_senha    VARCHAR2(24) NOT NULL,
     cli_ranking       NUMBER(6) NOT NULL,
-    cli_is_ativo      CHAR(1) NOT NULL,
-    cli_tel_id        NUMBER(6) NOT NULL
+    cli_tel_tipo      VARCHAR2(20) NOT NULL,
+    cli_tel_ddd       CHAR(2) NOT NULL,
+    cli_tel_numero    CHAR(9) NOT NULL,
+    cli_is_ativo      CHAR(1) NOT NULL
 )
 LOGGING;
 
@@ -73,7 +75,7 @@ CREATE TABLE enderecos (
     end_logradouro       VARCHAR2(100) NOT NULL,
     end_tipo_logradouro  VARCHAR2(20) NOT NULL,
     end_tipo_residencial VARCHAR2(20) NOT NULL,
-    end_numero           NUMBER(3) NOT NULL,
+    end_numero           VARCHAR2(10) NOT NULL,
     end_bairro           VARCHAR2(50) NOT NULL,
     end_cep              CHAR(8) NOT NULL,
     end_cidade           VARCHAR2(50) NOT NULL,
@@ -150,21 +152,6 @@ CREATE TABLE quadrinhos (
 LOGGING;
 
 ALTER TABLE quadrinhos ADD CONSTRAINT quadrinhos_pk PRIMARY KEY ( qua_id );
-
-CREATE TABLE telefones (
-    tel_id     NUMBER(6) NOT NULL,
-    tel_ddd    CHAR(2) NOT NULL,
-    tel_numero CHAR(9) NOT NULL,
-    tel_tipo   VARCHAR2(20) NOT NULL
-)
-LOGGING;
-
-ALTER TABLE telefones ADD CONSTRAINT pk_tel PRIMARY KEY ( tel_id );
-
-ALTER TABLE clientes
-    ADD CONSTRAINT fk_cli_tel FOREIGN KEY ( cli_tel_id )
-        REFERENCES telefones ( tel_id )
-    NOT DEFERRABLE;
 
 ALTER TABLE cartoes_credito
     ADD CONSTRAINT fk_cre_bcc FOREIGN KEY ( cre_bcc_id )
