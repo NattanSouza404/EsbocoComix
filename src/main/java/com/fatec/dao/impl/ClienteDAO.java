@@ -10,44 +10,55 @@ import java.util.List;
 
 import com.fatec.dao.IDAO;
 import com.fatec.model.entidades.Cliente;
+import com.fatec.model.entidades.Telefone;
 import com.fatec.utils.ConexaoFactory;
 
+/***
+ * Dentro do ClienteDAO, não retorno nem o hash da senha, nem o salt
+ */
+
 public class ClienteDAO implements IDAO<Cliente> {
+
+    private TelefoneDAO telefoneDAO = new TelefoneDAO();
 
     @Override
     public Cliente inserir(Cliente c) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement preparedStatement = connection.prepareStatement(
+        PreparedStatement pst = connection.prepareStatement(
             "INSERT INTO clientes("+
                 "cli_nome, cli_genero, cli_dt_nascimento, cli_cpf, cli_email,"+
-                "cli_hash_senha, cli_salt_senha, cli_ranking, cli_is_ativo)"+
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                "cli_hash_senha, cli_salt_senha, cli_ranking, cli_is_ativo, cli_tel_id)"+
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
                 Statement.RETURN_GENERATED_KEYS
         );
 
-        preparedStatement.setString(1, c.getNome());
-        preparedStatement.setString(2, c.getGenero());
-        preparedStatement.setDate(3, Date.valueOf(c.getDataNascimento()));
-        preparedStatement.setString(4, c.getCpf());
-        preparedStatement.setString(5, c.getEmail());
-        preparedStatement.setString(6, c.getHashSenha());
-        preparedStatement.setString(7, c.getSaltSenha());
-        preparedStatement.setInt(8, c.getRanking());
-        preparedStatement.setBoolean(9, c.isAtivo());
-        
-        if (preparedStatement.executeUpdate() == 0){
+        pst.setString(1, c.getNome());
+        pst.setString(2, c.getGenero());
+        pst.setDate(3, Date.valueOf(c.getDataNascimento()));
+        pst.setString(4, c.getCpf());
+        pst.setString(5, c.getEmail());
+        pst.setString(6, c.getHashSenha());
+        pst.setString(7, c.getSaltSenha());
+        pst.setInt(8, c.getRanking());
+        pst.setBoolean(9, c.isAtivo());
+
+        Telefone telefoneInserido = telefoneDAO.inserir(c.getTelefone());
+        c.setTelefone(telefoneInserido);
+        pst.setInt(10, c.getTelefone().getId());
+
+        if (pst.executeUpdate() == 0){
             throw new Exception("Inserção de cliente não executada!");
         }
 
-        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+        ResultSet rs = pst.getGeneratedKeys();
         Cliente clienteInserido = null;
-        if (resultSet.next()){
-            clienteInserido = consultarByID(resultSet.getInt(1));
+        if (rs.next()){
+            clienteInserido = consultarByID(rs.getInt(1));
         }
 
         connection.close();
-        preparedStatement.close();
+        pst.close();
 
         return clienteInserido;
     }
@@ -56,11 +67,11 @@ public class ClienteDAO implements IDAO<Cliente> {
     public List<Cliente> consultarTodos() throws Exception {
         Connection conn = ConexaoFactory.getConexao();
 
-        PreparedStatement pstmt = conn.prepareStatement(
+        PreparedStatement pst = conn.prepareStatement(
             "SELECT * FROM clientes;"
         );
 
-        ResultSet rs = pstmt.executeQuery();
+        ResultSet rs = pst.executeQuery();
 
         List<Cliente> clientes = new ArrayList<>();
 
@@ -72,15 +83,14 @@ public class ClienteDAO implements IDAO<Cliente> {
             c.setDataNascimento(rs.getDate("cli_dt_nascimento").toLocalDate());
             c.setCpf(rs.getString("cli_cpf"));
             c.setEmail(rs.getString("cli_email"));
-
-            //Não retorno hash_senha e salt_senha
             c.setRanking(rs.getInt("cli_ranking"));
             c.setAtivo(rs.getBoolean("cli_is_ativo"));
+            c.setTelefone(telefoneDAO.consultarByID(rs.getInt("cli_tel_id")));
             
             clientes.add(c);
         }
         
-        pstmt.close();
+        pst.close();
         conn.close();
 
         return clientes;
@@ -90,29 +100,28 @@ public class ClienteDAO implements IDAO<Cliente> {
     public Cliente consultarByID(int id) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement preparedStatement = connection.prepareStatement(
+        PreparedStatement pst = connection.prepareStatement(
             "SELECT * FROM clientes WHERE cli_id = ?"
         );
 
-        preparedStatement.setInt(1, id);
+        pst.setInt(1, id);
 
-        ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
+        ResultSet rs = pst.executeQuery();
+        rs.next();
 
         Cliente c = new Cliente();
-        c.setId(resultSet.getInt("cli_id"));
-        c.setNome(resultSet.getString("cli_nome"));
-        c.setGenero(resultSet.getString("cli_genero"));
-        c.setDataNascimento(resultSet.getDate("cli_dt_nascimento").toLocalDate());
-        c.setCpf(resultSet.getString("cli_cpf"));
-        c.setEmail(resultSet.getString("cli_email"));
-
-        //Não retorno hash_senha e salt_senha
-        c.setRanking(resultSet.getInt("cli_ranking"));
-        c.setAtivo(resultSet.getBoolean("cli_is_ativo"));
+        c.setId(rs.getInt("cli_id"));
+        c.setNome(rs.getString("cli_nome"));
+        c.setGenero(rs.getString("cli_genero"));
+        c.setDataNascimento(rs.getDate("cli_dt_nascimento").toLocalDate());
+        c.setCpf(rs.getString("cli_cpf"));
+        c.setEmail(rs.getString("cli_email"));
+        c.setRanking(rs.getInt("cli_ranking"));
+        c.setAtivo(rs.getBoolean("cli_is_ativo"));
+        c.setTelefone(telefoneDAO.consultarByID(rs.getInt("cli_tel_id")));
 
         connection.close();
-        preparedStatement.close();
+        pst.close();
 
         return c;        
     }
@@ -121,28 +130,30 @@ public class ClienteDAO implements IDAO<Cliente> {
     public Cliente atualizar(Cliente c) throws Exception {
         Connection conn = ConexaoFactory.getConexao(); 
     
-        PreparedStatement pstmt = conn.prepareStatement(
+        PreparedStatement pst = conn.prepareStatement(
             "UPDATE clientes set "+
                 "cli_nome = ?, cli_genero = ?, cli_dt_nascimento = ?, cli_cpf = ?, cli_email = ?,"+
                 "cli_ranking = ?, cli_is_ativo = ? "+
                 "WHERE cli_id = ?"
         );
     
-        pstmt.setString(1, c.getNome());
-        pstmt.setString(2, c.getGenero());
-        pstmt.setDate(3, Date.valueOf(c.getDataNascimento()));
-        pstmt.setString(4, c.getCpf());
-        pstmt.setString(5, c.getEmail());
-        pstmt.setInt(6, c.getRanking());
-        pstmt.setBoolean(7, c.isAtivo());
-
-        pstmt.setInt(8, c.getId());
+        pst.setString(1, c.getNome());
+        pst.setString(2, c.getGenero());
+        pst.setDate(3, Date.valueOf(c.getDataNascimento()));
+        pst.setString(4, c.getCpf());
+        pst.setString(5, c.getEmail());
+        pst.setInt(6, c.getRanking());
+        pst.setBoolean(7, c.isAtivo());
+        
+        pst.setInt(8, c.getId());
     
-        if (pstmt.executeUpdate() == 0) {
+        if (pst.executeUpdate() == 0) {
             throw new Exception("Atualização não foi sucedida!");
         }
 
-        pstmt.close();
+        telefoneDAO.atualizar(c.getTelefone());
+
+        pst.close();
         conn.close();
 
         return consultarByID(c.getId());
@@ -151,22 +162,22 @@ public class ClienteDAO implements IDAO<Cliente> {
     public Cliente atualizarSenha(Cliente c) throws Exception {
         Connection conn = ConexaoFactory.getConexao(); 
     
-        PreparedStatement pstmt = conn.prepareStatement(
+        PreparedStatement pst = conn.prepareStatement(
             "UPDATE clientes set "+
                 "cli_hash_senha = ?, cli_salt_senha = ? "+
                 "WHERE cli_id = ?"
         );
     
-        pstmt.setString(1, c.getHashSenha());
-        pstmt.setString(2, c.getSaltSenha());
+        pst.setString(1, c.getHashSenha());
+        pst.setString(2, c.getSaltSenha());
 
-        pstmt.setInt(3, c.getId());
+        pst.setInt(3, c.getId());
     
-        if (pstmt.executeUpdate() == 0) {
+        if (pst.executeUpdate() == 0) {
             throw new Exception("Atualização não foi sucedida!");
         }
 
-        pstmt.close();
+        pst.close();
         conn.close();
 
         return consultarByID(c.getId());
@@ -176,15 +187,19 @@ public class ClienteDAO implements IDAO<Cliente> {
     public void deletar(Cliente c) throws Exception {
         Connection conn = ConexaoFactory.getConexao();
 
-        PreparedStatement pstmt = conn.prepareStatement(
+        PreparedStatement pst = conn.prepareStatement(
             "DELETE FROM clientes WHERE cli_id = ?"
         );
         
-        pstmt.setInt(1, c.getId());
-        
-        pstmt.execute();
+        pst.setInt(1, c.getId());
 
-        pstmt.close();
+        if (pst.executeUpdate() == 0) {
+            throw new Exception("Deleção não realizada. Cliente de id " + c.getId() + " não encontrado.");
+        }
+
+        telefoneDAO.deletar(c.getTelefone());
+
+        pst.close();
         conn.close();
     }
     
