@@ -68,6 +68,11 @@ public class ClienteController extends HttpServlet {
         try {
             Cliente clienteAtualizado = null;
 
+            if (opcao == null){
+                clienteAtualizado = clienteService.atualizar(clienteToUpdate);
+                return;
+            }
+
             switch (opcao) {
                 case "atualizarsenha":
                     clienteAtualizado = clienteService.atualizarSenha(clienteToUpdate);
