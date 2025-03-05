@@ -54,7 +54,7 @@ class TabelaClientes extends HTMLTableElement {
                     tableRow.append(td);
 
                     if (chave === 'isAtivo'){
-                        td.textContent = (valor === 'true') ? 'Ativo' : "Inativo";
+                        td.textContent = (valor === true) ? 'Ativo' : "Inativo";
                         return;
                     }
 

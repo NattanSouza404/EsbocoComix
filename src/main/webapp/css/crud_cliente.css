@@ -124,7 +124,7 @@
     width: 80%;
 }
 
-#cadastrar-cliente section {
+#cadastrar-cliente .secao-cadastrar {
     align-items: center;
 
     border: solid 1px black;
