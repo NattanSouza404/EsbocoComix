@@ -26,37 +26,42 @@ public class EnderecoDAO implements IDAO<Endereco> {
                 Statement.RETURN_GENERATED_KEYS
         );
 
-        pst.setString(1, e.getFraseCurta());
-        pst.setString(2, e.getLogradouro());
-        pst.setString(3, e.getTipoLogradouro());
-        pst.setString(4, e.getTipoResidencial());
-        pst.setString(5, e.getNumero());
-        pst.setString(6, e.getBairro());
-        pst.setString(7, e.getCep());
-        pst.setString(8, e.getCidade());
-        pst.setString(9, e.getEstado());
-        pst.setString(10, e.getPais());
-        pst.setBoolean(11, e.isResidencial());
-        pst.setBoolean(12, e.isEntrega());
-        pst.setBoolean(13, e.isCobranca());
-        pst.setString(14, e.getObservacoes());
-        pst.setInt(15, e.getIdCliente());
+        try {
+            pst.setString(1, e.getFraseCurta());
+            pst.setString(2, e.getLogradouro());
+            pst.setString(3, e.getTipoLogradouro());
+            pst.setString(4, e.getTipoResidencial());
+            pst.setString(5, e.getNumero());
+            pst.setString(6, e.getBairro());
+            pst.setString(7, e.getCep());
+            pst.setString(8, e.getCidade());
+            pst.setString(9, e.getEstado());
+            pst.setString(10, e.getPais());
+            pst.setBoolean(11, e.isResidencial());
+            pst.setBoolean(12, e.isEntrega());
+            pst.setBoolean(13, e.isCobranca());
+            pst.setString(14, e.getObservacoes());
+            pst.setInt(15, e.getIdCliente());
+    
+            if (pst.executeUpdate() == 0){
+                throw new Exception("Inserção de endereço não executada!");
+            }
+            ResultSet rs = pst.getGeneratedKeys();
+            Endereco enderecoInserido = null;
+            if (rs.next()){
+                enderecoInserido = consultarByID(rs.getInt(1));
+            }
 
-        if (pst.executeUpdate() == 0){
-            throw new Exception("Inserção de endereço não executada!");
+            return enderecoInserido;
+        } catch (Exception ex){
+            throw ex;
+        } finally {
+            connection.close();
+            pst.close();
         }
-        ResultSet rs = pst.getGeneratedKeys();
-        Endereco enderecoInserido = null;
-        if (rs.next()){
-            enderecoInserido = consultarByID(rs.getInt(1));
-        }
 
-        connection.close();
-        pst.close();
-
-        return enderecoInserido;
     }
-
+        
     @Override
     public List<Endereco> consultarTodos() throws Exception {
         throw new UnsupportedOperationException("Unimplemented method 'consultarTodos'");
@@ -76,42 +81,47 @@ public class EnderecoDAO implements IDAO<Endereco> {
             ResultSet.CONCUR_READ_ONLY
         );
 
-        pst.setInt(1, idCliente);
+        try {
+            pst.setInt(1, idCliente);
 
-        ResultSet rs = pst.executeQuery();
+            ResultSet rs = pst.executeQuery();
+    
+            if (!rs.next()) {
+                throw new Exception("Nenhum registro encontrado de endereco.");
+            }
+            rs.beforeFirst();
+    
+            List<Endereco> enderecos = new ArrayList<>();
+            while(rs.next()){
+                Endereco e = new Endereco();        
+                e.setId(rs.getInt("end_id"));
+                e.setFraseCurta(rs.getString("end_frase_curta"));
+                e.setLogradouro(rs.getString("end_logradouro"));
+                e.setTipoLogradouro(rs.getString("end_tipo_logradouro"));
+                e.setTipoResidencial(rs.getString("end_tipo_residencial"));
+                e.setNumero(rs.getString("end_numero"));
+                e.setBairro(rs.getString("end_bairro"));
+                e.setCep(rs.getString("end_cep"));
+                e.setCidade(rs.getString("end_cidade"));
+                e.setEstado(rs.getString("end_estado"));
+                e.setPais(rs.getString("end_pais"));
+                e.setResidencial(rs.getBoolean("end_is_residencial"));
+                e.setEntrega(rs.getBoolean("end_is_entrega"));
+                e.setCobranca(rs.getBoolean("end_is_cobranca"));
+                e.setObservacoes(rs.getString("end_observacoes"));
+                e.setIdCliente(rs.getInt("end_cli_id"));
+    
+                enderecos.add(e);
+            }
 
-        if (!rs.next()) {
-            throw new Exception("Nenhum registro encontrado de endereco.");
+            return enderecos;    
+        } catch (Exception e){
+            throw e;
+        } finally {
+            connection.close();
+            pst.close();
         }
-        rs.beforeFirst();
-
-        List<Endereco> enderecos = new ArrayList<>();
-        while(rs.next()){
-            Endereco e = new Endereco();        
-            e.setId(rs.getInt("end_id"));
-            e.setFraseCurta(rs.getString("end_frase_curta"));
-            e.setLogradouro(rs.getString("end_logradouro"));
-            e.setTipoLogradouro(rs.getString("end_tipo_logradouro"));
-            e.setTipoResidencial(rs.getString("end_tipo_residencial"));
-            e.setNumero(rs.getString("end_numero"));
-            e.setBairro(rs.getString("end_bairro"));
-            e.setCep(rs.getString("end_cep"));
-            e.setCidade(rs.getString("end_cidade"));
-            e.setEstado(rs.getString("end_estado"));
-            e.setPais(rs.getString("end_pais"));
-            e.setResidencial(rs.getBoolean("end_is_residencial"));
-            e.setEntrega(rs.getBoolean("end_is_entrega"));
-            e.setCobranca(rs.getBoolean("end_is_cobranca"));
-            e.setObservacoes(rs.getString("end_observacoes"));
-            e.setIdCliente(rs.getInt("end_cli_id"));
-
-            enderecos.add(e);
-        }
-
-        connection.close();
-        pst.close();
-
-        return enderecos;    
+        
     }
 
     @Override

@@ -76,39 +76,44 @@ public class ClienteDAO implements IDAO<Cliente> {
             ResultSet.CONCUR_READ_ONLY
         );
 
-        ResultSet rs = pst.executeQuery();
+        try {
+            ResultSet rs = pst.executeQuery();
 
-        if (!rs.next()) {
-            throw new Exception("Nenhum registro encontrado de cliente.");
+            if (!rs.next()) {
+                throw new Exception("Nenhum registro encontrado de cliente.");
+            }
+            rs.beforeFirst();
+
+            List<Cliente> clientes = new ArrayList<>();
+
+            while (rs.next()){
+                Cliente c = new Cliente();        
+                c.setId(rs.getInt("cli_id"));
+                c.setNome(rs.getString("cli_nome"));
+                c.setGenero(rs.getString("cli_genero"));
+                c.setDataNascimento(rs.getDate("cli_dt_nascimento").toLocalDate());
+                c.setCpf(rs.getString("cli_cpf"));
+                c.setEmail(rs.getString("cli_email"));
+                c.setRanking(rs.getInt("cli_ranking"));
+                c.setAtivo(rs.getBoolean("cli_is_ativo"));
+
+                Telefone telefone = new Telefone();
+                telefone.setTipo(rs.getString("cli_tel_tipo"));
+                telefone.setDdd(rs.getString("cli_tel_ddd"));
+                telefone.setNumero(rs.getString("cli_tel_numero"));
+                c.setTelefone(telefone);
+                
+                clientes.add(c);
+            }
+
+            return clientes;
         }
-        rs.beforeFirst();
-
-        List<Cliente> clientes = new ArrayList<>();
-
-        while (rs.next()){
-            Cliente c = new Cliente();        
-            c.setId(rs.getInt("cli_id"));
-            c.setNome(rs.getString("cli_nome"));
-            c.setGenero(rs.getString("cli_genero"));
-            c.setDataNascimento(rs.getDate("cli_dt_nascimento").toLocalDate());
-            c.setCpf(rs.getString("cli_cpf"));
-            c.setEmail(rs.getString("cli_email"));
-            c.setRanking(rs.getInt("cli_ranking"));
-            c.setAtivo(rs.getBoolean("cli_is_ativo"));
-
-            Telefone telefone = new Telefone();
-            telefone.setTipo(rs.getString("cli_tel_tipo"));
-            telefone.setDdd(rs.getString("cli_tel_ddd"));
-            telefone.setNumero(rs.getString("cli_tel_numero"));
-            c.setTelefone(telefone);
-            
-            clientes.add(c);
+        catch (Exception e){
+            throw e;
+        } finally {
+            pst.close();
+            conn.close();
         }
-        
-        pst.close();
-        conn.close();
-
-        return clientes;
     }
 
     @Override
@@ -119,34 +124,38 @@ public class ClienteDAO implements IDAO<Cliente> {
             "SELECT * FROM clientes WHERE cli_id = ?"
         );
 
-        pst.setInt(1, id);
+        try {
+            pst.setInt(1, id);
 
-        ResultSet rs = pst.executeQuery();
+            ResultSet rs = pst.executeQuery();
+    
+            if (!rs.next()){
+                throw new Exception("Cliente não encontrado!");
+            }
+    
+            Cliente c = new Cliente();
+            c.setId(rs.getInt("cli_id"));
+            c.setNome(rs.getString("cli_nome"));
+            c.setGenero(rs.getString("cli_genero"));
+            c.setDataNascimento(rs.getDate("cli_dt_nascimento").toLocalDate());
+            c.setCpf(rs.getString("cli_cpf"));
+            c.setEmail(rs.getString("cli_email"));
+            c.setRanking(rs.getInt("cli_ranking"));
+            c.setAtivo(rs.getBoolean("cli_is_ativo"));
+    
+            Telefone telefone = new Telefone();
+            telefone.setTipo(rs.getString("cli_tel_tipo"));
+            telefone.setDdd(rs.getString("cli_tel_ddd"));
+            telefone.setNumero(rs.getString("cli_tel_numero"));
+            c.setTelefone(telefone);
 
-        if (!rs.next()){
-            throw new Exception("Cliente não encontrado!");
-        }
-
-        Cliente c = new Cliente();
-        c.setId(rs.getInt("cli_id"));
-        c.setNome(rs.getString("cli_nome"));
-        c.setGenero(rs.getString("cli_genero"));
-        c.setDataNascimento(rs.getDate("cli_dt_nascimento").toLocalDate());
-        c.setCpf(rs.getString("cli_cpf"));
-        c.setEmail(rs.getString("cli_email"));
-        c.setRanking(rs.getInt("cli_ranking"));
-        c.setAtivo(rs.getBoolean("cli_is_ativo"));
-
-        Telefone telefone = new Telefone();
-        telefone.setTipo(rs.getString("cli_tel_tipo"));
-        telefone.setDdd(rs.getString("cli_tel_ddd"));
-        telefone.setNumero(rs.getString("cli_tel_numero"));
-        c.setTelefone(telefone);
-
-        connection.close();
-        pst.close();
-
-        return c;        
+            return c;
+        } catch (Exception e){
+            throw e;
+        } finally {
+            connection.close();
+            pst.close();
+        }   
     }
 
     @Override
@@ -160,26 +169,30 @@ public class ClienteDAO implements IDAO<Cliente> {
                 "WHERE cli_id = ?"
         );
     
-        pst.setString(1, c.getNome());
-        pst.setString(2, c.getGenero());
-        pst.setDate(3, Date.valueOf(c.getDataNascimento()));
-        pst.setString(4, c.getCpf());
-        pst.setString(5, c.getEmail());
-        pst.setInt(6, c.getRanking());
-        pst.setString(7, c.getTelefone().getTipo());
-        pst.setString(8, c.getTelefone().getDdd());
-        pst.setString(9, c.getTelefone().getNumero());
-        pst.setBoolean(10, c.isAtivo());
-        pst.setInt(11, c.getId());
-    
-        if (pst.executeUpdate() == 0) {
-            throw new Exception("Atualização não foi sucedida!");
-        }
+        try {
+            pst.setString(1, c.getNome());
+            pst.setString(2, c.getGenero());
+            pst.setDate(3, Date.valueOf(c.getDataNascimento()));
+            pst.setString(4, c.getCpf());
+            pst.setString(5, c.getEmail());
+            pst.setInt(6, c.getRanking());
+            pst.setString(7, c.getTelefone().getTipo());
+            pst.setString(8, c.getTelefone().getDdd());
+            pst.setString(9, c.getTelefone().getNumero());
+            pst.setBoolean(10, c.isAtivo());
+            pst.setInt(11, c.getId());
+        
+            if (pst.executeUpdate() == 0) {
+                throw new Exception("Atualização não foi sucedida!");
+            }
 
-        pst.close();
-        conn.close();
-
-        return consultarByID(c.getId());
+            return consultarByID(c.getId());
+        } catch (Exception e){
+            throw e;
+        } finally {
+            pst.close();
+            conn.close();
+        } 
     }
 
     public Cliente atualizarSenha(Cliente c) throws Exception {
@@ -191,19 +204,24 @@ public class ClienteDAO implements IDAO<Cliente> {
                 "WHERE cli_id = ?"
         );
     
-        pst.setString(1, c.getHashSenha());
-        pst.setString(2, c.getSaltSenha());
-
-        pst.setInt(3, c.getId());
+        try {
+            pst.setString(1, c.getHashSenha());
+            pst.setString(2, c.getSaltSenha());
     
-        if (pst.executeUpdate() == 0) {
-            throw new Exception("Atualização não foi sucedida!");
+            pst.setInt(3, c.getId());
+        
+            if (pst.executeUpdate() == 0) {
+                throw new Exception("Atualização não foi sucedida!");
+            }
+    
+            return consultarByID(c.getId());
+
+        } catch (Exception e){
+            throw e;
+        } finally {
+            pst.close();
+            conn.close();
         }
-
-        pst.close();
-        conn.close();
-
-        return consultarByID(c.getId());
     }
 
     @Override
@@ -213,15 +231,20 @@ public class ClienteDAO implements IDAO<Cliente> {
         PreparedStatement pst = conn.prepareStatement(
             "DELETE FROM clientes WHERE cli_id = ?"
         );
-        
-        pst.setInt(1, c.getId());
 
-        if (pst.executeUpdate() == 0) {
-            throw new Exception("Deleção não realizada. Cliente de id " + c.getId() + " não encontrado.");
+        try {
+            pst.setInt(1, c.getId());
+
+            if (pst.executeUpdate() == 0) {
+                throw new Exception("Deleção não realizada. Cliente de id " + c.getId() + " não encontrado.");
+            }
+
+        } catch (Exception e){
+            throw e;
+        } finally {
+            pst.close();
+            conn.close();
         }
-
-        pst.close();
-        conn.close();
     }
     
 }
