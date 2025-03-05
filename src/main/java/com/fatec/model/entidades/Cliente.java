@@ -19,6 +19,7 @@ public class Cliente {
     private String  email;
     
     private String senha;
+    private String senhaConfirmacao;
     private String hashSenha;
     private String saltSenha;
     
