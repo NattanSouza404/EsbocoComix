@@ -14,6 +14,13 @@ function criarElemento(tag, texto){
     return element;
 }
 
+function formatarDataParaInput(array){
+    const ano = array[0];
+    const mes = ('0' + array[1]).slice(-2);
+    const dia = ('0' + array[2]).slice(-2);
+    return `${ano}-${mes}-${dia}`;
+}
+
 class BotaoFechar extends HTMLButtonElement  {
     constructor(acao){
         super();
