@@ -32,33 +32,38 @@ public class ClienteDAO implements IDAO<Cliente> {
                 Statement.RETURN_GENERATED_KEYS
         );
 
-        pst.setString(1, c.getNome());
-        pst.setString(2, c.getGenero());
-        pst.setDate(3, Date.valueOf(c.getDataNascimento()));
-        pst.setString(4, c.getCpf());
-        pst.setString(5, c.getEmail());
-        pst.setString(6, c.getHashSenha());
-        pst.setString(7, c.getSaltSenha());
-        pst.setInt(8, c.getRanking());
-        pst.setString(9, c.getTelefone().getTipo());
-        pst.setString(10, c.getTelefone().getDdd());
-        pst.setString(11, c.getTelefone().getNumero());
-        pst.setBoolean(12, c.isAtivo());
+        try {
+            pst.setString(1, c.getNome());
+            pst.setString(2, c.getGenero());
+            pst.setDate(3, Date.valueOf(c.getDataNascimento()));
+            pst.setString(4, c.getCpf());
+            pst.setString(5, c.getEmail());
+            pst.setString(6, c.getHashSenha());
+            pst.setString(7, c.getSaltSenha());
+            pst.setInt(8, c.getRanking());
+            pst.setString(9, c.getTelefone().getTipo());
+            pst.setString(10, c.getTelefone().getDdd());
+            pst.setString(11, c.getTelefone().getNumero());
+            pst.setBoolean(12, true);
+    
+            if (pst.executeUpdate() == 0){
+                throw new Exception("Inserção de cliente não executada!");
+            }
+    
+            ResultSet rs = pst.getGeneratedKeys();
+            Cliente clienteInserido = null;
+            if (rs.next()){
+                clienteInserido = consultarByID(rs.getInt(1));
+            }
 
-        if (pst.executeUpdate() == 0){
-            throw new Exception("Inserção de cliente não executada!");
+            return clienteInserido;
+            
+        } catch (Exception e){
+            throw e;
+        } finally {
+            connection.close();
+            pst.close();
         }
-
-        ResultSet rs = pst.getGeneratedKeys();
-        Cliente clienteInserido = null;
-        if (rs.next()){
-            clienteInserido = consultarByID(rs.getInt(1));
-        }
-
-        connection.close();
-        pst.close();
-
-        return clienteInserido;
     }
 
     @Override
