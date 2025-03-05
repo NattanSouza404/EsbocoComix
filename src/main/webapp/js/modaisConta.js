@@ -61,24 +61,16 @@ class ModalAlterarSenha extends Modal {
     }
 
     enviarFormulario() {
-        promessaCliente.then((cliente) => {
-
+        promessaCliente.then((clienteAtual) => {
             const form = document.getElementById("alterar-senha");
             const formData = new FormData(form);
 
-            const senha = formData.get('senha');
-            const senhaConfirmacao = formData.get('senhaConfirmacao')
-
-            if (!(senha === senhaConfirmacao)){
-                alert('Senhas não são iguais!');
-                return;
-            }
-
             const clienteToUpdate = {
-                "id": cliente.id,
-                "nome": cliente.nome,
-                "senha": formData.get('senha')
-            }
+                "id": clienteAtual.id,
+                "nome": clienteAtual.nome,
+                "senha": formData.get('senha'),
+                "senhaConfirmacao": formData.get('senhaConfirmacao')
+            };
 
             atualizarCliente(clienteToUpdate, 'atualizarsenha');
         });
