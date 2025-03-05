@@ -19,13 +19,19 @@ async function retornarAllClientes() {
     }
 }
 
-async function inserirCliente(){
+async function retornarEnderecos(idCliente){
+    try {
+        const response = await fetch("/endereco?idcliente="+idCliente);
+        return await response.json();
+    } catch (error) {
+        console.error('Erro buscando dados:', error);
+        document.getElementById("resultados").textContent = "Erro carregando dados.";
+    }
+} 
+
+async function inserirCliente(cliente){
 
     try {
-        const form = document.getElementById("form");
-        const formData = new FormData(form);
-        const cliente = Object.fromEntries(formData);
-
         const confirmacaoUsuario = confirm("Deseja mesmo cadastrar?");
 
         if (!confirmacaoUsuario){
