@@ -111,8 +111,8 @@ class ModalAlterarDadosPessoais extends Modal {
 
         form.append(new BotaoSalvar(
             () => {
-                promessaCliente.then((cliente) => {
-                    this.enviarFormulario(cliente);
+                promessaCliente.then((clienteAtual) => {
+                    this.enviarAtualizacao(clienteAtual);
                 })
             }
         ));
@@ -151,25 +151,13 @@ class ModalAlterarDadosPessoais extends Modal {
         );
     }
 
-    async enviarFormulario(cliente){
+    async enviarAtualizacao(clienteAtual){
         const form = document.getElementById("alterar-dados-pessoais");
-        const formData = new FormData(form);
+        const cliente = montarClientePorForm(form);
 
-        const c = {
-            id: cliente.id,
-            nome: formData.get("nome"),
-            genero: formData.get("genero"),
-            dataNascimento: formData.get("dataNascimento"),
-            cpf: formData.get("cpf"),
-            email: formData.get("email"),
-            telefone: {
-                tipo: formData.get("tipoTelefone"),
-                ddd: formData.get("ddd"),
-                numero: formData.get("numero"),
-            }
-        };
-
-        atualizarCliente(c);
+        cliente.id = clienteAtual.id;
+        
+        atualizarCliente(cliente);
     }
 }
 

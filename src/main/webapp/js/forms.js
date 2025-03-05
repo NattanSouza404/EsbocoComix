@@ -1,3 +1,23 @@
+function montarClientePorForm(form){
+    const formData = new FormData(form);
+
+    return {
+        nome: formData.get("nome"),
+        genero: formData.get("genero"),
+        dataNascimento: formData.get("dataNascimento"),
+        cpf: formData.get("cpf"),
+        email: formData.get("email"),
+        senha: formData.get("senha"),
+        senhaConfirmacao: formData.get("senhaConfirmacao"),
+        telefone: {
+            tipo: formData.get("tipoTelefone"),
+            ddd: formData.get("ddd"),
+            numero: formData.get("numero"),
+        }
+    };
+    
+}
+
 class FormularioDadosPessoais extends HTMLFormElement {
     constructor(){
         super();

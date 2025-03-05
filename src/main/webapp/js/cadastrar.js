@@ -40,22 +40,7 @@ cadastrarCliente.append(new SecaoCadastrarDadosPessoais());
 
 function enviarCliente(){
     const form = document.getElementById('form-cadastrar');
-    const formData = new FormData(form);
-
-    const cliente = {
-        nome: formData.get("nome"),
-        genero: formData.get("genero"),
-        dataNascimento: formData.get("dataNascimento"),
-        cpf: formData.get("cpf"),
-        email: formData.get("email"),
-        senha: formData.get('senha'),
-        senhaConfirmacao: formData.get('senhaConfirmacao'),
-        telefone: {
-            tipo: formData.get("tipoTelefone"),
-            ddd: formData.get("ddd"),
-            numero: formData.get("numero"),
-        }
-    };
-
+    const cliente = montarClientePorForm(form);
+    
     inserirCliente(cliente);
 }
