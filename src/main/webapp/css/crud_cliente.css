@@ -105,11 +105,13 @@
 }
 
 /*cadastrar*/
-#form-cadastrar {
-    justify-items: center;
+#cadastrar-cliente {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
-#cadastrar-cliente {
+#container-cadastrar-cliente {
     margin-top: 1%;
     margin-bottom: 1%;
 
@@ -124,7 +126,7 @@
     width: 80%;
 }
 
-#cadastrar-cliente .secao-cadastrar {
+.secao-cadastrar {
     align-items: center;
 
     border: solid 1px black;
@@ -137,6 +139,10 @@
     padding-bottom: 20px;
 
     height: fit-content;
+}
+
+#footer-secao-endereco {
+    justify-items: center;
 }
 
 .dados-formulario {
@@ -167,9 +173,6 @@
     border-radius: 2%;
 
     gap: 1%;
-
-    width: 80%;
-    max-width: 80%;
 
     background-color: lightgreen;
 }

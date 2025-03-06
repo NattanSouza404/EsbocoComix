@@ -6,7 +6,7 @@ class SecaoCadastrarDadosPessoais extends HTMLElement {
         this.className = 'secao-cadastrar';
 
         const form = new FormularioDadosPessoais();
-        form.id = "form-cadastrar";
+        form.id = "form-cadastrar-dados-pessoais";
         this.append(form);
 
         const header = document.createElement('div');
@@ -35,12 +35,16 @@ class SecaoCadastrarDadosPessoais extends HTMLElement {
 
 customElements.define('secao-cadastrar-dados-pessoais', SecaoCadastrarDadosPessoais);
 
-const cadastrarCliente = document.getElementById('cadastrar-cliente');
+const cadastrarCliente = document.getElementById('container-cadastrar-cliente');
 cadastrarCliente.append(new SecaoCadastrarDadosPessoais());
 
-function enviarCliente(){
-    const form = document.getElementById('form-cadastrar');
+const formEndereco = new FormularioEndereco();
+const containerEndereco = document.getElementById('container-enderecos');
+containerEndereco.append(formEndereco);
+
+async function enviarCliente(){
+    const form = document.getElementById('form-cadastrar-dados-pessoais');
     const cliente = montarClientePorForm(form);
-    
+
     inserirCliente(cliente);
 }
