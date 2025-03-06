@@ -9,6 +9,10 @@ public class EnderecoService {
 
     private EnderecoDAO enderecoDAO = new EnderecoDAO();
 
+    public Endereco inserir(Endereco e) throws Exception{
+        return enderecoDAO.inserir(e);
+    }
+
     public List<Endereco> consultarByIDCliente(int id) throws Exception {
         return enderecoDAO.consultarByIDCliente(id);
     }

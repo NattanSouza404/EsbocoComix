@@ -69,7 +69,46 @@ public class EnderecoDAO implements IDAO<Endereco> {
 
     @Override
     public Endereco consultarByID(int id) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'consultarByID'");
+        Connection connection = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = connection.prepareStatement(
+            "SELECT * FROM enderecos WHERE end_id = ?"
+        );
+
+        try {
+            pst.setInt(1, id);
+
+            ResultSet rs = pst.executeQuery();
+    
+            if (!rs.next()) {
+                throw new Exception("Nenhum registro encontrado de endereco.");
+            }
+    
+            Endereco e = new Endereco();        
+            e.setId(rs.getInt("end_id"));
+            e.setFraseCurta(rs.getString("end_frase_curta"));
+            e.setLogradouro(rs.getString("end_logradouro"));
+            e.setTipoLogradouro(rs.getString("end_tipo_logradouro"));
+            e.setTipoResidencial(rs.getString("end_tipo_residencial"));
+            e.setNumero(rs.getString("end_numero"));
+            e.setBairro(rs.getString("end_bairro"));
+            e.setCep(rs.getString("end_cep"));
+            e.setCidade(rs.getString("end_cidade"));
+            e.setEstado(rs.getString("end_estado"));
+            e.setPais(rs.getString("end_pais"));
+            e.setResidencial(rs.getBoolean("end_is_residencial"));
+            e.setEntrega(rs.getBoolean("end_is_entrega"));
+            e.setCobranca(rs.getBoolean("end_is_cobranca"));
+            e.setObservacoes(rs.getString("end_observacoes"));
+            e.setIdCliente(rs.getInt("end_cli_id"));
+
+            return e;    
+        } catch (Exception e){
+            throw e;
+        } finally {
+            connection.close();
+            pst.close();
+        }
     }
 
     public List<Endereco> consultarByIDCliente(int idCliente) throws Exception {
@@ -121,7 +160,6 @@ public class EnderecoDAO implements IDAO<Endereco> {
             connection.close();
             pst.close();
         }
-        
     }
 
     @Override
