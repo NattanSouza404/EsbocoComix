@@ -1,6 +1,7 @@
 package com.fatec.controller;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -64,11 +65,7 @@ public class ClienteController extends HttpServlet {
             Cliente clienteToUpdate = ServletUtil.jsonToObject(req, Cliente.class);
             Cliente clienteAtualizado = null;
 
-            String opcao = req.getParameter("opcao");
-            if (opcao == null){
-                clienteAtualizado = clienteService.atualizar(clienteToUpdate);
-                return;
-            }
+            String opcao = Optional.ofNullable(req.getParameter("opcao")).orElse("default");
 
             switch (opcao) {
                 case "atualizarsenha":
@@ -79,7 +76,7 @@ public class ClienteController extends HttpServlet {
                     clienteAtualizado = clienteService.atualizar(clienteToUpdate);
                     break;
             }
-
+            
             ServletUtil.retornarRespostaJson(
                 resp,
                 clienteAtualizado,
