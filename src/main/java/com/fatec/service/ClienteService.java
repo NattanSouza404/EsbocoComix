@@ -12,8 +12,7 @@ public class ClienteService {
 
     public Cliente inserir(Cliente c) throws Exception {
         clienteValidador.validar(c);
-        CriptografadorSenha.inserirNovoHash(c);
-
+        inserirNovoHash(c);
         return clienteDAO.inserir(c);
     }
 
@@ -31,12 +30,28 @@ public class ClienteService {
 
     public Cliente atualizarSenha(Cliente c) throws Exception {
         clienteValidador.validar(c);
-        CriptografadorSenha.inserirNovoHash(c);
+
+        Cliente clienteInserido = clienteDAO.consultarHashSaltPorID(c.getId()); 
+        String hashGuardado = clienteInserido.getHashSenha();
+        String saltGuardado = clienteInserido.getSaltSenha();
+
+        validarSenha(c.getSenha(), hashGuardado, saltGuardado);
+        inserirNovoHash(c);
         return clienteDAO.atualizarSenha(c);
     }
 
     public void deletar(Cliente c) throws Exception {
         clienteDAO.deletar(c);
+    }
+
+    private boolean validarSenha(String senha, String hash, String salt) throws Exception {
+        return CriptografadorSenha.hashSenha(senha, salt).equals(hash);
+    }
+
+    private void inserirNovoHash(Cliente c) throws Exception {
+        String saltSenha = CriptografadorSenha.generateSalt();
+        c.setHashSenha(CriptografadorSenha.hashSenha(c.getSenha(), saltSenha));
+        c.setSaltSenha(saltSenha);
     }
 
 }

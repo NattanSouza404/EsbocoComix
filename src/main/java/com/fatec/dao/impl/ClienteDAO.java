@@ -195,6 +195,29 @@ public class ClienteDAO implements IDAO<Cliente> {
         } 
     }
 
+    @Override
+    public void deletar(Cliente c) throws Exception {
+        Connection conn = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = conn.prepareStatement(
+            "DELETE FROM clientes WHERE cli_id = ?"
+        );
+
+        try {
+            pst.setInt(1, c.getId());
+
+            if (pst.executeUpdate() == 0) {
+                throw new Exception("Deleção não realizada. Cliente de id " + c.getId() + " não encontrado.");
+            }
+
+        } catch (Exception e){
+            throw e;
+        } finally {
+            pst.close();
+            conn.close();
+        }
+    }
+
     public Cliente atualizarSenha(Cliente c) throws Exception {
         Connection conn = ConexaoFactory.getConexao(); 
     
@@ -224,26 +247,32 @@ public class ClienteDAO implements IDAO<Cliente> {
         }
     }
 
-    @Override
-    public void deletar(Cliente c) throws Exception {
-        Connection conn = ConexaoFactory.getConexao();
+    public Cliente consultarHashSaltPorID(int id) throws Exception {
+        Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = conn.prepareStatement(
-            "DELETE FROM clientes WHERE cli_id = ?"
+        PreparedStatement pst = connection.prepareStatement(
+            "SELECT cli_id, cli_hash_senha, cli_salt_senha FROM clientes WHERE cli_id = ?;"
         );
 
         try {
-            pst.setInt(1, c.getId());
+            pst.setInt(1, id);
 
-            if (pst.executeUpdate() == 0) {
-                throw new Exception("Deleção não realizada. Cliente de id " + c.getId() + " não encontrado.");
+            ResultSet rs = pst.executeQuery();
+    
+            if (!rs.next()){
+                throw new Exception("Cliente não encontrado!");
             }
-
+    
+            Cliente c = new Cliente();
+            c.setId(rs.getInt("cli_id"));
+            c.setHashSenha(rs.getString("cli_hash_senha"));
+            c.setSaltSenha(rs.getString("cli_salt_senha"));
+            return c;
         } catch (Exception e){
             throw e;
         } finally {
+            connection.close();
             pst.close();
-            conn.close();
         }
     }
     
