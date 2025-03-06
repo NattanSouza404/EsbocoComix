@@ -19,16 +19,10 @@ class SecaoCadastrarDadosPessoais extends HTMLElement {
         form.append(this.secaoSenha);
 
         this.secaoSenha.append(criarElemento('label', "Senha"));
-        let input = document.createElement('input');
-        input.type = 'password';
-        input.name = 'senha';
-        this.secaoSenha.append(input);
+        this.secaoSenha.append(criarElementoInput('senha', null, 'password'));
 
         this.secaoSenha.append(criarElemento('label', "Confirme a senha"));
-        input = document.createElement('input');
-        input.type = 'password';
-        input.name = 'senhaConfirmacao';
-        this.secaoSenha.append(input);
+        this.secaoSenha.append(criarElementoInput('senhaConfirmacao', null, 'password'));
     }
 
 }
@@ -47,4 +41,8 @@ async function enviarCliente(){
     const cliente = montarClientePorForm(form);
 
     inserirCliente(cliente);
+}
+
+function adicionarEndereco(){
+    containerEndereco.append(new FormularioEndereco());
 }

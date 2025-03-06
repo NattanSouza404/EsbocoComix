@@ -34,17 +34,13 @@ class ModalAlterarSenha extends Modal {
 
         let label = criarElemento('label', 'Nova senha');
 
-        let input = document.createElement('input');
-        input.type = 'password';
-        input.name = "senha";
+        let input = criarElementoInput('senha', null, 'password');
         input.autocomplete = "new-password";
         dadosFormulario.append(label);
         dadosFormulario.append(input);
 
         label = criarElemento('label', 'Confirme a senha');
-        input = document.createElement('input');
-        input.type = 'password';
-        input.name = "senhaConfirmacao";
+        input = criarElementoInput('senhaConfirmacao', null, 'password');
         input.autocomplete = "new-password";
         dadosFormulario.append(label);
         dadosFormulario.append(input);

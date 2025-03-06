@@ -14,6 +14,37 @@ function criarElemento(tag, texto){
     return element;
 }
 
+function criarElementoInput(name, placeholder, type){
+    const input = document.createElement('input'); 
+    
+    if (name != null){
+        input.name = name;
+    }
+
+    if (placeholder != null){
+        input.placeholder = placeholder;
+    }
+
+    if (type != null){
+        input.type = type;
+    }
+
+    return input;
+}
+
+function criarSelectSimOuNao(){
+    let select = document.createElement('select');
+
+    let option = criarElemento('option', 'Não');
+    option.value = 'false';
+    select.append(option);
+    option = criarElemento('option', 'Sim');
+    option.value = 'true';
+    select.append(option);
+
+    return select;
+}
+
 function formatarDataParaInput(array){
     const ano = array[0];
     const mes = ('0' + array[1]).slice(-2);

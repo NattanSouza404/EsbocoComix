@@ -56,11 +56,7 @@ class FormularioDadosPessoais extends HTMLFormElement {
         this.append(this.secaoDadosPessoais);
 
         this.secaoDadosPessoais.append(criarElemento('label', "Nome"));
-        let input = document.createElement('input');
-        input.type = 'text';
-        input.name = 'nome';
-        input.placeholder = 'Seu Nome';
-        this.secaoDadosPessoais.append(input);
+        this.secaoDadosPessoais.append(criarElementoInput('nome', 'Seu nome'));
 
         this.secaoDadosPessoais.append(criarElemento('label', "Gênero"));
         let select = document.createElement('select');
@@ -76,24 +72,13 @@ class FormularioDadosPessoais extends HTMLFormElement {
         });
 
         this.secaoDadosPessoais.append(criarElemento('label', "Data de Nascimento"));
-        input = document.createElement('input');
-        input.type = 'date';
-        input.name = 'dataNascimento';
-        this.secaoDadosPessoais.append(input);
+        this.secaoDadosPessoais.append(criarElementoInput('dataNascimento', null, 'date'));
 
         this.secaoDadosPessoais.append(criarElemento('label', "CPF"));
-        input = document.createElement('input');
-        input.type = 'text';
-        input.name = 'cpf';
-        input.placeholder = "111.111.111-11";
-        this.secaoDadosPessoais.append(input);
+        this.secaoDadosPessoais.append(criarElementoInput('cpf', '111.111.111-11'));
 
         this.secaoDadosPessoais.append(criarElemento('label', "E-mail"));
-        input = document.createElement('input');
-        input.type = 'email';
-        input.name = 'email';
-        input.placeholder = "seuemail@email.com";
-        this.secaoDadosPessoais.append(input);
+        this.secaoDadosPessoais.append(criarElementoInput('email', 'seuemail@email.com', 'email'));
 
         this.header = document.createElement('div');
         this.header.className = 'header-dados-cadastro';
@@ -119,20 +104,10 @@ class FormularioDadosPessoais extends HTMLFormElement {
         });
 
         this.secaoTelefone.append(criarElemento('label', "DDD"));
-
-        input = document.createElement('input');
-        input.type = "text";
-        input.name = "ddd";
-        input.placeholder = "11";
-        this.secaoTelefone.append(input);
+        this.secaoTelefone.append(criarElementoInput('ddd', '11'));
 
         this.secaoTelefone.append(criarElemento('label', 'Número do Telefone'));
-
-        input = document.createElement('input');
-        input.type = "text";
-        input.name = "numero";
-        input.placeholder = "11111-1111";
-        this.secaoTelefone.append(input);
+        this.secaoTelefone.append(criarElementoInput('numero', '11111-1111'));
     }
 }
 
@@ -154,37 +129,25 @@ class FormularioEndereco extends HTMLFormElement {
         this.append(mainDiv);
 
         mainDiv.append(criarElemento('label', 'Frase curta para identificação'));
-        let input = document.createElement('input');
-        input.name = 'fraseCurta';
-        mainDiv.append(input);
+        mainDiv.append(criarElementoInput('fraseCurta'));
         
         mainDiv.append(criarElemento('label', 'É um endereço residencial?'));
-        let select = this.criarSelectSimOuNao();
-        select.name = 'isResidencial';
-        mainDiv.append(select);
+        mainDiv.append(criarSelectSimOuNao('isResidencial'));
 
         mainDiv.append(criarElemento('label', 'É um endereço de cobrança?'));
-        select = this.criarSelectSimOuNao();
-        select.name = 'isCobranca';
-        mainDiv.append(select);
+        mainDiv.append(criarSelectSimOuNao('isCobranca'));
 
         mainDiv.append(criarElemento('label', 'É um endereço de entrega?'));
-        select = this.criarSelectSimOuNao();
-        select.name = 'isEntrega';
-        mainDiv.append(select);
+        mainDiv.append(criarSelectSimOuNao('isEntrega'));
 
         mainDiv.append(criarElemento('label', 'Nº Endereço'));
-        input = document.createElement('input');
-        input.name = 'numero';
-        mainDiv.append(input);
+        mainDiv.append(criarElementoInput('numero'));
 
         mainDiv.append(criarElemento('label', 'Logradouro'));
-        input = document.createElement('input');
-        input.name = 'logradouro';
-        mainDiv.append(input);
+        mainDiv.append(criarElementoInput('logradouro'));
 
         mainDiv.append(criarElemento('label', 'Tipo de Logradouro'));
-        select = document.createElement('select');
+        let select = document.createElement('select');
         select.name = "tipoLogradouro";
         mainDiv.append(select);
     
@@ -194,47 +157,30 @@ class FormularioEndereco extends HTMLFormElement {
         });
 
         mainDiv.append(criarElemento('label', 'CEP'));
-        input = document.createElement('input');
-        input.name = 'cep';
-        mainDiv.append(input);
+        mainDiv.append(criarElementoInput('cep', '00000-000'));
 
         mainDiv.append(criarElemento('label', 'Bairro'));
-        input = document.createElement('input');
-        input.name = 'bairro';
-        mainDiv.append(input);
+        mainDiv.append(criarElementoInput('bairro'));
 
         mainDiv.append(criarElemento('label', 'Cidade'));
-        input = document.createElement('input');
-        input.name = 'cidade';
-        mainDiv.append(input);
+        mainDiv.append(criarElementoInput('cidade'));
 
         mainDiv.append(criarElemento('label', 'Estado'));
-        input = document.createElement('input');
-        input.name = 'estado';
-        mainDiv.append(input);
+        mainDiv.append(criarElementoInput('estado'));
 
         mainDiv.append(criarElemento('label', 'País'));
-        input = document.createElement('input');
-        input.name = 'pais';
-        mainDiv.append(input);
+        mainDiv.append(criarElementoInput('pais'));
 
         mainDiv.append(criarElemento('label', 'Observações'));
-        input = document.createElement('input');
-        input.name = 'observacoes';
-        mainDiv.append(input);
-    }
+        mainDiv.append(criarElementoInput('observacoes', 'Perto do prédio...'));
 
-    criarSelectSimOuNao(){
-        let select = document.createElement('select');
-
-        let option = criarElemento('option', 'Não');
-        option.value = 'false';
-        select.append(option);
-        option = criarElemento('option', 'Sim');
-        option.value = 'true';
-        select.append(option);
-
-        return select;
+        const botaoRemover = criarElemento('button', 'Remover');
+        botaoRemover.onclick = () => {
+            if (this.parentNode){
+                this.parentNode.removeChild(this);
+            }
+        };
+        this.append(botaoRemover);
     }
 }
 
