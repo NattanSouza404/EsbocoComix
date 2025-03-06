@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fatec.dao.impl.ClienteDAO;
 import com.fatec.model.entidades.Cliente;
+import com.fatec.utils.CriptografadorSenha;
 
 public class ClienteService {
     private ClienteDAO clienteDAO = new ClienteDAO();
@@ -44,8 +45,11 @@ public class ClienteService {
         clienteDAO.deletar(c);
     }
 
-    private boolean validarSenha(String senha, String hash, String salt) throws Exception {
-        return CriptografadorSenha.hashSenha(senha, salt).equals(hash);
+    private void validarSenha(String senha, String hash, String salt) throws Exception {
+        String hashNovo = CriptografadorSenha.hashSenha(senha, salt); 
+        if (!hashNovo.equals(hash)){
+            throw new Exception("Senha antiga não consta com senha inserida pelo usuário!");
+        }
     }
 
     private void inserirNovoHash(Cliente c) throws Exception {

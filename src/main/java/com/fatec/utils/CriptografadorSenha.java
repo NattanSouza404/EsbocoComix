@@ -1,4 +1,4 @@
-package com.fatec.service;
+package com.fatec.utils;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
