@@ -44,10 +44,9 @@ public class ClienteController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-        Cliente clienteToAdd = ServletUtil.toCliente(req);
-
         try {
+            Cliente clienteToAdd = (Cliente) ServletUtil.jsonToObject(req, Cliente.class);
+
             ServletUtil.retornarRespostaJson(
                 resp,
                 clienteService.inserir(clienteToAdd),
@@ -60,13 +59,12 @@ public class ClienteController extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Cliente clienteToUpdate = ServletUtil.toCliente(req);
-
-        String opcao = req.getParameter("opcao");
 
         try {
+            Cliente clienteToUpdate = ServletUtil.jsonToObject(req, Cliente.class);
             Cliente clienteAtualizado = null;
 
+            String opcao = req.getParameter("opcao");
             if (opcao == null){
                 clienteAtualizado = clienteService.atualizar(clienteToUpdate);
                 return;
@@ -95,9 +93,8 @@ public class ClienteController extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Cliente clienteToDelete = ServletUtil.toCliente(req);
-
         try {
+            Cliente clienteToDelete = ServletUtil.jsonToObject(req, Cliente.class);
             clienteService.deletar(clienteToDelete);
             resp.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception e) {

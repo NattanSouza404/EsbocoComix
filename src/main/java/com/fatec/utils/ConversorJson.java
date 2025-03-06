@@ -3,10 +3,8 @@ package com.fatec.utils;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fatec.model.entidades.Cliente;
 
 public class ConversorJson {
 
@@ -21,12 +19,12 @@ public class ConversorJson {
 	public static String toJson(Object object) throws JsonProcessingException {
 		return mapper.writeValueAsString(object);
 	}
-
-	public static Cliente toCliente(String stringJson) throws JsonMappingException, JsonProcessingException {
-		return mapper.readValue(stringJson, Cliente.class);
+	
+	public static <T> T jsonToObject(String json, Class<T> classe) throws Exception {
+        return mapper.readValue(json, classe);
 	}
-
-    public static String mapaToJson(Map<Object, Object> mapa) throws JsonProcessingException {
+    
+    public static String mapToJson(Map<Object, Object> mapa) throws JsonProcessingException {
 		return mapper.writeValueAsString(mapa);
     }
 }

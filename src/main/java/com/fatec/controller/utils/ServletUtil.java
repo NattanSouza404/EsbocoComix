@@ -7,9 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fatec.model.entidades.Cliente;
 import com.fatec.utils.ConversorJson;
 
 public class ServletUtil {
@@ -26,19 +23,9 @@ public class ServletUtil {
         resp.setStatus(sc);
     }
 
-    public static String bodyRequestToString(HttpServletRequest req) throws IOException {
-        StringBuilder string = new StringBuilder();
-
-        req.getReader().lines().forEach(
-            s -> string.append(s)
-        );
-        
-        return string.toString();
-    }
-
-    public static Cliente toCliente(HttpServletRequest req) throws JsonMappingException, JsonProcessingException, IOException {
-        return ConversorJson.toCliente(
-            bodyRequestToString(req)
+    public static <T> T jsonToObject(HttpServletRequest req, Class<T> classe) throws Exception {
+        return ConversorJson.jsonToObject(
+            bodyRequestToString(req), classe
         );
     }
 
@@ -48,7 +35,17 @@ public class ServletUtil {
         Map<Object, Object> mapaErro = new HashMap<>();
         mapaErro.put("erro", e.getMessage());
 
-        retornarResposta(resp, ConversorJson.mapaToJson(mapaErro), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        retornarResposta(resp, ConversorJson.mapToJson(mapaErro), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+    }
+
+    private static String bodyRequestToString(HttpServletRequest req) throws IOException {
+        StringBuilder string = new StringBuilder();
+
+        req.getReader().lines().forEach(
+            s -> string.append(s)
+        );
+        
+        return string.toString();
     }
 
 }
