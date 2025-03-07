@@ -32,8 +32,9 @@ function criarElementoInput(name, placeholder, type){
     return input;
 }
 
-function criarSelectSimOuNao(){
+function criarSelectSimOuNao(name){
     let select = document.createElement('select');
+    select.name = name;
 
     let option = criarElemento('option', 'Não');
     option.value = 'false';

@@ -32,7 +32,23 @@ customElements.define('secao-cadastrar-dados-pessoais', SecaoCadastrarDadosPesso
 const cadastrarCliente = document.getElementById('container-cadastrar-cliente');
 cadastrarCliente.append(new SecaoCadastrarDadosPessoais());
 
-const formEndereco = new FormularioEndereco();
+function montarEnderecoObrigatorio(){
+    const form = new FormularioEndereco();
+    const button = form.querySelector('button');
+    form.removeChild(button);
+
+    const isResidencial = form.querySelector('[name = "isResidencial"]');
+    isResidencial.value = 'true';
+    const opcaoNao = isResidencial.querySelector('[value = "false"]');
+    opcaoNao.disabled = true;
+
+    const fraseCurta = form.querySelector('[name = "fraseCurta"]');
+    fraseCurta.placeholder = "Casa";
+
+    return form;
+}
+
+const formEndereco = montarEnderecoObrigatorio();
 const containerEndereco = document.getElementById('container-enderecos');
 containerEndereco.append(formEndereco);
 
@@ -44,5 +60,9 @@ async function enviarCliente(){
 }
 
 function adicionarEndereco(){
-    containerEndereco.append(new FormularioEndereco());
+    const nEnderecosNaTela = document.querySelectorAll('.endereco').length + 1;
+    const form = new FormularioEndereco();
+    form.setNumeroTitulo(nEnderecosNaTela);
+    containerEndereco.append(form);
+
 }

@@ -120,8 +120,10 @@ class FormularioEndereco extends HTMLFormElement {
         this.className = 'endereco';
         const div = document.createElement('div');
         div.className = "numeracao";
-        div.append(criarElemento('p', '1'));
-        div.append(criarElemento('p', 'Endereço residencial'));
+
+        this.numeroTitulo = criarElemento('p', '1');
+        div.append(this.numeroTitulo);
+        div.append(criarElemento('p', 'Endereço'));
         this.append(div);
 
         const mainDiv = document.createElement('div');
@@ -181,6 +183,10 @@ class FormularioEndereco extends HTMLFormElement {
             }
         };
         this.append(botaoRemover);
+    }
+
+    setNumeroTitulo(numero){
+        this.numeroTitulo.textContent = numero;
     }
 }
 
