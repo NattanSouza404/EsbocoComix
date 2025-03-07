@@ -46,11 +46,11 @@ public class ClienteController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            Cliente clienteToAdd = (Cliente) ServletUtil.jsonToObject(req, Cliente.class);
+            PedidoCadastrarCliente pedidoCadastrarCliente = ServletUtil.jsonToObject(req, PedidoCadastrarCliente.class);
 
             ServletUtil.retornarRespostaJson(
                 resp,
-                clienteService.inserir(clienteToAdd),
+                clienteService.inserir(pedidoCadastrarCliente),
                 HttpServletResponse.SC_CREATED
             );
         } catch (Exception e) {

@@ -53,10 +53,19 @@ const containerEndereco = document.getElementById('container-enderecos');
 containerEndereco.append(formEndereco);
 
 async function enviarCliente(){
-    const form = document.getElementById('form-cadastrar-dados-pessoais');
-    const cliente = montarClientePorForm(form);
+    const formCliente = document.getElementById('form-cadastrar-dados-pessoais');
+    const cliente = montarClientePorForm(formCliente);
+    
+    const formsEndereco = document.querySelectorAll('.endereco');
+    const enderecos = [];
+    formsEndereco.forEach((e) => {
+        enderecos.push(montarEnderecoPorForm(e));
+    });
 
-    inserirCliente(cliente);
+    inserirCliente({
+        cliente: cliente,
+        enderecos: enderecos
+    });
 }
 
 function adicionarEndereco(){

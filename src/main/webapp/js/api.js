@@ -29,7 +29,7 @@ async function retornarEnderecos(idCliente){
     }
 } 
 
-async function inserirCliente(cliente){
+async function inserirCliente(pedidoCadastrarCliente){
 
     try {
         const confirmacaoUsuario = confirm("Deseja mesmo cadastrar?");
@@ -43,7 +43,7 @@ async function inserirCliente(cliente){
         const option = {
             method: 'POST',
             headers:{'Content-Type': 'application/json'},
-            body: JSON.stringify(cliente)
+            body: JSON.stringify(pedidoCadastrarCliente)
         }
 
         const result = await fetch(url, option);

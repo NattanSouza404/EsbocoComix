@@ -1,7 +1,9 @@
 package com.fatec.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.fatec.controller.PedidoCadastrarCliente;
 import com.fatec.dao.impl.ClienteDAO;
 import com.fatec.dao.impl.EnderecoDAO;
 import com.fatec.model.entidades.Cliente;
@@ -14,30 +16,28 @@ public class ClienteService {
 
     private ClienteValidador clienteValidador = new ClienteValidador();
 
-    public Cliente inserir(Cliente c) throws Exception {
-        clienteValidador.validar(c);
-        inserirNovoHash(c);
-        return clienteDAO.inserir(c);
+    public PedidoCadastrarCliente inserir(PedidoCadastrarCliente pedido) throws Exception {
+        Cliente clienteToAdd = pedido.getCliente();
+        clienteValidador.validar(clienteToAdd);
+        inserirNovoHash(clienteToAdd);
+
+        Cliente clienteInserido = clienteDAO.inserir(pedido.getCliente());
+
+        List<Endereco> enderecosInseridos = new ArrayList<>();
+        for (Endereco e : pedido.getEnderecos()) {
+            e.setIdCliente(clienteInserido.getId());
+            enderecosInseridos.add(enderecoDAO.inserir(e));
+        }
+
+        return new PedidoCadastrarCliente(clienteInserido, enderecosInseridos);
     }
 
     public List<Cliente> consultarTodos() throws Exception {
-        List<Cliente> clientes = clienteDAO.consultarTodos();
-
-        for (Cliente c: clientes) {
-            try {
-                c.setEnderecos(enderecoDAO.consultarByIDCliente(c.getId()));
-            } catch (Exception e){
-                System.err.println(e);
-            }
-        }
-
-        return clientes;
+        return clienteDAO.consultarTodos();
     }
 
     public Cliente consultarByID(int id) throws Exception {
-        Cliente cliente = consultarByID(id);
-        cliente.setEnderecos(enderecoDAO.consultarByIDCliente(id));
-        return cliente;
+        return clienteDAO.consultarByID(id);
     }
 
     public Cliente atualizar(Cliente c) throws Exception {

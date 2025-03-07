@@ -142,6 +142,16 @@ class FormularioEndereco extends HTMLFormElement {
         mainDiv.append(criarElemento('label', 'É um endereço de entrega?'));
         mainDiv.append(criarSelectSimOuNao('isEntrega'));
 
+        mainDiv.append(criarElemento('label', 'Tipo de Logradouro'));
+        let select = document.createElement('select');
+        select.name = "tipoResidencial";
+        mainDiv.append(select);
+
+        ["Casa", "Apartamento"].forEach((tipoResidencial) => {
+            let option = criarElemento('option', tipoResidencial);
+            select.append(option);
+        });
+
         mainDiv.append(criarElemento('label', 'Nº Endereço'));
         mainDiv.append(criarElementoInput('numero'));
 
@@ -149,7 +159,7 @@ class FormularioEndereco extends HTMLFormElement {
         mainDiv.append(criarElementoInput('logradouro'));
 
         mainDiv.append(criarElemento('label', 'Tipo de Logradouro'));
-        let select = document.createElement('select');
+        select = document.createElement('select');
         select.name = "tipoLogradouro";
         mainDiv.append(select);
     
