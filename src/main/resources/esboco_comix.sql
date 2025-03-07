@@ -42,6 +42,27 @@ CREATE TABLE enderecos (
 ALTER TABLE enderecos
     ADD CONSTRAINT fk_end_cli FOREIGN KEY ( end_cli_id ) REFERENCES clientes ( cli_id );
 
+CREATE TABLE bandeiras_cartao_credito (
+    bcc_id   NUMERIC(2) PRIMARY KEY,
+    bcc_nome VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE cartoes_credito (
+    cre_id               NUMERIC(9) PRIMARY KEY,
+    cre_numero           CHAR(16) NOT NULL,
+    cre_nome_impresso    VARCHAR(100) NOT NULL,
+    cre_codigo_seguranca CHAR(3) NOT NULL,
+    cre_is_preferencial  CHAR(1) NOT NULL,
+    cre_bcc_id           NUMERIC(2) NOT NULL,
+    cre_cli_id           NUMERIC(6) NOT NULL
+);
+
+ALTER TABLE cartoes_credito
+    ADD CONSTRAINT fk_cre_bcc FOREIGN KEY ( cre_bcc_id ) REFERENCES bandeiras_cartao_credito ( bcc_id );
+
+ALTER TABLE cartoes_credito
+    ADD CONSTRAINT fk_cre_cli FOREIGN KEY ( cre_cli_id ) REFERENCES clientes ( cli_id );
+
 CREATE SEQUENCE cli_sq
     START WITH 1
     INCREMENT BY 1
