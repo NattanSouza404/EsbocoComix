@@ -126,7 +126,7 @@ public class EnderecoDAO implements IDAO<Endereco> {
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()) {
-                throw new Exception("Nenhum registro encontrado de endereco.");
+                throw new Exception("Esse cliente não possui nenhum registro de endereco.");
             }
             rs.beforeFirst();
     
