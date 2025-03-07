@@ -1,9 +1,16 @@
-class ModalAlterarSenha extends Modal {
+import { Modal } from "../componentes.js";
+import { BotaoFechar, BotaoSalvar } from "../componentes.js";
+import { criarElemento, criarElementoInput, formatarDataParaInput, montarClientePorForm} from "../script.js";
+import { FormularioDadosPessoais } from "../forms.js";
+import { atualizarCliente } from "../api.js";
 
-    constructor(){
+export class ModalAlterarSenha extends Modal {
+
+    constructor(clienteAtual){
         super();
 
         this.id = 'modal-alterar-senha';
+        this.clienteAtual = clienteAtual;
 
         this.conteudoModal = this.initConteudoModal();
 
@@ -57,36 +64,36 @@ class ModalAlterarSenha extends Modal {
     }
 
     enviarFormulario() {
-        promessaCliente.then((clienteAtual) => {
-            const form = document.getElementById("alterar-senha");
-            const formData = new FormData(form);
+        const form = document.getElementById("alterar-senha");
+        const formData = new FormData(form);
 
-            const clienteToUpdate = {
-                "id": clienteAtual.id,
-                "nome": clienteAtual.nome,
-                "senha": formData.get('senha'),
-                "senhaConfirmacao": formData.get('senhaConfirmacao')
-            };
+        const clienteToUpdate = {
+            "id": this.clienteAtual.id,
+            "nome": this.clienteAtual.nome,
+            "senha": formData.get('senha'),
+            "senhaConfirmacao": formData.get('senhaConfirmacao')
+        };
 
-            atualizarCliente(clienteToUpdate, 'atualizarsenha');
-        });
+        atualizarCliente(clienteToUpdate, 'atualizarsenha');
     }
 }
 
-class ModalAlterarDadosPessoais extends Modal {
+export class ModalAlterarDadosPessoais extends Modal {
 
-    constructor(){
+    constructor(clienteAtual){
         super();
 
         this.id = 'modal-alterar-dados-pessoais';
+        this.clienteAtual = clienteAtual;
 
         this.conteudoModal = this.initConteudoModal();
 
         this.append(this.conteudoModal);
+
+        this.atualizar();
     }
 
     initConteudoModal(){
-
         const conteudoModal = document.createElement('div');
         conteudoModal.className = "conteudo-modal";
 
@@ -99,9 +106,7 @@ class ModalAlterarDadosPessoais extends Modal {
 
         form.append(new BotaoSalvar(
             () => {
-                promessaCliente.then((clienteAtual) => {
-                    this.enviarAtualizacao(clienteAtual);
-                })
+                this.enviarAtualizacao(this.clienteAtual);
             }
         ));
 
@@ -110,8 +115,8 @@ class ModalAlterarDadosPessoais extends Modal {
         return conteudoModal;
     }
 
-    atualizar(cliente){
-        Object.entries(cliente).forEach(
+    atualizar(){
+        Object.entries(this.clienteAtual).forEach(
             ([chave, valor]) => {
                 let elemento = document.querySelector(`[name="${chave}"]`);
 
@@ -128,7 +133,7 @@ class ModalAlterarDadosPessoais extends Modal {
             }
         );
 
-        Object.entries(cliente.telefone).forEach(
+        Object.entries(this.clienteAtual.telefone).forEach(
             ([chave, valor]) => {
                 let elemento = document.querySelector(`[name="${chave}"]`);
 
@@ -139,11 +144,11 @@ class ModalAlterarDadosPessoais extends Modal {
         );
     }
 
-    async enviarAtualizacao(clienteAtual){
+    async enviarAtualizacao(){
         const form = document.getElementById("alterar-dados-pessoais");
         const cliente = montarClientePorForm(form);
 
-        cliente.id = clienteAtual.id;
+        cliente.id = this.clienteAtual.id;
         
         atualizarCliente(cliente);
     }

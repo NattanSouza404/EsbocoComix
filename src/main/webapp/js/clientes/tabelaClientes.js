@@ -1,8 +1,7 @@
+import { toggleDisplay } from "../script.js";
+import { retornarAllClientes } from "../api.js";
 
-
-const tbodyClientes = document.querySelector('#tabela-clientes tbody');
-
-class TabelaClientes extends HTMLTableElement {
+export default class TabelaClientes extends HTMLTableElement {
     
     constructor(){
         super();
@@ -90,8 +89,3 @@ class TabelaClientes extends HTMLTableElement {
 }
 
 customElements.define('tabela-clientes', TabelaClientes, { extends: 'table'}); 
-
-const tabelaClientes = new TabelaClientes();
-document.body.append(tabelaClientes);
-
-tabelaClientes.atualizarTabelaClientes();

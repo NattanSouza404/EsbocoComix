@@ -1,4 +1,4 @@
-function toggleDisplay(id){
+export function toggleDisplay(id){
     const modal = document.getElementById(id);
 
     if (modal.style.display === 'none' || modal.style.display === ""){
@@ -8,13 +8,13 @@ function toggleDisplay(id){
     }
 }
 
-function criarElemento(tag, texto){
+export function criarElemento(tag, texto){
     const element = document.createElement(tag);
     element.textContent = texto;
     return element;
 }
 
-function criarElementoInput(name, placeholder, type){
+export function criarElementoInput(name, placeholder, type){
     const input = document.createElement('input'); 
     
     if (name != null){
@@ -32,7 +32,7 @@ function criarElementoInput(name, placeholder, type){
     return input;
 }
 
-function criarSelectSimOuNao(name){
+export function criarSelectSimOuNao(name){
     let select = document.createElement('select');
     select.name = name;
 
@@ -46,47 +46,50 @@ function criarSelectSimOuNao(name){
     return select;
 }
 
-function formatarDataParaInput(array){
+export function formatarDataParaInput(array){
     const ano = array[0];
     const mes = ('0' + array[1]).slice(-2);
     const dia = ('0' + array[2]).slice(-2);
     return `${ano}-${mes}-${dia}`;
 }
 
-class BotaoFechar extends HTMLButtonElement  {
-    constructor(acao){
-        super();
+export function montarClientePorForm(form){
+    const formData = new FormData(form);
 
-        this.className = "botao-fechar";
-        this.textContent = "X";
-        this.onclick = acao;
-    }
+    return {
+        nome: formData.get("nome"),
+        genero: formData.get("genero"),
+        dataNascimento: formData.get("dataNascimento"),
+        cpf: formData.get("cpf"),
+        email: formData.get("email"),
+        senha: formData.get("senha"),
+        senhaConfirmacao: formData.get("senhaConfirmacao"),
+        telefone: {
+            tipo: formData.get("tipoTelefone"),
+            ddd: formData.get("ddd"),
+            numero: formData.get("numero"),
+        }
+    };
+    
 }
 
-customElements.define('botao-fechar', BotaoFechar, { extends: 'button'});
+export function montarEnderecoPorForm(form){
+    const formData = new FormData(form);
 
-class BotaoSalvar extends HTMLButtonElement  {
-    constructor(acao){
-        super();
-
-        this.className = "botao-salvar";
-        this.textContent = "Salvar";
-        this.type = "button";
-        this.onclick = acao;
-    }
-}
-
-customElements.define('botao-salvar', BotaoSalvar, { extends: 'button'});
-
-class Modal extends HTMLElement {
-    constructor(){
-        super();
-
-        this.className = "modal";
-    }
-
-    toggleDisplay(){
-        this.style.display =
-            (this.style.display === 'none') ? 'flex' : 'none';
-    }
+    return {
+        fraseCurta: formData.get('fraseCurta'),
+        logradouro: formData.get('logradouro'),
+        tipoLogradouro: formData.get('tipoLogradouro'),
+        tipoResidencial: formData.get('tipoResidencial'),
+        numero: formData.get('numero'),
+        bairro: formData.get('bairro'),
+        cep: formData.get('cep'),
+        cidade: formData.get('cidade'),
+        estado: formData.get('estado'),
+        pais: formData.get('pais'),
+        isResidencial: formData.get('isResidencial'),
+        isEntrega: formData.get('isEntrega'),
+        isCobranca: formData.get('isCobranca'),
+        observacoes: formData.get('observacoes')
+    };
 }

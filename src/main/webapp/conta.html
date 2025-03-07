@@ -14,7 +14,7 @@
     </header>
 
     <div id="opcoes-conta">
-        <button onclick="modalAlterarDadosPessoais.toggleDisplay()" class="botao-prototipo">Editar cadastro</button>
+        <button onclick="toggleDisplay('modal-alterar-dados-pessoais')" class="botao-prototipo">Editar cadastro</button>
         <button onclick="toggleDisplay('modal-alterar-senha')" class="botao-prototipo">Alterar senha</button>
         <button onclick="toggleDisplay('modal-alterar-endereco')" class="botao-prototipo">Editar Endereços</button>
         <button onclick="toggleDisplay('modal-alterar-cartao-credito')" class="botao-prototipo">Editar Cartão de Crédito</button>
@@ -157,10 +157,6 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="js/script.js"></script>
-    <script type="text/javascript" src="js/api.js"></script>
-    <script type="text/javascript" src="js/forms.js"></script>
-    <script type="text/javascript" src="js/modaisConta.js"></script>
-    <script type="text/javascript" src="js/conta.js"></script>
+    <script type="module" src="js/conta/conta.js"></script>
 </body>
 </html>

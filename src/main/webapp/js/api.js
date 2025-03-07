@@ -1,4 +1,4 @@
-async function retornarCliente(id) {
+export async function retornarCliente(id) {
     try {
         const response = await fetch("/cliente?id="+id);
         return await response.json();
@@ -9,7 +9,7 @@ async function retornarCliente(id) {
     }
 }
 
-async function retornarAllClientes() {
+export async function retornarAllClientes() {
     try {
         const response = await fetch("/cliente");
         return await response.json();
@@ -19,7 +19,7 @@ async function retornarAllClientes() {
     }
 }
 
-async function retornarEnderecos(idCliente){
+export async function retornarEnderecos(idCliente){
     try {
         const response = await fetch("/endereco?idcliente="+idCliente);
         return await response.json();
@@ -29,7 +29,7 @@ async function retornarEnderecos(idCliente){
     }
 } 
 
-async function inserirCliente(pedidoCadastrarCliente){
+export async function inserirCliente(pedidoCadastrarCliente){
 
     try {
         const confirmacaoUsuario = confirm("Deseja mesmo cadastrar?");
@@ -63,7 +63,7 @@ async function inserirCliente(pedidoCadastrarCliente){
     }
 }
 
-async function atualizarCliente(cliente, opcao){
+export async function atualizarCliente(cliente, opcao){
 
     try {
         const confirmacaoUsuario = confirm("Deseja mesmo atualizar "+cliente.nome+"?"); 
@@ -100,7 +100,7 @@ async function atualizarCliente(cliente, opcao){
     
 }
 
-async function deletar(id){
+export async function deletar(id){
     
     try {
         const confirmacaoUsuario = confirm("Deseja mesmo deletar o cadastro desse cliente?");

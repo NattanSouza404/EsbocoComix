@@ -1,46 +1,6 @@
-function montarClientePorForm(form){
-    const formData = new FormData(form);
+import { criarElemento, criarElementoInput, criarSelectSimOuNao } from "./script.js";
 
-    return {
-        nome: formData.get("nome"),
-        genero: formData.get("genero"),
-        dataNascimento: formData.get("dataNascimento"),
-        cpf: formData.get("cpf"),
-        email: formData.get("email"),
-        senha: formData.get("senha"),
-        senhaConfirmacao: formData.get("senhaConfirmacao"),
-        telefone: {
-            tipo: formData.get("tipoTelefone"),
-            ddd: formData.get("ddd"),
-            numero: formData.get("numero"),
-        }
-    };
-    
-}
-
-function montarEnderecoPorForm(form){
-    const formData = new FormData(form);
-
-    return {
-        fraseCurta: formData.get('fraseCurta'),
-        logradouro: formData.get('logradouro'),
-        tipoLogradouro: formData.get('tipoLogradouro'),
-        tipoResidencial: formData.get('tipoResidencial'),
-        numero: formData.get('numero'),
-        bairro: formData.get('bairro'),
-        cep: formData.get('cep'),
-        cidade: formData.get('cidade'),
-        estado: formData.get('estado'),
-        pais: formData.get('pais'),
-        isResidencial: formData.get('isResidencial'),
-        isEntrega: formData.get('isEntrega'),
-        isCobranca: formData.get('isCobranca'),
-        observacoes: formData.get('observacoes')
-    };
-    
-}
-
-class FormularioDadosPessoais extends HTMLFormElement {
+export class FormularioDadosPessoais extends HTMLFormElement {
     constructor(){
         super();
 
@@ -111,9 +71,7 @@ class FormularioDadosPessoais extends HTMLFormElement {
     }
 }
 
-customElements.define('form-dados-pessoais', FormularioDadosPessoais, { extends: 'form'});
-
-class FormularioEndereco extends HTMLFormElement {
+export class FormularioEndereco extends HTMLFormElement {
     constructor(){
         super();
 
@@ -200,4 +158,5 @@ class FormularioEndereco extends HTMLFormElement {
     }
 }
 
+customElements.define('form-dados-pessoais', FormularioDadosPessoais, { extends: 'form'});
 customElements.define('form-dados-endereco', FormularioEndereco, { extends: 'form'});
