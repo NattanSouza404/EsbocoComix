@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,24 +83,8 @@ public class ClienteDAO implements IDAO<Cliente> {
 
             List<Cliente> clientes = new ArrayList<>();
 
-            while (rs.next()){
-                Cliente c = new Cliente();        
-                c.setId(rs.getInt("cli_id"));
-                c.setNome(rs.getString("cli_nome"));
-                c.setGenero(rs.getString("cli_genero"));
-                c.setDataNascimento(rs.getDate("cli_dt_nascimento").toLocalDate());
-                c.setCpf(rs.getString("cli_cpf"));
-                c.setEmail(rs.getString("cli_email"));
-                c.setRanking(rs.getInt("cli_ranking"));
-                c.setAtivo(rs.getBoolean("cli_is_ativo"));
-
-                Telefone telefone = new Telefone();
-                telefone.setTipo(rs.getString("cli_tel_tipo"));
-                telefone.setDdd(rs.getString("cli_tel_ddd"));
-                telefone.setNumero(rs.getString("cli_tel_numero"));
-                c.setTelefone(telefone);
-                
-                clientes.add(c);
+            while (rs.next()){                
+                clientes.add(mapearResultToCliente(rs));
             }
 
             return clientes;
@@ -128,24 +113,8 @@ public class ClienteDAO implements IDAO<Cliente> {
             if (!rs.next()){
                 throw new Exception("Cliente não encontrado!");
             }
-    
-            Cliente c = new Cliente();
-            c.setId(rs.getInt("cli_id"));
-            c.setNome(rs.getString("cli_nome"));
-            c.setGenero(rs.getString("cli_genero"));
-            c.setDataNascimento(rs.getDate("cli_dt_nascimento").toLocalDate());
-            c.setCpf(rs.getString("cli_cpf"));
-            c.setEmail(rs.getString("cli_email"));
-            c.setRanking(rs.getInt("cli_ranking"));
-            c.setAtivo(rs.getBoolean("cli_is_ativo"));
-    
-            Telefone telefone = new Telefone();
-            telefone.setTipo(rs.getString("cli_tel_tipo"));
-            telefone.setDdd(rs.getString("cli_tel_ddd"));
-            telefone.setNumero(rs.getString("cli_tel_numero"));
-            c.setTelefone(telefone);
-
-            return c;
+            
+            return mapearResultToCliente(rs);
         } catch (Exception e){
             throw e;
         } finally {
@@ -273,6 +242,26 @@ public class ClienteDAO implements IDAO<Cliente> {
             connection.close();
             pst.close();
         }
+    }
+
+    private Cliente mapearResultToCliente(ResultSet rs) throws SQLException {
+        Cliente c = new Cliente();        
+        c.setId(rs.getInt("cli_id"));
+        c.setNome(rs.getString("cli_nome"));
+        c.setGenero(rs.getString("cli_genero"));
+        c.setDataNascimento(rs.getDate("cli_dt_nascimento").toLocalDate());
+        c.setCpf(rs.getString("cli_cpf"));
+        c.setEmail(rs.getString("cli_email"));
+        c.setRanking(rs.getInt("cli_ranking"));
+        c.setAtivo(rs.getBoolean("cli_is_ativo"));
+
+        Telefone telefone = new Telefone();
+        telefone.setTipo(rs.getString("cli_tel_tipo"));
+        telefone.setDdd(rs.getString("cli_tel_ddd"));
+        telefone.setNumero(rs.getString("cli_tel_numero"));
+        c.setTelefone(telefone);
+
+        return c;
     }
     
 }

@@ -3,6 +3,7 @@ package com.esboco_comix.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +13,6 @@ import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
-
-    private BandeiraCartaoDAO bandeiraCartaoDAO = new BandeiraCartaoDAO();
 
     @Override
     public CartaoCredito inserir(CartaoCredito c) throws Exception {
@@ -74,15 +73,7 @@ public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
             if (!rs.next()) {
                 throw new Exception("Cartão de crédito não encontrado.");
             }
-
-            CartaoCredito c = new CartaoCredito();
-            c.setId(rs.getInt("cre_id"));
-            c.setNomeImpresso(rs.getString("cre_nome_impresso"));
-            c.setPreferencial(rs.getBoolean("cre_is_preferencial"));
-            c.setIdBandeiraCartao(rs.getInt("cre_bcc_id"));
-            c.setIdCliente(rs.getInt("cre_cli_id"));
-
-            return c;    
+            return mapearResultToCartaoCredito(rs);  
         } catch (Exception e){
             throw e;
         } finally {
@@ -122,13 +113,7 @@ public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
     
             List<CartaoCredito> cartoesCredito = new ArrayList<>();
             while(rs.next()){
-                CartaoCredito c = new CartaoCredito();
-                c.setId(rs.getInt("cre_id"));
-                c.setNomeImpresso(rs.getString("cre_nome_impresso"));
-                c.setPreferencial(rs.getBoolean("cre_is_preferencial"));
-                c.setBandeiraCartao(bandeiraCartaoDAO.consultarByID(rs.getInt("cre_bcc_id")));
-                c.setIdCliente(rs.getInt(rs.getInt("cre_cli_id")));
-                cartoesCredito.add(c);
+                cartoesCredito.add(mapearResultToCartaoCredito(rs));
             }
 
             return cartoesCredito;    
@@ -138,6 +123,16 @@ public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
             connection.close();
             pst.close();
         }
+    }
+
+    private CartaoCredito mapearResultToCartaoCredito(ResultSet rs) throws SQLException {
+        CartaoCredito c = new CartaoCredito();
+        c.setId(rs.getInt("cre_id"));
+        c.setNomeImpresso(rs.getString("cre_nome_impresso"));
+        c.setPreferencial(rs.getBoolean("cre_is_preferencial"));
+        c.setIdCliente(rs.getInt(rs.getInt("cre_cli_id")));
+        c.setIdBandeiraCartao(rs.getInt("cre_bcc_id"));
+        return c;
     }
 
 }

@@ -3,6 +3,7 @@ package com.esboco_comix.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,26 +84,7 @@ public class EnderecoDAO implements IDAO<Endereco> {
             if (!rs.next()) {
                 throw new Exception("Endereço não encontrado.");
             }
-    
-            Endereco e = new Endereco();        
-            e.setId(rs.getInt("end_id"));
-            e.setFraseCurta(rs.getString("end_frase_curta"));
-            e.setLogradouro(rs.getString("end_logradouro"));
-            e.setTipoLogradouro(rs.getString("end_tipo_logradouro"));
-            e.setTipoResidencial(rs.getString("end_tipo_residencial"));
-            e.setNumero(rs.getString("end_numero"));
-            e.setBairro(rs.getString("end_bairro"));
-            e.setCep(rs.getString("end_cep"));
-            e.setCidade(rs.getString("end_cidade"));
-            e.setEstado(rs.getString("end_estado"));
-            e.setPais(rs.getString("end_pais"));
-            e.setResidencial(rs.getBoolean("end_is_residencial"));
-            e.setEntrega(rs.getBoolean("end_is_entrega"));
-            e.setCobranca(rs.getBoolean("end_is_cobranca"));
-            e.setObservacoes(rs.getString("end_observacoes"));
-            e.setIdCliente(rs.getInt("end_cli_id"));
-
-            return e;    
+            return mapearResultToEndereco(rs);    
         } catch (Exception e){
             throw e;
         } finally {
@@ -142,25 +124,7 @@ public class EnderecoDAO implements IDAO<Endereco> {
     
             List<Endereco> enderecos = new ArrayList<>();
             while(rs.next()){
-                Endereco e = new Endereco();        
-                e.setId(rs.getInt("end_id"));
-                e.setFraseCurta(rs.getString("end_frase_curta"));
-                e.setLogradouro(rs.getString("end_logradouro"));
-                e.setTipoLogradouro(rs.getString("end_tipo_logradouro"));
-                e.setTipoResidencial(rs.getString("end_tipo_residencial"));
-                e.setNumero(rs.getString("end_numero"));
-                e.setBairro(rs.getString("end_bairro"));
-                e.setCep(rs.getString("end_cep"));
-                e.setCidade(rs.getString("end_cidade"));
-                e.setEstado(rs.getString("end_estado"));
-                e.setPais(rs.getString("end_pais"));
-                e.setResidencial(rs.getBoolean("end_is_residencial"));
-                e.setEntrega(rs.getBoolean("end_is_entrega"));
-                e.setCobranca(rs.getBoolean("end_is_cobranca"));
-                e.setObservacoes(rs.getString("end_observacoes"));
-                e.setIdCliente(rs.getInt("end_cli_id"));
-    
-                enderecos.add(e);
+                enderecos.add(mapearResultToEndereco(rs));
             }
 
             return enderecos;    
@@ -170,6 +134,28 @@ public class EnderecoDAO implements IDAO<Endereco> {
             connection.close();
             pst.close();
         }
+    }
+
+    private Endereco mapearResultToEndereco(ResultSet rs) throws SQLException {
+        Endereco e = new Endereco();        
+        e.setId(rs.getInt("end_id"));
+        e.setFraseCurta(rs.getString("end_frase_curta"));
+        e.setLogradouro(rs.getString("end_logradouro"));
+        e.setTipoLogradouro(rs.getString("end_tipo_logradouro"));
+        e.setTipoResidencial(rs.getString("end_tipo_residencial"));
+        e.setNumero(rs.getString("end_numero"));
+        e.setBairro(rs.getString("end_bairro"));
+        e.setCep(rs.getString("end_cep"));
+        e.setCidade(rs.getString("end_cidade"));
+        e.setEstado(rs.getString("end_estado"));
+        e.setPais(rs.getString("end_pais"));
+        e.setResidencial(rs.getBoolean("end_is_residencial"));
+        e.setEntrega(rs.getBoolean("end_is_entrega"));
+        e.setCobranca(rs.getBoolean("end_is_cobranca"));
+        e.setObservacoes(rs.getString("end_observacoes"));
+        e.setIdCliente(rs.getInt("end_cli_id"));
+
+        return e;
     }
 
 }
