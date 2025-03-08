@@ -15,6 +15,8 @@
   
     <main id="cadastrar-cliente">
         <div id="container-cadastrar-cliente">
+            <section id="secao-dados-pessoais" class="secao-cadastrar"></section>
+
             <section id="secao-endereco" class="secao-cadastrar">
                 <p class="titulo-dados-cadastro">Endereços</p>
 
@@ -32,37 +34,11 @@
             
             <section id="secao-cartao-credito" class="secao-cadastrar">
                 <p class="titulo-dados-cadastro">Cartões de crédito</p>
-                <button type="button">+ Novo cartão de crédito</button>
-    
-                <div class="cartao-credito">
-                    <div class="numeracao">
-                        <p>1</p>
-                    </div>
-    
-                    <div class="dados-formulario">
-                        <label>Número cartão</label>
-                        <input value="XXXX-XXXX-XXXX-XXXX">
-    
-                        <label>Código de segurança</label>
-                        <input value="XXX">
-            
-                        <label>Nome impresso</label>
-                        <input value="MAURICIO DA SILVA">
-    
-                        <label>Bandeira cartão</label>
-                        <select>
-                            <option selected>Visa</option>
-                            <option>Mastercard</option>
-                        </select>
-    
-                        <label>Preferencial</label>
-                        <select>
-                            <option selected>Sim</option>
-                            <option>Não</option>
-                        </select>
-    
-                        <button type="button">Remover</button>
-                    </div>
+
+                <div id="container-cartao-credito"></div>
+
+                <div id="footer-secao-cartao-credito">
+                    <button type="button" onclick="adicionarCartaoCredito()">+ Novo Cartão</button>
                 </div>
             </section>
         </div>

@@ -29,6 +29,6 @@ public class Cliente {
     private boolean isAtivo;
 
     private Telefone telefone;
-    private List<CartaoCredito> cartoesCliente;
+    private List<CartaoCredito> cartoesCredito;
     private List<Endereco> enderecos;
 }

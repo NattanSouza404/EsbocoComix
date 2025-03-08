@@ -126,7 +126,7 @@
     width: 80%;
 }
 
-.secao-cadastrar {
+#container-cadastrar-cliente section {
     align-items: center;
 
     border: solid 1px black;
@@ -156,6 +156,16 @@
 }
 
 .dados-endereco {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    width: fit-content;
+    max-width: 80%;
+    
+    gap: 8px 0px;
+}
+
+.dados-cartao-credito {
     display: grid;
     grid-template-columns: 1fr 1fr;
 

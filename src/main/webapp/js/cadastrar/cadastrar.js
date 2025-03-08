@@ -1,10 +1,10 @@
-import { SecaoCadastrarDadosPessoais } from "./secoesCadastrar.js";
-import { FormularioEndereco } from "../forms.js";
-import { montarClientePorForm, montarEnderecoPorForm } from "../script.js";
+import { FormularioCadastrarDadosPessoais } from "./formsCadastrar.js";
+import { FormularioEndereco, FormularioCartaoCredito } from "../forms.js";
+import { montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm } from "../script.js";
 import { inserirCliente } from "../api.js";
 
-const cadastrarCliente = document.getElementById('container-cadastrar-cliente');
-cadastrarCliente.append(new SecaoCadastrarDadosPessoais());
+const secaoCadastrarDadosPessoais = document.getElementById('secao-dados-pessoais');
+secaoCadastrarDadosPessoais.append(new FormularioCadastrarDadosPessoais());
 
 function montarEnderecoObrigatorio(){
     const form = new FormularioEndereco();
@@ -26,6 +26,10 @@ const formEndereco = montarEnderecoObrigatorio();
 const containerEndereco = document.getElementById('container-enderecos');
 containerEndereco.append(formEndereco);
 
+const formCartaoCredito = new FormularioCartaoCredito();
+const containerCartaoCredito = document.getElementById('container-cartao-credito');
+containerCartaoCredito.append(formCartaoCredito);
+
 async function enviarCliente(){
     const formCliente = document.getElementById('form-cadastrar-dados-pessoais');
     const cliente = montarClientePorForm(formCliente);
@@ -36,9 +40,16 @@ async function enviarCliente(){
         enderecos.push(montarEnderecoPorForm(e));
     });
 
+    const formsCartaoCredito = document.querySelectorAll('.cartao-credito');
+    const cartoesCredito = [];
+    formsCartaoCredito.forEach((c) => {
+        cartoesCredito.push(montarCartaoCreditoPorForm(c));
+    });
+
     inserirCliente({
         cliente: cliente,
-        enderecos: enderecos
+        enderecos: enderecos,
+        cartoesCredito: cartoesCredito
     });
 }
 
@@ -49,5 +60,13 @@ function adicionarEndereco(){
     containerEndereco.append(form);
 }
 
+function adicionarCartaoCredito(){
+    const nCartoesCreditoNaTela = document.querySelectorAll('.cartao-credito').length + 1;
+    const form = new FormularioCartaoCredito();
+    form.setNumeroTitulo(nCartoesCreditoNaTela);
+    containerCartaoCredito.append(form);
+}
+
 window.adicionarEndereco = adicionarEndereco;
 window.enviarCliente = enviarCliente;
+window.adicionarCartaoCredito = adicionarCartaoCredito;

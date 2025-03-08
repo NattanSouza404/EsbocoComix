@@ -93,3 +93,17 @@ export function montarEnderecoPorForm(form){
         observacoes: formData.get('observacoes')
     };
 }
+
+export function montarCartaoCreditoPorForm(form){
+    const formData = new FormData(form);
+
+    return {
+        numero: formData.get('numero'),
+        nomeImpresso: formData.get('nomeImpresso'),
+        codigoSeguranca: formData.get('codigoSeguranca'),
+        isPreferencial: formData.get('isPreferencial'),
+        bandeiraCartao: {
+            nome: formData.get('bandeiraCartao')
+        }
+    };
+}
