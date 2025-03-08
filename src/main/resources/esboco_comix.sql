@@ -52,7 +52,7 @@ CREATE TABLE cartoes_credito (
     cre_numero           CHAR(16) NOT NULL,
     cre_nome_impresso    VARCHAR(100) NOT NULL,
     cre_codigo_seguranca CHAR(3) NOT NULL,
-    cre_is_preferencial  CHAR(1) NOT NULL,
+    cre_is_preferencial  BOOLEAN NOT NULL,
     cre_bcc_id           NUMERIC(2) NOT NULL,
     cre_cli_id           NUMERIC(6) NOT NULL
 );
@@ -104,3 +104,45 @@ CREATE TRIGGER tg_set_end_id
 BEFORE INSERT ON enderecos
 FOR EACH ROW
 EXECUTE FUNCTION set_end_id();
+
+CREATE SEQUENCE cre_sq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE FUNCTION set_cre_id() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    NEW.cre_id := nextval('cre_sq');
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tg_set_cre_id
+BEFORE INSERT ON cartoes_credito
+FOR EACH ROW
+EXECUTE FUNCTION set_cre_id();
+
+CREATE SEQUENCE bcc_sq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE FUNCTION set_bcc_id() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    NEW.bcc_id := nextval('bcc_sq');
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tg_set_bcc_id
+BEFORE INSERT ON bandeiras_cartao_credito
+FOR EACH ROW
+EXECUTE FUNCTION set_bcc_id();

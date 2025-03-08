@@ -81,7 +81,7 @@ public class EnderecoDAO implements IDAO<Endereco> {
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()) {
-                throw new Exception("Nenhum registro encontrado de endereco.");
+                throw new Exception("Endereço não encontrado.");
             }
     
             Endereco e = new Endereco();        
@@ -111,6 +111,16 @@ public class EnderecoDAO implements IDAO<Endereco> {
         }
     }
 
+    @Override
+    public Endereco atualizar(Endereco e) throws Exception {
+        throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
+    }
+
+    @Override
+    public void deletar(Endereco e) throws Exception {
+        throw new UnsupportedOperationException("Unimplemented method 'deletar'");
+    }
+
     public List<Endereco> consultarByIDCliente(int idCliente) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
@@ -126,7 +136,7 @@ public class EnderecoDAO implements IDAO<Endereco> {
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()) {
-                throw new Exception("Esse cliente não possui nenhum registro de endereco.");
+                throw new Exception("Cliente não possui nenhum endereco.");
             }
             rs.beforeFirst();
     
@@ -160,16 +170,6 @@ public class EnderecoDAO implements IDAO<Endereco> {
             connection.close();
             pst.close();
         }
-    }
-
-    @Override
-    public Endereco atualizar(Endereco e) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
-    }
-
-    @Override
-    public void deletar(Endereco e) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'deletar'");
     }
 
 }

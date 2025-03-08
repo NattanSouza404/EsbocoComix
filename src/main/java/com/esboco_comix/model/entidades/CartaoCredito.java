@@ -8,12 +8,16 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CartaoCredito {
+    private int id;
     private String numero;
     private String nomeImpresso;
     private String codigoSeguranca;
 
     @JsonProperty("isPreferencial")
     private boolean isPreferencial;
-    
+
     private BandeiraCartao bandeiraCartao;
+
+    private int idCliente;
+    private int idBandeiraCartao;
 }

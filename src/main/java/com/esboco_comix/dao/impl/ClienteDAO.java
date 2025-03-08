@@ -13,10 +13,6 @@ import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Telefone;
 import com.esboco_comix.utils.ConexaoFactory;
 
-/***
- * Dentro do ClienteDAO, não retorno nem o hash da senha, nem o salt
- */
-
 public class ClienteDAO implements IDAO<Cliente> {
 
     @Override
@@ -247,6 +243,9 @@ public class ClienteDAO implements IDAO<Cliente> {
         }
     }
 
+    /***
+     * Apenas esse método retorna o hash e o salt da senha do ClienteDAO.
+     */
     public Cliente consultarHashSaltPorID(int id) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 

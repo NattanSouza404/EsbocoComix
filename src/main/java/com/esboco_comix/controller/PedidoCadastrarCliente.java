@@ -2,6 +2,7 @@ package com.esboco_comix.controller;
 
 import java.util.List;
 
+import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
 
@@ -17,4 +18,5 @@ import lombok.Setter;
 public class PedidoCadastrarCliente {
     private Cliente cliente;
     private List<Endereco> enderecos;
+    private List<CartaoCredito> cartoesCredito;
 }

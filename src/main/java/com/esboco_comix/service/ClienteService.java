@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.controller.PedidoCadastrarCliente;
+import com.esboco_comix.dao.impl.BandeiraCartaoDAO;
+import com.esboco_comix.dao.impl.CartaoCreditoDAO;
 import com.esboco_comix.dao.impl.ClienteDAO;
 import com.esboco_comix.dao.impl.EnderecoDAO;
+import com.esboco_comix.model.entidades.BandeiraCartao;
+import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.utils.CriptografadorSenha;
@@ -13,6 +17,8 @@ import com.esboco_comix.utils.CriptografadorSenha;
 public class ClienteService {
     private ClienteDAO clienteDAO = new ClienteDAO();
     private EnderecoDAO enderecoDAO = new EnderecoDAO();
+    private CartaoCreditoDAO cartaoCreditoDAO = new CartaoCreditoDAO();
+    private BandeiraCartaoDAO bandeiraCartaoDAO = new BandeiraCartaoDAO();
 
     private ClienteValidador clienteValidador = new ClienteValidador();
 
@@ -29,7 +35,14 @@ public class ClienteService {
             enderecosInseridos.add(enderecoDAO.inserir(e));
         }
 
-        return new PedidoCadastrarCliente(clienteInserido, enderecosInseridos);
+        List<CartaoCredito> cartoesCredito = new ArrayList<>();
+        for (CartaoCredito c: pedido.getCartoesCredito()){
+            c.setIdCliente(clienteInserido.getId());
+            BandeiraCartao bc = consultarBandeiraCartao(c.getBandeiraCartao()); 
+            c.setBandeiraCartao(bc);
+            cartoesCredito.add(cartaoCreditoDAO.inserir(c));
+        }
+        return new PedidoCadastrarCliente(clienteInserido, enderecosInseridos, cartoesCredito);
     }
 
     public List<Cliente> consultarTodos() throws Exception {
@@ -74,6 +87,10 @@ public class ClienteService {
         String saltSenha = CriptografadorSenha.generateSalt();
         c.setHashSenha(CriptografadorSenha.hashSenha(c.getSenha(), saltSenha));
         c.setSaltSenha(saltSenha);
+    }
+            
+    private BandeiraCartao consultarBandeiraCartao(BandeiraCartao bandeiraCartao) throws Exception {
+        return bandeiraCartaoDAO.consultarByNome(bandeiraCartao.getNome());
     }
 
 }
