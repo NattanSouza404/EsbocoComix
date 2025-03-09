@@ -10,7 +10,7 @@
 
     <properties>
     	<tomcat.version>8.0.23</tomcat.version>
-		<mainClass>com.fatec.Main</mainClass>
+		<mainClass>com.esboco_comix.Main</mainClass>
     </properties>
 	
 	<dependencies>
