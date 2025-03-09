@@ -95,7 +95,47 @@ public class EnderecoDAO implements IDAO<Endereco> {
 
     @Override
     public Endereco atualizar(Endereco e) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
+        Connection conn = ConexaoFactory.getConexao(); 
+    
+        PreparedStatement pst = conn.prepareStatement(
+            "UPDATE enderecos "+
+                "SET end_frase_curta = ?, end_logradouro = ?, "+
+                "end_tipo_logradouro = ?, end_tipo_residencial = ?, end_numero = ?, "+
+                "end_bairro = ?, end_cep = ?, end_cidade = ?, end_estado = ?, end_pais = ?, "+
+                "end_is_residencial = ?, end_is_entrega = ?, end_is_cobranca = ?, "+
+                "end_observacoes = ?, end_cli_id = ? "+
+                "WHERE end_id = ?;"
+        );
+    
+        try {
+            pst.setString(1, e.getFraseCurta());
+            pst.setString(2, e.getLogradouro());
+            pst.setString(3, e.getTipoLogradouro());
+            pst.setString(4, e.getTipoResidencial());
+            pst.setString(5, e.getNumero());
+            pst.setString(6, e.getBairro());
+            pst.setString(7, e.getCep());
+            pst.setString(8, e.getCidade());
+            pst.setString(9, e.getEstado());
+            pst.setString(10, e.getPais());
+            pst.setBoolean(11, e.isResidencial());
+            pst.setBoolean(12, e.isEntrega());
+            pst.setBoolean(13, e.isCobranca());
+            pst.setString(14, e.getObservacoes());
+            pst.setInt(15, e.getIdCliente());
+            pst.setInt(16, e.getId());
+        
+            if (pst.executeUpdate() == 0) {
+                throw new Exception("Atualização não foi sucedida!");
+            }
+
+            return consultarByID(e.getId());
+        } catch (Exception ex){
+            throw ex;
+        } finally {
+            pst.close();
+            conn.close();
+        } 
     }
 
     @Override

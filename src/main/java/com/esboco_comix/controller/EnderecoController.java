@@ -1,6 +1,7 @@
 package com.esboco_comix.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.esboco_comix.controller.utils.ServletUtil;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.service.EnderecoService;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 public class EnderecoController extends HttpServlet {
 
@@ -47,6 +49,21 @@ public class EnderecoController extends HttpServlet {
             ServletUtil.retornarRespostaJson(
                 resp,
                 enderecoService.inserir(enderecoToAdd),
+                HttpServletResponse.SC_CREATED
+            );
+        } catch (Exception e) {
+            ServletUtil.estourarErro(resp, e);
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
+        try {
+            List<Endereco> enderecosToUpdate = ServletUtil.jsonToObject(req, new TypeReference<List<Endereco>>() {});
+            ServletUtil.retornarRespostaJson(
+                resp,
+                enderecoService.atualizarEnderecos(enderecosToUpdate),
                 HttpServletResponse.SC_CREATED
             );
         } catch (Exception e) {
