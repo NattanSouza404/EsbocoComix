@@ -1,10 +1,10 @@
-import { Modal } from "../componentes.js";
-import { BotaoFechar, BotaoSalvar } from "../componentes.js";
+import { Modal } from "../componentes/componentes.js";
+import { BotaoFechar, BotaoSalvar } from "../componentes/componentes.js";
 import { criarElemento, criarElementoInput, formatarDataParaInput, montarClientePorForm, montarEnderecoPorForm} from "../script.js";
-import { FormularioDadosPessoais, FormularioEndereco } from "../forms.js";
+import { FormularioDadosPessoais, FormularioEndereco } from "../forms/forms.js";
 import { atualizarCliente, atualizarEndereco } from "../api.js";
-import { SecaoFormsEndereco } from "../cadastrar/secaoEndereco.js";
-import { SecaoFormsCartaoCredito } from "../cadastrar/secaoCartaoCredito.js";
+import { SecaoFormsEndereco } from "../forms/secaoEndereco.js";
+import { SecaoFormsCartaoCredito } from "../forms/secaoCartaoCredito.js";
 
 export class ModalAlterarSenha extends Modal {
 

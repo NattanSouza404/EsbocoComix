@@ -1,13 +1,11 @@
 import { criarElemento } from "../script.js";
-import { FormularioCartaoCredito } from "../forms.js";
+import { FormularioCartaoCredito } from "./forms.js";
 
 export class SecaoFormsCartaoCredito extends HTMLElement {
     constructor(){
         super();
 
-        const p = criarElemento("p", "Cartões de crédito");
-        p.className = 'titulo-dados-cadastro';
-        this.append(p);
+        this.append(criarElemento("p", "Cartões de crédito"));
 
         this.container = document.createElement('div');
         this.container.id = 'container-cartao-credito';

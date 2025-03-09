@@ -1,4 +1,4 @@
-import { ChatIA } from "./chatIA.js";
+import { ChatIA } from "./componentes/chatIA.js";
 
 const chatIA = new ChatIA();
 document.body.append(chatIA);

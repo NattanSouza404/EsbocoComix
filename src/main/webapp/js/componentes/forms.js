@@ -1,4 +1,4 @@
-import { criarElemento, criarElementoInput, criarSelectSimOuNao } from "./script.js";
+import { criarElemento, criarElementoInput, criarSelectSimOuNao } from "../script.js";
 
 export class FormularioDadosPessoais extends HTMLFormElement {
     constructor(){

@@ -86,5 +86,5 @@ export class DadosEnderecoConta extends HTMLElement {
     }
 }
 
-customElements.define('dados-pessoais-conta', DadosPessoaisConta);
-customElements.define('dados-endereco-conta', DadosEnderecoConta);
+customElements.define('dados-pessoais-conta', DadosPessoaisConta, {extends: "section"});
+customElements.define('dados-endereco-conta', DadosEnderecoConta, {extends: "section"});

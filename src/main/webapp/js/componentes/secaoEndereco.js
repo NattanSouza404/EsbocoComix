@@ -1,13 +1,11 @@
 import { criarElemento } from "../script.js";
-import { FormularioEndereco } from "../forms.js";
+import { FormularioEndereco } from "./forms.js";
 
 export class SecaoFormsEndereco extends HTMLElement {
     constructor(){
         super();
 
-        const p = criarElemento("p", "Endereços");
-        p.className = 'titulo-dados-cadastro';
-        this.append(p);
+        this.append(criarElemento("p", "Endereços"));
 
         this.container = document.createElement('div');
         this.container.id = 'container-enderecos';

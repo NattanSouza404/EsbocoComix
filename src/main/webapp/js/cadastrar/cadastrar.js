@@ -1,8 +1,8 @@
 import { FormularioCadastrarDadosPessoais } from "./formsCadastrar.js";
 import { montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm } from "../script.js";
 import { inserirCliente } from "../api.js";
-import { SecaoFormsEndereco } from "./secaoEndereco.js";
-import { SecaoFormsCartaoCredito } from "./secaoCartaoCredito.js";
+import { SecaoFormsEndereco } from "../forms/secaoEndereco.js";
+import { SecaoFormsCartaoCredito } from "../forms/secaoCartaoCredito.js";
 
 const mainContainer = document.getElementById('container-cadastrar-cliente');
 
