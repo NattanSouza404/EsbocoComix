@@ -212,6 +212,33 @@ public class ClienteDAO implements IDAO<Cliente> {
         }
     }
 
+    public Cliente atualizarStatusCadastro(Cliente c) throws Exception {
+        Connection conn = ConexaoFactory.getConexao(); 
+    
+        PreparedStatement pst = conn.prepareStatement(
+            "UPDATE clientes set "+
+                "cli_is_ativo = ? WHERE cli_id = ?"
+        );
+    
+        try {
+            pst.setBoolean(1, c.isAtivo());
+            
+            pst.setInt(2, c.getId());
+        
+            if (pst.executeUpdate() == 0) {
+                throw new Exception("Atualização não foi sucedida!");
+            }
+    
+            return consultarByID(c.getId());
+
+        } catch (Exception e){
+            throw e;
+        } finally {
+            pst.close();
+            conn.close();
+        }
+    }
+
     /***
      * Apenas esse método retorna o hash e o salt da senha do ClienteDAO.
      */

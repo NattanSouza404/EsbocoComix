@@ -63,13 +63,17 @@ public class ClienteController extends HttpServlet {
 
         try {
             Cliente clienteToUpdate = ServletUtil.jsonToObject(req, Cliente.class);
-            Cliente clienteAtualizado = null;
-
+            
             String opcao = Optional.ofNullable(req.getParameter("opcao")).orElse("default");
 
+            Cliente clienteAtualizado = null;
             switch (opcao) {
                 case "atualizarsenha":
                     clienteAtualizado = clienteService.atualizarSenha(clienteToUpdate);
+                    break;
+
+                case "atualizarstatuscadastro":
+                    clienteAtualizado = clienteService.atualizarStatusCadastro(clienteToUpdate);
                     break;
             
                 default:
