@@ -4,6 +4,7 @@ import { criarElemento, criarElementoInput, formatarDataParaInput, montarCliente
 import { FormularioDadosPessoais, FormularioEndereco } from "../forms.js";
 import { atualizarCliente, atualizarEndereco } from "../api.js";
 import { SecaoFormsEndereco } from "../cadastrar/secaoEndereco.js";
+import { SecaoFormsCartaoCredito } from "../cadastrar/secaoCartaoCredito.js";
 
 export class ModalAlterarSenha extends Modal {
 
@@ -176,34 +177,65 @@ export class ModalAlterarEndereco extends Modal {
             () => this.toggleDisplay()
         ));
 
-        const form = new SecaoFormsEndereco();
-        form.id = 'alterar-endereco';
+        const secaoForm = new SecaoFormsEndereco();
+        secaoForm.id = 'alterar-endereco';
 
-        form.append(new BotaoSalvar(
+        secaoForm.append(new BotaoSalvar(
             () => {
                 this.enviarAtualizacao(this.enderecos);
             }
         ));
 
-        conteudoModal.append(form);
+        conteudoModal.append(secaoForm);
 
         return conteudoModal;
     }
 
     async enviarAtualizacao(enderecos){
-        const form = document.getElementById("alterar-dados-pessoais");
+        
+    }
+}
 
-        const enderecosToUpdate = [];
-        enderecos.forEach((e) => {
-            enderecosToUpdate.add(montarEnderecoPorForm(e));
-        });
+export class ModalAlterarCartaoCredito extends Modal {
+    constructor(cartoesCreditos){
+        super();
 
-        enderecosToUpdate.forEach((e) => {
-            atualizarEndereco(e);
-        });
+        this.id = 'modal-alterar-cartao-credito';
+        this.cartoesCreditos = cartoesCreditos;
+
+        this.conteudoModal = this.initConteudoModal();
+
+        this.append(this.conteudoModal);
+    }
+
+    initConteudoModal(){
+        const conteudoModal = document.createElement('div');
+        conteudoModal.className = "conteudo-modal";
+
+        conteudoModal.append(new BotaoFechar(
+            () => this.toggleDisplay()
+        ));
+
+        const secaoForm = new SecaoFormsCartaoCredito();
+        secaoForm.id = 'alterar-cartao-credito';
+
+        secaoForm.append(new BotaoSalvar(
+            () => {
+                this.enviarAtualizacao(this.cartoesCreditos);
+            }
+        ));
+
+        conteudoModal.append(secaoForm);
+
+        return conteudoModal;
+    }
+
+    async enviarAtualizacao(cartoesCreditos){
+        
     }
 }
 
 customElements.define('alterar-senha', ModalAlterarSenha);
 customElements.define('alterar-dados-pessoais', ModalAlterarDadosPessoais);
 customElements.define('alterar-endereco', ModalAlterarEndereco);
+customElements.define('alterar-cartao-credito', ModalAlterarCartaoCredito);
