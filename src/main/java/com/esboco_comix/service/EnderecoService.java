@@ -17,4 +17,8 @@ public class EnderecoService {
         return enderecoDAO.consultarByIDCliente(id);
     }
 
+    public void deletar(Endereco e) throws Exception {
+        enderecoDAO.deletar(e);
+    }
+
 }
