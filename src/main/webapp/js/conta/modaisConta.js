@@ -1,8 +1,9 @@
 import { Modal } from "../componentes.js";
 import { BotaoFechar, BotaoSalvar } from "../componentes.js";
-import { criarElemento, criarElementoInput, formatarDataParaInput, montarClientePorForm} from "../script.js";
-import { FormularioDadosPessoais } from "../forms.js";
-import { atualizarCliente } from "../api.js";
+import { criarElemento, criarElementoInput, formatarDataParaInput, montarClientePorForm, montarEnderecoPorForm} from "../script.js";
+import { FormularioDadosPessoais, FormularioEndereco } from "../forms.js";
+import { atualizarCliente, atualizarEndereco } from "../api.js";
+import { SecaoFormsEndereco } from "../cadastrar/secaoEndereco.js";
 
 export class ModalAlterarSenha extends Modal {
 
@@ -154,5 +155,55 @@ export class ModalAlterarDadosPessoais extends Modal {
     }
 }
 
+export class ModalAlterarEndereco extends Modal {
+
+    constructor(enderecos){
+        super();
+
+        this.id = 'modal-alterar-endereco';
+        this.enderecos = enderecos;
+
+        this.conteudoModal = this.initConteudoModal();
+
+        this.append(this.conteudoModal);
+    }
+
+    initConteudoModal(){
+        const conteudoModal = document.createElement('div');
+        conteudoModal.className = "conteudo-modal";
+
+        conteudoModal.append(new BotaoFechar(
+            () => this.toggleDisplay()
+        ));
+
+        const form = new SecaoFormsEndereco();
+        form.id = 'alterar-endereco';
+
+        form.append(new BotaoSalvar(
+            () => {
+                this.enviarAtualizacao(this.enderecos);
+            }
+        ));
+
+        conteudoModal.append(form);
+
+        return conteudoModal;
+    }
+
+    async enviarAtualizacao(enderecos){
+        const form = document.getElementById("alterar-dados-pessoais");
+
+        const enderecosToUpdate = [];
+        enderecos.forEach((e) => {
+            enderecosToUpdate.add(montarEnderecoPorForm(e));
+        });
+
+        enderecosToUpdate.forEach((e) => {
+            atualizarEndereco(e);
+        });
+    }
+}
+
 customElements.define('alterar-senha', ModalAlterarSenha);
 customElements.define('alterar-dados-pessoais', ModalAlterarDadosPessoais);
+customElements.define('alterar-endereco', ModalAlterarEndereco);

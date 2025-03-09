@@ -1,34 +1,21 @@
 import { FormularioCadastrarDadosPessoais } from "./formsCadastrar.js";
-import { FormularioEndereco, FormularioCartaoCredito } from "../forms.js";
 import { montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm } from "../script.js";
 import { inserirCliente } from "../api.js";
+import { SecaoFormsEndereco } from "./secaoEndereco.js";
+import { SecaoFormsCartaoCredito } from "./secaoCartaoCredito.js";
 
-const secaoCadastrarDadosPessoais = document.getElementById('secao-dados-pessoais');
-secaoCadastrarDadosPessoais.append(new FormularioCadastrarDadosPessoais());
+const mainContainer = document.getElementById('container-cadastrar-cliente');
 
-function montarEnderecoObrigatorio(){
-    const form = new FormularioEndereco();
-    const button = form.querySelector('button');
-    form.removeChild(button);
+const secaoDadosPessoais = document.createElement('section');
+secaoDadosPessoais.id = 'secao-dados-pessoais';
+secaoDadosPessoais.append(new FormularioCadastrarDadosPessoais());
+mainContainer.append(secaoDadosPessoais);
 
-    const isResidencial = form.querySelector('[name = "isResidencial"]');
-    isResidencial.value = 'true';
-    const opcaoNao = isResidencial.querySelector('[value = "false"]');
-    opcaoNao.disabled = true;
+const secaoFormsEndereco = new SecaoFormsEndereco();
+mainContainer.append(secaoFormsEndereco);
 
-    const fraseCurta = form.querySelector('[name = "fraseCurta"]');
-    fraseCurta.placeholder = "Casa";
-
-    return form;
-}
-
-const formEndereco = montarEnderecoObrigatorio();
-const containerEndereco = document.getElementById('container-enderecos');
-containerEndereco.append(formEndereco);
-
-const formCartaoCredito = new FormularioCartaoCredito();
-const containerCartaoCredito = document.getElementById('container-cartao-credito');
-containerCartaoCredito.append(formCartaoCredito);
+const secaoCartaoCredito = new SecaoFormsCartaoCredito();
+mainContainer.append(secaoCartaoCredito);
 
 async function enviarCliente(){
     const formCliente = document.getElementById('form-cadastrar-dados-pessoais');
@@ -53,20 +40,4 @@ async function enviarCliente(){
     });
 }
 
-function adicionarEndereco(){
-    const nEnderecosNaTela = document.querySelectorAll('.endereco').length + 1;
-    const form = new FormularioEndereco();
-    form.setNumeroTitulo(nEnderecosNaTela);
-    containerEndereco.append(form);
-}
-
-function adicionarCartaoCredito(){
-    const nCartoesCreditoNaTela = document.querySelectorAll('.cartao-credito').length + 1;
-    const form = new FormularioCartaoCredito();
-    form.setNumeroTitulo(nCartoesCreditoNaTela);
-    containerCartaoCredito.append(form);
-}
-
-window.adicionarEndereco = adicionarEndereco;
 window.enviarCliente = enviarCliente;
-window.adicionarCartaoCredito = adicionarCartaoCredito;

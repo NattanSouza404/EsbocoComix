@@ -14,34 +14,7 @@
     </header>
   
     <main id="cadastrar-cliente">
-        <div id="container-cadastrar-cliente">
-            <section id="secao-dados-pessoais" class="secao-cadastrar"></section>
-
-            <section id="secao-endereco" class="secao-cadastrar">
-                <p class="titulo-dados-cadastro">Endereços</p>
-
-                <div id="container-enderecos"></div>
-
-                <div id="footer-secao-endereco">
-                    <button type="button" onclick="adicionarEndereco()">+ Novo endereço</button>
-    
-                    <p class="aviso">
-                        Observações: Deve haver ao menos 1 endereço de
-                        residência, um de entrega e um de cobrança
-                    </p>
-                </div>
-            </section>
-            
-            <section id="secao-cartao-credito" class="secao-cadastrar">
-                <p class="titulo-dados-cadastro">Cartões de crédito</p>
-
-                <div id="container-cartao-credito"></div>
-
-                <div id="footer-secao-cartao-credito">
-                    <button type="button" onclick="adicionarCartaoCredito()">+ Novo Cartão</button>
-                </div>
-            </section>
-        </div>
+        <div id="container-cadastrar-cliente"></div>
         <button type="button" class="botao-salvar" onclick="enviarCliente()">Salvar cliente</button>
     </main> 
   <script type="module" src="js/cadastrar/cadastrar.js"></script>

@@ -1,5 +1,5 @@
 import { DadosPessoaisConta, DadosEnderecoConta } from "./secoesConta.js";
-import { ModalAlterarSenha, ModalAlterarDadosPessoais } from "./modaisConta.js";
+import { ModalAlterarSenha, ModalAlterarDadosPessoais, ModalAlterarEndereco } from "./modaisConta.js";
 import { retornarCliente, retornarEnderecos } from "../api.js";
 import { toggleDisplay } from "../script.js";
 
@@ -21,9 +21,13 @@ let promessaEnderecos = (async () => {
     return enderecos;
 })();
 
+const conta = document.getElementById('conta');
 let modalAlterarSenha;
 let modalAlterarDadosPessoais;
+let modalAlterarEndereco = new ModalAlterarEndereco();
 let dadosPessoaisConta;
+
+conta.append(modalAlterarEndereco);
 
 promessaCliente.then((clienteAtual) => {
     modalAlterarSenha = new ModalAlterarSenha(clienteAtual);
@@ -33,7 +37,6 @@ promessaCliente.then((clienteAtual) => {
     document.body.append(modalAlterarSenha);
     document.body.append(modalAlterarDadosPessoais);
 
-    const conta = document.getElementById('conta');
     conta.append(dadosPessoaisConta);
 });
 
