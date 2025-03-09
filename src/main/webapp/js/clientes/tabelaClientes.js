@@ -1,5 +1,5 @@
 import { toggleDisplay } from "../script.js";
-import { retornarAllClientes } from "../api.js";
+import { retornarAllClientes, atualizarCliente } from "../api.js";
 
 export default class TabelaClientes extends HTMLTableElement {
     
@@ -78,6 +78,10 @@ export default class TabelaClientes extends HTMLTableElement {
             btn = document.createElement('button');
             btn.type = "button";
             btn.textContent = "Inativar";
+            btn.onclick = () => {
+                c.isAtivo = (c.isAtivo === true) ? false : true;
+                atualizarCliente(c, "atualizarstatuscadastro");
+            };
             td.append(btn);
         
             tableRow.append(td);
