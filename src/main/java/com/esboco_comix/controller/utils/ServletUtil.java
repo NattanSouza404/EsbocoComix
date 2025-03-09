@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.esboco_comix.utils.ConversorJson;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 public class ServletUtil {
 
@@ -26,6 +27,12 @@ public class ServletUtil {
     public static <T> T jsonToObject(HttpServletRequest req, Class<T> classe) throws Exception {
         return ConversorJson.jsonToObject(
             bodyRequestToString(req), classe
+        );
+    }
+
+    public static <T> T jsonToObject(HttpServletRequest req, TypeReference<T> typeReference) throws IOException {
+        return ConversorJson.jsonToObject(
+            bodyRequestToString(req), typeReference
         );
     }
 

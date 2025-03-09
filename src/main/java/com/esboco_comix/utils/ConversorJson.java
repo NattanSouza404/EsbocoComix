@@ -1,8 +1,10 @@
 package com.esboco_comix.utils;
 
+import java.io.IOException;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -22,6 +24,10 @@ public class ConversorJson {
 	
 	public static <T> T jsonToObject(String json, Class<T> classe) throws Exception {
         return mapper.readValue(json, classe);
+	}
+
+	public static <T> T jsonToObject(String string, TypeReference<T> typeReference) throws IOException {
+        return mapper.readValue(string, typeReference);
 	}
     
     public static String mapToJson(Map<Object, Object> mapa) throws JsonProcessingException {
