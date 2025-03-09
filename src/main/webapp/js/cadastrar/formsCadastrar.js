@@ -1,4 +1,4 @@
-import { FormularioDadosPessoais } from '../forms/forms.js';
+import { FormularioDadosPessoais } from '../componentes/forms.js';
 import { criarElemento, criarElementoInput } from "../script.js";
 
 export class FormularioCadastrarDadosPessoais extends FormularioDadosPessoais {

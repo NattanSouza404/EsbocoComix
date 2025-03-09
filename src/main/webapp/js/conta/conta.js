@@ -40,6 +40,8 @@ promessaCliente.then((clienteAtual) => {
     document.body.append(modalAlterarSenha);
     document.body.append(modalAlterarDadosPessoais);
 
+    modalAlterarDadosPessoais.atualizar();
+
     conta.append(dadosPessoaisConta);
 });
 
