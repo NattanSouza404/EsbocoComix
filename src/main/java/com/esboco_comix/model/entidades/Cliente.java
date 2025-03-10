@@ -18,8 +18,6 @@ public class Cliente {
     private String  cpf;
     private String  email;
     
-    private String senha;
-    private String senhaConfirmacao;
     private String hashSenha;
     private String saltSenha;
     
