@@ -8,15 +8,10 @@ import { SecaoFormsCartaoCredito } from "../componentes/secaoCartaoCredito.js";
 
 export class ModalAlterarSenha extends Modal {
 
-    constructor(clienteAtual){
+    constructor(){
         super();
-
         this.id = 'modal-alterar-senha';
-        this.clienteAtual = clienteAtual;
-
-        this.conteudoModal = this.initConteudoModal();
-
-        this.append(this.conteudoModal);
+        this.append(this.initConteudoModal());
     }
 
     initConteudoModal(){
@@ -57,7 +52,7 @@ export class ModalAlterarSenha extends Modal {
         form.append(dadosFormulario);
 
         form.append(new BotaoSalvar(
-            () => this.enviarFormulario()
+            () => this.enviarFormulario(this.clienteAtual)
         ));
 
         conteudoModal.append(form);
@@ -65,13 +60,17 @@ export class ModalAlterarSenha extends Modal {
         return conteudoModal;
     }
 
-    enviarFormulario() {
+    atualizar(cliente){
+        this.clienteAtual = cliente;
+    }
+
+    enviarFormulario(cliente) {
         const form = document.getElementById("alterar-senha");
         const formData = new FormData(form);
 
         const clienteToUpdate = {
-            "id": this.clienteAtual.id,
-            "nome": this.clienteAtual.nome,
+            "id": cliente.id,
+            "nome": cliente.nome,
             "senha": formData.get('senha'),
             "senhaConfirmacao": formData.get('senhaConfirmacao')
         };
@@ -82,17 +81,13 @@ export class ModalAlterarSenha extends Modal {
 
 export class ModalAlterarDadosPessoais extends Modal {
 
-    constructor(clienteAtual){
+    constructor(){
         super();
 
         this.id = 'modal-alterar-dados-pessoais';
-        this.clienteAtual = clienteAtual;
-
         this.conteudoModal = this.initConteudoModal();
 
         this.append(this.conteudoModal);
-
-        this.atualizar();
     }
 
     initConteudoModal(){
@@ -117,8 +112,9 @@ export class ModalAlterarDadosPessoais extends Modal {
         return conteudoModal;
     }
 
-    atualizar(){
-        Object.entries(this.clienteAtual).forEach(
+    atualizar(cliente){
+        this.clienteAtual = cliente;
+        Object.entries(cliente).forEach(
             ([chave, valor]) => {
                 let elemento = document.querySelector(`[name="${chave}"]`);
 
@@ -135,7 +131,7 @@ export class ModalAlterarDadosPessoais extends Modal {
             }
         );
 
-        Object.entries(this.clienteAtual.telefone).forEach(
+        Object.entries(cliente.telefone).forEach(
             ([chave, valor]) => {
                 let elemento = document.querySelector(`[name="${chave}"]`);
 
@@ -191,9 +187,6 @@ export class ModalAlterarEndereco extends Modal {
         return conteudoModal;
     }
 
-    async enviarAtualizacao(enderecos){
-        
-    }
 }
 
 export class ModalAlterarCartaoCredito extends Modal {

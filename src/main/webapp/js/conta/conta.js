@@ -1,7 +1,7 @@
 import { DadosPessoaisConta, DadosEnderecoConta } from "./secoesConta.js";
 import { ModalAlterarSenha, ModalAlterarDadosPessoais, ModalAlterarEndereco, ModalAlterarCartaoCredito } from "./modaisConta.js";
 import { retornarCliente, retornarEnderecos } from "../api.js";
-import { toggleDisplay } from "../script.js";
+import { criarElemento } from "../script.js";
 
 let promessaCliente = (async () => {
     const uRLSearchParams = new URLSearchParams(window.location.search);
@@ -21,35 +21,39 @@ let promessaEnderecos = (async () => {
     return enderecos;
 })();
 
-const conta = document.getElementById('conta');
-let modalAlterarSenha;
-let modalAlterarDadosPessoais;
-let modalAlterarEndereco = new ModalAlterarEndereco();
-let dadosPessoaisConta;
+/*
+let promessaCartoesCredito = (async () => {
+    const uRLSearchParams = new URLSearchParams(window.location.search);
+    const cartoesCredito = await retornarCartoesCredito(
+        uRLSearchParams.get('idcliente')
+    );
+    console.log("Variavel global inicializada cartões de crédito:", cartoesCredito);
+    return cartoesCredito;
+})();
+*/
 
-conta.append(modalAlterarEndereco);
+const modalAlterarDadosPessoais = new ModalAlterarDadosPessoais();
+const modalAlterarEndereco = new ModalAlterarEndereco();
+const modalAlterarCartaoCredito = new ModalAlterarCartaoCredito();
+const modalAlterarSenha = new ModalAlterarSenha();
 
-let modalAlterarCartaoCredito = new ModalAlterarCartaoCredito();
-conta.append(modalAlterarCartaoCredito);
+document.body.append(modalAlterarDadosPessoais);
+document.body.append(modalAlterarSenha);
+document.body.append(modalAlterarCartaoCredito)
+document.body.append(modalAlterarEndereco);
 
-promessaCliente.then((clienteAtual) => {
-    modalAlterarSenha = new ModalAlterarSenha(clienteAtual);
-    modalAlterarDadosPessoais = new ModalAlterarDadosPessoais(clienteAtual);
-    dadosPessoaisConta = new DadosPessoaisConta(clienteAtual);
+promessaCliente.then((cliente) => {
+    modalAlterarDadosPessoais.atualizar(cliente);
+    modalAlterarSenha.atualizar(cliente);
 
-    document.body.append(modalAlterarSenha);
-    document.body.append(modalAlterarDadosPessoais);
-
-    modalAlterarDadosPessoais.atualizar();
-
-    conta.append(dadosPessoaisConta);
+    const containerDadosPessoais = document.getElementById('dados-pessoais');
+    containerDadosPessoais.append(new DadosPessoaisConta(cliente));
 });
 
 promessaEnderecos.then((enderecos) => {
     let contador = 1;
-    const dadosEndereco = document.createElement('div');
-    dadosEndereco.id = 'dados-endereco';
-    conta.append(dadosEndereco);
+
+    const dadosEndereco = document.getElementById('dados-endereco');
 
     enderecos.forEach(
         (e) => {
@@ -61,4 +65,28 @@ promessaEnderecos.then((enderecos) => {
     )
 });
 
-window.toggleDisplay = toggleDisplay;
+
+const navegacaoConta = document.createElement('nav');
+const opcoesConta = document.getElementById('opcoes-conta');
+
+opcoesConta.append(navegacaoConta);
+
+let button = criarElemento('button', "Editar Cadastro");
+button.onclick = () => modalAlterarDadosPessoais.toggleDisplay();
+button.className = 'botao-prototipo';
+navegacaoConta.append(button);
+
+button = criarElemento('button', "Alterar senha");
+button.onclick = () => modalAlterarSenha.toggleDisplay();
+button.className = 'botao-prototipo';
+navegacaoConta.append(button);
+
+button = criarElemento('button', "Editar Endereço");
+button.onclick = () => modalAlterarEndereco.toggleDisplay();
+button.className = 'botao-prototipo';
+navegacaoConta.append(button);
+
+button = criarElemento('button', "Editar cartão de crédito");
+button.onclick = () => modalAlterarCartaoCredito.toggleDisplay();
+button.className = 'botao-prototipo';
+navegacaoConta.append(button);

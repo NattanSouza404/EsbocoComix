@@ -1,24 +1,22 @@
 import { criarElemento } from "../script.js";
 
 export class DadosPessoaisConta extends HTMLElement {
-    constructor(clienteAtual){
+    constructor(cliente){
         super();
-
-        this.id = 'dados-pessoais';
-        this.cliente = clienteAtual;
-
-        this.preencherDados();
+        this.atualizar(cliente);
     }
 
-    async preencherDados(){
+    async atualizar(cliente){
+
+        this.textContent = "";
 
         const dados = {
-            "Nome":             this.cliente.nome,
-            "Data Nascimento":  this.cliente.dataNascimento,
-            "CPF":              this.cliente.cpf,
-            "E-mail":           this.cliente.email,
-            "Gênero":           this.cliente.genero,
-            "Ranking":          this.cliente.ranking
+            "Nome":             cliente.nome,
+            "Data Nascimento":  cliente.dataNascimento,
+            "CPF":              cliente.cpf,
+            "E-mail":           cliente.email,
+            "Gênero":           cliente.genero,
+            "Ranking":          cliente.ranking
         };
 
         Object.entries(dados).forEach(
@@ -28,9 +26,11 @@ export class DadosPessoaisConta extends HTMLElement {
         );
     
         this.append(document.createElement('hr'));
+
+        const telefone = cliente.telefone;
         
         this.append(criarElemento(
-            'p', `Telefone ${this.cliente.telefone.tipo} : ${this.cliente.telefone.ddd} ${this.cliente.telefone.numero}`
+            'p', `Telefone ${telefone.tipo} : ${telefone.ddd} ${telefone.numero}`
         ));
     }
 }
@@ -41,41 +41,42 @@ export class DadosEnderecoConta extends HTMLElement {
         super();
 
         this.className = 'endereco-conta';
-        this.endereco = endereco;
-
         this.titulo = criarElemento('h3', 'Endereço');
         this.append(this.titulo);
+        this.atualizar(endereco);
+    }
 
+    atualizar(endereco){
         let msgTipoEndereco = "";
 
-        if (this.endereco.isResidencial === true){
-            msgTipoEndereco += "Residencial";
+        if (endereco.isResidencial === true){
+            msgTipoEndereco += "[Residencial] ";
         }
 
-        if (this.endereco.isEntrega === true){
-            msgTipoEndereco += "Entrega";
+        if (endereco.isEntrega === true){
+            msgTipoEndereco += "[Entrega] ";
         }
 
-        if (this.endereco.isCobranca === true){
-            msgTipoEndereco += "Cobranca";
+        if (endereco.isCobranca === true){
+            msgTipoEndereco += "[Cobranca] ";
         }
 
-        if (this.endereco.observacoes === null){
-            this.endereco.observacoes = "";
+        if (endereco.observacoes === null){
+            endereco.observacoes = "";
         }
 
         const dados = {
-            "Frase Curta":          this.endereco.fraseCurta,
+            "Frase Curta":          endereco.fraseCurta,
             "Tipo do Endereço":     msgTipoEndereco,
-            "Tipo de Residência":   this.endereco.tipoResidencial,
-            "Nº":                   this.endereco.numero,
-            "Tipo Logradouro":      this.endereco.tipoLogradouro,
-            "CEP":                  this.endereco.cep,
-            "Bairro":               this.endereco.bairro,
-            "Cidade":               this.endereco.cidade,
-            "Estado":               this.endereco.estado,
-            "País":                 this.endereco.pais,
-            "Observações":          this.endereco.observacoes
+            "Tipo de Residência":   endereco.tipoResidencial,
+            "Nº":                   endereco.numero,
+            "Tipo Logradouro":      endereco.tipoLogradouro,
+            "CEP":                  endereco.cep,
+            "Bairro":               endereco.bairro,
+            "Cidade":               endereco.cidade,
+            "Estado":               endereco.estado,
+            "País":                 endereco.pais,
+            "Observações":          endereco.observacoes
         };
 
         Object.entries(dados).forEach(
@@ -86,5 +87,31 @@ export class DadosEnderecoConta extends HTMLElement {
     }
 }
 
-customElements.define('dados-pessoais-conta', DadosPessoaisConta, {extends: "section"});
-customElements.define('dados-endereco-conta', DadosEnderecoConta, {extends: "section"});
+export class DadosCartaoCreditoConta extends HTMLElement {
+    constructor(){
+        super();
+
+        this.className = 'cartao-credito-conta';
+
+        this.titulo = criarElemento('h3', '1º Cartão');
+        this.append(this.titulo);
+
+        const dados = {
+            "Número Cartão":        this.cartaoCredito.numero,
+            "Código de Segurança":  this.cartaoCredito.codigoSeguranca,
+            "Nome impresso":        this.cartaoCredito.nomeImpresso,
+            "Bandeira do Cartão":   this.cartaoCredito.bandeiraCartao,
+            "Preferencial":         this.cartaoCredito.isPreferencial,
+        };
+
+        Object.entries(dados).forEach(
+            ([chave, valor]) => {
+                this.append(criarElemento('p', chave+": "+valor));
+            }
+        );
+    }
+}
+
+customElements.define('dados-pessoais-conta', DadosPessoaisConta);
+customElements.define('dados-endereco-conta', DadosEnderecoConta);
+customElements.define('dados-cartao-credito', DadosCartaoCreditoConta) 

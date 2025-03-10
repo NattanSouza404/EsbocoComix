@@ -27,8 +27,11 @@ export class Modal extends HTMLElement {
     }
 
     toggleDisplay(){
-        this.style.display =
-            (this.style.display === 'none') ? 'flex' : 'none';
+        if (this.style.display === 'none' || this.style.display === ""){
+            this.style.display = 'flex';
+        } else {
+            this.style.display = 'none';
+        }
     }
 }
 
