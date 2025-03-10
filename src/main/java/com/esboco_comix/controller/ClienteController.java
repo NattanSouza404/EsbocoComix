@@ -22,21 +22,18 @@ public class ClienteController extends HttpServlet {
          
         try {
             String parametroId = req.getParameter("id");
+            Object objetoResposta = null;
 
             if (parametroId != null){
                 int id = Integer.parseInt(parametroId);
-
-                ServletUtil.retornarRespostaJson(
-                    resp,
-                    clienteService.consultarByID(id),
-                    HttpServletResponse.SC_OK
-                );
-                return;
+                objetoResposta = clienteService.consultarByID(id);
+            } else {
+                objetoResposta = clienteService.consultarTodos();
             }
 
             ServletUtil.retornarRespostaJson(
                 resp, 
-                clienteService.consultarTodos(),
+                objetoResposta,
                 HttpServletResponse.SC_OK
             ); 
 
@@ -65,42 +62,30 @@ public class ClienteController extends HttpServlet {
 
         try {
             String opcao = Optional.ofNullable(req.getParameter("opcao")).orElse("default");
+            Object objetoResposta = null;
 
-            Cliente clienteToUpdate = null;
-            Cliente clienteAtualizado = null;
             switch (opcao) {
-                case "atualizarsenha":
-                    PedidoAlterarSenha pedidoAlterarSenha = ServletUtil.jsonToObject(req, PedidoAlterarSenha.class);
-                    clienteAtualizado = clienteService.atualizarSenha(pedidoAlterarSenha);
+                default:
+                    Cliente clienteToUpdate = ServletUtil.jsonToObject(req, Cliente.class);
+                    objetoResposta = clienteService.atualizar(clienteToUpdate);
+                    break;
 
-                    ServletUtil.retornarRespostaJson(
-                        resp,
-                        pedidoAlterarSenha,
-                        HttpServletResponse.SC_OK
-                    );
+                case "atualizarsenha":
+                    PedidoAlterarSenha pedido = ServletUtil.jsonToObject(req, PedidoAlterarSenha.class);
+                    objetoResposta = clienteService.atualizarSenha(pedido);
                     break;
 
                 case "atualizarstatuscadastro":
-                    clienteToUpdate = ServletUtil.jsonToObject(req, Cliente.class);
-                    clienteAtualizado = clienteService.atualizarStatusCadastro(clienteToUpdate);
-
-                    ServletUtil.retornarRespostaJson(
-                        resp,
-                        clienteAtualizado,
-                        HttpServletResponse.SC_OK
-                    );
-                    break;
-            
-                default:
-                    clienteToUpdate = ServletUtil.jsonToObject(req, Cliente.class);
-                    clienteAtualizado = clienteService.atualizar(clienteToUpdate);
-                    ServletUtil.retornarRespostaJson(
-                        resp,
-                        clienteAtualizado,
-                        HttpServletResponse.SC_OK
-                    );
+                    Cliente clienteToUpdateStatus = ServletUtil.jsonToObject(req, Cliente.class);
+                    objetoResposta = clienteService.atualizarStatusCadastro(clienteToUpdateStatus);
                     break;
             }
+
+            ServletUtil.retornarRespostaJson(
+                resp,
+                objetoResposta,
+                HttpServletResponse.SC_OK
+            );
         } catch (Exception e) {
             ServletUtil.estourarErro(resp, e);
         }
