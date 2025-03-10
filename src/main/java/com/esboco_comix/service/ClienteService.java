@@ -67,7 +67,7 @@ public class ClienteService {
         String hashGuardado = clienteInserido.getHashSenha();
         String saltGuardado = clienteInserido.getSaltSenha();
 
-        validarSenha(pedido.getSenhaNova(), hashGuardado, saltGuardado);
+        validarSenha(pedido.getSenhaAntiga(), hashGuardado, saltGuardado);
         inserirNovoHash(c, pedido.getSenhaNova());
         return clienteDAO.atualizarSenha(c);
     }
