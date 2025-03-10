@@ -32,6 +32,8 @@ let promessaCartoesCredito = (async () => {
 })();
 */
 
+const dadosEndereco = document.getElementById('dados-endereco');
+
 const modalAlterarDadosPessoais = new ModalAlterarDadosPessoais();
 const modalAlterarEndereco = new ModalAlterarEndereco();
 const modalAlterarCartaoCredito = new ModalAlterarCartaoCredito();
@@ -51,10 +53,9 @@ promessaCliente.then((cliente) => {
 });
 
 promessaEnderecos.then((enderecos) => {
+    modalAlterarEndereco.atualizar(enderecos);
+
     let contador = 1;
-
-    const dadosEndereco = document.getElementById('dados-endereco');
-
     enderecos.forEach(
         (e) => {
             const endereco = new DadosEnderecoConta(e);
@@ -65,28 +66,24 @@ promessaEnderecos.then((enderecos) => {
     )
 });
 
-
 const navegacaoConta = document.createElement('nav');
 const opcoesConta = document.getElementById('opcoes-conta');
-
 opcoesConta.append(navegacaoConta);
 
-let button = criarElemento('button', "Editar Cadastro");
-button.onclick = () => modalAlterarDadosPessoais.toggleDisplay();
-button.className = 'botao-prototipo';
-navegacaoConta.append(button);
+const textosBotao = [
+    "Editar Cadastro", 'Alterar senha', 'Editar endereço', 'Editar Cartão de Crédito'
+];
 
-button = criarElemento('button', "Alterar senha");
-button.onclick = () => modalAlterarSenha.toggleDisplay();
-button.className = 'botao-prototipo';
-navegacaoConta.append(button);
+const acoesBotao = [
+    () => modalAlterarDadosPessoais.toggleDisplay(),
+    () => modalAlterarSenha.toggleDisplay(),
+    () => modalAlterarEndereco.toggleDisplay(),
+    () => modalAlterarCartaoCredito.toggleDisplay()
+];
 
-button = criarElemento('button', "Editar Endereço");
-button.onclick = () => modalAlterarEndereco.toggleDisplay();
-button.className = 'botao-prototipo';
-navegacaoConta.append(button);
-
-button = criarElemento('button', "Editar cartão de crédito");
-button.onclick = () => modalAlterarCartaoCredito.toggleDisplay();
-button.className = 'botao-prototipo';
-navegacaoConta.append(button);
+for (let i = 0; i < 4; i++) {
+    const button = criarElemento('button', textosBotao[i]);
+    button.onclick = acoesBotao[i];
+    button.className = 'botao-prototipo';
+    navegacaoConta.append(button);
+}

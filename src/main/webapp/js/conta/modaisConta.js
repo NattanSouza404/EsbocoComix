@@ -1,10 +1,83 @@
 import { Modal } from "../componentes/componentes.js";
 import { BotaoFechar, BotaoSalvar } from "../componentes/componentes.js";
 import { criarElemento, criarElementoInput, formatarDataParaInput, montarClientePorForm} from "../script.js";
-import { FormularioDadosPessoais } from "../componentes/forms.js";
+import { FormularioDadosPessoais, FormularioEndereco } from "../componentes/forms.js";
 import { atualizarCliente } from "../api.js";
 import { SecaoFormsEndereco } from "../componentes/secaoEndereco.js";
 import { SecaoFormsCartaoCredito } from "../componentes/secaoCartaoCredito.js";
+
+export class ModalAlterarDadosPessoais extends Modal {
+
+    constructor(){
+        super();
+
+        this.id = 'modal-alterar-dados-pessoais';
+        this.conteudoModal = this.initConteudoModal();
+
+        this.append(this.conteudoModal);
+    }
+
+    initConteudoModal(){
+        const conteudoModal = document.createElement('div');
+        conteudoModal.className = "conteudo-modal";
+
+        conteudoModal.append(new BotaoFechar(
+            () => this.toggleDisplay()
+        ));
+
+        const form = new FormularioDadosPessoais();
+        form.id = 'alterar-dados-pessoais';
+
+        form.append(new BotaoSalvar(
+            () => {
+                this.enviarAtualizacao(this.clienteAtual);
+            }
+        ));
+
+        conteudoModal.append(form);
+
+        return conteudoModal;
+    }
+
+    atualizar(cliente){
+        this.clienteAtual = cliente;
+        Object.entries(cliente).forEach(
+            ([chave, valor]) => {
+                let elemento = document.querySelector(`[name="${chave}"]`);
+
+                if (!elemento){
+                    return;
+                }
+
+                if (chave === 'dataNascimento'){
+                    elemento.value = formatarDataParaInput(valor);
+                    return;
+                }
+
+                elemento.value = valor;
+            }
+        );
+
+        Object.entries(cliente.telefone).forEach(
+            ([chave, valor]) => {
+                let elemento = document.querySelector(`[name="${chave}"]`);
+
+                if (elemento){
+                    elemento.value = valor;
+                }
+            }
+        );
+    }
+
+    async enviarAtualizacao(){
+        const form = document.getElementById("alterar-dados-pessoais");
+        const cliente = montarClientePorForm(form);
+
+        cliente.id = this.clienteAtual.id;
+        
+        atualizarCliente(cliente);
+    }
+}
 
 export class ModalAlterarSenha extends Modal {
 
@@ -86,87 +159,12 @@ export class ModalAlterarSenha extends Modal {
     }
 }
 
-export class ModalAlterarDadosPessoais extends Modal {
+export class ModalAlterarEndereco extends Modal {
 
     constructor(){
         super();
 
-        this.id = 'modal-alterar-dados-pessoais';
-        this.conteudoModal = this.initConteudoModal();
-
-        this.append(this.conteudoModal);
-    }
-
-    initConteudoModal(){
-        const conteudoModal = document.createElement('div');
-        conteudoModal.className = "conteudo-modal";
-
-        conteudoModal.append(new BotaoFechar(
-            () => this.toggleDisplay()
-        ));
-
-        const form = new FormularioDadosPessoais();
-        form.id = 'alterar-dados-pessoais';
-
-        form.append(new BotaoSalvar(
-            () => {
-                this.enviarAtualizacao(this.clienteAtual);
-            }
-        ));
-
-        conteudoModal.append(form);
-
-        return conteudoModal;
-    }
-
-    atualizar(cliente){
-        this.clienteAtual = cliente;
-        Object.entries(cliente).forEach(
-            ([chave, valor]) => {
-                let elemento = document.querySelector(`[name="${chave}"]`);
-
-                if (!elemento){
-                    return;
-                }
-
-                if (chave === 'dataNascimento'){
-                    elemento.value = formatarDataParaInput(valor);
-                    return;
-                }
-
-                elemento.value = valor;
-            }
-        );
-
-        Object.entries(cliente.telefone).forEach(
-            ([chave, valor]) => {
-                let elemento = document.querySelector(`[name="${chave}"]`);
-
-                if (elemento){
-                    elemento.value = valor;
-                }
-            }
-        );
-    }
-
-    async enviarAtualizacao(){
-        const form = document.getElementById("alterar-dados-pessoais");
-        const cliente = montarClientePorForm(form);
-
-        cliente.id = this.clienteAtual.id;
-        
-        atualizarCliente(cliente);
-    }
-}
-
-export class ModalAlterarEndereco extends Modal {
-
-    constructor(enderecos){
-        super();
-
         this.id = 'modal-alterar-endereco';
-        this.enderecos = enderecos;
-
         this.conteudoModal = this.initConteudoModal();
 
         this.append(this.conteudoModal);
@@ -180,18 +178,47 @@ export class ModalAlterarEndereco extends Modal {
             () => this.toggleDisplay()
         ));
 
-        const secaoForm = new SecaoFormsEndereco();
-        secaoForm.id = 'alterar-endereco';
+        this.secaoForm = new SecaoFormsEndereco();
+        this.secaoForm.id = 'alterar-endereco';
 
-        secaoForm.append(new BotaoSalvar(
+        this.secaoForm.append(new BotaoSalvar(
             () => {
                 this.enviarAtualizacao(this.enderecos);
             }
         ));
 
-        conteudoModal.append(secaoForm);
+        conteudoModal.append(this.secaoForm);
 
         return conteudoModal;
+    }
+    
+    atualizar(enderecos){
+        this.enderecos = enderecos;
+
+        this.secaoForm.container.textContent = '';
+
+        enderecos.forEach(e => {
+            const form = new FormularioEndereco();
+            this.secaoForm.container.append(form);
+
+            Object.entries(e).forEach(
+                ([chave, valor]) => {
+                    let elemento = form.querySelector(`[name="${chave}"]`);
+    
+                    if (!elemento){
+                        return;
+                    }
+    
+                    elemento.value = valor;
+                }
+            );
+
+
+        });
+    }
+
+    async enviarAtualizacao(){
+
     }
 
 }
@@ -235,7 +262,7 @@ export class ModalAlterarCartaoCredito extends Modal {
     }
 }
 
-customElements.define('alterar-senha', ModalAlterarSenha);
 customElements.define('alterar-dados-pessoais', ModalAlterarDadosPessoais);
+customElements.define('alterar-senha', ModalAlterarSenha);
 customElements.define('alterar-endereco', ModalAlterarEndereco);
 customElements.define('alterar-cartao-credito', ModalAlterarCartaoCredito);
