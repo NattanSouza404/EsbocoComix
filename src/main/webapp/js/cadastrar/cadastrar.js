@@ -33,10 +33,13 @@ async function enviarCliente(){
         cartoesCredito.push(montarCartaoCreditoPorForm(c));
     });
 
+    const formData = new FormData(formCliente);
+
     inserirCliente({
         cliente: cliente,
         enderecos: enderecos,
-        cartoesCredito: cartoesCredito
+        cartoesCredito: cartoesCredito,
+        senhaNova: formData.get('senhaNova')
     });
 }
 

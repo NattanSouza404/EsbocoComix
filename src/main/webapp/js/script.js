@@ -62,8 +62,6 @@ export function montarClientePorForm(form){
         dataNascimento: formData.get("dataNascimento"),
         cpf: formData.get("cpf"),
         email: formData.get("email"),
-        senha: formData.get("senha"),
-        senhaConfirmacao: formData.get("senhaConfirmacao"),
         telefone: {
             tipo: formData.get("tipoTelefone"),
             ddd: formData.get("ddd"),

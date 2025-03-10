@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.esboco_comix.controller.pedidos.PedidoAlterarSenha;
+import com.esboco_comix.controller.pedidos.PedidoCadastrarCliente;
 import com.esboco_comix.controller.utils.ServletUtil;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.service.ClienteService;
@@ -62,31 +64,43 @@ public class ClienteController extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         try {
-            Cliente clienteToUpdate = ServletUtil.jsonToObject(req, Cliente.class);
-            
             String opcao = Optional.ofNullable(req.getParameter("opcao")).orElse("default");
 
+            Cliente clienteToUpdate = null;
             Cliente clienteAtualizado = null;
             switch (opcao) {
                 case "atualizarsenha":
-                    clienteAtualizado = clienteService.atualizarSenha(clienteToUpdate);
+                    PedidoAlterarSenha pedidoAlterarSenha = ServletUtil.jsonToObject(req, PedidoAlterarSenha.class);
+                    clienteAtualizado = clienteService.atualizarSenha(pedidoAlterarSenha);
+
+                    ServletUtil.retornarRespostaJson(
+                        resp,
+                        pedidoAlterarSenha,
+                        HttpServletResponse.SC_OK
+                    );
                     break;
 
                 case "atualizarstatuscadastro":
+                    clienteToUpdate = ServletUtil.jsonToObject(req, Cliente.class);
                     clienteAtualizado = clienteService.atualizarStatusCadastro(clienteToUpdate);
+
+                    ServletUtil.retornarRespostaJson(
+                        resp,
+                        clienteAtualizado,
+                        HttpServletResponse.SC_OK
+                    );
                     break;
             
                 default:
+                    clienteToUpdate = ServletUtil.jsonToObject(req, Cliente.class);
                     clienteAtualizado = clienteService.atualizar(clienteToUpdate);
+                    ServletUtil.retornarRespostaJson(
+                        resp,
+                        clienteAtualizado,
+                        HttpServletResponse.SC_OK
+                    );
                     break;
             }
-            
-            ServletUtil.retornarRespostaJson(
-                resp,
-                clienteAtualizado,
-                HttpServletResponse.SC_OK
-            );
-
         } catch (Exception e) {
             ServletUtil.estourarErro(resp, e);
         }

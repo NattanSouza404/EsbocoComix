@@ -16,7 +16,7 @@ export class FormularioCadastrarDadosPessoais extends FormularioDadosPessoais {
         this.secaoSenha.className = 'dados-formulario';
 
         this.secaoSenha.append(criarElemento('label', "Senha"));
-        this.secaoSenha.append(criarElementoInput('senha', null, 'password'));
+        this.secaoSenha.append(criarElementoInput('senhaNova', null, 'password'));
 
         this.secaoSenha.append(criarElemento('label', "Confirme a senha"));
         this.secaoSenha.append(criarElementoInput('senhaConfirmacao', null, 'password'));

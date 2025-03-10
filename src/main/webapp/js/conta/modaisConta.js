@@ -36,9 +36,14 @@ export class ModalAlterarSenha extends Modal {
         const dadosFormulario = document.createElement('div');
         dadosFormulario.className = 'dados-formulario';
 
-        let label = criarElemento('label', 'Nova senha');
+        let label = criarElemento('label', 'Senha Antiga');
+        let input = criarElementoInput('senhaAntiga', null, 'password');
+        input.autocomplete = "password";
+        dadosFormulario.append(label);
+        dadosFormulario.append(input);
 
-        let input = criarElementoInput('senha', null, 'password');
+        label = criarElemento('label', 'Nova senha');
+        input = criarElementoInput('senhaNova', null, 'password');
         input.autocomplete = "new-password";
         dadosFormulario.append(label);
         dadosFormulario.append(input);
@@ -68,14 +73,16 @@ export class ModalAlterarSenha extends Modal {
         const form = document.getElementById("alterar-senha");
         const formData = new FormData(form);
 
-        const clienteToUpdate = {
-            "id": cliente.id,
-            "nome": cliente.nome,
-            "senha": formData.get('senha'),
+        const pedidoAlterarSenha = {
+            cliente: {
+                id: cliente.id
+            },
+            "senhaAntiga": formData.get('senhaAntiga'),
+            "senhaNova": formData.get('senhaNova'),
             "senhaConfirmacao": formData.get('senhaConfirmacao')
         };
 
-        atualizarCliente(clienteToUpdate, 'atualizarsenha');
+        atualizarCliente(pedidoAlterarSenha, 'atualizarsenha');
     }
 }
 

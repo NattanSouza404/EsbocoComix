@@ -3,7 +3,8 @@ package com.esboco_comix.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.controller.PedidoCadastrarCliente;
+import com.esboco_comix.controller.pedidos.PedidoAlterarSenha;
+import com.esboco_comix.controller.pedidos.PedidoCadastrarCliente;
 import com.esboco_comix.dao.impl.ClienteDAO;
 import com.esboco_comix.model.entidades.BandeiraCartao;
 import com.esboco_comix.model.entidades.CartaoCredito;
@@ -20,8 +21,8 @@ public class ClienteService {
 
     public PedidoCadastrarCliente inserir(PedidoCadastrarCliente pedido) throws Exception {
         Cliente clienteToAdd = pedido.getCliente();
-        clienteValidador.validar(clienteToAdd);
-        inserirNovoHash(clienteToAdd);
+        clienteValidador.validar(clienteToAdd, pedido);
+        inserirNovoHash(clienteToAdd, pedido.getSenhaNova());
 
         Cliente clienteInserido = clienteDAO.inserir(pedido.getCliente());
 
@@ -38,7 +39,13 @@ public class ClienteService {
             c.setBandeiraCartao(bc);
             cartoesCredito.add(cartaoCreditoService.inserir(c));
         }
-        return new PedidoCadastrarCliente(clienteInserido, enderecosInseridos, cartoesCredito);
+
+        PedidoCadastrarCliente pedidoInserido = new PedidoCadastrarCliente();
+        pedidoInserido.setCliente(clienteInserido);
+        pedidoInserido.setEnderecos(enderecosInseridos);
+        pedidoInserido.setCartoesCredito(cartoesCredito);
+
+        return pedidoInserido;
     }
 
     public List<Cliente> consultarTodos() throws Exception {
@@ -53,15 +60,15 @@ public class ClienteService {
         return clienteDAO.atualizar(c);
     }
 
-    public Cliente atualizarSenha(Cliente c) throws Exception {
-        clienteValidador.validar(c);
+    public Cliente atualizarSenha(PedidoAlterarSenha pedido) throws Exception {
+        Cliente c = pedido.getCliente();
 
         Cliente clienteInserido = clienteDAO.consultarHashSaltPorID(c.getId()); 
         String hashGuardado = clienteInserido.getHashSenha();
         String saltGuardado = clienteInserido.getSaltSenha();
 
-        validarSenha(c.getSenha(), hashGuardado, saltGuardado);
-        inserirNovoHash(c);
+        validarSenha(pedido.getSenhaNova(), hashGuardado, saltGuardado);
+        inserirNovoHash(c, pedido.getSenhaNova());
         return clienteDAO.atualizarSenha(c);
     }
 
@@ -83,9 +90,9 @@ public class ClienteService {
         }
     }
 
-    private void inserirNovoHash(Cliente c) throws Exception {
+    private void inserirNovoHash(Cliente c, String senhaNova) throws Exception {
         String saltSenha = CriptografadorSenha.generateSalt();
-        c.setHashSenha(CriptografadorSenha.hashSenha(c.getSenha(), saltSenha));
+        c.setHashSenha(CriptografadorSenha.hashSenha(senhaNova, saltSenha));
         c.setSaltSenha(saltSenha);
     }
 
