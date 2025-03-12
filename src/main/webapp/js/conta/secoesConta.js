@@ -88,20 +88,23 @@ export class DadosEnderecoConta extends HTMLElement {
 }
 
 export class DadosCartaoCreditoConta extends HTMLElement {
-    constructor(){
+    constructor(cartaoCredito){
         super();
 
         this.className = 'cartao-credito-conta';
 
         this.titulo = criarElemento('h3', '1º Cartão');
         this.append(this.titulo);
+        this.atualizar(cartaoCredito);
+    }
 
+    atualizar(cartaoCredito){
         const dados = {
-            "Número Cartão":        this.cartaoCredito.numero,
-            "Código de Segurança":  this.cartaoCredito.codigoSeguranca,
-            "Nome impresso":        this.cartaoCredito.nomeImpresso,
-            "Bandeira do Cartão":   this.cartaoCredito.bandeiraCartao,
-            "Preferencial":         this.cartaoCredito.isPreferencial,
+            "Número Cartão":        cartaoCredito.numero,
+            "Código de Segurança":  cartaoCredito.codigoSeguranca,
+            "Nome impresso":        cartaoCredito.nomeImpresso,
+            "Bandeira do Cartão":   cartaoCredito.bandeiraCartao.nome,
+            "Preferencial":         cartaoCredito.isPreferencial,
         };
 
         Object.entries(dados).forEach(
