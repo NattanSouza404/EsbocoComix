@@ -244,13 +244,13 @@ export class FormularioCartaoCredito extends HTMLFormElement {
             select.append(option);
         });
 
-        const botaoRemover = criarElemento('button', 'Remover');
-        botaoRemover.onclick = () => {
+        this.botaoRemover = criarElemento('button', 'Remover');
+        this.botaoRemover.onclick = () => {
             if (this.parentNode){
                 this.parentNode.removeChild(this);
             }
         };
-        this.append(botaoRemover);
+        this.append(this.botaoRemover);
     }
 
     setNumeroTitulo(numero){
@@ -265,6 +265,11 @@ export class FormularioCartaoCredito extends HTMLFormElement {
                 let elemento = this.querySelector(`[name="${chave}"]`);
 
                 if (!elemento){
+                    return;
+                }
+
+                if (chave === 'bandeiraCartao'){
+                    elemento.value = valor.nome;
                     return;
                 }
 
