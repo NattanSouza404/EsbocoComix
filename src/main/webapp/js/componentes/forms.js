@@ -1,4 +1,4 @@
-import { criarElemento, criarElementoInput, criarSelectSimOuNao } from "../script.js";
+import { criarElemento, criarElementoInput, criarSelectSimOuNao, formatarDataParaInput } from "../script.js";
 
 export class FormularioDadosPessoais extends HTMLFormElement {
     constructor(){
@@ -68,6 +68,36 @@ export class FormularioDadosPessoais extends HTMLFormElement {
 
         this.secaoTelefone.append(criarElemento('label', 'Número do Telefone'));
         this.secaoTelefone.append(criarElementoInput('numero', '11111-1111'));
+    }
+
+    atualizar(cliente){
+        this.cliente = cliente;
+        Object.entries(cliente).forEach(
+            ([chave, valor]) => {
+                let elemento = document.querySelector(`[name="${chave}"]`);
+
+                if (!elemento){
+                    return;
+                }
+
+                if (chave === 'dataNascimento'){
+                    elemento.value = formatarDataParaInput(valor);
+                    return;
+                }
+
+                elemento.value = valor;
+            }
+        );
+
+        Object.entries(cliente.telefone).forEach(
+            ([chave, valor]) => {
+                let elemento = document.querySelector(`[name="${chave}"]`);
+
+                if (elemento){
+                    elemento.value = valor;
+                }
+            }
+        );
     }
 }
 

@@ -53,8 +53,6 @@ promessaCliente.then((cliente) => {
 });
 
 promessaEnderecos.then((enderecos) => {
-    modalAlterarEndereco.atualizar(enderecos);
-
     let contador = 1;
     enderecos.forEach(
         (e) => {
@@ -65,6 +63,12 @@ promessaEnderecos.then((enderecos) => {
         }
     )
 });
+
+promessaCliente.then((cliente) => {
+    promessaEnderecos.then((enderecos) => {
+        modalAlterarEndereco.atualizar(enderecos, cliente);
+    });
+})
 
 const navegacaoConta = document.createElement('nav');
 const opcoesConta = document.getElementById('opcoes-conta');
