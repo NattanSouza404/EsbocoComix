@@ -207,6 +207,37 @@ export async function deletar(id){
     
 }
 
+export async function deletarCartaoCredito(cartaoCredito){
+    try {
+        const confirmacaoUsuario = confirm("Deseja mesmo deletar esse cartão de crédito?");
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+
+        const url = '/cartaocredito';
+
+        const option = {
+            method: 'DELETE',
+            headers:{'Content-Type': 'application/json'},
+            body: JSON.stringify(cartaoCredito)
+        }
+
+        const response = await fetch(url, option);
+
+        if (response.status === 204) {
+            alert('Deletado com sucesso');
+        }
+        else {
+            const resposta = await result.json();
+            alert("Erro ao deletar: "+resposta.erro);
+        }
+
+    } catch (error){
+        console.error('Erro ao deletar:', error);
+    }
+}
+
 export async function deletarEndereco(endereco){
     try {
         const confirmacaoUsuario = confirm("Deseja mesmo deletar esse endereço?");

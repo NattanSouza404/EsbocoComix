@@ -51,4 +51,15 @@ public class CartaoCreditoController extends HttpServlet {
             ServletUtil.estourarErro(resp, e);
         }
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            CartaoCredito cartaoCredito = ServletUtil.jsonToObject(req, CartaoCredito.class);
+            cartaoCreditoService.deletar(cartaoCredito);
+            resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        } catch (Exception e) {
+            ServletUtil.estourarErro(resp, e);
+        }
+    }
 }

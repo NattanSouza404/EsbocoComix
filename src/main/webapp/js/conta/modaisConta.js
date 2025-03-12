@@ -2,7 +2,7 @@ import { Modal } from "../componentes/componentes.js";
 import { BotaoFechar, BotaoSalvar } from "../componentes/componentes.js";
 import { criarElemento, criarElementoInput, montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm} from "../script.js";
 import { FormularioDadosPessoais } from "../componentes/forms.js";
-import { atualizarCliente, atualizarEndereco, atualizarCartaoCredito, deletarEndereco } from "../api.js";
+import { atualizarCliente, atualizarEndereco, atualizarCartaoCredito, deletarEndereco, deletarCartaoCredito } from "../api.js";
 import { SecaoFormsEndereco } from "../componentes/secaoEndereco.js";
 import { SecaoFormsCartaoCredito } from "../componentes/secaoCartaoCredito.js";
 
@@ -161,6 +161,7 @@ export class ModalAlterarEndereco extends Modal {
             form.botaoRemover.onclick = () => {
                 this.enviarPedidoDeletarEndereco(form);
             };
+            form.botaoRemover.type = 'button';
             form.append(this.criarBotaoAtualizar(form));
         }
 
@@ -180,6 +181,7 @@ export class ModalAlterarEndereco extends Modal {
             form.botaoRemover.onclick = () => {
                 this.enviarDelecao(form);
             };
+            form.botaoRemover.type = 'button';
             form.append(this.criarBotaoAtualizar(form));
             form.atualizar(e);
         });
@@ -241,6 +243,7 @@ export class ModalAlterarCartaoCredito extends Modal {
             form.botaoRemover.onclick = () => {
                 this.enviarPedidoDeletar(form);
             };
+            form.botaoRemover.type = 'button';
             form.append(this.criarBotaoAtualizar(form));
         }
 
@@ -258,8 +261,9 @@ export class ModalAlterarCartaoCredito extends Modal {
         cartoes.forEach(e => {
             const form = this.secaoForm.adicionarCartaoCredito();
             form.botaoRemover.onclick = () => {
-                this.enviarPedidoDeletar(form);
+                this.enviarDelecao(form);
             };
+            form.botaoRemover.type = 'button';
             form.append(this.criarBotaoAtualizar(form));
             form.atualizar(e);
         });
@@ -274,8 +278,12 @@ export class ModalAlterarCartaoCredito extends Modal {
         atualizarCartaoCredito(cartao);
     }
 
-    async enviarPedidoDeletar(form){
-
+    async enviarDelecao(form){
+        const cartaoCredito = montarCartaoCreditoPorForm(form);
+        if (form.cartaoCredito != null){
+            cartaoCredito.id = form.cartaoCredito.id;
+        }
+        deletarCartaoCredito(cartaoCredito);
     }
 
     criarBotaoAtualizar(form){

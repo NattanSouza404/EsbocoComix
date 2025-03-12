@@ -119,7 +119,25 @@ public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
 
     @Override
     public void deletar(CartaoCredito c) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'deletar'");
+        Connection conn = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = conn.prepareStatement(
+            "DELETE FROM cartoes_credito WHERE cre_id = ?"
+        );
+
+        try {
+            pst.setInt(1, c.getId());
+
+            if (pst.executeUpdate() == 0) {
+                throw new Exception("Deleção não realizada. Cartão de crédito de id " + c.getId() + " não encontrado.");
+            }
+
+        } catch (Exception ex){
+            throw ex;
+        } finally {
+            pst.close();
+            conn.close();
+        }
     }
 
     public List<CartaoCredito> consultarByIDCliente(int idCliente) throws Exception {
