@@ -5,6 +5,7 @@ import java.io.File;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 
+import com.esboco_comix.controller.CartaoCreditoController;
 import com.esboco_comix.controller.ClienteController;
 import com.esboco_comix.controller.EnderecoController;
 import com.esboco_comix.controller.IndexController;
@@ -28,6 +29,9 @@ public class Servidor {
 
 		Tomcat.addServlet(context, "apiendereco", new EnderecoController());
 		context.addServletMapping("/endereco", "apiendereco");
+
+		Tomcat.addServlet(context, "apicartaocredito", new CartaoCreditoController());
+		context.addServletMapping("/cartaocredito", "apicartaocredito");
 
 		tomcat.start();
 		tomcat.getServer().await();

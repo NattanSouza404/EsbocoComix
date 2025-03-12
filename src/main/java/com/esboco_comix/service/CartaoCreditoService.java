@@ -22,8 +22,8 @@ public class CartaoCreditoService {
         }
     }
 
-    public List<CartaoCredito> consultarTodos() throws Exception {
-        return cartaoCreditoDAO.consultarTodos();
+    public List<CartaoCredito> consultarByIDCliente(int id) throws Exception {
+        return cartaoCreditoDAO.consultarByIDCliente(id);
     }
 
     public CartaoCredito consultarByID(int id) throws Exception {
