@@ -257,10 +257,10 @@ export class FormularioCartaoCredito extends HTMLFormElement {
         this.numeroTitulo.textContent = numero;
     }
 
-    atualizar(cartao){
-        this.cartao = cartao;
+    atualizar(cartaoCredito){
+        this.cartaoCredito = cartaoCredito;
 
-        Object.entries(this.cartao).forEach(
+        Object.entries(this.cartaoCredito).forEach(
             ([chave, valor]) => {
                 let elemento = this.querySelector(`[name="${chave}"]`);
 

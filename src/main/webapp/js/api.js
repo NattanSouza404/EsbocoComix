@@ -144,6 +144,40 @@ export async function atualizarEndereco(endereco){
     
 }
 
+export async function atualizarCartaoCredito(cartaoCredito){
+
+    try {
+        const confirmacaoUsuario = confirm("Deseja mesmo atualizar esse cartão de crédito?"); 
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+
+        let url = "/cartaocredito";
+
+        const option = {
+            method: 'PUT',
+            headers:{'Content-Type': 'application/json'},
+            body: JSON.stringify(cartaoCredito)
+        }
+
+        const result = await fetch(url, option);
+
+        if (result.status === 200) {
+            alert('Atualizado com sucesso!');
+        }
+        else {
+            const resposta = await result.json();
+            alert("Erro ao atualizar: "+resposta.erro);
+        }
+
+    } catch (error){
+        console.error('Erro ao atualizar:', error);
+        document.getElementById("resultados").textContent = "Erro ao atualizar.";
+    }
+    
+}
+
 export async function deletar(id){
     
     try {

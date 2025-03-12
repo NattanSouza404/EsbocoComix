@@ -1,8 +1,8 @@
 import { Modal } from "../componentes/componentes.js";
 import { BotaoFechar, BotaoSalvar } from "../componentes/componentes.js";
-import { criarElemento, criarElementoInput, montarClientePorForm, montarEnderecoPorForm} from "../script.js";
-import { FormularioDadosPessoais, FormularioEndereco } from "../componentes/forms.js";
-import { atualizarCliente, atualizarEndereco } from "../api.js";
+import { criarElemento, criarElementoInput, montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm} from "../script.js";
+import { FormularioDadosPessoais } from "../componentes/forms.js";
+import { atualizarCliente, atualizarEndereco, atualizarCartaoCredito } from "../api.js";
 import { SecaoFormsEndereco } from "../componentes/secaoEndereco.js";
 import { SecaoFormsCartaoCredito } from "../componentes/secaoCartaoCredito.js";
 
@@ -229,22 +229,58 @@ export class ModalAlterarCartaoCredito extends Modal {
             () => this.toggleDisplay()
         ));
 
-        const secaoForm = new SecaoFormsCartaoCredito();
-        secaoForm.id = 'alterar-cartao-credito';
+        this.secaoForm = new SecaoFormsCartaoCredito();
+        this.secaoForm.id = 'alterar-cartao-credito';
 
-        secaoForm.append(new BotaoSalvar(
-            () => {
-                this.enviarAtualizacao(this.cartoesCreditos);
-            }
-        ));
+        this.secaoForm.buttonAddCartao.onclick = () => {
+            const form = this.secaoForm.adicionarCartaoCredito();
+            form.botaoRemover.onclick = () => {
+                this.enviarPedidoDeletar(form);
+            };
+            form.append(this.criarBotaoAtualizar(form));
+        }
 
-        conteudoModal.append(secaoForm);
+        conteudoModal.append(this.secaoForm);
 
         return conteudoModal;
     }
 
-    async enviarAtualizacao(cartoesCreditos){
-        
+    atualizar(cartoes, cliente){
+        this.cartoes = cartoes;
+        this.cliente = cliente;
+
+        this.secaoForm.container.textContent = '';
+
+        cartoes.forEach(e => {
+            const form = this.secaoForm.adicionarCartaoCredito();
+            form.botaoRemover.onclick = () => {
+                this.enviarPedidoDeletar(form);
+            };
+            form.append(this.criarBotaoAtualizar(form));
+            form.atualizar(e);
+        });
+    }
+
+    async enviarAtualizacao(form){
+        const cartao = montarCartaoCreditoPorForm(form);
+        if (form.cartaoCredito != null){
+            cartao.id = form.cartaoCredito.id;
+        }
+        cartao.idCliente = this.cliente.id;
+        atualizarCartaoCredito(cartao);
+    }
+
+    async enviarPedidoDeletar(form){
+
+    }
+
+    criarBotaoAtualizar(form){
+        const botaoAtualizar = criarElemento('button', 'Atualizar');
+        botaoAtualizar.type = "button";
+        botaoAtualizar.onclick = () => {
+            this.enviarAtualizacao(form);
+        };
+        return botaoAtualizar;
     }
 }
 

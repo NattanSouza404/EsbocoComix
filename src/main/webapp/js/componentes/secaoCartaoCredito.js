@@ -15,10 +15,10 @@ export class SecaoFormsCartaoCredito extends HTMLElement {
         footer.id = 'footer-secao-cartao-credito';
         this.append(footer);
 
-        const button = criarElemento('button', '+ Novo Cartão de Crédito');
-        button.type = 'button';
-        button.onclick = () => this.adicionarCartaoCredito();
-        footer.append(button);
+        this.buttonAddCartao = criarElemento('button', '+ Novo Cartão de Crédito');
+        this.buttonAddCartao.type = 'button';
+        this.buttonAddCartao.onclick = () => this.adicionarCartaoCredito();
+        footer.append(this.buttonAddCartao);
     }
 
     adicionarCartaoCredito(){

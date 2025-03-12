@@ -30,7 +30,11 @@ public class CartaoCreditoService {
         return cartaoCreditoDAO.consultarByID(id);
     }
 
-    public CartaoCredito atualizar(CartaoCredito c) throws Exception {
+    public CartaoCredito atualizar(CartaoCredito c) throws Exception{
+        if (c.getId() <= 0){
+            return cartaoCreditoDAO.inserir(c);
+        }
+
         return cartaoCreditoDAO.atualizar(c);
     }
 

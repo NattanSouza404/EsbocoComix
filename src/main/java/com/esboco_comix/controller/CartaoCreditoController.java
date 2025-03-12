@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.esboco_comix.controller.utils.ServletUtil;
+import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.service.CartaoCreditoService;
 
 public class CartaoCreditoController extends HttpServlet {
@@ -34,5 +35,20 @@ public class CartaoCreditoController extends HttpServlet {
             ServletUtil.estourarErro(resp, e);
         }
 
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
+        try {
+            CartaoCredito cartaoCredito = ServletUtil.jsonToObject(req, CartaoCredito.class);
+            ServletUtil.retornarRespostaJson(
+                resp,
+                cartaoCreditoService.atualizar(cartaoCredito),
+                HttpServletResponse.SC_OK
+            );
+        } catch (Exception e) {
+            ServletUtil.estourarErro(resp, e);
+        }
     }
 }

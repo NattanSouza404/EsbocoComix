@@ -32,7 +32,7 @@ public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
             pst.setString(2, c.getNomeImpresso());
             pst.setString(3, c.getCodigoSeguranca());
             pst.setBoolean(4, c.isPreferencial());
-            pst.setInt(5, c.getBandeiraCartao().getId());
+            pst.setInt(5, bandeiraCartaoDAO.consultarByNome(c.getBandeiraCartao().getNome()).getId());
             pst.setInt(6, c.getIdCliente());
 
             if (pst.executeUpdate() == 0){
@@ -85,7 +85,36 @@ public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
 
     @Override
     public CartaoCredito atualizar(CartaoCredito c) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
+        Connection conn = ConexaoFactory.getConexao(); 
+    
+        PreparedStatement pst = conn.prepareStatement(
+            "UPDATE cartoes_credito SET "+
+                "cre_numero = ?, cre_nome_impresso = ?, cre_codigo_seguranca = ?, "+
+                "cre_is_preferencial = ?, cre_bcc_id = ?, cre_cli_id = ? "+
+                "WHERE cre_id = ?;"
+        );
+    
+        try {
+            pst.setString(1, c.getNumero());
+            pst.setString(2, c.getNomeImpresso());
+            pst.setString(3, c.getCodigoSeguranca());
+            pst.setBoolean(4, c.isPreferencial());
+            pst.setInt(5, bandeiraCartaoDAO.consultarByNome(c.getBandeiraCartao().getNome()).getId());
+            pst.setInt(6, c.getIdCliente());
+
+            pst.setInt(7, c.getId());
+        
+            if (pst.executeUpdate() == 0) {
+                throw new Exception("Atualização não foi sucedida!");
+            }
+
+            return consultarByID(c.getId());
+        } catch (Exception ex){
+            throw ex;
+        } finally {
+            pst.close();
+            conn.close();
+        }
     }
 
     @Override
