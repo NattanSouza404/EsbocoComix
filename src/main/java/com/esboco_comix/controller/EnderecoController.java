@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.esboco_comix.controller.utils.ServletUtil;
+import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.service.EnderecoService;
 
@@ -32,8 +33,6 @@ public class EnderecoController extends HttpServlet {
                 );
                 return;
             }
-
-            throw new Exception("Necessário id do cliente para consultar endereço!");
 
         } catch (Exception e) {
             ServletUtil.estourarErro(resp, e);
@@ -64,6 +63,17 @@ public class EnderecoController extends HttpServlet {
                 enderecoService.atualizar(enderecoToUpdate),
                 HttpServletResponse.SC_OK
             );
+        } catch (Exception e) {
+            ServletUtil.estourarErro(resp, e);
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            Endereco endereco = ServletUtil.jsonToObject(req, Endereco.class);
+            enderecoService.deletar(endereco);
+            resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         } catch (Exception e) {
             ServletUtil.estourarErro(resp, e);
         }

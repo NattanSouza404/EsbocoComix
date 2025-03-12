@@ -206,3 +206,34 @@ export async function deletar(id){
     }
     
 }
+
+export async function deletarEndereco(endereco){
+    try {
+        const confirmacaoUsuario = confirm("Deseja mesmo deletar esse endereço?");
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+
+        const url = '/endereco';
+
+        const option = {
+            method: 'DELETE',
+            headers:{'Content-Type': 'application/json'},
+            body: JSON.stringify(endereco)
+        }
+
+        const response = await fetch(url, option);
+
+        if (response.status === 204) {
+            alert('Deletado com sucesso');
+        }
+        else {
+            const resposta = await result.json();
+            alert("Erro ao deletar: "+resposta.erro);
+        }
+
+    } catch (error){
+        console.error('Erro ao deletar:', error);
+    }
+}

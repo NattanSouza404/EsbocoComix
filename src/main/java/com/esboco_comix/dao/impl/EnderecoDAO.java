@@ -140,7 +140,25 @@ public class EnderecoDAO implements IDAO<Endereco> {
 
     @Override
     public void deletar(Endereco e) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'deletar'");
+        Connection conn = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = conn.prepareStatement(
+            "DELETE FROM enderecos WHERE end_id = ?"
+        );
+
+        try {
+            pst.setInt(1, e.getId());
+
+            if (pst.executeUpdate() == 0) {
+                throw new Exception("Deleção não realizada. Endereço de id " + e.getId() + " não encontrado.");
+            }
+
+        } catch (Exception ex){
+            throw ex;
+        } finally {
+            pst.close();
+            conn.close();
+        }
     }
 
     public List<Endereco> consultarByIDCliente(int idCliente) throws Exception {

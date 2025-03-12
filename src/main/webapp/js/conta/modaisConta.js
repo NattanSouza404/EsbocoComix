@@ -2,7 +2,7 @@ import { Modal } from "../componentes/componentes.js";
 import { BotaoFechar, BotaoSalvar } from "../componentes/componentes.js";
 import { criarElemento, criarElementoInput, montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm} from "../script.js";
 import { FormularioDadosPessoais } from "../componentes/forms.js";
-import { atualizarCliente, atualizarEndereco, atualizarCartaoCredito } from "../api.js";
+import { atualizarCliente, atualizarEndereco, atualizarCartaoCredito, deletarEndereco } from "../api.js";
 import { SecaoFormsEndereco } from "../componentes/secaoEndereco.js";
 import { SecaoFormsCartaoCredito } from "../componentes/secaoCartaoCredito.js";
 
@@ -178,7 +178,7 @@ export class ModalAlterarEndereco extends Modal {
         enderecos.forEach(e => {
             const form = this.secaoForm.adicionarEndereco();
             form.botaoRemover.onclick = () => {
-                this.enviarPedidoDeletarEndereco(form);
+                this.enviarDelecao(form);
             };
             form.append(this.criarBotaoAtualizar(form));
             form.atualizar(e);
@@ -195,7 +195,11 @@ export class ModalAlterarEndereco extends Modal {
     }
 
     async enviarDelecao(form){
-
+        const endereco = montarEnderecoPorForm(form);
+        if (form.endereco != null){
+            endereco.id = form.endereco.id;
+        }
+        deletarEndereco(endereco);
     }
 
     criarBotaoAtualizar(form){
