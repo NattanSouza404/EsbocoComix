@@ -256,6 +256,22 @@ export class FormularioCartaoCredito extends HTMLFormElement {
     setNumeroTitulo(numero){
         this.numeroTitulo.textContent = numero;
     }
+
+    atualizar(cartao){
+        this.cartao = cartao;
+
+        Object.entries(this.cartao).forEach(
+            ([chave, valor]) => {
+                let elemento = this.querySelector(`[name="${chave}"]`);
+
+                if (!elemento){
+                    return;
+                }
+
+                elemento.value = valor;
+            }
+        );
+    }
 }
 
 customElements.define('form-dados-pessoais', FormularioDadosPessoais, { extends: 'form'});

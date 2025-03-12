@@ -29,6 +29,16 @@ export async function retornarEnderecos(idCliente){
     }
 } 
 
+export async function retornarCartoesCredito(idCliente) {
+    try {
+        const response = await fetch("/cartaocredito?idcliente="+idCliente);
+        return await response.json();
+    } catch (error) {
+        console.error('Erro buscando dados:', error);
+        document.getElementById("resultados").textContent = "Erro carregando dados.";
+    }
+}
+
 export async function inserirCliente(pedidoCadastrarCliente){
 
     try {

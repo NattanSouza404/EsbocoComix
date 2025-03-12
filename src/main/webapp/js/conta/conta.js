@@ -1,6 +1,6 @@
-import { DadosPessoaisConta, DadosEnderecoConta } from "./secoesConta.js";
+import { DadosPessoaisConta, DadosEnderecoConta, DadosCartaoCreditoConta } from "./secoesConta.js";
 import { ModalAlterarSenha, ModalAlterarDadosPessoais, ModalAlterarEndereco, ModalAlterarCartaoCredito } from "./modaisConta.js";
-import { retornarCliente, retornarEnderecos } from "../api.js";
+import { retornarCliente, retornarEnderecos, retornarCartoesCredito } from "../api.js";
 import { criarElemento } from "../script.js";
 
 let promessaCliente = (async () => {
@@ -21,7 +21,6 @@ let promessaEnderecos = (async () => {
     return enderecos;
 })();
 
-/*
 let promessaCartoesCredito = (async () => {
     const uRLSearchParams = new URLSearchParams(window.location.search);
     const cartoesCredito = await retornarCartoesCredito(
@@ -30,9 +29,9 @@ let promessaCartoesCredito = (async () => {
     console.log("Variavel global inicializada cartões de crédito:", cartoesCredito);
     return cartoesCredito;
 })();
-*/
 
 const dadosEndereco = document.getElementById('dados-endereco');
+const dadosCartaoCredito = document.getElementById('dados-cartao-credito');
 
 const modalAlterarDadosPessoais = new ModalAlterarDadosPessoais();
 const modalAlterarEndereco = new ModalAlterarEndereco();
@@ -64,9 +63,25 @@ promessaEnderecos.then((enderecos) => {
     )
 });
 
+promessaCartoesCredito.then((cartoes) => {
+    let contador = 1;
+    cartoes.forEach(
+        (e) => {
+            const cartao = new DadosCartaoCreditoConta(e);
+            cartao.titulo.textContent = contador+"º Cartão";
+            dadosCartaoCredito.append(cartao);
+            contador++;
+        }
+    )
+});
+
 promessaCliente.then((cliente) => {
     promessaEnderecos.then((enderecos) => {
         modalAlterarEndereco.atualizar(enderecos, cliente);
+    });
+
+    promessaCartoesCredito.then((cartoes) => {
+        modalAlterarCartaoCredito.atualizar(cartoes, cliente);
     });
 })
 

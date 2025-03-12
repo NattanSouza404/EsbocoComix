@@ -26,6 +26,7 @@ export class SecaoFormsCartaoCredito extends HTMLElement {
         const form = new FormularioCartaoCredito();
         form.setNumeroTitulo(nCartoesCreditoNaTela);
         this.container.append(form);
+        return form;
     }
 }
 
