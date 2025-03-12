@@ -144,17 +144,34 @@ export class FormularioEndereco extends HTMLFormElement {
         mainDiv.append(criarElemento('label', 'Observações'));
         mainDiv.append(criarElementoInput('observacoes', 'Perto do prédio...'));
 
-        const botaoRemover = criarElemento('button', 'Remover');
-        botaoRemover.onclick = () => {
+        this.botaoRemover = criarElemento('button', 'Remover');
+        this.botaoRemover.type = 'button';
+        this.botaoRemover.onclick = () => {
             if (this.parentNode){
                 this.parentNode.removeChild(this);
             }
         };
-        this.append(botaoRemover);
+        this.append(this.botaoRemover);
     }
 
     setNumeroTitulo(numero){
         this.numeroTitulo.textContent = numero;
+    }
+
+    atualizar(endereco){
+        this.endereco = endereco;
+
+        Object.entries(this.endereco).forEach(
+            ([chave, valor]) => {
+                let elemento = this.querySelector(`[name="${chave}"]`);
+
+                if (!elemento){
+                    return;
+                }
+
+                elemento.value = valor;
+            }
+        );
     }
 }
 

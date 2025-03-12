@@ -66,7 +66,7 @@ export async function inserirCliente(pedidoCadastrarCliente){
 export async function atualizarCliente(cliente, opcao){
 
     try {
-        const confirmacaoUsuario = confirm("Deseja mesmo atualizar "+cliente.nome+"?"); 
+        const confirmacaoUsuario = confirm("Deseja mesmo atualizar ?"); 
 
         if (!confirmacaoUsuario){
             return;
@@ -81,6 +81,40 @@ export async function atualizarCliente(cliente, opcao){
             method: 'PUT',
             headers:{'Content-Type': 'application/json'},
             body: JSON.stringify(cliente)
+        }
+
+        const result = await fetch(url, option);
+
+        if (result.status === 200) {
+            alert('Atualizado com sucesso!');
+        }
+        else {
+            const resposta = await result.json();
+            alert("Erro ao atualizar: "+resposta.erro);
+        }
+
+    } catch (error){
+        console.error('Erro ao atualizar:', error);
+        document.getElementById("resultados").textContent = "Erro ao atualizar.";
+    }
+    
+}
+
+export async function atualizarEndereco(endereco){
+
+    try {
+        const confirmacaoUsuario = confirm("Deseja mesmo atualizar esse endereço?"); 
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+
+        let url = "/endereco";
+
+        const option = {
+            method: 'PUT',
+            headers:{'Content-Type': 'application/json'},
+            body: JSON.stringify(endereco)
         }
 
         const result = await fetch(url, option);

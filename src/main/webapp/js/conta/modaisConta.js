@@ -1,8 +1,8 @@
 import { Modal } from "../componentes/componentes.js";
 import { BotaoFechar, BotaoSalvar } from "../componentes/componentes.js";
-import { criarElemento, criarElementoInput, formatarDataParaInput, montarClientePorForm} from "../script.js";
+import { criarElemento, criarElementoInput, formatarDataParaInput, montarClientePorForm, montarEnderecoPorForm} from "../script.js";
 import { FormularioDadosPessoais, FormularioEndereco } from "../componentes/forms.js";
-import { atualizarCliente } from "../api.js";
+import { atualizarCliente, atualizarEndereco } from "../api.js";
 import { SecaoFormsEndereco } from "../componentes/secaoEndereco.js";
 import { SecaoFormsCartaoCredito } from "../componentes/secaoCartaoCredito.js";
 
@@ -181,11 +181,15 @@ export class ModalAlterarEndereco extends Modal {
         this.secaoForm = new SecaoFormsEndereco();
         this.secaoForm.id = 'alterar-endereco';
 
-        this.secaoForm.append(new BotaoSalvar(
-            () => {
-                this.enviarAtualizacao(this.enderecos);
-            }
-        ));
+        this.secaoForm.botaoAddEndereco.onclick = () => {
+            const form = this.secaoForm.adicionarEndereco();
+            const botaoAtualizar = criarElemento('button', 'Atualizar');
+            botaoAtualizar.type = "button";
+            botaoAtualizar.onclick = () => {
+                this.enviarAtualizacao(form);
+            };
+            form.append(botaoAtualizar);
+        }
 
         conteudoModal.append(this.secaoForm);
 
@@ -201,23 +205,34 @@ export class ModalAlterarEndereco extends Modal {
             const form = new FormularioEndereco();
             this.secaoForm.container.append(form);
 
-            Object.entries(e).forEach(
-                ([chave, valor]) => {
-                    let elemento = form.querySelector(`[name="${chave}"]`);
-    
-                    if (!elemento){
-                        return;
-                    }
-    
-                    elemento.value = valor;
-                }
-            );
+            form.botaoRemover.onclick = () => {
+                this.enviarPedidoDeletarEndereco(form);
+            };
 
+            const botaoAtualizar = criarElemento('button', 'Atualizar');
+            botaoAtualizar.type = "button";
+            botaoAtualizar.onclick = () => {
+                this.enviarAtualizacao(form);
+            };
+            form.append(botaoAtualizar);
 
+            form.atualizar(e);
         });
     }
 
-    async enviarAtualizacao(){
+    async enviarAtualizacao(form){
+        const endereco = montarEnderecoPorForm(form);
+        if (form.endereco != null){
+            endereco.id = form.endereco.id;
+            endereco.idCliente = form.endereco.idCliente;
+        } else {
+            const uRLSearchParams = new URLSearchParams(window.location.search);
+            endereco.idCliente = uRLSearchParams.get('idcliente');
+        }
+        atualizarEndereco(endereco);
+    }
+
+    async enviarDelecao(form){
 
     }
 

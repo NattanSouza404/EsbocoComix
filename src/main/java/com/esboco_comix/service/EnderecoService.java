@@ -1,6 +1,5 @@
 package com.esboco_comix.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.dao.impl.EnderecoDAO;
@@ -18,15 +17,11 @@ public class EnderecoService {
         return enderecoDAO.consultarByIDCliente(id);
     }
 
-    public List<Endereco> atualizarEnderecos(List<Endereco> enderecos) throws Exception{
-        List<Endereco> enderecosInseridos = new ArrayList<>();
-        for (Endereco e : enderecos) {
-            enderecosInseridos.add(atualizar(e));
-        }
-        return enderecosInseridos;
-    }
-
     public Endereco atualizar(Endereco e) throws Exception{
+        if (e.getId() <= 0){
+            return enderecoDAO.inserir(e);
+        }
+
         return enderecoDAO.atualizar(e);
     }
 

@@ -15,10 +15,10 @@ export class SecaoFormsEndereco extends HTMLElement {
         footer.id = 'footer-secao-endereco';
         this.append(footer);
 
-        const button = criarElemento('button', '+ Novo Endereço');
-        button.type = 'button';
-        button.onclick = () => this.adicionarEndereco();
-        footer.append(button);
+        this.botaoAddEndereco = criarElemento('button', '+ Novo Endereço');
+        this.botaoAddEndereco.type = 'button';
+        this.botaoAddEndereco.onclick = () => this.adicionarEndereco();
+        footer.append(this.botaoAddEndereco);
 
         const aviso = criarElemento('p', 'Observações: Deve haver ao menos 1 endereço de'+
                         'residência, um de entrega e um de cobrança');
@@ -34,6 +34,7 @@ export class SecaoFormsEndereco extends HTMLElement {
         const form = new FormularioEndereco();
         form.setNumeroTitulo(nEnderecosNaTela);
         this.container.append(form);
+        return form;
     }
 
     montarEnderecoObrigatorio(){
