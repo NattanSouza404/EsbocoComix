@@ -1,4 +1,4 @@
-package webapp;
+package com.esboco_comix.webapp.cadastrar_cliente;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,9 +15,9 @@ public class PaginaCadastrar {
         WebDriver driver = new EdgeDriver();
         driver.get(URL);
 
-        WebElement form = getFormularioDadosPessoais(driver);
-        WebElement input = form.findElement(By.name("nome"));
-        input.sendKeys(c.getNome());
+        FormDadosPessoais form = new FormDadosPessoais(driver);
+        form.preencherInput("nome", c.getNome());
+        form.preencherInput("cpf", c.getCpf());
 
         driver.close();
     }
