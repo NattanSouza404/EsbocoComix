@@ -38,6 +38,7 @@ public class ServletUtil {
 
     public static void estourarErro(HttpServletResponse resp, Exception e) throws IOException {
         System.err.println(e.getMessage());
+        e.printStackTrace();
 
         Map<Object, Object> mapaErro = new HashMap<>();
         mapaErro.put("erro", e.getMessage());
