@@ -2,6 +2,7 @@ import { DadosPessoaisConta, DadosEnderecoConta, DadosCartaoCreditoConta } from 
 import { ModalAlterarSenha, ModalAlterarDadosPessoais, ModalAlterarEndereco, ModalAlterarCartaoCredito } from "./modaisConta.js";
 import { retornarCliente, retornarEnderecos, retornarCartoesCredito } from "../api.js";
 import { criarElemento } from "../script.js";
+import { NavegacaoConta } from "./navegacaoConta.js";
 
 let promessaCliente = (async () => {
     const uRLSearchParams = new URLSearchParams(window.location.search);
@@ -85,24 +86,17 @@ promessaCliente.then((cliente) => {
     });
 })
 
-const navegacaoConta = document.createElement('nav');
+const navegacaoConta = new NavegacaoConta();
 const opcoesConta = document.getElementById('opcoes-conta');
 opcoesConta.append(navegacaoConta);
 
-const textosBotao = [
-    "Editar Cadastro", 'Alterar senha', 'Editar endereço', 'Editar Cartão de Crédito'
+const botoes = [
+    { id: 'btn-editar-cadastro', texto: "Editar Cadastro", acao: () => modalAlterarDadosPessoais.toggleDisplay() },
+    { id: 'btn-alterar-senha', texto: 'Alterar senha', acao: () => modalAlterarSenha.toggleDisplay() },
+    { id: 'btn-alterar-endereco', texto: 'Editar endereço', acao: () => modalAlterarEndereco.toggleDisplay() },
+    { id: 'btn-alterar-cartao-credito', texto: 'Editar Cartão de Crédito', acao: () => modalAlterarCartaoCredito.toggleDisplay() }
 ];
 
-const acoesBotao = [
-    () => modalAlterarDadosPessoais.toggleDisplay(),
-    () => modalAlterarSenha.toggleDisplay(),
-    () => modalAlterarEndereco.toggleDisplay(),
-    () => modalAlterarCartaoCredito.toggleDisplay()
-];
-
-for (let i = 0; i < 4; i++) {
-    const button = criarElemento('button', textosBotao[i]);
-    button.onclick = acoesBotao[i];
-    button.className = 'botao-prototipo';
-    navegacaoConta.append(button);
-}
+botoes.forEach(({ id, texto, acao }) => {
+    navegacaoConta.adicionarBotao(id, texto, acao);
+});
