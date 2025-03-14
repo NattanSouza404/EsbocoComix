@@ -1,4 +1,4 @@
-import { BANDEIRAS_CARTAO } from "../dados.js";
+import { BANDEIRAS_CARTAO, GENEROS, TIPOS_LOGRADOURO, TIPOS_RESIDENCIAL, TIPOS_TELEFONE } from "../dados.js";
 import { criarElemento, criarElementoInput, criarSelectSimOuNao, formatarDataParaInput } from "../script.js";
 
 export class FormularioDadosPessoais extends HTMLFormElement {
@@ -24,11 +24,7 @@ export class FormularioDadosPessoais extends HTMLFormElement {
         select.name = 'genero';
         this.secaoDadosPessoais.append(select);
 
-        const opcoesGenero = [
-            "Masculino", "Feminino", "Outro", "Prefiro não informar"
-        ];
-
-        opcoesGenero.forEach(genero => {
+        GENEROS.forEach(genero => {
             select.append(criarElemento('option', genero));
         });
 
@@ -52,15 +48,11 @@ export class FormularioDadosPessoais extends HTMLFormElement {
 
         this.secaoTelefone.append(criarElemento('label', "Tipo do Telefone"));
 
-        const opcoesTipoTelefone = [
-            "Fixo", "Celular"
-        ];
-
         select = document.createElement('select');
         select.name = "tipoTelefone";
         this.secaoTelefone.append(select);
 
-        opcoesTipoTelefone.forEach(genero => {
+        TIPOS_TELEFONE.forEach(genero => {
             select.append(criarElemento('option', genero));
         });
 
@@ -136,7 +128,7 @@ export class FormularioEndereco extends HTMLFormElement {
         select.name = "tipoResidencial";
         mainDiv.append(select);
 
-        ["Casa", "Apartamento"].forEach((tipoResidencial) => {
+        TIPOS_RESIDENCIAL.forEach((tipoResidencial) => {
             let option = criarElemento('option', tipoResidencial);
             select.append(option);
         });
@@ -152,7 +144,7 @@ export class FormularioEndereco extends HTMLFormElement {
         select.name = "tipoLogradouro";
         mainDiv.append(select);
     
-        ["Rua", "Avenida", "Praça"].forEach((tipoLogradouro) => {
+        TIPOS_LOGRADOURO.forEach((tipoLogradouro) => {
             let option = criarElemento('option', tipoLogradouro);
             select.append(option);
         });

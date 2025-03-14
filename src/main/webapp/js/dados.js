@@ -1,3 +1,20 @@
+export const GENEROS = [
+    "Masculino", "Feminino", "Outro"
+];
+
+export const TIPOS_TELEFONE = [
+    "Fixo", "Comercial", "Celular", "VoIP", "Fax"
+];
+
+export const TIPOS_RESIDENCIAL = [
+    "Casa", "Apartamento", "Condomínio"
+];
+
+export const TIPOS_LOGRADOURO = [
+    "Rua", "Avenida", "Praça", "Travessa", "Estrada", "Alameda",
+    "Via", "Rodovia", "Viaduto", "Largo", "Beco", "Túnel"
+];
+
 export const BANDEIRAS_CARTAO = [
     {"nome": "Mastercard", "valor": "MASTERCARD"},
     {"nome": "Visa", "valor": "VISA"},
