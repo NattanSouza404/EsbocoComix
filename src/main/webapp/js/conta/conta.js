@@ -1,7 +1,6 @@
 import { DadosPessoaisConta, DadosEnderecoConta, DadosCartaoCreditoConta } from "./secoesConta.js";
 import { ModalAlterarSenha, ModalAlterarDadosPessoais, ModalAlterarEndereco, ModalAlterarCartaoCredito } from "./modaisConta.js";
 import { retornarCliente, retornarEnderecos, retornarCartoesCredito } from "../api.js";
-import { criarElemento } from "../script.js";
 import { NavegacaoConta } from "./navegacaoConta.js";
 
 let promessaCliente = (async () => {

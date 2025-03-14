@@ -1,14 +1,14 @@
-import { FormularioCadastrarDadosPessoais } from "./formsCadastrar.js";
 import { montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm } from "../script.js";
 import { inserirCliente } from "../api.js";
 import { SecaoFormsEndereco } from "../componentes/secaoEndereco.js";
 import { SecaoFormsCartaoCredito } from "../componentes/secaoCartaoCredito.js";
+import { FormularioDadosPessoais } from "../componentes/forms/formDadosPessoais.js";
 
 const mainContainer = document.getElementById('container-cadastrar-cliente');
 
 const secaoDadosPessoais = document.createElement('section');
 secaoDadosPessoais.id = 'secao-dados-pessoais';
-secaoDadosPessoais.append(new FormularioCadastrarDadosPessoais());
+secaoDadosPessoais.append(new FormularioDadosPessoais());
 mainContainer.append(secaoDadosPessoais);
 
 const secaoFormsEndereco = new SecaoFormsEndereco();

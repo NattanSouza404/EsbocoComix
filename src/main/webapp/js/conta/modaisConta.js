@@ -1,10 +1,10 @@
 import { Modal } from "../componentes/componentes.js";
 import { BotaoFechar, BotaoSalvar } from "../componentes/componentes.js";
 import { criarElemento, criarElementoInput, montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm} from "../script.js";
-import { FormularioDadosPessoais } from "../componentes/forms.js";
 import { atualizarCliente, atualizarEndereco, atualizarCartaoCredito, deletarEndereco, deletarCartaoCredito } from "../api.js";
 import { SecaoFormsEndereco } from "../componentes/secaoEndereco.js";
 import { SecaoFormsCartaoCredito } from "../componentes/secaoCartaoCredito.js";
+import { FormularioDadosPessoais } from "../componentes/forms/formDadosPessoais.js";
 
 export class ModalAlterarDadosPessoais extends Modal {
 

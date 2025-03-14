@@ -1,5 +1,5 @@
 import { criarElemento } from "../script.js";
-import { FormularioEndereco } from "./forms.js";
+import { FormularioEndereco } from "./forms/formEndereco.js";
 
 export class SecaoFormsEndereco extends HTMLElement {
     constructor(){
