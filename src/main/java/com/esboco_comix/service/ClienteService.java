@@ -6,7 +6,6 @@ import java.util.List;
 import com.esboco_comix.controller.pedidos.PedidoAlterarSenha;
 import com.esboco_comix.controller.pedidos.PedidoCadastrarCliente;
 import com.esboco_comix.dao.impl.ClienteDAO;
-import com.esboco_comix.model.entidades.BandeiraCartao;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
@@ -35,8 +34,6 @@ public class ClienteService {
         List<CartaoCredito> cartoesCredito = new ArrayList<>();
         for (CartaoCredito c: pedido.getCartoesCredito()){
             c.setIdCliente(clienteInserido.getId());
-            BandeiraCartao bc = cartaoCreditoService.consultarBandeiraCartao(c.getBandeiraCartao()); 
-            c.setBandeiraCartao(bc);
             cartoesCredito.add(cartaoCreditoService.inserir(c));
         }
 
