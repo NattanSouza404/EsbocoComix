@@ -100,8 +100,6 @@ export function montarCartaoCreditoPorForm(form){
         nomeImpresso: formData.get('nomeImpresso'),
         codigoSeguranca: formData.get('codigoSeguranca'),
         isPreferencial: formData.get('isPreferencial'),
-        bandeiraCartao: {
-            nome: formData.get('bandeiraCartao')
-        }
+        bandeiraCartao: formData.get('bandeiraCartao')
     };
 }

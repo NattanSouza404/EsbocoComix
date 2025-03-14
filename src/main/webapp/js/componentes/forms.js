@@ -1,3 +1,4 @@
+import { BANDEIRAS_CARTAO } from "../dados.js";
 import { criarElemento, criarElementoInput, criarSelectSimOuNao, formatarDataParaInput } from "../script.js";
 
 export class FormularioDadosPessoais extends HTMLFormElement {
@@ -239,8 +240,9 @@ export class FormularioCartaoCredito extends HTMLFormElement {
         select.name = "bandeiraCartao";
         mainDiv.append(select);
 
-        ["Mastercard", "Visa"].forEach((bandeiraCartao) => {
-            let option = criarElemento('option', bandeiraCartao);
+        BANDEIRAS_CARTAO.forEach(({ nome, valor }) => {
+            let option = criarElemento('option', nome);
+            option.value = valor;
             select.append(option);
         });
 
@@ -265,11 +267,6 @@ export class FormularioCartaoCredito extends HTMLFormElement {
                 let elemento = this.querySelector(`[name="${chave}"]`);
 
                 if (!elemento){
-                    return;
-                }
-
-                if (chave === 'bandeiraCartao'){
-                    elemento.value = valor.nome;
                     return;
                 }
 
