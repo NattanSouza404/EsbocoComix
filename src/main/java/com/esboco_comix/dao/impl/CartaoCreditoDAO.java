@@ -32,7 +32,7 @@ public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
             pst.setString(2, c.getNomeImpresso());
             pst.setString(3, c.getCodigoSeguranca());
             pst.setBoolean(4, c.isPreferencial());
-            pst.setInt(5, bandeiraCartaoDAO.consultarByNome(c.getBandeiraCartao().getNome()).getId());
+            pst.setInt(5, bandeiraCartaoDAO.consultarIDByNome(c.getBandeiraCartao().getNome()));
             pst.setInt(6, c.getIdCliente());
 
             if (pst.executeUpdate() == 0){
@@ -99,7 +99,7 @@ public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
             pst.setString(2, c.getNomeImpresso());
             pst.setString(3, c.getCodigoSeguranca());
             pst.setBoolean(4, c.isPreferencial());
-            pst.setInt(5, bandeiraCartaoDAO.consultarByNome(c.getBandeiraCartao().getNome()).getId());
+            pst.setInt(5, bandeiraCartaoDAO.consultarIDByNome(c.getBandeiraCartao().getNome()));
             pst.setInt(6, c.getIdCliente());
 
             pst.setInt(7, c.getId());

@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.List;
 
 import com.esboco_comix.dao.IDAO;
-import com.esboco_comix.model.entidades.BandeiraCartao;
+import com.esboco_comix.model.enuns.BandeiraCartao;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class BandeiraCartaoDAO implements IDAO<BandeiraCartao> {
@@ -37,12 +37,7 @@ public class BandeiraCartaoDAO implements IDAO<BandeiraCartao> {
             if (!rs.next()) {
                 throw new Exception("Bandeira de cartão de crédito não encontrada.");
             }
-
-            BandeiraCartao bc = new BandeiraCartao();
-            bc.setId(rs.getInt("bcc_id"));
-            bc.setNome(rs.getString("bcc_nome"));
-
-            return bc;    
+            return BandeiraCartao.getBandeiraByNome(rs.getString("bcc_nome"));
         } catch (Exception e){
             throw e;
         } finally {
@@ -61,7 +56,7 @@ public class BandeiraCartaoDAO implements IDAO<BandeiraCartao> {
         throw new UnsupportedOperationException("Unimplemented method 'deletar'");
     }
 
-    public BandeiraCartao consultarByNome(String nome) throws Exception {
+    public int consultarIDByNome(String nome) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
         PreparedStatement pst = connection.prepareStatement(
@@ -77,11 +72,7 @@ public class BandeiraCartaoDAO implements IDAO<BandeiraCartao> {
                 throw new Exception("Bandeira de cartão de crédito não encontrada.");
             }
 
-            BandeiraCartao bc = new BandeiraCartao();
-            bc.setId(rs.getInt("bcc_id"));
-            bc.setNome(rs.getString("bcc_nome"));
-
-            return bc;    
+            return rs.getInt("bcc_id");  
         } catch (Exception e){
             throw e;
         } finally {

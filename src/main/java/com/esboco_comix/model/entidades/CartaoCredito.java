@@ -1,5 +1,6 @@
 package com.esboco_comix.model.entidades;
 
+import com.esboco_comix.model.enuns.BandeiraCartao;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
