@@ -2,13 +2,15 @@ import { montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm
 import { inserirCliente } from "../api.js";
 import { SecaoFormsEndereco } from "../componentes/secaoEndereco.js";
 import { SecaoFormsCartaoCredito } from "../componentes/secaoCartaoCredito.js";
-import { FormularioDadosPessoais } from "../componentes/forms/formDadosPessoais.js";
+import { FormularioCadastrarDadosPessoais } from "./formsCadastrar.js";
 
 const mainContainer = document.getElementById('container-cadastrar-cliente');
 
 const secaoDadosPessoais = document.createElement('section');
 secaoDadosPessoais.id = 'secao-dados-pessoais';
-secaoDadosPessoais.append(new FormularioDadosPessoais());
+
+const formDadosPessoais = new FormularioCadastrarDadosPessoais();
+secaoDadosPessoais.append(formDadosPessoais);
 mainContainer.append(secaoDadosPessoais);
 
 const secaoFormsEndereco = new SecaoFormsEndereco();
@@ -18,8 +20,7 @@ const secaoCartaoCredito = new SecaoFormsCartaoCredito();
 mainContainer.append(secaoCartaoCredito);
 
 async function enviarCliente(){
-    const formCliente = document.getElementById('form-cadastrar-dados-pessoais');
-    const cliente = montarClientePorForm(formCliente);
+    const cliente = montarClientePorForm(formDadosPessoais);
     
     const formsEndereco = document.querySelectorAll('.endereco');
     const enderecos = [];
@@ -33,13 +34,13 @@ async function enviarCliente(){
         cartoesCredito.push(montarCartaoCreditoPorForm(c));
     });
 
-    const formData = new FormData(formCliente);
+    const senhaNova = new FormData(formDadosPessoais).get("senhaNova");
 
     inserirCliente({
         cliente: cliente,
         enderecos: enderecos,
         cartoesCredito: cartoesCredito,
-        senhaNova: formData.get('senhaNova')
+        senhaNova: senhaNova
     });
 }
 

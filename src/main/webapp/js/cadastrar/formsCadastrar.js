@@ -5,8 +5,6 @@ export class FormularioCadastrarDadosPessoais extends FormularioDadosPessoais {
     constructor(){
         super();
 
-        this.id = 'form-cadastrar-dados-pessoais';
-
         const header = document.createElement('div');
         header.className = 'header-dados-cadastro';
         header.append(criarElemento('p', 'Senha'));
