@@ -1,4 +1,4 @@
-package com.esboco_comix.webapp;
+package com.esboco_comix.webapp.teste_factories;
 
 import java.time.LocalDate;
 
