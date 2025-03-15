@@ -13,5 +13,6 @@ public class DriverTeste extends EdgeDriver {
 
     public DriverTeste(){
         super(criarEdgeOptions());
+        manage().window().maximize();
     }
 }
