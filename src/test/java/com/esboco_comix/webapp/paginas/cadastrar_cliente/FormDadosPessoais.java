@@ -26,6 +26,9 @@ public class FormDadosPessoais {
         preencherInput("ddd", c.getTelefone().getDdd());
         preencherInput("numero", c.getTelefone().getNumero());
         preencherInput("dataNascimento", String.valueOf(c.getDataNascimento()));
+
+        preencherInput("senhaNova", "aaaabbbb");
+        preencherInput("senhaConfirmacao", "aaaabbbb");
     }
 
 }
