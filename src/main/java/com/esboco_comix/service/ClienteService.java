@@ -49,6 +49,10 @@ public class ClienteService {
         return clienteDAO.consultarTodos();
     }
 
+    public List<Cliente> consultarTodos(Cliente filtro) throws Exception {
+        return clienteDAO.consultarTodos(filtro);
+    }
+
     public Cliente consultarByID(int id) throws Exception {
         return clienteDAO.consultarByID(id);
     }

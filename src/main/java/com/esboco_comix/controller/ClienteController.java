@@ -21,14 +21,27 @@ public class ClienteController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
          
         try {
-            String parametroId = req.getParameter("id");
+            String opcao = Optional.ofNullable(req.getParameter("opcao")).orElse("default");
             Object objetoResposta = null;
 
-            if (parametroId != null){
-                int id = Integer.parseInt(parametroId);
-                objetoResposta = clienteService.consultarByID(id);
-            } else {
-                objetoResposta = clienteService.consultarTodos();
+            switch (opcao) {
+                case "consultarporfiltro":
+                    Cliente filtro = ServletUtil.jsonToObject(req, Cliente.class);
+                    clienteService.consultarTodos(filtro);
+                    break;
+            
+                default:
+                    String parametroId = req.getParameter("id");
+
+                    if (parametroId != null){
+                        int id = Integer.parseInt(parametroId);
+                        objetoResposta = clienteService.consultarByID(id);
+                        break;
+                    }
+
+                    objetoResposta = clienteService.consultarTodos();
+
+                    break;
             }
 
             ServletUtil.retornarRespostaJson(

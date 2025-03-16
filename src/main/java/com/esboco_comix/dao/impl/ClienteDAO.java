@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.dao.IDAO;
+import com.esboco_comix.dao.impl.utils.DAOUtil;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Telefone;
 import com.esboco_comix.utils.ConexaoFactory;
@@ -183,6 +184,56 @@ public class ClienteDAO implements IDAO<Cliente> {
         }
     }
 
+    public List<Cliente> consultarTodos(Cliente filtro) throws Exception {
+        Connection conn = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = conn.prepareStatement(
+            "SELECT * FROM clientes " +
+                "WHERE (cli_nome LIKE COALESCE(?, cli_nome)) "+
+                "AND (cli_genero = COALESCE(?, cli_genero)) "+
+                "AND (cli_dt_nascimento = COALESCE(?, cli_dt_nascimento)) "+
+                "AND (cli_cpf LIKE COALESCE(?, cli_cpf)) "+
+                "AND (cli_email LIKE COALESCE(?, cli_email)) "+
+                "AND (cli_ranking = COALESCE(?, cli_ranking)) "+
+                "AND (cli_is_ativo = ? OR ? IS NULL) ",
+            ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_READ_ONLY
+        );
+
+        try {
+            DAOUtil.setParametroComCoringa(pst, 1, null);
+            DAOUtil.setParametroComCoringa(pst, 2, filtro.getGenero());
+            DAOUtil.setParametroComCoringa(pst, 3, filtro.getDataNascimento());
+            DAOUtil.setParametroComCoringa(pst, 4, filtro.getCpf());
+            DAOUtil.setParametroComCoringa(pst, 5, filtro.getEmail());
+            DAOUtil.setParametroComCoringa(pst, 6, filtro.getRanking());
+
+            pst.setBoolean(7, filtro.isAtivo());
+            pst.setBoolean(8, filtro.isAtivo());
+
+            ResultSet rs = pst.executeQuery();
+
+            if (!rs.next()) {
+                throw new Exception("Nenhum registro encontrado de cliente.");
+            }
+            rs.beforeFirst();
+
+            List<Cliente> clientes = new ArrayList<>();
+
+            while (rs.next()){                
+                clientes.add(mapearResultToCliente(rs));
+            }
+
+            return clientes;
+        }
+        catch (Exception e){
+            throw e;
+        } finally {
+            pst.close();
+            conn.close();
+        }
+    }
+
     public Cliente atualizarSenha(Cliente c) throws Exception {
         Connection conn = ConexaoFactory.getConexao(); 
     
@@ -272,7 +323,7 @@ public class ClienteDAO implements IDAO<Cliente> {
     }
 
     private Cliente mapearResultToCliente(ResultSet rs) throws SQLException {
-        Cliente c = new Cliente();        
+        Cliente c = new Cliente();  
         c.setId(rs.getInt("cli_id"));
         c.setNome(rs.getString("cli_nome"));
         c.setGenero(rs.getString("cli_genero"));
