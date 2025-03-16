@@ -19,10 +19,12 @@ public class ClienteService {
     private ClienteValidador clienteValidador = new ClienteValidador();
 
     public PedidoCadastrarCliente inserir(PedidoCadastrarCliente pedido) throws Exception {
-        Cliente clienteToAdd = pedido.getCliente();
-        clienteValidador.validar(clienteToAdd, pedido);
-        inserirNovoHash(clienteToAdd, pedido.getSenhaNova());
+        clienteValidador.validarCadastro(pedido);
 
+        Cliente clienteToAdd = pedido.getCliente();
+        inserirNovoHash(clienteToAdd, pedido.getSenhaNova());
+        clienteToAdd.setRanking(0);
+        
         Cliente clienteInserido = clienteDAO.inserir(pedido.getCliente());
 
         List<Endereco> enderecosInseridos = new ArrayList<>();
@@ -63,12 +65,14 @@ public class ClienteService {
 
     public Cliente atualizarSenha(PedidoAlterarSenha pedido) throws Exception {
         Cliente c = pedido.getCliente();
+        Cliente clienteInserido = clienteDAO.consultarHashSaltPorID(c.getId());
 
-        Cliente clienteInserido = clienteDAO.consultarHashSaltPorID(c.getId()); 
+        clienteValidador.validarSenhas(pedido.getSenhaNova(), pedido.getSenhaConfirmacao());
+
         String hashGuardado = clienteInserido.getHashSenha();
         String saltGuardado = clienteInserido.getSaltSenha();
+        clienteValidador.validarSenhaAntiga(pedido.getSenhaNova(), hashGuardado, saltGuardado);
 
-        validarSenha(pedido.getSenhaAntiga(), hashGuardado, saltGuardado);
         inserirNovoHash(c, pedido.getSenhaNova());
         return clienteDAO.atualizarSenha(c);
     }
@@ -81,13 +85,6 @@ public class ClienteService {
         clienteDAO.deletar(c);
         for (Endereco e : c.getEnderecos()) {
             enderecoService.deletar(e);
-        }
-    }
-
-    private void validarSenha(String senha, String hash, String salt) throws Exception {
-        String hashNovo = CriptografadorSenha.hashSenha(senha, salt); 
-        if (!hashNovo.equals(hash)){
-            throw new Exception("Senha antiga não consta com senha inserida pelo usuário!");
         }
     }
 
