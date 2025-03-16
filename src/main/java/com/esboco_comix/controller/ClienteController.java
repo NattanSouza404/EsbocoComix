@@ -27,7 +27,7 @@ public class ClienteController extends HttpServlet {
             switch (opcao) {
                 case "consultarporfiltro":
                     Cliente filtro = ServletUtil.jsonToObject(req, Cliente.class);
-                    clienteService.consultarTodos(filtro);
+                    objetoResposta = clienteService.consultarTodos(filtro);
                     break;
             
                 default:

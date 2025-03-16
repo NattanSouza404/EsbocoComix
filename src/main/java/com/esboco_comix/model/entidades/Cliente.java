@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Cliente {
-    private int     id;
+    private Integer id;
     private String  nome;
     private String  genero;
     private LocalDate dataNascimento;
@@ -21,10 +21,18 @@ public class Cliente {
     private String hashSenha;
     private String saltSenha;
     
-    private int ranking;
+    private Integer ranking;
 
     @JsonProperty("isAtivo")
-    private boolean isAtivo;
+    private Boolean isAtivo;
+
+    public Boolean isAtivo(){
+        return isAtivo;
+    }
+
+    public void setAtivo(Boolean isAtivo){
+        this.isAtivo = isAtivo;
+    }
 
     private Telefone telefone;
     private List<CartaoCredito> cartoesCredito;

@@ -190,7 +190,7 @@ public class ClienteDAO implements IDAO<Cliente> {
         PreparedStatement pst = conn.prepareStatement(
             "SELECT * FROM clientes " +
                 "WHERE (cli_nome LIKE COALESCE(?, cli_nome)) "+
-                "AND (cli_genero = COALESCE(?, cli_genero)) "+
+                "AND (cli_genero LIKE COALESCE(?, cli_genero)) "+
                 "AND (cli_dt_nascimento = COALESCE(?, cli_dt_nascimento)) "+
                 "AND (cli_cpf LIKE COALESCE(?, cli_cpf)) "+
                 "AND (cli_email LIKE COALESCE(?, cli_email)) "+
@@ -201,15 +201,15 @@ public class ClienteDAO implements IDAO<Cliente> {
         );
 
         try {
-            DAOUtil.setParametroComCoringa(pst, 1, null);
+            DAOUtil.setParametroComCoringa(pst, 1, filtro.getNome());
             DAOUtil.setParametroComCoringa(pst, 2, filtro.getGenero());
             DAOUtil.setParametroComCoringa(pst, 3, filtro.getDataNascimento());
             DAOUtil.setParametroComCoringa(pst, 4, filtro.getCpf());
             DAOUtil.setParametroComCoringa(pst, 5, filtro.getEmail());
             DAOUtil.setParametroComCoringa(pst, 6, filtro.getRanking());
 
-            pst.setBoolean(7, filtro.isAtivo());
-            pst.setBoolean(8, filtro.isAtivo());
+            pst.setObject(7, filtro.isAtivo(), java.sql.Types.BOOLEAN);
+            pst.setObject(8, filtro.isAtivo(), java.sql.Types.BOOLEAN);
 
             ResultSet rs = pst.executeQuery();
 
