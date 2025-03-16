@@ -8,31 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.esboco_comix.utils.ConversorJson;
-import com.fasterxml.jackson.core.type.TypeReference;
 
 public class ServletUtil {
 
     public static void retornarRespostaJson(HttpServletResponse resp, Object object, int sc) throws IOException {
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json; charset=UTF-8");
         resp.getWriter().println(
             ConversorJson.toJson(object)
         );
         resp.setStatus(sc);
     }
 
-    public static void retornarResposta(HttpServletResponse resp, String string, int sc) throws IOException {
-        resp.getWriter().println(string);
-        resp.setStatus(sc);
-    }
-
     public static <T> T jsonToObject(HttpServletRequest req, Class<T> classe) throws Exception {
         return ConversorJson.jsonToObject(
             bodyRequestToString(req), classe
-        );
-    }
-
-    public static <T> T jsonToObject(HttpServletRequest req, TypeReference<T> typeReference) throws IOException {
-        return ConversorJson.jsonToObject(
-            bodyRequestToString(req), typeReference
         );
     }
 
@@ -43,7 +33,7 @@ public class ServletUtil {
         Map<Object, Object> mapaErro = new HashMap<>();
         mapaErro.put("erro", e.getMessage());
 
-        retornarResposta(resp, ConversorJson.mapToJson(mapaErro), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        retornarRespostaJson(resp, mapaErro, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 
     private static String bodyRequestToString(HttpServletRequest req) throws IOException {
