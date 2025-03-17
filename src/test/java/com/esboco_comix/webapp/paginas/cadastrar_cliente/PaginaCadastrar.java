@@ -2,11 +2,12 @@ package com.esboco_comix.webapp.paginas.cadastrar_cliente;
 
 import java.util.List;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.esboco_comix.model.entidades.Cliente;
+import com.esboco_comix.controller.pedidos.PedidoCadastrarCliente;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.webapp.webdriver.DriverTeste;
 
@@ -33,8 +34,13 @@ public class PaginaCadastrar {
         driver.close();
     }
 
-    public void preencherCliente(Cliente c) throws InterruptedException {
-        formDadosPessoais.preencherCliente(c);
+    public void preencher(PedidoCadastrarCliente pedido) throws InterruptedException {
+        preencherCliente(pedido);
+        preencherEnderecos(pedido.getEnderecos());
+    }
+
+    public void preencherCliente(PedidoCadastrarCliente pedido) throws InterruptedException {
+        formDadosPessoais.preencherCliente(pedido);
     }
 
     public void preencherEnderecos(List<Endereco> enderecos) {
@@ -47,6 +53,9 @@ public class PaginaCadastrar {
 
     public void enviarCadastro() {
         botaoEnviarCadastro.click();
+
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
     }
 
 }

@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.esboco_comix.controller.pedidos.PedidoCadastrarCliente;
 import com.esboco_comix.model.entidades.Cliente;
 
 public class FormDadosPessoais {
@@ -18,7 +19,9 @@ public class FormDadosPessoais {
         form.findElement(By.name(nome)).sendKeys(valorInput);
     }
 
-    public void preencherCliente(Cliente c) {
+    public void preencherCliente(PedidoCadastrarCliente pedido) {
+        Cliente c = pedido.getCliente();
+
         preencherInput("nome", c.getNome());
         preencherInput("cpf", c.getCpf());
         preencherInput("email", c.getEmail());
@@ -27,8 +30,8 @@ public class FormDadosPessoais {
         preencherInput("numero", c.getTelefone().getNumero());
         preencherInput("dataNascimento", String.valueOf(c.getDataNascimento()));
 
-        preencherInput("senhaNova", "aaaabbbb");
-        preencherInput("senhaConfirmacao", "aaaabbbb");
+        preencherInput("senhaNova", pedido.getSenhaNova());
+        preencherInput("senhaConfirmacao", pedido.getSenhaConfirmacao());
     }
 
 }

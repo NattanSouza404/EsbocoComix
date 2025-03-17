@@ -3,7 +3,7 @@ package com.esboco_comix.webapp.teste_factories;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.enuns.BandeiraCartao;
 
-public class CartaoCreditoFactory {
+public class CartaoCreditoTesteFactory {
     public static CartaoCredito criar(){
         CartaoCredito c = new CartaoCredito();
         
