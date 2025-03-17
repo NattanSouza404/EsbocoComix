@@ -35,12 +35,14 @@ async function enviarCliente(){
     });
 
     const senhaNova = new FormData(formDadosPessoais).get("senhaNova");
+    const senhaConfirmacao = new FormData(formDadosPessoais).get("senhaConfirmacao");
 
     inserirCliente({
         cliente: cliente,
         enderecos: enderecos,
         cartoesCredito: cartoesCredito,
-        senhaNova: senhaNova
+        senhaNova: senhaNova,
+        senhaConfirmacao: senhaConfirmacao
     });
 }
 
