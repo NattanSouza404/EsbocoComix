@@ -1,6 +1,6 @@
-package com.esboco_comix.service.validator;
+package com.esboco_comix.service.validador;
 
-public class ValidatorUtil {
+public class ValidadorUtil {
 
     public static void validarAtributoObrigatorio(Object atributo, String nome) throws Exception{
         if (atributo == null){

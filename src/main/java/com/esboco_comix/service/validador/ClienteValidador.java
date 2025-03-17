@@ -1,9 +1,9 @@
-package com.esboco_comix.service.validator;
+package com.esboco_comix.service.validador;
+
+import static com.esboco_comix.service.validador.ValidadorUtil.*;
 
 import com.esboco_comix.controller.pedidos.PedidoCadastrarCliente;
 import com.esboco_comix.model.entidades.Cliente;
-import static com.esboco_comix.service.validator.ValidatorUtil.*;
-
 import com.esboco_comix.utils.CriptografadorSenha;
 
 public class ClienteValidador {
