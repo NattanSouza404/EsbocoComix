@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.esboco_comix.controller.utils.ServletUtil;
+import static com.esboco_comix.controller.utils.ServletUtil.*;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.service.CartaoCreditoService;
 
@@ -23,7 +23,7 @@ public class CartaoCreditoController extends HttpServlet {
             if (parametroIdCliente != null){
                 int id = Integer.parseInt(parametroIdCliente);
 
-                ServletUtil.retornarRespostaJson(
+                retornarRespostaJson(
                     resp,
                     cartaoCreditoService.consultarByIDCliente(id),
                     HttpServletResponse.SC_OK
@@ -32,7 +32,7 @@ public class CartaoCreditoController extends HttpServlet {
             }
 
         } catch (Exception e) {
-            ServletUtil.estourarErro(resp, e);
+            estourarErro(resp, e);
         }
 
     }
@@ -41,25 +41,25 @@ public class CartaoCreditoController extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
         try {
-            CartaoCredito cartaoCredito = ServletUtil.jsonToObject(req, CartaoCredito.class);
-            ServletUtil.retornarRespostaJson(
+            CartaoCredito cartaoCredito = jsonToObject(req, CartaoCredito.class);
+            retornarRespostaJson(
                 resp,
                 cartaoCreditoService.atualizar(cartaoCredito),
                 HttpServletResponse.SC_OK
             );
         } catch (Exception e) {
-            ServletUtil.estourarErro(resp, e);
+            estourarErro(resp, e);
         }
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            CartaoCredito cartaoCredito = ServletUtil.jsonToObject(req, CartaoCredito.class);
+            CartaoCredito cartaoCredito = jsonToObject(req, CartaoCredito.class);
             cartaoCreditoService.deletar(cartaoCredito);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         } catch (Exception e) {
-            ServletUtil.estourarErro(resp, e);
+            estourarErro(resp, e);
         }
     }
 }

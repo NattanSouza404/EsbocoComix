@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.esboco_comix.controller.pedidos.PedidoAlterarSenha;
 import com.esboco_comix.controller.pedidos.PedidoCadastrarCliente;
-import com.esboco_comix.controller.utils.ServletUtil;
+import static com.esboco_comix.controller.utils.ServletUtil.*;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.service.ClienteService;
 
@@ -26,7 +26,7 @@ public class ClienteController extends HttpServlet {
 
             switch (opcao) {
                 case "consultarporfiltro":
-                    Cliente filtro = ServletUtil.jsonToObject(req, Cliente.class);
+                    Cliente filtro = jsonToObject(req, Cliente.class);
                     objetoResposta = clienteService.consultarTodos(filtro);
                     break;
             
@@ -44,29 +44,29 @@ public class ClienteController extends HttpServlet {
                     break;
             }
 
-            ServletUtil.retornarRespostaJson(
+            retornarRespostaJson(
                 resp, 
                 objetoResposta,
                 HttpServletResponse.SC_OK
             ); 
 
         } catch (Exception e) {
-            ServletUtil.estourarErro(resp, e);
+            estourarErro(resp, e);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            PedidoCadastrarCliente pedidoCadastrarCliente = ServletUtil.jsonToObject(req, PedidoCadastrarCliente.class);
+            PedidoCadastrarCliente pedidoCadastrarCliente = jsonToObject(req, PedidoCadastrarCliente.class);
 
-            ServletUtil.retornarRespostaJson(
+            retornarRespostaJson(
                 resp,
                 clienteService.inserir(pedidoCadastrarCliente),
                 HttpServletResponse.SC_CREATED
             );
         } catch (Exception e) {
-            ServletUtil.estourarErro(resp, e);
+            estourarErro(resp, e);
         }
     }
 
@@ -79,39 +79,39 @@ public class ClienteController extends HttpServlet {
 
             switch (opcao) {
                 default:
-                    Cliente clienteToUpdate = ServletUtil.jsonToObject(req, Cliente.class);
+                    Cliente clienteToUpdate = jsonToObject(req, Cliente.class);
                     objetoResposta = clienteService.atualizar(clienteToUpdate);
                     break;
 
                 case "atualizarsenha":
-                    PedidoAlterarSenha pedido = ServletUtil.jsonToObject(req, PedidoAlterarSenha.class);
+                    PedidoAlterarSenha pedido = jsonToObject(req, PedidoAlterarSenha.class);
                     objetoResposta = clienteService.atualizarSenha(pedido);
                     break;
 
                 case "atualizarstatuscadastro":
-                    Cliente clienteToUpdateStatus = ServletUtil.jsonToObject(req, Cliente.class);
+                    Cliente clienteToUpdateStatus = jsonToObject(req, Cliente.class);
                     objetoResposta = clienteService.atualizarStatusCadastro(clienteToUpdateStatus);
                     break;
             }
 
-            ServletUtil.retornarRespostaJson(
+            retornarRespostaJson(
                 resp,
                 objetoResposta,
                 HttpServletResponse.SC_OK
             );
         } catch (Exception e) {
-            ServletUtil.estourarErro(resp, e);
+            estourarErro(resp, e);
         }
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            Cliente clienteToDelete = ServletUtil.jsonToObject(req, Cliente.class);
+            Cliente clienteToDelete = jsonToObject(req, Cliente.class);
             clienteService.deletar(clienteToDelete);
             resp.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception e) {
-            ServletUtil.estourarErro(resp, e);
+            estourarErro(resp, e);
         }
     }
 

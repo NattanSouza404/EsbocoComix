@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.esboco_comix.controller.utils.ServletUtil;
+import static com.esboco_comix.controller.utils.ServletUtil.*;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.service.EnderecoService;
 
@@ -25,7 +25,7 @@ public class EnderecoController extends HttpServlet {
             if (parametroIdCliente != null){
                 int id = Integer.parseInt(parametroIdCliente);
 
-                ServletUtil.retornarRespostaJson(
+                retornarRespostaJson(
                     resp,
                     enderecoService.consultarByIDCliente(id),
                     HttpServletResponse.SC_OK
@@ -34,21 +34,21 @@ public class EnderecoController extends HttpServlet {
             }
 
         } catch (Exception e) {
-            ServletUtil.estourarErro(resp, e);
+            estourarErro(resp, e);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            Endereco enderecoToAdd = ServletUtil.jsonToObject(req, Endereco.class);
-            ServletUtil.retornarRespostaJson(
+            Endereco enderecoToAdd = jsonToObject(req, Endereco.class);
+            retornarRespostaJson(
                 resp,
                 enderecoService.inserir(enderecoToAdd),
                 HttpServletResponse.SC_CREATED
             );
         } catch (Exception e) {
-            ServletUtil.estourarErro(resp, e);
+            estourarErro(resp, e);
         }
     }
 
@@ -56,25 +56,25 @@ public class EnderecoController extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
         try {
-            Endereco enderecoToUpdate = ServletUtil.jsonToObject(req, Endereco.class);
-            ServletUtil.retornarRespostaJson(
+            Endereco enderecoToUpdate = jsonToObject(req, Endereco.class);
+            retornarRespostaJson(
                 resp,
                 enderecoService.atualizar(enderecoToUpdate),
                 HttpServletResponse.SC_OK
             );
         } catch (Exception e) {
-            ServletUtil.estourarErro(resp, e);
+            estourarErro(resp, e);
         }
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            Endereco endereco = ServletUtil.jsonToObject(req, Endereco.class);
+            Endereco endereco = jsonToObject(req, Endereco.class);
             enderecoService.deletar(endereco);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         } catch (Exception e) {
-            ServletUtil.estourarErro(resp, e);
+            estourarErro(resp, e);
         }
     }
 }
