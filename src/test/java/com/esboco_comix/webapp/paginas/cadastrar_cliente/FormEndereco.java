@@ -27,9 +27,9 @@ public class FormEndereco {
     public void preencher(Endereco e) {
         preencherInput("fraseCurta", e.getFraseCurta());
 
-        selecionarInputTrueOrFalse("isResidencial", e.isResidencial());
-        selecionarInputTrueOrFalse("isEntrega", e.isEntrega());
-        selecionarInputTrueOrFalse("isCobranca", e.isCobranca());
+        selecionarInputTrueOrFalse("isResidencial", e.getIsResidencial());
+        selecionarInputTrueOrFalse("isEntrega", e.getIsEntrega());
+        selecionarInputTrueOrFalse("isCobranca", e.getIsCobranca());
 
         preencherInput("bairro", e.getBairro());
         preencherInput("cidade", e.getCidade());

@@ -21,13 +21,13 @@ public class Endereco {
     private String pais;
 
     @JsonProperty("isResidencial")
-    private boolean isResidencial;
+    private Boolean isResidencial;
 
     @JsonProperty("isEntrega")
-    private boolean isEntrega;
+    private Boolean isEntrega;
 
     @JsonProperty("isCobranca")
-    private boolean isCobranca;
+    private Boolean isCobranca;
 
     private String observacoes;
 

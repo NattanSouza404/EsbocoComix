@@ -145,7 +145,7 @@ public class ClienteDAO implements IDAO<Cliente> {
             pst.setString(7, c.getTelefone().getTipo());
             pst.setString(8, c.getTelefone().getDdd());
             pst.setString(9, c.getTelefone().getNumero());
-            pst.setBoolean(10, c.isAtivo());
+            pst.setBoolean(10, c.getIsAtivo());
             pst.setInt(11, c.getId());
         
             if (pst.executeUpdate() == 0) {
@@ -208,8 +208,8 @@ public class ClienteDAO implements IDAO<Cliente> {
             DAOUtil.setParametroComCoringa(pst, 5, filtro.getEmail());
             DAOUtil.setParametroComCoringa(pst, 6, filtro.getRanking());
 
-            pst.setObject(7, filtro.isAtivo(), java.sql.Types.BOOLEAN);
-            pst.setObject(8, filtro.isAtivo(), java.sql.Types.BOOLEAN);
+            pst.setObject(7, filtro.getIsAtivo(), java.sql.Types.BOOLEAN);
+            pst.setObject(8, filtro.getIsAtivo(), java.sql.Types.BOOLEAN);
 
             ResultSet rs = pst.executeQuery();
 
@@ -272,7 +272,7 @@ public class ClienteDAO implements IDAO<Cliente> {
         );
     
         try {
-            pst.setBoolean(1, c.isAtivo());
+            pst.setBoolean(1, c.getIsAtivo());
             
             pst.setInt(2, c.getId());
         
@@ -331,7 +331,7 @@ public class ClienteDAO implements IDAO<Cliente> {
         c.setCpf(rs.getString("cli_cpf"));
         c.setEmail(rs.getString("cli_email"));
         c.setRanking(rs.getInt("cli_ranking"));
-        c.setAtivo(rs.getBoolean("cli_is_ativo"));
+        c.setIsAtivo(rs.getBoolean("cli_is_ativo"));
 
         Telefone telefone = new Telefone();
         telefone.setTipo(rs.getString("cli_tel_tipo"));

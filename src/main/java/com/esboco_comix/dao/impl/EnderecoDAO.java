@@ -38,9 +38,9 @@ public class EnderecoDAO implements IDAO<Endereco> {
             pst.setString(8, e.getCidade());
             pst.setString(9, e.getEstado());
             pst.setString(10, e.getPais());
-            pst.setBoolean(11, e.isResidencial());
-            pst.setBoolean(12, e.isEntrega());
-            pst.setBoolean(13, e.isCobranca());
+            pst.setBoolean(11, e.getIsResidencial());
+            pst.setBoolean(12, e.getIsEntrega());
+            pst.setBoolean(13, e.getIsCobranca());
             pst.setString(14, e.getObservacoes());
             pst.setInt(15, e.getIdCliente());
     
@@ -118,9 +118,9 @@ public class EnderecoDAO implements IDAO<Endereco> {
             pst.setString(8, e.getCidade());
             pst.setString(9, e.getEstado());
             pst.setString(10, e.getPais());
-            pst.setBoolean(11, e.isResidencial());
-            pst.setBoolean(12, e.isEntrega());
-            pst.setBoolean(13, e.isCobranca());
+            pst.setBoolean(11, e.getIsResidencial());
+            pst.setBoolean(12, e.getIsEntrega());
+            pst.setBoolean(13, e.getIsCobranca());
             pst.setString(14, e.getObservacoes());
             pst.setInt(15, e.getIdCliente());
             pst.setInt(16, e.getId());
@@ -207,9 +207,9 @@ public class EnderecoDAO implements IDAO<Endereco> {
         e.setCidade(rs.getString("end_cidade"));
         e.setEstado(rs.getString("end_estado"));
         e.setPais(rs.getString("end_pais"));
-        e.setResidencial(rs.getBoolean("end_is_residencial"));
-        e.setEntrega(rs.getBoolean("end_is_entrega"));
-        e.setCobranca(rs.getBoolean("end_is_cobranca"));
+        e.setIsResidencial(rs.getBoolean("end_is_residencial"));
+        e.setIsEntrega(rs.getBoolean("end_is_entrega"));
+        e.setIsCobranca(rs.getBoolean("end_is_cobranca"));
         e.setObservacoes(rs.getString("end_observacoes"));
         e.setIdCliente(rs.getInt("end_cli_id"));
 

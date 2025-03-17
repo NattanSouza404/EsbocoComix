@@ -26,14 +26,6 @@ public class Cliente {
     @JsonProperty("isAtivo")
     private Boolean isAtivo;
 
-    public Boolean isAtivo(){
-        return isAtivo;
-    }
-
-    public void setAtivo(Boolean isAtivo){
-        this.isAtivo = isAtivo;
-    }
-
     private Telefone telefone;
     private List<CartaoCredito> cartoesCredito;
     private List<Endereco> enderecos;
