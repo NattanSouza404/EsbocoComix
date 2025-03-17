@@ -22,6 +22,11 @@ public class ClienteValidador {
         validarAtributoObrigatorio(cliente.getTelefone().getDdd(), "DDD");
         validarAtributoObrigatorio(cliente.getTelefone().getNumero(), "Número de telefone");
         validarAtributoObrigatorio(cliente.getTelefone().getTipo(), "Tipo de telefone");
+
+        validarSeApenasNumeros(cliente.getCpf(), "CPF");
+        validarSeApenasNumeros(cliente.getTelefone().getDdd(), "DDD");
+        validarSeApenasNumeros(cliente.getTelefone().getNumero(), "Número de telefone");
+        validarEmail(cliente.getEmail());
     }
 
     public void validarSenhas(String senhaNova, String senhaConfirmacao) throws Exception {
