@@ -9,6 +9,9 @@ import com.esboco_comix.dao.impl.ClienteDAO;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
+import com.esboco_comix.service.validador.CartaoCreditoValidador;
+import com.esboco_comix.service.validador.ClienteValidador;
+import com.esboco_comix.service.validador.EnderecoValidador;
 import com.esboco_comix.utils.CriptografadorSenha;
 
 public class ClienteService {
@@ -17,9 +20,18 @@ public class ClienteService {
     private CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
 
     private ClienteValidador clienteValidador = new ClienteValidador();
+    private EnderecoValidador enderecoValidador = new EnderecoValidador();
+    private CartaoCreditoValidador cartaoCreditoValidador = new CartaoCreditoValidador();
 
     public PedidoCadastrarCliente inserir(PedidoCadastrarCliente pedido) throws Exception {
         clienteValidador.validarCadastro(pedido);
+        for (Endereco e : pedido.getEnderecos()) {
+            enderecoValidador.validar(e);
+        }
+
+        for (CartaoCredito c : pedido.getCartoesCredito()) {
+            cartaoCreditoValidador.validar(c);
+        }
 
         Cliente clienteToAdd = pedido.getCliente();
         inserirNovoHash(clienteToAdd, pedido.getSenhaNova());

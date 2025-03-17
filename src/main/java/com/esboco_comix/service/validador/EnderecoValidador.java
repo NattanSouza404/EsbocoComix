@@ -28,5 +28,7 @@ public class EnderecoValidador {
         if (endereco.getIsCobranca() == null){
             throw new Exception("Obrigatório informar se o endereço é de cobrança ou não!");
         }
+
+        validarSeApenasNumeros(endereco.getCep(), "CEP");
     }
 }
