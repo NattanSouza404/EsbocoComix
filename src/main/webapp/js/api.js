@@ -21,6 +21,7 @@ export async function retornarAllClientes(filtro) {
             url += "&genero="+filtro.genero;
             url += "&email="+filtro.email;
             url += "&ranking="+filtro.ranking;
+            url += "&isAtivo="+filtro.isAtivo
         }
 
         const response = await fetch(url);

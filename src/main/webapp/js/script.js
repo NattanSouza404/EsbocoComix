@@ -66,7 +66,8 @@ export function montarClientePorForm(form){
             tipo: formData.get("tipoTelefone"),
             ddd: formData.get("ddd"),
             numero: formData.get("numero"),
-        }
+        },
+        isAtivo: formData.get("isAtivo")
     };
     
 }

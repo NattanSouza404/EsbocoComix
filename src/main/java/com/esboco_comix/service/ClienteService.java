@@ -97,6 +97,11 @@ public class ClienteService {
             filtro.setRanking(Integer.parseInt(ranking));
         }
 
+        String isAtivo = parametrosFiltro.get("isAtivo");
+        if (isAtivo != null && isAtivo.length() > 0){
+            filtro.setIsAtivo(Boolean.valueOf(isAtivo));
+        }
+
         return clienteDAO.consultarTodos(filtro);
     }
 

@@ -35,6 +35,7 @@ public class ClienteController extends HttpServlet {
                     parametrosFiltro.put("cpf", req.getParameter("cpf"));
                     parametrosFiltro.put("dataNascimento", req.getParameter("dataNascimento"));
                     parametrosFiltro.put("ranking", req.getParameter("ranking"));
+                    parametrosFiltro.put("isAtivo", req.getParameter("isAtivo"));
                    
                     objetoResposta = clienteService.consultarTodos(parametrosFiltro);
                     break;
