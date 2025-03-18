@@ -131,7 +131,7 @@ public class ClienteDAO implements IDAO<Cliente> {
         PreparedStatement pst = conn.prepareStatement(
             "UPDATE clientes set "+
                 "cli_nome = ?, cli_genero = ?, cli_dt_nascimento = ?, cli_cpf = ?, cli_email = ?,"+
-                "cli_ranking = ?, cli_tel_tipo = ?, cli_tel_ddd = ?, cli_tel_numero = ?, cli_is_ativo = ? "+
+                "cli_tel_tipo = ?, cli_tel_ddd = ?, cli_tel_numero = ? "+
                 "WHERE cli_id = ?"
         );
     
@@ -141,12 +141,10 @@ public class ClienteDAO implements IDAO<Cliente> {
             pst.setDate(3, Date.valueOf(c.getDataNascimento()));
             pst.setString(4, c.getCpf());
             pst.setString(5, c.getEmail());
-            pst.setInt(6, c.getRanking());
-            pst.setString(7, c.getTelefone().getTipo());
-            pst.setString(8, c.getTelefone().getDdd());
-            pst.setString(9, c.getTelefone().getNumero());
-            pst.setBoolean(10, c.getIsAtivo());
-            pst.setInt(11, c.getId());
+            pst.setString(6, c.getTelefone().getTipo());
+            pst.setString(7, c.getTelefone().getDdd());
+            pst.setString(8, c.getTelefone().getNumero());
+            pst.setInt(9, c.getId());
         
             if (pst.executeUpdate() == 0) {
                 throw new Exception("Atualização não foi sucedida!");
