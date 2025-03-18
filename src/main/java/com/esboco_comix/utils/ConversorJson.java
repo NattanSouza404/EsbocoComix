@@ -3,6 +3,7 @@ package com.esboco_comix.utils;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.json.JsonWriteFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -14,6 +15,7 @@ public class ConversorJson {
 	private static ObjectMapper initMapper() {
 		ObjectMapper mapeador = new ObjectMapper();
 		mapeador.registerModule(new JavaTimeModule());
+		mapeador.getFactory().configure(JsonWriteFeature.ESCAPE_NON_ASCII.mappedFeature(), true);
 		return mapper = mapeador;
 	}
 

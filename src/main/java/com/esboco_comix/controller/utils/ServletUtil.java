@@ -37,6 +37,7 @@ public class ServletUtil {
     }
 
     private static String bodyRequestToString(HttpServletRequest req) throws IOException {
+        req.setCharacterEncoding("UTF-8");
         StringBuilder string = new StringBuilder();
 
         req.getReader().lines().forEach(
