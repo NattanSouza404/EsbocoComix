@@ -33,6 +33,10 @@ export default class TabelaClientes extends HTMLTableElement {
         this.tBody.textContent = '';
         this.tBody.append(this.initCabecalho());
 
+        if (clientes === null || clientes === undefined){
+            return;
+        }
+
         clientes.forEach(c => {
 
             let tableRow = document.createElement('tr');

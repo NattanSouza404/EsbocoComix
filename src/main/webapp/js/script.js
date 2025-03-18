@@ -67,7 +67,8 @@ export function montarClientePorForm(form){
             ddd: formData.get("ddd"),
             numero: formData.get("numero"),
         },
-        isAtivo: formData.get("isAtivo")
+        isAtivo: formData.get("isAtivo"),
+        ranking: formData.get('ranking')
     };
     
 }
