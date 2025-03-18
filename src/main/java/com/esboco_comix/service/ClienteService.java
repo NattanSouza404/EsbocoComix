@@ -74,7 +74,7 @@ public class ClienteService {
 
         String cpf = parametrosFiltro.get("cpf");
         if (cpf != null && cpf.length() > 0){
-            filtro.setNome(cpf);
+            filtro.setCpf(cpf);
         }
 
         String dataNascimento = parametrosFiltro.get("dataNascimento");
