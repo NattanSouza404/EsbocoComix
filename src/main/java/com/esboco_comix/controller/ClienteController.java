@@ -1,6 +1,8 @@
 package com.esboco_comix.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
@@ -26,8 +28,15 @@ public class ClienteController extends HttpServlet {
 
             switch (opcao) {
                 case "consultarporfiltro":
-                    Cliente filtro = jsonToObject(req, Cliente.class);
-                    objetoResposta = clienteService.consultarTodos(filtro);
+                    Map<String, String> parametrosFiltro = new HashMap<>();
+                    parametrosFiltro.put("nome", req.getParameter("nome"));
+                    parametrosFiltro.put("genero", req.getParameter("genero"));
+                    parametrosFiltro.put("email", req.getParameter("email"));
+                    parametrosFiltro.put("cpf", req.getParameter("cpf"));
+                    parametrosFiltro.put("dataNascimento", req.getParameter("dataNascimento"));
+                    parametrosFiltro.put("ranking", req.getParameter("ranking"));
+                   
+                    objetoResposta = clienteService.consultarTodos(parametrosFiltro);
                     break;
             
                 default:

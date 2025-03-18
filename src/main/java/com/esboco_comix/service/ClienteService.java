@@ -1,7 +1,9 @@
 package com.esboco_comix.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.esboco_comix.controller.pedidos.PedidoAlterarSenha;
 import com.esboco_comix.controller.pedidos.PedidoCadastrarCliente;
@@ -63,7 +65,38 @@ public class ClienteService {
         return clienteDAO.consultarTodos();
     }
 
-    public List<Cliente> consultarTodos(Cliente filtro) throws Exception {
+    public List<Cliente> consultarTodos(Map<String, String> parametrosFiltro) throws Exception {
+        Cliente filtro = new Cliente();
+        String nome = parametrosFiltro.get("nome");
+        if (nome != null && nome.length() > 0){
+            filtro.setNome(nome);
+        }
+
+        String cpf = parametrosFiltro.get("cpf");
+        if (cpf != null && cpf.length() > 0){
+            filtro.setNome(cpf);
+        }
+
+        String dataNascimento = parametrosFiltro.get("dataNascimento");
+        if (dataNascimento != null && dataNascimento.length() > 0){
+            filtro.setDataNascimento(LocalDate.parse(dataNascimento));
+        }
+
+        String genero = parametrosFiltro.get("genero");
+        if (genero != null && genero.length() > 0){
+            filtro.setGenero(genero);
+        }
+
+        String email = parametrosFiltro.get("email");
+        if (email != null && email.length() > 0){
+            filtro.setEmail(email);
+        }
+
+        String ranking = parametrosFiltro.get("ranking");
+        if (ranking != null && ranking.length() > 0 && !ranking.equals("undefined")){
+            filtro.setRanking(Integer.parseInt(ranking));
+        }
+
         return clienteDAO.consultarTodos(filtro);
     }
 

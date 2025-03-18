@@ -1,12 +1,11 @@
 import { toggleDisplay } from "../script.js";
-import { retornarAllClientes, atualizarCliente } from "../api.js";
+import { atualizarCliente } from "../api.js";
 
 export default class TabelaClientes extends HTMLTableElement {
     
     constructor(){
         super();
 
-        this.clientes = [];
         this.colunas = [
             'Nome', "Gênero", "Data de Nascimento", "CPF", "E-mail", "Ranking", "Status", "Operações"
         ];
@@ -18,8 +17,6 @@ export default class TabelaClientes extends HTMLTableElement {
         
         this.tBody = document.createElement('tbody');
         this.append(this.tBody);
-
-        this.atualizarTabelaClientes();
     }
 
     initCabecalho(){
@@ -32,14 +29,11 @@ export default class TabelaClientes extends HTMLTableElement {
         return tr;
     }
 
-    async atualizarTabelaClientes(){
-
-        this.clientes = await retornarAllClientes();
-    
+    async atualizarTabelaClientes(clientes){
         this.tBody.textContent = '';
         this.tBody.append(this.initCabecalho());
 
-        this.clientes.forEach(c => {
+        clientes.forEach(c => {
 
             let tableRow = document.createElement('tr');
 

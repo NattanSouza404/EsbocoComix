@@ -26,29 +26,30 @@
       <div id="campos-filtro-clientes">
   
         <label>Nome</label>
-        <input placeholder="Nome"></input>
+        <input placeholder="Nome" name="nome"></input>
     
         <label>Gênero</label>
-        <select>
+        <select name="genero">
+          <option></option>
           <option>Masculino</option>
           <option>Feminino</option>
           <option>Outro</option>
         </select>
     
         <label>Data nascimento</label>
-        <input type="date">
+        <input type="date" name="dataNascimento">
       
         <label>CPF</label>
-        <input placeholder="111.111.111-11">
+        <input placeholder="111.111.111-11" name="cpf">
       
         <label>E-mail</label>
-        <input type="email" placeholder="email@email.com">
+        <input type="email" placeholder="email@email.com" name="email">
     
         <label>Ranking</label>
-        <input type="number" placeholder="4">
+        <input type="number" placeholder="4" name="ranking">
       </div>
     
-      <button type="button">Pesquisar</button>
+      <button type="button" onclick="atualizarTabelaClientes()">Pesquisar</button>
     </form>
   </div>
 

@@ -9,10 +9,22 @@ export async function retornarCliente(id) {
     }
 }
 
-export async function retornarAllClientes() {
+export async function retornarAllClientes(filtro) {
     try {
-        const response = await fetch("/cliente");
-        return await response.json();
+        let url = "/cliente";
+        if (filtro !== undefined){
+
+            url += "?opcao=consultarporfiltro";
+            url += "&nome="+filtro.nome;
+            url += "&cpf="+filtro.cpf;
+            url += "&dataNascimento="+filtro.dataNascimento;
+            url += "&genero="+filtro.genero;
+            url += "&email="+filtro.email;
+            url += "&ranking="+filtro.ranking;
+        }
+
+        const response = await fetch(url);
+        return await response.json();        
     } catch (error) {
         console.error('Erro buscando dados:', error);
         document.getElementById("resultados").textContent = "Erro carregando dados.";
