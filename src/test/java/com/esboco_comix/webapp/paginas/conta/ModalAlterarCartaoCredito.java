@@ -6,7 +6,8 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
+
+import com.esboco_comix.webapp.utils.FormElement;
 
 
 public class ModalAlterarCartaoCredito {
@@ -14,6 +15,8 @@ public class ModalAlterarCartaoCredito {
     private WebDriver driver;
 
     private List<WebElement> forms;
+    private FormElement form;
+
     private WebElement botaoAbrirModal;
     
     private WebElement botaoAdicionarCartao;
@@ -22,6 +25,7 @@ public class ModalAlterarCartaoCredito {
         this.driver = webDriver;
         
         this.forms = webDriver.findElements(By.id("alterar-cartao-credito"));
+        this.form = new FormElement(forms.get(0));
         this.botaoAbrirModal = webDriver.findElement(By.id("btn-alterar-cartao-credito"));
         this.botaoAdicionarCartao = webDriver.findElement(By.cssSelector("#footer-secao-cartao-credito button"));
     }
@@ -30,10 +34,8 @@ public class ModalAlterarCartaoCredito {
         this.botaoAbrirModal.click();
     }
 
-    public void preencherInput(String nome, String valorInput) throws InterruptedException{
-        Thread.sleep(100);
-        this.forms.get(0).findElement(By.name(nome)).clear();
-        this.forms.get(0).findElement(By.name(nome)).sendKeys(valorInput);
+    public void preencherInput(String nome, String valorInput) throws InterruptedException {
+        this.form.preencherInput(nome, valorInput);
     }
 
     public void adicionarNovoCartao() {
@@ -41,13 +43,11 @@ public class ModalAlterarCartaoCredito {
     }
 
     public void preencherInputSelect(String nome, String valorInput) {
-        WebElement dropdown = forms.get(0).findElement(By.name(nome));
-        Select select = new Select(dropdown);
-        select.selectByValue(valorInput);
+        form.preencherInputSelect(nome, valorInput);
     }
 
     public void inserir() throws InterruptedException {
-        this.forms.get(0).findElement(By.cssSelector(".btn-atualizar")).click();
+        this.form.getForm().findElement(By.cssSelector(".btn-atualizar")).click();
         Thread.sleep(1500);
 
         Alert alert = driver.switchTo().alert();
@@ -57,7 +57,7 @@ public class ModalAlterarCartaoCredito {
     }
 
     public void deletarCartaoCredito() throws InterruptedException {
-        this.forms.get(0).findElement(By.cssSelector(".btn-remover")).click();
+        this.form.getForm().findElement(By.cssSelector(".btn-remover")).click();
         Thread.sleep(1500);
         
         Alert alert = driver.switchTo().alert();
@@ -65,8 +65,5 @@ public class ModalAlterarCartaoCredito {
         Thread.sleep(1500);
         alert.dismiss();
     }
-
-    
-
     
 }

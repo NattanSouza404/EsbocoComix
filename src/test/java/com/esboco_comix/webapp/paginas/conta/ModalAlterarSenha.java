@@ -5,20 +5,22 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.esboco_comix.webapp.utils.FormElement;
+
 public class ModalAlterarSenha {
 
     private WebDriver driver;
 
-    private WebElement form;
+    private FormElement form;
     private WebElement botaoAbrirModal;
     private WebElement botaoEnviar;
 
     public ModalAlterarSenha(WebDriver webDriver){
         this.driver = webDriver;
         
-        this.form = webDriver.findElement(By.id("alterar-senha"));
+        this.form = new FormElement(webDriver.findElement(By.id("alterar-senha")));
         this.botaoAbrirModal = webDriver.findElement(By.id("btn-alterar-senha"));
-        this.botaoEnviar = form.findElement(By.className("botao-salvar"));
+        this.botaoEnviar = form.getForm().findElement(By.className("botao-salvar"));
     }
 
     public void abrirModal(){
@@ -26,8 +28,7 @@ public class ModalAlterarSenha {
     }
 
     public void preencherInput(String nome, String valorInput) throws InterruptedException{
-        Thread.sleep(100);
-        this.form.findElement(By.name(nome)).sendKeys(valorInput);
+        this.form.preencherInput(nome, valorInput);
     }
 
     public void enviar() throws InterruptedException {

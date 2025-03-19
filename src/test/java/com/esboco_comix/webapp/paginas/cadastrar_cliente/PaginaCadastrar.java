@@ -44,7 +44,7 @@ public class PaginaCadastrar {
         formDadosPessoais.preencherCliente(pedido);
     }
 
-    public void preencherEnderecos(List<Endereco> enderecos) {
+    public void preencherEnderecos(List<Endereco> enderecos) throws InterruptedException {
         this.secaoEnderecos.preencherEnderecos(enderecos);
     }
 

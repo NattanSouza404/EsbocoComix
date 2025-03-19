@@ -29,7 +29,7 @@ public class SecaoEnderecos {
         this.botaoAdicionarEndereco.click();
     }
 
-    public void preencherEnderecos(List<Endereco> enderecos) {
+    public void preencherEnderecos(List<Endereco> enderecos) throws InterruptedException {
         for (int i = 0; i < enderecos.size(); i++){
             forms.get(i).preencher(enderecos.get(i));
         }

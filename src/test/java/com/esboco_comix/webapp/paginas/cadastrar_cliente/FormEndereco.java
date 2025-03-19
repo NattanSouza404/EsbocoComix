@@ -1,46 +1,34 @@
 package com.esboco_comix.webapp.paginas.cadastrar_cliente;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 
 import com.esboco_comix.model.entidades.Endereco;
+import com.esboco_comix.webapp.utils.FormElement;
 
 public class FormEndereco {
-    private WebElement form;
+    private FormElement form;
 
     public FormEndereco(WebElement form){
-        this.form = form;
+        this.form = new FormElement(form);
     }
 
-    public void preencherInput(String nome, String valorInput){
-        form.findElement(By.name(nome)).sendKeys(valorInput);
-    }
+    public void preencher(Endereco e) throws InterruptedException {
+        form.preencherInput("fraseCurta", e.getFraseCurta());
 
-    private void selecionarInputTrueOrFalse(String nome, boolean valor) {
-        WebElement webElement = form.findElement(By.name(nome));
-        Select select = new Select(webElement);
+        form.selecionarInputTrueOrFalse("isResidencial", e.getIsResidencial());
+        form.selecionarInputTrueOrFalse("isEntrega", e.getIsEntrega());
+        form.selecionarInputTrueOrFalse("isCobranca", e.getIsCobranca());
 
-        select.selectByValue(String.valueOf(valor));
-    }
-
-    public void preencher(Endereco e) {
-        preencherInput("fraseCurta", e.getFraseCurta());
-
-        selecionarInputTrueOrFalse("isResidencial", e.getIsResidencial());
-        selecionarInputTrueOrFalse("isEntrega", e.getIsEntrega());
-        selecionarInputTrueOrFalse("isCobranca", e.getIsCobranca());
-
-        preencherInput("bairro", e.getBairro());
-        preencherInput("cidade", e.getCidade());
-        preencherInput("estado", e.getEstado());
-        preencherInput("pais", e.getPais());
-        preencherInput("cep", e.getCep());
-        preencherInput("observacoes", e.getObservacoes());
-        preencherInput("logradouro", e.getLogradouro());
-        preencherInput("tipoLogradouro", e.getTipoLogradouro());
-        preencherInput("tipoResidencial", e.getTipoResidencial());
-        preencherInput("numero", e.getNumero());
+        form.preencherInput("bairro", e.getBairro());
+        form.preencherInput("cidade", e.getCidade());
+        form.preencherInput("estado", e.getEstado());
+        form.preencherInput("pais", e.getPais());
+        form.preencherInput("cep", e.getCep());
+        form.preencherInput("observacoes", e.getObservacoes());
+        form.preencherInput("logradouro", e.getLogradouro());
+        form.preencherInput("tipoLogradouro", e.getTipoLogradouro());
+        form.preencherInput("tipoResidencial", e.getTipoResidencial());
+        form.preencherInput("numero", e.getNumero());
     }
 
 }
