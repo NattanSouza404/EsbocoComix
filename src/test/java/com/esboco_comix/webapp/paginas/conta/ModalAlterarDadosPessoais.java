@@ -1,11 +1,12 @@
 package com.esboco_comix.webapp.paginas.conta;
 
+import java.time.LocalDate;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import com.esboco_comix.model.entidades.Cliente;
 
 public class ModalAlterarDadosPessoais {
     private WebDriver driver;
@@ -26,19 +27,23 @@ public class ModalAlterarDadosPessoais {
         this.botaoAbrirModal.click();
     }
 
-    public void preencherInput(String nome, String valorInput){
+    public void preencherInput(String nome, String valorInput) throws InterruptedException{
         this.form.findElement(By.name(nome)).clear();
         this.form.findElement(By.name(nome)).sendKeys(valorInput);
+        Thread.sleep(1000);
     }
 
-    public void preencher(Cliente cliente){
-        preencherInput("nome", "Jorginio dos Santos");
+    public void preencherInput(String nome, LocalDate data){
+        this.form.findElement(By.name(nome)).clear();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].value = '"+data.toString()+"';", this.form.findElement(By.name(nome)));
     }
 
-    public void enviar(){
+    public void enviar() throws InterruptedException {
         this.botaoEnviar.click();
         Alert alert = driver.switchTo().alert();
         alert.accept();
+        Thread.sleep(1500);
         alert.dismiss();
     }
 }

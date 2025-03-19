@@ -5,8 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.esboco_comix.controller.pedidos.PedidoAlterarSenha;
-
 public class ModalAlterarSenha {
 
     private WebDriver driver;
@@ -27,20 +25,18 @@ public class ModalAlterarSenha {
         this.botaoAbrirModal.click();
     }
 
-    public void preencherInput(String nome, String valorInput){
+    public void preencherInput(String nome, String valorInput) throws InterruptedException{
+        Thread.sleep(100);
         this.form.findElement(By.name(nome)).sendKeys(valorInput);
     }
 
-    public void preencher(PedidoAlterarSenha pedido){
-        preencherInput("senhaAntiga", pedido.getSenhaAntiga());
-        preencherInput("senhaNova", pedido.getSenhaNova());
-        preencherInput("senhaConfirmacao", pedido.getSenhaConfirmacao());
-    }
-
-    public void enviar(){
+    public void enviar() throws InterruptedException {
         this.botaoEnviar.click();
+        Thread.sleep(1000);
+        
         Alert alert = driver.switchTo().alert();
         alert.accept();
+        Thread.sleep(1500);
         alert.dismiss();
     }
 }

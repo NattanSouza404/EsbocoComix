@@ -20,11 +20,12 @@ public class FormDadosPessoais {
         this.campoData = form.findElement(By.name("dataNascimento"));
     }
 
-    public void preencherInput(String nome, String valorInput){
+    public void preencherInput(String nome, String valorInput) throws InterruptedException{
+        Thread.sleep(100);
         form.findElement(By.name(nome)).sendKeys(valorInput);
     }
 
-    public void preencherCliente(PedidoCadastrarCliente pedido) {
+    public void preencherCliente(PedidoCadastrarCliente pedido) throws InterruptedException {
         Cliente c = pedido.getCliente();
 
         preencherInput("nome", c.getNome());

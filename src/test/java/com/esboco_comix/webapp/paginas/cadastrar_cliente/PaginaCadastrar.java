@@ -30,7 +30,8 @@ public class PaginaCadastrar {
         this.botaoEnviarCadastro = driver.findElement(By.id("botao-enviar-cadastro"));
     }
 
-    public void fechar(){
+    public void fechar() throws InterruptedException{
+        Thread.sleep(3000);
         driver.close();
     }
 
@@ -51,11 +52,18 @@ public class PaginaCadastrar {
         this.secaoEnderecos.adicionarNovoEndereco();
     }
 
-    public void enviarCadastro() {
+    public void enviarCadastro() throws InterruptedException {
         botaoEnviarCadastro.click();
+        Thread.sleep(500);
 
         Alert alert = driver.switchTo().alert();
+        Thread.sleep(500);
+
         alert.accept();
+        Thread.sleep(1000);
+
+        alert.dismiss();
+        Thread.sleep(500);
     }
 
 }

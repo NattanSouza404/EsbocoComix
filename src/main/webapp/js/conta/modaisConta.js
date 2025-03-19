@@ -162,6 +162,7 @@ export class ModalAlterarEndereco extends Modal {
                 this.enviarPedidoDeletarEndereco(form);
             };
             form.botaoRemover.type = 'button';
+            form.botaoRemover.className = 'btn-remover';
             form.append(this.criarBotaoAtualizar(form));
         }
 
@@ -182,6 +183,7 @@ export class ModalAlterarEndereco extends Modal {
                 this.enviarDelecao(form);
             };
             form.botaoRemover.type = 'button';
+            form.botaoRemover.className = 'btn-remover';
             form.append(this.criarBotaoAtualizar(form));
             form.atualizar(e);
         });
@@ -207,6 +209,7 @@ export class ModalAlterarEndereco extends Modal {
     criarBotaoAtualizar(form){
         const botaoAtualizar = criarElemento('button', 'Atualizar');
         botaoAtualizar.type = "button";
+        botaoAtualizar.className = "btn-atualizar";
         botaoAtualizar.onclick = () => {
             this.enviarAtualizacao(form);
         };
@@ -264,6 +267,7 @@ export class ModalAlterarCartaoCredito extends Modal {
                 this.enviarDelecao(form);
             };
             form.botaoRemover.type = 'button';
+            form.botaoRemover.className = 'btn-remover';
             form.append(this.criarBotaoAtualizar(form));
             form.atualizar(e);
         });
@@ -289,6 +293,7 @@ export class ModalAlterarCartaoCredito extends Modal {
     criarBotaoAtualizar(form){
         const botaoAtualizar = criarElemento('button', 'Atualizar');
         botaoAtualizar.type = "button";
+        botaoAtualizar.className = "btn-atualizar";
         botaoAtualizar.onclick = () => {
             this.enviarAtualizacao(form);
         };

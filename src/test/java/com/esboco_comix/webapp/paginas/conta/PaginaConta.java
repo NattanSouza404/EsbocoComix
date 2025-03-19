@@ -15,7 +15,6 @@ public class PaginaConta {
     public final ModalAlterarEndereco modalAlterarEndereco;
     public final ModalAlterarCartaoCredito modalAlterarCartaoCredito;
     
-
     public PaginaConta(){
         this.driver = new DriverTeste();
         driver.get(URL);
@@ -26,9 +25,9 @@ public class PaginaConta {
         this.modalAlterarCartaoCredito = new ModalAlterarCartaoCredito(driver);
     }
 
-    public void fechar(){
+    public void fechar() throws InterruptedException{
+        Thread.sleep(3000);
         driver.close();
-        driver.notifyAll();
     }
 
 }
