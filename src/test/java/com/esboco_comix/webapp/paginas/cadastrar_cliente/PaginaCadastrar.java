@@ -35,11 +35,6 @@ public class PaginaCadastrar {
         driver.close();
     }
 
-    public void preencher(PedidoCadastrarCliente pedido) throws InterruptedException {
-        preencherCliente(pedido);
-        preencherEnderecos(pedido.getEnderecos());
-    }
-
     public void preencherCliente(PedidoCadastrarCliente pedido) throws InterruptedException {
         formDadosPessoais.preencherCliente(pedido);
     }

@@ -21,7 +21,9 @@ public class PaginaCadastrarTest {
         pedido.setSenhaConfirmacao("1234abC!");
         
         try {
-            cadastro.preencher(pedido);
+            cadastro.preencherCliente(pedido);
+            cadastro.preencherEnderecos(pedido.getEnderecos());
+
             cadastro.enviarCadastro();
             cadastro.fechar();
         } catch (InterruptedException e) {
