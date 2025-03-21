@@ -4,31 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicial</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
   
-  <header>
-    <div>
-      <h2>E-commerce</h2>
-    </div>
-    <div>
-      <nav>
-        <a href="clientes.html"><h2>Clientes</h2></a>
-        <a href="index.html"><h2>Index</h2></a>
-      </nav>
-    </div>
-      <nav id="menu-usuario">
-        <button onclick="chatIA.trocarDisplayChat()">
-          <img src="img/bate-papo-com-ia.png">
-        </button>
-      </nav>
-    </div>
+  <header id="main-header">
+    <h2>E-commerce</h2>
+    <nav>
+      <a href="clientes.html">Clientes</a>
+      <a href="index.html">Index</a>
+      <a href="conta.html">Minha Conta</a>
+      <a href="carrinho.html">Carrinho</a>
+    </nav>
+    <nav id="menu-usuario">
+      <button onclick="chatIA.trocarDisplayChat()">
+        <img src="img/bate-papo-com-ia.png">
+      </button>
+    </nav>
   </header>
 
   <main>
     <div id="navegacao-lateral"></div>
-    <div id="container-produtos"></div>
+    <div id="container-produtos">
+      <div class="cartao-produto">
+        <p>Produto mano</p>
+        <p>Preço<p>
+        <img src="img/quadrinhos/conancraft.jpg" height="150px">
+        <button>Comprar</button>
+      </div>
+      <div class="cartao-produto">
+        <p>Produto mano</p>
+        <p>Imagem produto</p>
+        <button>Comprar</button>
+      </div>
+      <div class="cartao-produto">
+        <p>Produto mano</p>
+        <p>Imagem produto</p>
+        <button>Comprar</button>
+      </div>
+    </div>
   </main>
 
   <script type="text/javascript" src="js/chat_ia.js"></script>

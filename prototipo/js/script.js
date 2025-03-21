@@ -1,3 +1,13 @@
+function toggleDisplay(id){
+    const modal = document.getElementById(id);
+
+    if (modal.style.display === 'none' || modal.style.display === ""){
+        modal.style.display = 'flex';
+    } else {
+        modal.style.display = 'none';
+    }
+}
+
 function inativarConta(){
     const conta = document.getElementById('inative-me');
 
@@ -25,14 +35,4 @@ function inativarConta(){
         return;
     }
     
-}
-
-function toggleDisplay(id){
-    const modal = document.getElementById(id);
-
-    if (modal.style.display === 'none'){
-        modal.style.display = 'flex';
-    } else {
-        modal.style.display = 'none';
-    }
 }

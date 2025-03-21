@@ -3,279 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/crud_cliente.css">
+    <link rel="stylesheet" href="css/crud_clientes/conta.css">
 </head>
 <body>
 
-    <header>
+    <header id="main-header">
         <a href="clientes.html"><h2>Clientes</h2></a>
     </header>
 
     <div id="opcoes-conta">
-        <button onclick="toggleDisplay('modal-alterar-dados-pessoais')" class="botao-prototipo">Editar cadastro</button>
-        <button onclick="toggleDisplay('modal-alterar-senha')" class="botao-prototipo">Alterar senha</button>
-        <button onclick="toggleDisplay('modal-alterar-endereco')" class="botao-prototipo">Editar Endereços</button>
-        <button onclick="toggleDisplay('modal-alterar-cartao-credito')" class="botao-prototipo">Editar Cartão de Crédito</button>
+        <nav>
+            <button id="btn-editar-cadastro" onclick="toggleDisplay('modal-alterar-dados-pessoais')">Editar Cadastro</button>
+            <button id="btn-alterar-senha" onclick="toggleDisplay('modal-alterar-senha')">Alterar senha</button>
+            <button id="btn-alterar-endereco" onclick="toggleDisplay('modal-alterar-endereco')">Editar endereço</button>
+            <button id="btn-alterar-cartao-credito" onclick="toggleDisplay('modal-alterar-cartao-credito')">Editar Cartão de Crédito</button>
+        </nav>
     </div>
 
     <div id="conta">
         <div id="dados-pessoais">
-            <p>Nome: Maurício de Silva</p>
-            <p>Data Nascimento: 12/12/1999</p>
-            <p>CPF: 111.111.111-11</p>
-            <p>E-mail: mauricinho@ayomail.com.br</p>
-            <p>Gênero: Masculino</p>
-            <p>Ranking - 2</p>
-
-            <hr>
-            <p>Telefone: 11 99999-9999 - Fixo</p>
+            <dados-pessoais-conta>
+                <p>Nome: Jorge dos Santos Menezes</p>
+                <p>Data Nascimento: 1998,12,20</p>
+                <p>CPF: 11122233344</p>
+                <p>E-mail: jorge@email.com</p>
+                <p>Gênero: Masculino</p><p>Ranking: 0</p>
+                <hr>
+                <p>Telefone Fixo : 11 99999999</p>
+            </dados-pessoais-conta>
         </div>
-
         <div id="dados-endereco">
-            <div class="endereco-conta">
-                <h3>1º Endereço</h3>
-                <p>Frase curta: Casa</p>
-                <p>Tipo do endereço: Residencial, Cobrança, Entrega</p>
-                <p>Tipo de Residência: Casa</p>
-                <p>Nº Endereço: 2</p>
-                <p>Logradouro: Jorge das Quantas</p>
-                <p>Tipo de Logradouro: Rua</p>
-                <p>CEP: XXXXX-XXX</p>
-                <p>Bairro: A</p>
-                <p>Cidade: B</p>
-                <p>Estado: C</p>
-                <p>País: A</p>
-                <p>Observações: Perto do prédio XYZ</p>
-            </div>
-            
+            <dados-endereco-conta class="endereco-conta">
+            <h3>1º Endereço</h3>
+            <p>Frase Curta: Casa</p>
+            <p>Tipo do Endereço: [Residencial] [Entrega] [Cobranca] </p>
+            <p>Tipo de Residência: Apartamento</p>
+            <p>Nº: 9</p>
+            <p>Tipo Logradouro: Rua</p>
+            <p>CEP: 22222222</p>
+            <p>Bairro: A</p>
+            <p>Cidade: Mogi</p>
+            <p>Estado: SP</p>
+            <p>País: Brasil</p>
+            <p>Observações: </p>
+            </dados-endereco-conta>
         </div>
-
         <div id="dados-cartao-credito">
-            <div class="cartao-credito-conta">
+            <dados-cartao-credito class="cartao-credito-conta">
                 <h3>1º Cartão</h3>
-                <p>Número cartão: XXXX</p>
-                <p>Código de segurança: XXX</p>
-                <p>Nome impresso: MAURICIO DA SILVA </p>
-                <p>Bandeira cartão: VISA</p>
-                <p>Preferencial</p>
-            </div>
+                <p>Número Cartão: 1111222233334444</p>
+                <p>Código de Segurança: 111</p>
+                <p>Nome impresso: JORGE DOS SANTOS MENEZES</p>
+                <p>Bandeira do Cartão: Mastercard</p>
+                <p>Preferencial: false</p>
+            </dados-cartao-credito>
         </div>
     </div>
 
-    <div id="modal-alterar-senha" class="modal">
+    <script type="module" src="js/script.js"></script>
+
+    <alterar-dados-pessoais class="modal" id="modal-alterar-dados-pessoais">
         <div class="conteudo-modal">
-            <button onclick="toggleDisplay('modal-alterar-senha')" class="botao-fechar">X</button>
-            <form id="alterar-senha">
-            
-                <p class="aviso">
-                    A senha deve ser composta de pelo menos 8 caracteres,<br/>
-                    ter letras maiúsculas e minúsculas além de conter<br/>
-                    caracteres especiais. 
-                </p>
+            <button class="botao-fechar" onclick="toggleDisplay('modal-alterar-dados-pessoais')">X</button>
+            <form id="alterar-dados-pessoais">
+                <div class="header-dados-cadastro">
+                    <p>Dados Pessoais</p>
+                </div>
+                <div class="dados-formulario">
+                    <label>Nome</label>
+                    <input name="nome" placeholder="Seu nome">
+                    <label>Gênero</label>
+                    <select name="genero">
+                        <option>Masculino</option>
+                        <option>Feminino</option>
+                        <option>Outro</option>
+                    </select>
+                    <label>Data de Nascimento</label>
+                    <input name="dataNascimento" type="date">
+                    <label>CPF</label>
+                    <input name="cpf" placeholder="111.111.111-11">
+                    <label>E-mail</label>
+                    <input name="email" placeholder="seuemail@email.com" type="email">
+                </div>
+                <div class="header-dados-cadastro">
+                    <p>Telefone</p>
+                </div>
+                <div class="dados-formulario">
+                    <label>Tipo do Telefone</label>
+                    <select name="tipoTelefone">
+                        <option>Fixo</option>
+                        <option>Comercial</option>
+                        <option>Celular</option>
+                        <option>VoIP</option>
+                        <option>Fax</option>
+                    </select>
+                    <label>DDD</label>
+                    <input name="ddd" placeholder="11">
+                    <label>Número do Telefone</label>
+                    <input name="numero" placeholder="11111-1111">
+                </div>
+                <button class="botao-salvar" type="button">Salvar</button>
+            </form>
+        </div>
+    </alterar-dados-pessoais>
     
+    <alterar-senha class="modal" id="modal-alterar-senha">
+        <div class="conteudo-modal">
+            <button class="botao-fechar" onclick="toggleDisplay('modal-alterar-senha')">X</button>
+            <form id="alterar-senha">
+                <p class="aviso">
+                    A senha deve ser composta de pelo menos <br>
+                    8 caracteres, ter letras maiúsculas e <br>
+                    minúsculas além de conter caracteres especiais.
+                </p>
                 <div class="dados-formulario">
                     <label>Senha Antiga</label>
-                    <input type="password" autocomplete="password">
-
+                    <input name="senhaAntiga" type="password" autocomplete="password">
                     <label>Nova senha</label>
-                    <input type="password" autocomplete="new-password"></textarea>
+                    <input name="senhaNova" type="password" autocomplete="new-password">
                     <label>Confirme a senha</label>
-                    <input type="password" autocomplete="new-password"></textarea>
+                    <input name="senhaConfirmacao" type="password" autocomplete="new-password">
                 </div>
-                <button type="button" class="botao-salvar">Salvar</button>
-                
+                <button class="botao-salvar" type="button">Salvar</button>
             </form>
         </div>
-    </div>
-
-    <div id="modal-alterar-endereco" class="modal">
-        <div class="conteudo-modal">
-            <button onclick="toggleDisplay('modal-alterar-endereco')" class="botao-fechar">X</button>
-
-            <form id="alterar-endereco">
-
-                <div class="endereco">
-                    <div class="numeracao">
-                        <p>1</p>
-                        <p>Endereço Residencial</p>
-                    </div>
-        
-                    <div class="dados-formulario">
-                        <label>Frase curta para identificação</label>
-                        <input value="Casa">
-        
-                        <label>É um endereço residencial?</label>
-                        <select name="isResidencial">
-                            <option value="false">Não</option>
-                            <option value="true">Sim</option>
-                        </select>
-                        
-                        <label>É um endereço de cobrança?</label>
-                        <select name="isCobranca">
-                            <option value="false">Não</option>
-                            <option value="true">Sim</option>
-                        </select>
-                        
-                        <label>É um endereço de entrega?</label>
-                        <select name="isEntrega">
-                            <option value="false">Não</option>
-                            <option value="true">Sim</option>
-                        </select>
-        
-                        <label>Tipo de Residência</label>
-                        <select>
-                            <option selected>Casa</option>
-                            <option>Apartamento</option>
-                        </select>
-        
-                        <label>Nº Endereço</label>
-                        <input value="2">
-        
-                        <label>Logradouro</label>
-                        <input value="Jorge das Quantas">
-        
-                        <label>Tipo de Logradouro</label>
-                        <select>
-                            <option selected>Rua</option>
-                            <option>Avenida</option>
-                            <option>Praça</option>
-                        </select>
+    </alterar-senha>
     
-                        <label>CEP</label>
-                        <input value="XXXXX-XXX">
-        
-                        <label>Bairro</label>
-                        <input value="A">
-        
-                        <label>Cidade</label>
-                        <input value="B">
-        
-                        <label>Estado</label>
-                        <input value="C">
-        
-                        <label>País</label>
-                        <input value="A">
-        
-                        <label>Observações</label>
-                        <input value="Perto do prédio XYZ">
-                    </div>
-                    <button type="button" class="btn-remover">Remover</button>
-                    <button type="button" class="btn-atualizar">Atualizar</button>
-                </div>
-
-                <p class="aviso">
-                    Observações: Deve haver ao menos 1 endereço de
-                    residência, um de entrega e um de cobrança
-                </p>
-        
-                <button type="button" class="botao-salvar">Salvar</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="modal-alterar-cartao-credito" class="modal">
+    <alterar-cartao-credito class="modal" id="modal-alterar-cartao-credito">
         <div class="conteudo-modal">
-            <button onclick="toggleDisplay('modal-alterar-cartao-credito')" class="botao-fechar">X</button>
-
-            <form id="alterar-cartao-credito">
-
-                <button type="button">+ Novo cartão de crédito</button>
-
-                <div class="cartao-credito">
-                    <div class="numeracao">
-                        <p>1</p>
-                    </div>
-
-                    <div class="dados-formulario">
-                        <label>Número cartão</label>
-                        <input value="XXXX-XXXX-XXXX-XXXX">
-
-                        <label>Código de segurança</label>
-                        <input value="XXX">
-            
-                        <label>Nome impresso</label>
-                        <input value="MAURICIO DA SILVA">
-
-                        <label>Bandeira cartão</label>
-                        <select>
-                            <option selected>Visa</option>
-                            <option>Mastercard</option>
-                        </select>
-
-                        <label>Preferencial</label>
-                        <select>
-                            <option selected>Sim</option>
-                            <option>Não</option>
-                        </select>
-                    </div>
-                    <button type="button" class="btn-remover">Remover</button>
-                    <button type="button" class="btn-atualizar">Atualizar</button>
+            <button class="botao-fechar" onclick="toggleDisplay('modal-alterar-cartao-credito')">X</button>
+            <section id="alterar-cartao-credito">
+                <p>Cartões de crédito</p>
+                <div id="container-cartao-credito">
+                    <form class="cartao-credito">
+                        <div class="numeracao">
+                            <p>1</p>
+                            <p>Cartão de Crédito</p>
+                        </div>
+                        <div class="dados-cartao-credito">
+                            <label>Número Cartão de Crédito</label>
+                            <input name="numero">
+                            <label>Nome Impresso?</label>
+                            <input name="nomeImpresso">
+                            <label>Código de Segurança</label>
+                            <input name="codigoSeguranca">
+                            <label>É preferencial?</label>
+                            <select name="isPreferencial">
+                                <option value="false">Não</option>
+                                <option value="true">Sim</option>
+                            </select>
+                            <label>Bandeira do Cartão</label>
+                            <select name="bandeiraCartao">
+                                <option value="MASTERCARD">Mastercard</option>
+                                <option value="VISA">Visa</option>
+                                <option value="AMERICAN_EXPRESS">American Express</option>
+                                <option value="HIPERCARD">Hipercard</option>
+                                <option value="ELO">Elo</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn-remover">Remover</button>
+                        <button type="button" class="btn-atualizar">Atualizar</button>
+                    </form>
                 </div>
-      
-                <button type="button" class="botao-salvar">Salvar</button>
-            </form>
+                <div id="footer-secao-cartao-credito">
+                    <button type="button">+ Novo Cartão de Crédito</button>
+                </div>
+            </section>
         </div>
-    </div>
-
-    <div id="modal-alterar-dados-pessoais" class="modal">
+    </alterar-cartao-credito>
+    
+    <alterar-endereco class="modal" id="modal-alterar-endereco">
         <div class="conteudo-modal">
-            <button onclick="toggleDisplay('modal-alterar-dados-pessoais')" class="botao-fechar">X</button>
-
-            <form id="alterar-dados-pessoais">
-
-                <section>
-                    <p class="titulo-dados-cadastro">Dados Pessoais</p>
-            
-                    <div class="dados-formulario">
-                        <label>Nome</label>
-                        <input type="text" placeholder="Seu nome" value="Maurício de Silva">
-                
-                        <label>Gênero</label>
-                        <select>
-                            <option selected>Masculino</option>
-                            <option>Feminino</option>
-                            <option>Outro</option>
-                            <option>Prefiro não informar</option>
-                        </select>
-                
-                        <label>Data de Nascimento</label>
-                        <input type="date" value="1999-12-12">
-                
-                        <label>CPF</label>
-                        <input placeholder="111.111.111-11" value="111.111.111-11">
-            
-                        <label>E-mail</label>
-                        <input type="email" placeholder="seuemail@email.com" value="mauricinho@ayomail.com.br">
-                    </div>
-            
-                    
-                </section>
-            
-                <section id="secao-telefone">
-                    <p class="titulo-dados-cadastro">Telefone</p>
-            
-                    <div class="dados-formulario">
-                        <label>Tipo do telefone</label>
-                        <select>
-                            <option selected>Fixo</option>
-                        </select>
-                        
-                        <label>DDD</label>
-                        <input placeholder="11" value="11">
-                
-                        <label>Número do telefone</label>
-                        <input placeholder="11111-1111" value="99999-9999"> 
-                    </div>
-                    
-                </section>
-      
-                <button type="button" class="botao-salvar">Salvar</button>
-            </form>
+            <button class="botao-fechar" onclick="toggleDisplay('modal-alterar-endereco')">X</button>
+            <section id="alterar-endereco">
+                <p>Endereços</p>
+                <div id="container-enderecos">
+                    <form class="endereco">
+                        <div class="numeracao">
+                            <p>1</p>
+                            <p>Endereço</p>
+                        </div>
+                        <div class="dados-endereco">
+                            <label>Frase curta para identificação</label>
+                            <input name="fraseCurta">
+                            <label>É um endereço residencial?</label>
+                            <select name="isResidencial">
+                                <option value="false">Não</option>
+                                <option value="true">Sim</option>
+                            </select>
+                            <label>É um endereço de cobrança?</label>
+                            <select name="isCobranca">
+                                <option value="false">Não</option>
+                                <option value="true">Sim</option>
+                            </select>
+                            <label>É um endereço de entrega?</label>
+                            <select name="isEntrega">
+                                <option value="false">Não</option>
+                                <option value="true">Sim</option>
+                            </select>
+                            <label>Tipo de Logradouro</label>
+                            <select name="tipoResidencial">
+                                <option>Casa</option>
+                                <option>Apartamento</option>
+                                <option>Condomínio</option>
+                            </select>
+                            <label>Nº Endereço</label>
+                            <input name="numero">
+                            <label>Logradouro</label>
+                            <input name="logradouro">
+                            <label>Tipo de Logradouro</label>
+                            <select name="tipoLogradouro">
+                                <option>Rua</option>
+                                <option>Avenida</option>
+                                <option>Praça</option>
+                                <option>Travessa</option>
+                                <option>Estrada</option>
+                                <option>Alameda</option>
+                                <option>Via</option>
+                                <option>Rodovia</option>
+                                <option>Viaduto</option>
+                                <option>Largo</option>
+                                <option>Beco</option>
+                                <option>Túnel</option>
+                            </select>
+                            <label>CEP</label>
+                            <input name="cep" placeholder="00000-000">
+                            <label>Bairro</label>
+                            <input name="bairro">
+                            <label>Cidade</label>
+                            <input name="cidade">
+                            <label>Estado</label>
+                            <input name="estado">
+                            <label>País</label>
+                            <input name="pais">
+                            <label>Observações</label>
+                            <input name="observacoes" placeholder="Perto do prédio...">
+                        </div>
+                        <button type="button" class="btn-remover">Remover</button>
+                        <button type="button" class="btn-atualizar">Atualizar</button>
+                    </form>
+                </div>
+                <div id="footer-secao-endereco">
+                    <button type="button">+ Novo Endereço</button>
+                    <p class="aviso">
+                        Observações: Deve haver ao menos 1 endereço de residência, um de entrega e um de cobrança
+                    </p>
+                </div>
+            </section>
         </div>
-    </div>
+    </alterar-endereco>
 
-    <script type="text/javascript" src="js/crud_clientes.js"></script>
+    <script src="js/script.js"></script>
 </body>
-</html>
