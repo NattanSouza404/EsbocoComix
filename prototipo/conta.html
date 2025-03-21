@@ -76,6 +76,9 @@
                 </p>
     
                 <div class="dados-formulario">
+                    <label>Senha Antiga</label>
+                    <input type="password" autocomplete="password">
+
                     <label>Nova senha</label>
                     <input type="password" autocomplete="new-password"></textarea>
                     <label>Confirme a senha</label>
@@ -103,17 +106,23 @@
                         <label>Frase curta para identificação</label>
                         <input value="Casa">
         
-                        <label>Tipo do endereço</label>
-                        <div>
-                            <input type="checkbox" checked disabled>
-                            <label>Residencial</label>
-    
-                            <input type="checkbox" checked>
-                            <label>Cobrança</label>
-    
-                            <input type="checkbox" checked>
-                            <label>Entrega</label>
-                        </div>
+                        <label>É um endereço residencial?</label>
+                        <select name="isResidencial">
+                            <option value="false">Não</option>
+                            <option value="true">Sim</option>
+                        </select>
+                        
+                        <label>É um endereço de cobrança?</label>
+                        <select name="isCobranca">
+                            <option value="false">Não</option>
+                            <option value="true">Sim</option>
+                        </select>
+                        
+                        <label>É um endereço de entrega?</label>
+                        <select name="isEntrega">
+                            <option value="false">Não</option>
+                            <option value="true">Sim</option>
+                        </select>
         
                         <label>Tipo de Residência</label>
                         <select>
@@ -152,15 +161,14 @@
                         <label>Observações</label>
                         <input value="Perto do prédio XYZ">
                     </div>
+                    <button type="button" class="btn-remover">Remover</button>
+                    <button type="button" class="btn-atualizar">Atualizar</button>
                 </div>
-
-                <button type="button">+ Novo endereço</button>
 
                 <p class="aviso">
                     Observações: Deve haver ao menos 1 endereço de
                     residência, um de entrega e um de cobrança
                 </p>
-
         
                 <button type="button" class="botao-salvar">Salvar</button>
             </form>
@@ -201,9 +209,9 @@
                             <option selected>Sim</option>
                             <option>Não</option>
                         </select>
-
-                        <button type="button">Remover</button>
                     </div>
+                    <button type="button" class="btn-remover">Remover</button>
+                    <button type="button" class="btn-atualizar">Atualizar</button>
                 </div>
       
                 <button type="button" class="botao-salvar">Salvar</button>
