@@ -1,0 +1,72 @@
+#alterar-senha {
+    justify-items: center;
+}
+
+#alterar-endereco, #consultar-transacoes, #alterar-cartao-credito, #alterar-dados-pessoais {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#alterar-endereco, #alterar-cartao-credito, #alterar-dados-pessoais {
+    align-items: center;
+}
+
+#footer-secao-endereco {
+    justify-items: center;
+}
+
+.dados-formulario {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    width: 80%;
+    max-width: 80%;
+    
+    gap: 8px 0px;
+}
+
+.dados-endereco {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    width: fit-content;
+    max-width: 80%;
+    
+    gap: 8px 0px;
+}
+
+.dados-cartao-credito {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    width: fit-content;
+    max-width: 80%;
+    
+    gap: 8px 0px;
+}
+
+.endereco, .cartao-credito {
+    margin: 10px 0px;
+
+    border: solid 1px black;
+    padding: 8px;
+    border-radius: 2%;
+
+    gap: 1%;
+
+    background-color: lightgreen;
+}
+
+.numeracao {
+    display: flex;
+    justify-content: space-between;
+}
+
+.numeracao p {
+    background-color: pink;
+
+    border: solid 1px black;
+
+    padding: 4px;
+}
