@@ -40,19 +40,10 @@
         
                 <label>E-mail</label>
                 <input type="email" placeholder="seuemail@email.com">
-        
-                <label>Senha</label>
-                <input type="password"></textarea>
-        
-                <label>Confirme a senha</label>
-                <input type="password"></textarea>
-            </div>
-        </section>
 
-        <section id="secao-telefone">
-            <p class="titulo-dados-cadastro">Telefone</p>
+                <p class="titulo-dados-cadastro">Telefone</p>
+                <div></div>
 
-            <div class="dados-formulario">
                 <label>Tipo do telefone</label>
                 <select>
                     <option>Fixo</option>
@@ -63,6 +54,12 @@
         
                 <label>Número do telefone</label>
                 <input placeholder="11111-1111"> 
+
+                <label>Senha</label>
+                <input type="password"></textarea>
+        
+                <label>Confirme a senha</label>
+                <input type="password"></textarea>
             </div>
         </section>
 
@@ -79,17 +76,23 @@
                     <label>Frase curta para identificação</label>
                     <input>
 
-                    <label>Tipo do endereço</label>
-                    <div>
-                        <input type="checkbox" checked disabled>
-                        <label>Residencial</label>
-
-                        <input type="checkbox">
-                        <label>Cobrança</label>
-
-                        <input type="checkbox">
-                        <label>Entrega</label>
-                    </div>
+                    <label>É um endereço residencial?</label>
+                    <select name="isResidencial">
+                        <option value="false">Não</option>
+                        <option value="true">Sim</option>
+                    </select>
+                    
+                    <label>É um endereço de cobrança?</label>
+                    <select name="isCobranca">
+                        <option value="false">Não</option>
+                        <option value="true">Sim</option>
+                    </select>
+                    
+                    <label>É um endereço de entrega?</label>
+                    <select name="isEntrega">
+                        <option value="false">Não</option>
+                        <option value="true">Sim</option>
+                    </select>
 
                     <label>Tipo de Residência</label>
                     <select>
@@ -139,17 +142,23 @@
                     <label>Frase curta para identificação</label>
                     <input>
 
-                    <label>Tipo do endereço</label>
-                    <div>
-                        <input type="checkbox">
-                        <label>Residencial</label>
-
-                        <input type="checkbox">
-                        <label>Cobrança</label>
-
-                        <input type="checkbox">
-                        <label>Entrega</label>
-                    </div>
+                    <label>É um endereço residencial?</label>
+                    <select name="isResidencial">
+                        <option value="false">Não</option>
+                        <option value="true">Sim</option>
+                    </select>
+                    
+                    <label>É um endereço de cobrança?</label>
+                    <select name="isCobranca">
+                        <option value="false">Não</option>
+                        <option value="true">Sim</option>
+                    </select>
+                    
+                    <label>É um endereço de entrega?</label>
+                    <select name="isEntrega">
+                        <option value="false">Não</option>
+                        <option value="true">Sim</option>
+                    </select>
 
                     <label>Tipo de Residência</label>
                     <select>
