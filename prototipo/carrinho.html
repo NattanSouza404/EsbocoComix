@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicial</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-light">
+
+  <nav id="main-nav" class="navbar navbar-expand-lg navbar-light"></nav>
+
+  <div class="container my-5">
+    <h1 class="mb-4 text-center">Shopping Cart</h1>
+
+    <!-- Cart Table -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Example Product Row -->
+          <tr>
+            <td>Product 1</td>
+            <td>$10.00</td>
+            <td>
+              <input type="number" class="form-control form-control-sm" value="1" min="1">
+            </td>
+            <td>$10.00</td>
+            <td>
+              <button class="btn btn-danger btn-sm">Remove</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Product 2</td>
+            <td>$20.00</td>
+            <td>
+              <input type="number" class="form-control form-control-sm" value="2" min="1">
+            </td>
+            <td>$40.00</td>
+            <td>
+              <button class="btn btn-danger btn-sm">Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <p>Calcular frete</p>
+      <label>Endereço</label>
+      <select>
+        <option>Casa</option>
+        <option>Casa da mãe</option>
+      </select>
+    </div>
+    <button>Adicionar Cupom</button>
+    <select>
+      <option>Cupom R$ 10</option>
+    </select>
+    <p>Cupons adicionados</p>
+
+    <!-- Cart Summary -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+      <h4>Total: <span class="text-success">$50.00</span></h4>
+      <button class="btn btn-primary btn-lg">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <footer id="main-footer" class="text-black text-center py-4"></footer>
+
+  <script type="module" src="js/loadPage.js"></script>
+  <script type="text/javascript" src="js/chat_ia.js"></script>
+</body>
+
+</html>
