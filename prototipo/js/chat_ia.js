@@ -1,4 +1,4 @@
-class ChatIA extends HTMLElement {
+export class ChatIA extends HTMLElement {
 
     frasesProntas = [
         'De acordo com o seu perfil, acredito que o quadrinho Ficticio, do autor Jr pode te interessar!',
@@ -120,9 +120,3 @@ class ChatIA extends HTMLElement {
 }
 
 customElements.define('chat-ia', ChatIA);
-
-const chatIA = new ChatIA();
-document.body.append(chatIA);
-
-chatIA.adicionarMensagem('Bom dia! O que você gostaria de saber?', 'texto-ia');
-chatIA.adicionarMensagem('Gostaria de alguma recomendação específica?', 'texto-ia');

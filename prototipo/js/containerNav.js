@@ -1,3 +1,4 @@
+import { ChatIA } from "./chat_ia.js";
 import { carregarBootstrapJS } from "./script.js";
 
 export class ContainerNav extends HTMLDivElement {
@@ -38,5 +39,12 @@ export class ContainerNav extends HTMLDivElement {
 }
 
 customElements.define("main-nav", ContainerNav, { extends: 'div' });
+
+const chatIA = new ChatIA();
+document.body.append(chatIA);
+window.chatIA = chatIA;
+
+chatIA.adicionarMensagem('Bom dia! O que você gostaria de saber?', 'texto-ia');
+chatIA.adicionarMensagem('Gostaria de alguma recomendação específica?', 'texto-ia');
 
 carregarBootstrapJS();
