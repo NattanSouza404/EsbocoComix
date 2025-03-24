@@ -36,3 +36,11 @@ function inativarConta(){
     }
     
 }
+
+function carregarBootstrapJS() {
+    const script = document.createElement('script');
+    script.src = 'bootstrap.bundle.min.js';
+    document.body.appendChild(script);
+}
+
+carregarBootstrapJS();
