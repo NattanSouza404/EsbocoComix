@@ -1,4 +1,4 @@
-function toggleDisplay(id){
+export function toggleDisplay(id){
     const modal = document.getElementById(id);
 
     if (modal.style.display === 'none' || modal.style.display === ""){
@@ -8,39 +8,17 @@ function toggleDisplay(id){
     }
 }
 
-function inativarConta(){
-    const conta = document.getElementById('inative-me');
+let BOOTSTRAP_CARREGADO = false;
 
-    if (conta.textContent === 'Ativo'){
-        const confirmacaoUsuario = confirm('Deseja mesmo inativar o cadastro de Maurício de Silva?');
+export function carregarBootstrapJS() {
 
-        if (!confirmacaoUsuario){
-            return;
-        }
-    
-        conta.textContent = 'Inativo';
-
+    if (BOOTSTRAP_CARREGADO === true){
         return;
     }
 
-    if (conta.textContent === 'Inativo'){
-        const confirmacaoUsuario = confirm('Deseja mesmo reativar o cadastro de Maurício de Silva?');
-
-        if (!confirmacaoUsuario){
-            return;
-        }
-    
-        conta.textContent = 'Ativo';
-
-        return;
-    }
-    
-}
-
-function carregarBootstrapJS() {
     const script = document.createElement('script');
-    script.src = 'bootstrap.bundle.min.js';
+    script.src = './js/bootstrap.bundle.min.js';
     document.body.appendChild(script);
-}
 
-carregarBootstrapJS();
+    BOOTSTRAP_CARREGADO = true;
+}

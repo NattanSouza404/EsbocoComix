@@ -1,3 +1,5 @@
+import { carregarBootstrapJS } from "./script.js";
+
 export class ContainerNav extends HTMLDivElement {
     constructor(){
         super();
@@ -9,17 +11,26 @@ export class ContainerNav extends HTMLDivElement {
             </a>
             <div id="navbar-nav" class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a href="conta.html" class="nav-link"><img src="img/conta.png"> Conta</a>
-                </li>
-                <li class="nav-item">
-                    <a href="carrinho.html" class="nav-link"><img src="img/carrinho.png"> Carrinho</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" onclick="chatIA.trocarDisplayChat()">
-                    <img src="img/bate-papo-com-ia.png"> Assistente Virtual
-                    </a>
-                </li>
+                    <li class="nav-link">
+                        <div class="dropdown">
+                            <img src="img/imagem-do-usuario-com-fundo-preto.png">
+                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Minha Conta
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="conta.html">Conta</a></li>
+                                <li><a class="dropdown-item" href="login.html">Sair</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="carrinho.html" class="nav-link"><img src="img/carrinho.png"> Carrinho</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="chatIA.trocarDisplayChat()">
+                        <img src="img/bate-papo-com-ia.png"> Assistente Virtual
+                        </a>
+                    </li>
                 </ul>
             </div>
         `;
@@ -27,3 +38,5 @@ export class ContainerNav extends HTMLDivElement {
 }
 
 customElements.define("main-nav", ContainerNav, { extends: 'div' });
+
+carregarBootstrapJS();

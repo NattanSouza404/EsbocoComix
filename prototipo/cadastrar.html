@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/crud_clientes/cadastrar.css">
 </head>
+
 <body>
 
-    <header id="main-header">
-        <a href="clientes.html"><h2>Clientes</h2></a>
-    </header>
-  
+    <nav id="main-nav" class="navbar navbar-expand-lg navbar-light"></nav>
+
     <main id="cadastrar-cliente">
         <div id="container-cadastrar-cliente">
             <section id="secao-dados-pessoais">
@@ -50,7 +50,8 @@
                         <input name="ddd" placeholder="11">
                         <label>Número do Telefone</label>
                         <input name="numero" placeholder="11111-1111">
-                    </div><div class="header-dados-cadastro">
+                    </div>
+                    <div class="header-dados-cadastro">
                         <p>Senha</p>
                     </div>
                     <div class="dados-formulario">
@@ -73,38 +74,38 @@
                         <div class="dados-endereco">
                             <label>Frase curta para identificação</label>
                             <input name="fraseCurta" placeholder="Casa">
-                            
+
                             <label>É um endereço residencial?</label>
                             <select name="isResidencial">
                                 <option value="false" disabled="">Não</option>
                                 <option value="true">Sim</option>
                             </select>
-                            
+
                             <label>É um endereço de cobrança?</label>
                             <select name="isCobranca">
                                 <option value="false">Não</option>
                                 <option value="true">Sim</option>
                             </select>
-                            
+
                             <label>É um endereço de entrega?</label>
                             <select name="isEntrega">
                                 <option value="false">Não</option>
                                 <option value="true">Sim</option>
                             </select>
-                            
+
                             <label>Tipo de Residencial</label>
                             <select name="tipoResidencial">
                                 <option>Casa</option>
                                 <option>Apartamento</option>
                                 <option>Condomínio</option>
                             </select>
-                            
+
                             <label>Nº Endereço</label>
                             <input name="numero">
-                            
+
                             <label>Logradouro</label>
                             <input name="logradouro">
-                            
+
                             <label>Tipo de Logradouro</label>
                             <select name="tipoLogradouro">
                                 <option>Rua</option>
@@ -120,22 +121,22 @@
                                 <option>Beco</option>
                                 <option>Túnel</option>
                             </select>
-                            
+
                             <label>CEP</label>
                             <input name="cep" placeholder="00000-000">
-                            
+
                             <label>Bairro</label>
                             <input name="bairro">
-                            
+
                             <label>Cidade</label>
                             <input name="cidade">
-                            
+
                             <label>Estado</label>
                             <input name="estado">
-                            
+
                             <label>País</label>
                             <input name="pais">
-                            
+
                             <label>Observações</label>
                             <input name="observacoes" placeholder="Perto do prédio...">
                         </div>
@@ -159,13 +160,13 @@
                         <div class="dados-cartao-credito">
                             <label>Número Cartão de Crédito</label>
                             <input name="numero">
-                            
+
                             <label>Nome Impresso?</label>
                             <input name="nomeImpresso">
-                            
+
                             <label>Código de Segurança</label>
                             <input name="codigoSeguranca">
-                            
+
                             <label>É preferencial?</label>
                             <select name="isPreferencial">
                                 <option value="false">Não</option>
@@ -189,8 +190,14 @@
                 </div>
             </section>
         </div>
-        <button type="button" id="botao-enviar-cadastro" class="botao-salvar" onclick="enviarCliente()">Salvar cliente</button>
-    </main> 
-  <script type="module" src="./cadastrar_files/cadastrar.js.download"></script>
+        <button type="button" id="botao-enviar-cadastro" class="botao-salvar" onclick="enviarCliente()">Salvar
+            cliente</button>
+    </main>
+
+
+    <footer id="main-footer" class="text-black text-center py-4"></footer>
+
+    <script type="module" src="js/loadPage.js"></script>
 </body>
+
 </html>

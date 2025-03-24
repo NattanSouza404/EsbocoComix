@@ -1,5 +1,10 @@
 import { ContainerFooter } from "./containerFooter.js";
 import { ContainerNav } from "./containerNav.js";
 
-document.getElementById("main-nav").append(new ContainerNav());
-document.getElementById("main-footer").append(new ContainerFooter());
+if (document.getElementById("main-nav")){
+    document.getElementById("main-nav").append(new ContainerNav());
+}
+
+if (document.getElementById("main-footer")){
+    document.getElementById("main-footer").append(new ContainerFooter());
+}
