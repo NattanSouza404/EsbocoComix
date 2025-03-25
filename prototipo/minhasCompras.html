@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Compras</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+    <nav id="main-nav" class="navbar navbar-expand-lg navbar-light"></nav>
+
+    <div class="container my-5">
+        <h1 class="mb-4 text-center">Minhas Compras</h1>
+
+        <!-- Tabela de Pedidos -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Pedido</th>
+                        <th>Data</th>
+                        <th>Valor Total</th>
+                        <th>Status</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Exemplo de Pedidos -->
+                    <tr>
+                        <td>1</td>
+                        <td>Pedido #001</td>
+                        <td>25/03/2025</td>
+                        <td>R$ 150,00</td>
+                        <td>Entregue</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" onclick="pedirTroca(this)">Pedir Troca</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Pedido #002</td>
+                        <td>20/03/2025</td>
+                        <td>R$ 80,00</td>
+                        <td>Em Transporte</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" onclick="pedirTroca(this)" disabled>Pedir Troca</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Pedido #003</td>
+                        <td>15/03/2025</td>
+                        <td>R$ 50,00</td>
+                        <td>Entregue</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" onclick="pedirTroca(this)">Pedir Troca</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal para Solicitação de Troca -->
+    <div class="modal fade" id="trocaModal" tabindex="-1" aria-labelledby="trocaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="trocaModalLabel">Solicitar Troca</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="pedidoId" class="form-label">Número do Pedido</label>
+                            <input type="text" class="form-control" id="pedidoId" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="motivoTroca" class="form-label">Motivo da Troca</label>
+                            <textarea class="form-control" id="motivoTroca" rows="3" placeholder="Descreva o motivo da troca"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar Solicitação</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="main-footer" class="text-black text-center py-4"></footer>
+
+    <script>
+        const pedirTroca = (button) => {
+            const row = button.parentElement.parentElement;
+            const pedido = row.querySelector('td:nth-child(2)').textContent;
+            const modal = new bootstrap.Modal(document.getElementById('trocaModal'));
+
+            document.getElementById('pedidoId').value = pedido;
+            modal.show();
+        };
+    </script>
+
+    <script type="module" src="js/loadPage.js"></script>
+</body>
+</html>
