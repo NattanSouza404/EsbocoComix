@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Management</title>
+    <link rel="stylesheet" href="../css/crud_clientes/clientes.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    
+    <nav id="main-nav">
+        <a href="clientes.html">Clientes</a>
+        <a href="estoque.html">Controle de estoque</a>
+        <a href="analise.html">Relatórios de Análise</a>
+        <a href="gerenciarVendas.html">Gerenciar vendas</a>
+        <a href="../login.html">Sair</a>
+      </nav>
+
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Controle de Estoque</h2>
+
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Quantidade</th>
+                    <th>Valor de Custo</th>
+                    <th>% Grupo de Precificação</th>
+                    <th>Valor de Venda</th>
+                    <th>Operações</th>
+                </tr>
+            </thead>
+            <tbody id="stockTable">
+                <tr>
+                    <td>1</td>
+                    <td class="item-name">Conancraft</td>
+                    <td class="item-quantity">15</td>
+                    <td class="item-cost-value">50.00</td>
+                    <td class="item-precification">20</td>
+                    <td class="item-price">60.00</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm">Fazer entrada no estoque</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td class="item-name">Homem Chiclete</td>
+                    <td class="item-quantity">30</td>
+                    <td class="item-cost-value">50.00</td>
+                    <td class="item-precification">20</td>
+                    <td class="item-price">60.00</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm">Fazer entrada no estoque</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td class="item-name">Sonic</td>
+                    <td class="item-quantity">50</td>
+                    <td class="item-cost-value">50.00</td>
+                    <td class="item-precification">20</td>
+                    <td class="item-price">60.00</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm">Fazer entrada no estoque</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td class="item-name">Menino Maluquinho</td>
+                    <td class="item-quantity">50</td>
+                    <td class="item-cost-value">50.00</td>
+                    <td class="item-precification">20</td>
+                    <td class="item-price">60.00</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm">Fazer entrada no estoque</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management</title>
+    <link rel="stylesheet" href="../css/crud_clientes/clientes.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <nav id="main-nav">
+        <a href="clientes.html">Clientes</a>
+        <a href="estoque.html">Controle de estoque</a>
+        <a href="analise.html">Relatórios de Análise</a>
+        <a href="gerenciarVendas.html">Gerenciar vendas</a>
+        <a href="../login.html">Sair</a>
+      </nav>
+
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Gestão de Pedidos</h2>
+
+        <!-- Table for Managing Orders -->
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Pedido</th>
+                    <th>Cliente</th>
+                    <th>Status</th>
+                    <th>Operações</th>
+                </tr>
+            </thead>
+            <tbody id="orderTable">
+                <tr>
+                    <td>1</td>
+                    <td>Pedido #001</td>
+                    <td>João Silva</td>
+                    <td class="order-status">On Route</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="changeStatus(this)">Alterar Status</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Pedido #002</td>
+                    <td>Maria Oliveira</td>
+                    <td class="order-status">Delivered</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="changeStatus(this)">Alterar Status</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Pedido #003</td>
+                    <td>Carlos Pereira</td>
+                    <td class="order-status">On Route</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="changeStatus(this)">Alterar Status</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- JavaScript Code -->
+    <script>
+        const changeStatus = (button) => {
+            const row = button.parentElement.parentElement;
+            const statusCell = row.querySelector('.order-status');
+
+            if (statusCell.textContent === 'On Route') {
+                statusCell.textContent = 'Delivered';
+                alert('Status atualizado para: Delivered');
+            } else if (statusCell.textContent === 'Delivered') {
+                statusCell.textContent = 'On Route';
+                alert('Status atualizado para: On Route');
+            }
+        };
+    </script>
+</body>
+</html>
