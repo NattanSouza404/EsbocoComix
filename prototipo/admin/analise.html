@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,23 +13,39 @@
         }
     </style>
 </head>
+
 <body>
 
-    <nav id="main-nav">
-        <a href="clientes.html">Clientes</a>
-        <a href="estoque.html">Controle de estoque</a>
-        <a href="analise.html">Relatórios de Análise</a>
-        <a href="gerenciarVendas.html">Gerenciar vendas</a>
-        <a href="../login.html">Sair</a>
+    <nav id="main-nav" class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#">Painel de Controle</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a href="clientes.html" class="nav-link active" aria-current="page">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="estoque.html" class="nav-link">Controle de Estoque</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="analise.html" class="nav-link">Relatórios de Análise</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gerenciarVendas.html" class="nav-link">Gerenciar Vendas</a>
+                    </li>
+                </ul>
+                <a href="../login.html" class="btn btn-danger">Sair</a>
+            </div>
+        </div>
     </nav>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <div class="container">
         <canvas id="graficoLinhaCategorias" class="graficoLinha" width="400" height="200"></canvas>
         <canvas id="graficoLinhaProdutos" class="graficoLinha" width="400" height="200"></canvas>
     </div>
-    
+
     <script>
         const ctxCategorias = document.getElementById('graficoLinhaCategorias').getContext('2d');
         const graficoLinhaCategorias = new Chart(ctxCategorias, {
@@ -143,4 +160,5 @@
         });
     </script>
 </body>
+
 </html>

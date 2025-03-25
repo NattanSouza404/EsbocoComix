@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,30 @@
     <link rel="stylesheet" href="../css/crud_clientes/clientes.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-light">
-    <nav id="main-nav">
-        <a href="clientes.html">Clientes</a>
-        <a href="estoque.html">Controle de estoque</a>
-        <a href="analise.html">Relatórios de Análise</a>
-        <a href="gerenciarVendas.html">Gerenciar vendas</a>
-        <a href="../login.html">Sair</a>
-      </nav>
+    <nav id="main-nav" class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#">Painel de Controle</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a href="clientes.html" class="nav-link active" aria-current="page">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="estoque.html" class="nav-link">Controle de Estoque</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="analise.html" class="nav-link">Relatórios de Análise</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gerenciarVendas.html" class="nav-link">Gerenciar Vendas</a>
+                    </li>
+                </ul>
+                <a href="../login.html" class="btn btn-danger">Sair</a>
+            </div>
+        </div>
+    </nav>
 
     <div class="container my-5">
         <h2 class="text-center mb-4">Gestão de Pedidos</h2>
@@ -78,4 +95,5 @@
         };
     </script>
 </body>
+
 </html>
