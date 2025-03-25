@@ -52,48 +52,56 @@
                     <td>1</td>
                     <td>Pedido #001</td>
                     <td>João Silva</td>
-                    <td class="order-status">On Route</td>
+                    <td class="order-status">Aprovar</td>
                     <td>
-                        <button class="btn btn-warning btn-sm" onclick="changeStatus(this)">Alterar Status</button>
+                        <button class="btn btn-warning btn-sm">Mudar para "Em trânsito"</button>
                     </td>
                 </tr>
                 <tr>
                     <td>2</td>
                     <td>Pedido #002</td>
                     <td>Maria Oliveira</td>
-                    <td class="order-status">Delivered</td>
+                    <td class="order-status">Em trânsito</td>
                     <td>
-                        <button class="btn btn-warning btn-sm" onclick="changeStatus(this)">Alterar Status</button>
+                        <button class="btn btn-warning btn-sm">Mudar para "Entregue"</button>
                     </td>
                 </tr>
                 <tr>
                     <td>3</td>
                     <td>Pedido #003</td>
                     <td>Carlos Pereira</td>
-                    <td class="order-status">On Route</td>
+                    <td class="order-status">Em troca</td>
                     <td>
-                        <button class="btn btn-warning btn-sm" onclick="changeStatus(this)">Alterar Status</button>
+                        <button class="btn btn-warning btn-sm">Mudar para "Troca Autorizada"</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 class="text-center mb-4">Pedidos de troca</h2>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Pedido</th>
+                    <th>Cliente</th>
+                    <th>Status</th>
+                    <th>Operações</th>
+                </tr>
+            </thead>
+            <tbody id="orderTable">
+                <tr>
+                    <td>1</td>
+                    <td>Pedido de troca #001</td>
+                    <td>Dario dos Santos</td>
+                    <td class="order-status">Em troca</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm">Mudar para "Troca Autorizada"</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-
-    <!-- JavaScript Code -->
-    <script>
-        const changeStatus = (button) => {
-            const row = button.parentElement.parentElement;
-            const statusCell = row.querySelector('.order-status');
-
-            if (statusCell.textContent === 'On Route') {
-                statusCell.textContent = 'Delivered';
-                alert('Status atualizado para: Delivered');
-            } else if (statusCell.textContent === 'Delivered') {
-                statusCell.textContent = 'On Route';
-                alert('Status atualizado para: On Route');
-            }
-        };
-    </script>
 </body>
 
 </html>
