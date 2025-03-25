@@ -28,6 +28,12 @@ export class ContainerNav extends HTMLDivElement {
                         <a href="carrinho.html" class="nav-link"><img src="img/carrinho.png"> Carrinho</a>
                     </li>
                     <li class="nav-item">
+                        <a href="minhasCompras.html" class="nav-link">
+                            <img src="img/bag.svg">
+                             Compras
+                         </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" onclick="chatIA.trocarDisplayChat()">
                         <img src="img/bate-papo-com-ia.png"> Assistente Virtual
                         </a>
