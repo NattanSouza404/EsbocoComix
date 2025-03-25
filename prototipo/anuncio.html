@@ -28,11 +28,20 @@
             <hr>
 
             <!-- Action Buttons -->
-            <div class="d-flex gap-3 mt-4">
-              <a href="compra.html" class="btn btn-primary btn-lg w-50 text-center" style="text-decoration: none;">Comprar agora</a>
-              <button class="btn btn-warning btn-lg w-50">Adicionar ao carrinho</button>
+            <div class="d-flex flex-column align-items-center gap-3">
+              <a href="compra.html" class="btn btn-primary btn-lg w-75">Comprar agora</a>
             </div>
-            <hr>
+
+            <hr class="my-4">
+
+            <!-- Section for "Adicionar ao carrinho" -->
+            <div class="d-flex flex-column align-items-center gap-3">
+              <div class="d-flex gap-3 w-75">
+                <button class="btn btn-warning btn-lg">Adicionar ao carrinho</button>
+                <input type="number" class="form-control" min="1" placeholder="Quantidade">
+              </div>
+            </div>
+            <hr class="my-4">
 
             <!-- Product Details Table -->
             <h3 class="mt-4">Product Info</h3>
