@@ -32,9 +32,31 @@ export class ContainerNav extends HTMLDivElement {
                         <img src="img/bate-papo-com-ia.png"> Assistente Virtual
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn position-relative dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="img/bell.svg" alt="Bell Icon" width="30">
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notificationCount">
+                                    1
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" id="notificationsDropdown">
+                                <li class="dropdown-item">Notificação!</li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
         `;
+
+        const notificationCount = this.querySelector('#notificationCount');
+        const notificationsDropdown = this.querySelector('#notificationsDropdown');
+
+        const clearNotifications = () => {
+            notificationCount.textContent = '';
+        };
+
+        notificationsDropdown.addEventListener('click', clearNotifications);
     }
 }
 
