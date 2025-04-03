@@ -1,36 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicial</title>
-    <link rel="stylesheet" href="css/index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicial</title>
+  <link rel="stylesheet" href="css/index.css">
 </head>
+
 <body>
-  
-  <header id="main-header">
-    <div>
-      <h2>E-commerce</h2>
-    </div>
-    <div>
-      <nav>
-        <a href="clientes.html"><h2>Clientes</h2></a>
-        <a href="index.html"><h2>Index</h2></a>
-      </nav>
-    </div>
-      <nav id="menu-usuario">
-        <button onclick="trocarDisplayChat()">
-          <img src="img/bate-papo-com-ia.png">
-        </button>
-      </nav>
+
+  <nav id="main-nav" class="navbar navbar-expand-lg navbar-light"></nav>
+
+  <!-- Hero Section -->
+  <header id="main-header" class="text-white text-center py-5">
+    <div class="container">
+      <h1>Bem vindo à Esboço Comix</h1>
+      <p>Encontre seus quadrinhos preferidos pelos melhores preços!</p>
     </div>
   </header>
 
   <main>
-    <div id="navegacao-lateral"></div>
-    <div id="container-produtos"></div>
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-3">
+          <div class="container mt-4">
+            <form>
+              <div class="d-flex align-items-center mb-3">
+                <label for="input3" class="form-label me-2">Autor:</label>
+                <input type="tel" id="input3" class="form-control" placeholder="Digite o autor">
+              </div>
+
+              <div class="d-flex align-items-center mb-3">
+                <label for="input3" class="form-label me-2">Categoria:</label>
+                <input type="tel" id="input3" class="form-control" placeholder="Digite a categoria">
+              </div>
+
+              <div class="d-flex align-items-center mb-3">
+                <label for="input3" class="form-label me-2">Telefone:</label>
+                <input type="tel" id="input3" class="form-control" placeholder="Digite o telefone">
+              </div>
+      
+              <!-- Button -->
+              <div class="text-center mt-3">
+                  <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="row col-md-9">
+          <cartao-produto class="col-md-3">
+            <div class="card">
+              <img src="img/quadrinhos/conancraft.jpg" class="card-img-top" alt="Comic Cover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Conancraft</h5>
+                <p class="card-text">As aventurinhas de Conancraft</p>
+                <p class="price text-success fw-bold">R$ 60,00</p>
+                <a href="anuncio.html" class="btn btn-warning text-white">Comprar</a>
+              </div>
+            </div>
+          </cartao-produto>
+
+          <cartao-produto class="col-md-3">
+            <div class="card">
+              <img src="img/quadrinhos/homemchiclete.jpg" class="card-img-top" alt="Comic Cover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Homem chiclete</h5>
+                <p class="card-text">As aventurinhas do Homem Chiclete</p>
+                <p class="price text-success fw-bold">R$ 60,00</p>
+                <a href="#" class="btn btn-warning text-white">Comprar</a>
+              </div>
+            </div>
+          </cartao-produto>
+
+          <cartao-produto class="col-md-3">
+            <div class="card">
+              <img src="img/quadrinhos/meninomaluquinho.jpg" class="card-img-top" alt="Comic Cover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Menino Maluquinho</h5>
+                <p class="card-text">Texto</p>
+                <p class="price text-success fw-bold">R$ 60,00</p>
+                <a href="#" class="btn btn-warning text-white">Comprar</a>
+              </div>
+            </div>
+          </cartao-produto>
+
+          <cartao-produto class="col-md-3">
+            <div class="card">
+              <img src="img/quadrinhos/sonic.jpg" class="card-img-top" alt="Comic Cover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Sonic</h5>
+                <p class="card-text">Texto</p>
+                <p class="price text-success fw-bold">R$ 60,00</p>
+                <a href="#" class="btn btn-warning text-white">Comprar</a>
+              </div>
+            </div>
+          </cartao-produto>
+
+          <cartao-produto class="col-md-3">
+            <div class="card">
+              <img src="img/quadrinhos/conancraft.jpg" class="card-img-top" alt="Comic Cover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Conancraft</h5>
+                <p class="card-text">As aventurinhas de Conancraft</p>
+                <p class="price text-success fw-bold">R$ 60,00</p>
+                <a href="#" class="btn btn-warning text-white">Comprar</a>
+              </div>
+            </div>
+          </cartao-produto>
+          <cartao-produto class="col-md-3">
+            <div class="card">
+              <img src="img/quadrinhos/homemchiclete.jpg" class="card-img-top" alt="Comic Cover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Homem chiclete</h5>
+                <p class="card-text">As aventurinhas do Homem Chiclete</p>
+                <p class="price text-success fw-bold">R$ 60,00</p>
+                <a href="#" class="btn btn-warning text-white">Comprar</a>
+              </div>
+            </div>
+          </cartao-produto>
+
+          <cartao-produto class="col-md-3">
+            <div class="card">
+              <img src="img/quadrinhos/meninomaluquinho.jpg" class="card-img-top" alt="Comic Cover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Menino Maluquinho</h5>
+                <p class="card-text">Texto</p>
+                <p class="price text-success fw-bold">R$ 60,00</p>
+                <a href="#" class="btn btn-warning text-white">Comprar</a>
+              </div>
+            </div>
+          </cartao-produto>
+
+          <cartao-produto class="col-md-3">
+            <div class="card">
+              <img src="img/quadrinhos/sonic.jpg" class="card-img-top" alt="Comic Cover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Sonic</h5>
+                <p class="card-text">Texto</p>
+                <p class="price text-success fw-bold">R$ 60,00</p>
+                <a href="" class="btn btn-warning text-white">Comprar</a>
+              </div>
+            </div>
+          </cartao-produto>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <script type="module" src="js/index.js"></script>
+  <footer id="main-footer" class="text-black text-center py-4"></footer>
+
+  <script type="module" src="js/script.js"></script>
+  <script type="module" src="js/loadPage.js"></script>
 </body>
+
 </html>

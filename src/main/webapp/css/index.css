@@ -9,5 +9,13 @@
 #container-produtos {
     max-width: 70%;
     width: 70%;
-    background-color: lightblue;
+}
+
+cartao-produto .card {
+    border: 0px;
+}
+
+.custom-img {
+    height: 180px;
+    object-fit: contain;
 }

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clientes</title>
+  <link rel="stylesheet" href="/css/crud_clientes/clientes.css">
+</head>
+
+<body>
+
+  <nav id="main-nav" class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="#">Painel de Controle</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a href="clientes.html" class="nav-link active" aria-current="page">Clientes</a>
+          </li>
+          <li class="nav-item">
+            <a href="estoque.html" class="nav-link">Controle de Estoque</a>
+          </li>
+          <li class="nav-item">
+            <a href="analise.html" class="nav-link">Relatórios de Análise</a>
+          </li>
+          <li class="nav-item">
+            <a href="gerenciarVendas.html" class="nav-link">Gerenciar Vendas</a>
+          </li>
+        </ul>
+        <a href="../login.html" class="btn btn-danger">Sair</a>
+      </div>
+    </div>
+  </nav>
+
+  <div id="header-clientes">
+    <div id="opcoes-cliente">
+      <h3>Gerenciar clientes</h3>
+      <a href="../cadastrar.html">
+        <button class="botao-prototipo">+ Novo cliente</button>
+      </a>
+    </div>
+
+    <form id="filtro-clientes">
+      <div id="campos-filtro-clientes">
+
+        <label>Nome</label>
+        <input placeholder="Nome" name="nome"></input>
+
+        <label>Gênero</label>
+        <select name="genero">
+          <option></option>
+          <option>Masculino</option>
+          <option>Feminino</option>
+          <option>Outro</option>
+        </select>
+
+        <label>Data nascimento</label>
+        <input type="date" name="dataNascimento">
+
+        <label>CPF</label>
+        <input placeholder="111.111.111-11" name="cpf">
+
+        <label>E-mail</label>
+        <input type="email" placeholder="email@email.com" name="email">
+
+        <label>Ranking</label>
+        <input type="number" placeholder="4" name="ranking">
+
+        <label>Status cadastro</label>
+        <select name="isAtivo">
+          <option value="">Todos</option>
+          <option value=true>Ativo</option>
+          <option value=false>Inativo</option>
+        </select>
+      </div>
+
+      <button type="button" onclick="atualizarTabelaClientes()">Pesquisar</button>
+    </form>
+  </div>
+
+  <script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="../js/script.js"></script>
+  <script type="module" src="../js/clientes/clientes.js"></script>
+
+</body>
+
+</html>

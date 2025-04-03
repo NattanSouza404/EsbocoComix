@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clientes</title>
     <link rel="stylesheet" href="css/crud_clientes/cadastrar.css">
 </head>
+
 <body>
 
-    <header id="main-header">
-        <a href="clientes.html"><h2>Clientes</h2></a>
-    </header>
-  
+    <nav id="main-nav" class="navbar navbar-expand-lg navbar-light"></nav>
+
     <main id="cadastrar-cliente">
         <div id="container-cadastrar-cliente"></div>
-        <button type="button" id="botao-enviar-cadastro" class="botao-salvar" onclick="enviarCliente()">Salvar cliente</button>
-    </main> 
-  <script type="module" src="js/cadastrar/cadastrar.js"></script>
+        <button type="button" id="botao-enviar-cadastro" class="botao-salvar" onclick="enviarCliente()">
+            Salvar cliente
+        </button>
+    </main>
+
+    <script type="module" src="js/cadastrar/cadastrar.js"></script>
+    <footer id="main-footer" class="text-black text-center py-4"></footer>
+
+    <script type="module" src="js/loadPage.js"></script>
 </body>
+
 </html>

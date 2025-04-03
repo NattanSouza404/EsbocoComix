@@ -1,0 +1,38 @@
+#main-nav {
+    display: flex;
+    justify-content: space-around;
+    justify-items: center;
+    align-items: center;
+    
+    background-color: var(--verde);
+}
+
+#logo-nav {
+    display: flex;
+    align-items: center;
+}
+
+#logo-nav img {
+    height: 80px;
+}
+
+#logo-nav h5 {
+    color: #4d5461;
+}
+
+.nav-link {
+    cursor: pointer;
+}
+
+.nav-link img {
+    height: 30px;
+}
+
+#botao-chat-ia {
+    justify-content: right;
+    background-color: white;
+}
+
+#botao-chat-ia img {
+    height: 30px;
+}

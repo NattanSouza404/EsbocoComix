@@ -1,6 +1,7 @@
 import { retornarAllClientes } from "../api.js";
 import { montarClientePorForm } from "../script.js";
 import TabelaClientes from "./tabelaClientes.js";
+import { Modal } from "../componentes/modal.js";
 
 const tabelaClientes = new TabelaClientes();
 document.body.append(tabelaClientes);

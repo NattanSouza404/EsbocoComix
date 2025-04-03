@@ -1,10 +1,13 @@
 import { toggleDisplay } from "../script.js";
 import { atualizarCliente } from "../api.js";
+import { modalTransacoes } from "./modalTransacoes.js";
 
 export default class TabelaClientes extends HTMLTableElement {
     
     constructor(){
         super();
+
+        this.modalTransacoes = modalTransacoes;
 
         this.colunas = [
             'Nome', "Gênero", "Data de Nascimento", "CPF", "E-mail", "Ranking", "Status", "Operações"
@@ -64,13 +67,13 @@ export default class TabelaClientes extends HTMLTableElement {
             let btn = document.createElement('button');
             btn.textContent = "Consultar Transações";
             btn.type = "button";
-            btn.onclick = () => toggleDisplay('modal-consultar-transacoes');
+            btn.onclick = () => this.modalTransacoes.show();
             td.append(btn);
         
             btn = document.createElement('button');
             btn.textContent = "Editar";
             btn.type = "button";
-            btn.onclick = () => window.location.replace('conta.html?idcliente='+c.id);
+            btn.onclick = () => window.location.replace('../conta.html?idcliente='+c.id);
             td.append(btn);
         
             btn = document.createElement('button');

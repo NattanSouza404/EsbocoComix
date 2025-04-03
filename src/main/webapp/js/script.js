@@ -105,3 +105,18 @@ export function montarCartaoCreditoPorForm(form){
         bandeiraCartao: formData.get('bandeiraCartao')
     };
 }
+
+let BOOTSTRAP_CARREGADO = false;
+
+export function carregarBootstrapJS() {
+
+    if (BOOTSTRAP_CARREGADO === true){
+        return;
+    }
+
+    const script = document.createElement('script');
+    script.src = './js/bootstrap.bundle.min.js';
+    document.body.appendChild(script);
+
+    BOOTSTRAP_CARREGADO = true;
+}
