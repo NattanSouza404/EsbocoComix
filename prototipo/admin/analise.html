@@ -39,11 +39,34 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container d-flex flex-column align-items-center">  
         <h2 class="text-center py-5">Análise por categoria</h2>
+        <div class="centered">
+            <button>Adicionar categoria</button>
+            <input>
+
+            <label>Data início</label>
+            <input type="date">
+    
+            <label>Data final</label>
+            <input type="date">
+        </div>
+
         <canvas id="graficoLinhaCategorias" class="graficoLinha" width="400" height="200"></canvas>
 
         <h2 class="text-center py-5">Análise por produto</h2>
+        <div class="centered">
+            
+            <button>Adicionar produto</button>
+            <input>
+
+            <label>Data início</label>
+            <input type="date">
+    
+            <label>Data final</label>
+            <input type="date">
+        </div>
+
         <canvas id="graficoLinhaProdutos" class="graficoLinha" width="400" height="200"></canvas>
     </div>
 
