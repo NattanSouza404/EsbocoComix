@@ -1,4 +1,4 @@
-import { AdminContainerNav } from "./adminContainerNav.js";
+import { AdminContainerNav } from "/js/componentes/adminContainerNav.js";
 
 if (document.getElementById("main-nav")){
     document.getElementById("main-nav").className = "navbar navbar-expand-lg navbar-light";

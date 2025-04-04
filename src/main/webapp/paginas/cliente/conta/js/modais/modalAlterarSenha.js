@@ -1,6 +1,8 @@
-import { BotaoFechar, BotaoSalvar, Modal } from "/js/componentes/componentes.js";
 import { criarElemento, criarElementoInput } from "/js/script.js";
 import { atualizarCliente } from "/js/api.js";
+import { BotaoFechar } from "/js/componentes/botoes/BotaoFechar.js";
+import { BotaoSalvar } from "/js/componentes/botoes/BotaoSalvar.js";
+import { Modal } from "/js/componentes/componentes.js";
 
 export class ModalAlterarSenha extends Modal {
 

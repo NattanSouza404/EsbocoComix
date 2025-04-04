@@ -1,7 +1,8 @@
-import { BotaoFechar, Modal } from "/js/componentes/componentes.js";
 import { criarElemento, montarCartaoCreditoPorForm } from "/js/script.js";
 import { atualizarCartaoCredito, deletarCartaoCredito } from "/js/api.js";
 import { SecaoFormsCartaoCredito } from "/js/componentes/secaoCartaoCredito.js";
+import { BotaoFechar } from "/js/componentes/botoes/BotaoFechar.js";
+import { Modal } from "/js/componentes/componentes.js";
 
 export class ModalAlterarCartaoCredito extends Modal {
     constructor(cartoesCreditos){

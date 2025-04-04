@@ -1,4 +1,4 @@
-import { ChatIA } from "./componentes/chatIA.js";
+import { ChatIA } from "./chatIA.js";
 
 export class ContainerNav extends HTMLDivElement {
     constructor(){

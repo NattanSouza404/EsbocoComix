@@ -1,5 +1,5 @@
-import { ContainerFooter } from "./containerFooter.js";
-import { ContainerNav } from "./containerNav.js";
+import { ContainerFooter } from "/js/componentes/containerFooter.js";
+import { ContainerNav } from "/js/componentes/containerNav.js";
 
 if (document.getElementById("main-nav")){
     document.getElementById("main-nav").className = "navbar navbar-expand-lg navbar-light";
@@ -7,6 +7,7 @@ if (document.getElementById("main-nav")){
 }
 
 if (document.getElementById("main-footer")){
+    document.getElementById("main-footer").className="text-black text-center py-4"
     document.getElementById("main-footer").append(new ContainerFooter());
 }
 
