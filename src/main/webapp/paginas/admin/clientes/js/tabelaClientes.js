@@ -1,4 +1,3 @@
-import { toggleDisplay } from "../../../../js/script.js";
 import { atualizarCliente } from "../../../../js/api.js";
 import { modalTransacoes } from "./modalTransacoes.js";
 
@@ -73,7 +72,7 @@ export default class TabelaClientes extends HTMLTableElement {
             btn = document.createElement('button');
             btn.textContent = "Editar";
             btn.type = "button";
-            btn.onclick = () => window.location.replace('../conta.html?idcliente='+c.id);
+            btn.onclick = () => window.location.replace('/conta?idcliente='+c.id);
             td.append(btn);
         
             btn = document.createElement('button');

@@ -5,14 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inicial</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
-<body class="bg-light">
+<body class="bg-light d-flex flex-column">
 
-  <nav id="main-nav" class="navbar navbar-expand-lg navbar-light"></nav>
+  <nav id="main-nav"></nav>
 
-  <div class="container my-5">
+  <div class="container my-5 flex-grow-1">
     <h1 class="mb-4 text-center">Carrinho</h1>
 
     <!-- Cart Table -->
@@ -45,13 +45,13 @@
     <!-- Cart Summary -->
     <div class="d-flex justify-content-between align-items-center mt-4">
       <h4>Total: <span class="text-success" id="cartTotal">R$ 50.00</span></h4>
-      <a href="compra.html"><button class="btn btn-primary btn-lg">Comprar</button></a>
+      <a href="compra"><button class="btn btn-primary btn-lg">Comprar</button></a>
     </div>
   </div>
 
-  <footer id="main-footer" class="text-black text-center py-4" style="bottom: 0;"></footer>
+  <footer id="main-footer"></footer>
 
-  <script type="module" src="js/loadPage.js"></script>
+  <script type="module" src="/js/loadPage.js"></script>
 </body>
 
 </html>

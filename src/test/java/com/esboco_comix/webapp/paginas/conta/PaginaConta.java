@@ -6,7 +6,7 @@ import com.esboco_comix.webapp.webdriver.DriverTeste;
 
 public class PaginaConta {
 
-    private static String URL = "http://localhost:8080/conta.html?idcliente=45"; 
+    private static String URL = "http://localhost:8080/conta?idcliente=45"; 
 
     private WebDriver driver;
 

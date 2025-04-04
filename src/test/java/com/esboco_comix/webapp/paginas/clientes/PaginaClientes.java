@@ -9,7 +9,7 @@ import com.esboco_comix.webapp.webdriver.DriverTeste;
 
 public class PaginaClientes {
 
-    private static String URL = "http://localhost:8080/admin/clientes.html"; 
+    private static String URL = "http://localhost:8080/admin/clientes"; 
 
     private WebDriver driver;
     

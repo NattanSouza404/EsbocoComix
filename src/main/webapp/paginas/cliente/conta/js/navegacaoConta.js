@@ -1,4 +1,4 @@
-import { criarElemento } from "../script.js";
+import { criarElemento } from "/js/script.js";
 
 export class NavegacaoConta extends HTMLElement {
     constructor(){

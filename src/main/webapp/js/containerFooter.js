@@ -11,13 +11,13 @@ export class ContainerFooter extends HTMLDivElement {
             </ul>
             <div>
                 <a href="#" class="me-3">
-                <img src="img/facebook.svg" width="24" height="24">
+                <img src="/img/facebook.svg" width="24" height="24">
                 </a>
                 <a href="#" class="me-3">
-                <img src="img/twitter-x.svg" width="24" height="24">
+                <img src="/img/twitter-x.svg" width="24" height="24">
                 </a>
                 <a href="#" class="me-3">
-                <img src="img/instagram.svg" width="24" height="24">
+                <img src="/img/instagram.svg" width="24" height="24">
                 </a>
             </div>
         `

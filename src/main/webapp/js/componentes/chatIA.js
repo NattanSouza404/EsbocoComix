@@ -24,6 +24,9 @@ export class ChatIA extends HTMLElement {
         this.append(this.chatHeader);
         this.append(this.historicoConversa);
         this.append(this.enviarMensagem);
+
+        this.adicionarMensagem('Bom dia! O que você gostaria de saber?', 'texto-ia');
+        this.adicionarMensagem('Gostaria de alguma recomendação específica?', 'texto-ia');
     }
 
     initHeader(){
@@ -63,7 +66,7 @@ export class ChatIA extends HTMLElement {
         button.onclick = () => this.enviarMsgChatIA();
         
         const img = document.createElement('img');
-        img.src = "./img/enviado.png";
+        img.src = "/img/enviado.png";
         button.append(img);
         
         enviarMensagem.append(textarea);
@@ -89,9 +92,9 @@ export class ChatIA extends HTMLElement {
         
         const img = document.createElement('img');
         if (tipoMensagem === 'texto-ia'){
-            img.src = './img/bate-papo-com-ia.png';
+            img.src = '/img/bate-papo-com-ia.png';
         } else {
-            img.src = './img/imagem-do-usuario-com-fundo-preto.png';
+            img.src = '/img/imagem-do-usuario-com-fundo-preto.png';
         }
     
         div.append(img);

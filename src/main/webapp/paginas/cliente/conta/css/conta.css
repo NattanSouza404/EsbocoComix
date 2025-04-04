@@ -1,5 +1,5 @@
-@import url(../style.css);
-@import url(crud_cliente.css);
+@import url(/css/style.css);
+@import url(/css/crud_cliente.css);
 
 #opcoes-conta {
     justify-self: center;

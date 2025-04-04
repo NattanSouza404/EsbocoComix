@@ -1,5 +1,5 @@
 import { DadosPessoaisConta, DadosEnderecoConta, DadosCartaoCreditoConta } from "./secoesConta.js";
-import { retornarCliente, retornarEnderecos, retornarCartoesCredito } from "../api.js";
+import { retornarCliente, retornarEnderecos, retornarCartoesCredito } from "/js/api.js";
 import { NavegacaoConta } from "./navegacaoConta.js";
 import { ModalAlterarCartaoCredito } from "./modais/modalAlterarCartaoCredito.js";
 import { ModalAlterarEndereco } from "./modais/modalAlterarEndereco.js";

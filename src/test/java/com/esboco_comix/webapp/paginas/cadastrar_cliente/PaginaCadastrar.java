@@ -13,7 +13,7 @@ import com.esboco_comix.webapp.webdriver.DriverTeste;
 
 public class PaginaCadastrar {
 
-    private static String URL = "http://localhost:8080/cadastrar.html"; 
+    private static String URL = "http://localhost:8080/cadastrar"; 
 
     private WebDriver driver;
 

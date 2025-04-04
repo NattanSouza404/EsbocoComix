@@ -1,7 +1,7 @@
-import { BotaoFechar, Modal } from "../../componentes/componentes.js";
-import { criarElemento, montarEnderecoPorForm} from "../../script.js";
-import { atualizarEndereco, deletarEndereco } from "../../api.js";
-import { SecaoFormsEndereco } from "../../componentes/secaoEndereco.js";
+import { BotaoFechar, Modal } from "/js/componentes/componentes.js";
+import { criarElemento, montarEnderecoPorForm} from "/js/script.js";
+import { atualizarEndereco, deletarEndereco } from "/js/api.js";
+import { SecaoFormsEndereco } from "/js/componentes/secaoEndereco.js";
 
 export class ModalAlterarEndereco extends Modal {
 

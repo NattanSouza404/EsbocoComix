@@ -5,38 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Clientes</title>
-  <link rel="stylesheet" href="/css/crud_clientes/clientes.css">
+  <link rel="stylesheet" href="/paginas/admin/clientes/css/clientes.css">
 </head>
 
 <body>
 
-  <nav id="main-nav" class="navbar navbar-expand-lg navbar-light">
-    <div class="container-fluid">
-      <a class="navbar-brand fw-bold" href="#">Painel de Controle</a>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a href="clientes.html" class="nav-link active" aria-current="page">Clientes</a>
-          </li>
-          <li class="nav-item">
-            <a href="estoque.html" class="nav-link">Controle de Estoque</a>
-          </li>
-          <li class="nav-item">
-            <a href="analise.html" class="nav-link">Relatórios de Análise</a>
-          </li>
-          <li class="nav-item">
-            <a href="gerenciarVendas.html" class="nav-link">Gerenciar Vendas</a>
-          </li>
-        </ul>
-        <a href="../login.html" class="btn btn-danger">Sair</a>
-      </div>
-    </div>
-  </nav>
+  <nav id="main-nav"></nav>
 
   <div id="header-clientes">
     <div id="opcoes-cliente">
       <h3>Gerenciar clientes</h3>
-      <a href="../cadastrar.html">
+      <a href="/cadastrar">
         <button class="botao-prototipo">+ Novo cliente</button>
       </a>
     </div>
@@ -79,9 +58,9 @@
     </form>
   </div>
 
-  <script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
-  <script type="module" src="../js/script.js"></script>
-  <script type="module" src="../js/clientes/clientes.js"></script>
+  <script type="module" src="/js/loadAdminPage.js"></script>
+  <script type="module" src="/js/script.js"></script>
+  <script type="module" src="/paginas/admin/clientes/js/clientes.js"></script>
 
 </body>
 
