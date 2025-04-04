@@ -1,4 +1,4 @@
-import { Modal } from "../componentes/modal.js";
+import { Modal } from "../../../../js/componentes/modal.js";
 
 export const modalTransacoes = new Modal('modal-consultar-transacoes', "Transações", 
     `

@@ -1,5 +1,5 @@
-import { getNomeBandeiraCartao } from "../dados.js";
-import { criarElemento } from "../script.js";
+import { getNomeBandeiraCartao } from "../../../../js/dados.js";
+import { criarElemento } from "../../../../js/script.js";
 
 export class DadosPessoaisConta extends HTMLElement {
     constructor(cliente){

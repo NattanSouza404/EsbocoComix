@@ -1,5 +1,5 @@
-import { toggleDisplay } from "../script.js";
-import { atualizarCliente } from "../api.js";
+import { toggleDisplay } from "../../../../js/script.js";
+import { atualizarCliente } from "../../../../js/api.js";
 import { modalTransacoes } from "./modalTransacoes.js";
 
 export default class TabelaClientes extends HTMLTableElement {

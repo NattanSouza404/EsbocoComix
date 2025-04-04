@@ -1,0 +1,141 @@
+-> JQuery? 
+
+-> Protótipo completo
+    -> Bootstrap
+
+-> Pensar em todas as páginas
+    -> tela inicial
+        -> produtos
+        -> ia
+    -> parte administrador
+        -> clientes
+        -> gerenciar vendas eletrônicas
+        -> gráficos bi
+        -> estoque mano
+            -> gerenciar estoque
+    -> cadastro
+    -> conta
+    -> anúncio
+    -> carrinho
+
+    O aluno deverá apresentar ao professor o protótipo de todo o sistema.
+    Esse protótipo deve demonstrar o fluxo de venda, troca, devolução,
+    módulo administrador e dashboards.
+
+    https://paletadecores.com/paleta/e0be7e/e89d10/db4b23/382924/136066/
+    https://www.mercadolivre.com.br/
+    https://www.comix.com.br/quadrinhos/quadrinhos-nacionais.html?p=2
+    https://www.comix.com.br/quadrinhos/sobras.html
+    https://panini.com.br/mauricio-de-sousa-producoes/gibis-turma-da-monica
+    https://www.socialcomics.com.br/
+    https://www.sitioverdeonline.com.br/
+
+    https://www.comix.com.br/quadrinhos/quadrinhos-nacionais/as-aventuras-do-homem-chiclete.html
+    https://www.comix.com.br/quadrinhos/quadrinhos-nacionais/conancraft.html
+    https://www.livrariadavila.com.br/876972-o-menino-maluquinho/p
+
+
+file:///C:/Users/natta/Downloads/bootstrap-5.3.3-examples/modals/index.html?
+    #66BB6A   (main)
+    #A5D6A7    (secundario)
+    #FFA726   ((main))
+    #FFCC80   (secundario)
+    #424242
+    #E0E0E0
+
+    #FFF59D
+    #90CAF9
+
+    #FFFFFF
+
+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+
+-> fazer o pesquisar lá por coiso no clientes.html
+    -> coisar o inativar cliente
+    -> Consulta de clientes páginada (num sei como faz)
+    -> coisar um pouco a parte do consultar transação
+
+-> coisar verificações 
+    -> valores nulos
+    -> verificação trâmites banco sla
+    -> verificação endereços do cara
+    -> verificar enuns essas coisas
+
+-> modelo
+
+tintin
+turma da mônica
+disney
+garfield, snoopy
+marvel dc
+quadrinhos nacionais muito lokos/quadrinhos específicos
+mangás
+
+produto
+- is_ativo
+- valor custo
+- grupo_precificacao
+
+obrigatório
+autor
+categoria (categoriaS, )
+ano
+titulo
+editora
+edição
+ISBN
+numero_paginas
+sinopse
+altura
+largura
+peso
+profundidade
+grupo precificação
+codigo_de_barras
+
+valor venda = valor custo - grupo_precificação
+
+venda com valor inferior à parâmetro no sistema?
+
+grupo precificação
+- margem de lucro
+
+justificativa_inativação_livro
+- livro
+- justificativa texto
+- categoria de inativação
+
+justificativa_ativação_livro
+- livro
+- justificativa texto
+- categoria de inativação
+
+estoque
+- quant_estoque
+
+carrinho
+- item
+- quantidade item
+
+cupom de troca/cupom promocional válido
+
+compra
+- endereço entrega
+- forma pagamento
+- status compra
+
+pedido
+
+histórico vendas
+- 
+
+
+
+log (que nem Mariângela)
+- data
+- hora
+- usuário responsável
+- dados alterados
+

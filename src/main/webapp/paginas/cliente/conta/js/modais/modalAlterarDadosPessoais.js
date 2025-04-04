@@ -1,7 +1,7 @@
-import { BotaoFechar, BotaoSalvar, Modal } from "../../componentes/componentes.js";
-import { montarClientePorForm } from "../../script.js";
-import { atualizarCliente } from "../../api.js";
-import { FormularioDadosPessoais } from "../../componentes/forms/formDadosPessoais.js";
+import { BotaoFechar, BotaoSalvar, Modal } from "../../../../../js/componentes/componentes.js";
+import { montarClientePorForm } from "../../../../../js/script.js";
+import { atualizarCliente } from "../../../../../js/api.js";
+import { FormularioDadosPessoais } from "../../../../../js/componentes/forms/formDadosPessoais.js";
 
 export class ModalAlterarDadosPessoais extends Modal {
 
