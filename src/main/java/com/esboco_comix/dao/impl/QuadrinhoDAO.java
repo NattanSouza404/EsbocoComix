@@ -70,6 +70,10 @@ public class QuadrinhoDAO implements IDAO<Quadrinho> {
     private Quadrinho mapearResultToQuadrinho(ResultSet rs) throws SQLException {
         Quadrinho q = new Quadrinho();  
         q.setId(rs.getInt("qua_id"));
+        q.setUrlImagem(rs.getString("qua_url_imagem"));
+        q.setTitulo(rs.getString("qua_titulo"));
+        q.setPreco(rs.getDouble("qua_preco"));
+        q.setAutor(rs.getString("qua_autor"));
 
         return q;
     }

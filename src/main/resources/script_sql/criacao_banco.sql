@@ -69,20 +69,23 @@ CREATE TABLE grupos_precificacao (
 
 CREATE TABLE quadrinhos (
     qua_id             NUMERIC(6) PRIMARY KEY,
+    qua_preco          NUMERIC(6,2) NOT NULL,
+    qua_autor          VARCHAR(100) NOT NULL,
     qua_ano            DATE NOT NULL,
     qua_titulo         VARCHAR(100) NOT NULL,
     qua_editora        VARCHAR(50) NOT NULL,
     qua_edicao         NUMERIC(3) NOT NULL,
     qua_isbn           CHAR(13) NOT NULL,
     qua_numero_paginas NUMERIC(5) NOT NULL,
-    qua_sinopse        VARCHAR(255) NOT NULL,
+    qua_sinopse        TEXT NOT NULL,
     qua_altura_cm      NUMERIC(3) NOT NULL,
     qua_largura_cm     NUMERIC(3) NOT NULL,
     qua_profundidade   NUMERIC(3) NOT NULL,
     qua_peso_gramas    NUMERIC(5) NOT NULL,
     qua_codigo_barras  VARCHAR(13) NOT NULL,
     qua_is_ativo       BOOLEAN NOT NULL,
-    qua_gpr_id         NUMERIC(3) NOT NULL
+    qua_gpr_id         NUMERIC(3) NOT NULL,
+    qua_url_imagem     VARCHAR(255)
 );
 
 ALTER TABLE quadrinhos

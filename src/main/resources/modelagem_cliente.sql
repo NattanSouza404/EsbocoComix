@@ -130,20 +130,23 @@ ALTER TABLE pedidos ADD CONSTRAINT pk_ped PRIMARY KEY ( ped_id );
 
 CREATE TABLE quadrinhos (
     qua_id             NUMBER(6) NOT NULL,
+    qua_preco          NUMBER(6,2) NOT NULL,
+    qua_autor          VARCHAR2(100) NOT NULL,
     qua_ano            DATE NOT NULL,
     qua_titulo         VARCHAR2(100) NOT NULL,
     qua_editora        VARCHAR2(50) NOT NULL,
     qua_edicao         NUMBER(3) NOT NULL,
     qua_isbn           CHAR(13) NOT NULL,
     qua_numero_paginas NUMBER(5) NOT NULL,
-    qua_sinopse        VARCHAR2(255) NOT NULL,
+    qua_sinopse        CLOB NOT NULL,
     qua_altura_cm      NUMBER(3) NOT NULL,
     qua_largura_cm     NUMBER(3) NOT NULL,
     qua_profundidade   NUMBER(3) NOT NULL,
     qua_peso_gramas    NUMBER(5) NOT NULL,
     qua_codigo_barras  VARCHAR2(13) NOT NULL,
     qua_is_ativo       CHAR(1) NOT NULL,
-    qua_gpr_id         NUMBER(3) NOT NULL
+    qua_gpr_id         NUMBER(3) NOT NULL,
+    qua_url_imagem     VARCHAR2(255)
 )
 LOGGING;
 
