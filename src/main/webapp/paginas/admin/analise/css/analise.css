@@ -1,0 +1,7 @@
+@import url(/css/style.css);
+
+.graficoLinha {
+    width: 80%;
+    max-width: 80%;
+    justify-self: center;
+}
