@@ -63,6 +63,58 @@ ALTER TABLE cartoes_credito
 ALTER TABLE cartoes_credito
     ADD CONSTRAINT fk_cre_cli FOREIGN KEY ( cre_cli_id ) REFERENCES clientes ( cli_id );
 
+CREATE TABLE grupos_precificacao (
+    gpr_id NUMERIC(3) PRIMARY KEY
+);
+
+CREATE SEQUENCE gpr_sq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE FUNCTION set_gpr_id() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    NEW.gpr_id := nextval('gpr_sq');
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tg_set_gpr_id
+BEFORE INSERT ON grupos_precificacao
+FOR EACH ROW
+EXECUTE FUNCTION set_gpr_id();
+
+CREATE TABLE quadrinhos (
+    qua_id             NUMERIC(6) PRIMARY KEY,
+    qua_ano            DATE NOT NULL,
+    qua_titulo         VARCHAR(100) NOT NULL,
+    qua_editora        VARCHAR(50) NOT NULL,
+    qua_edicao         NUMERIC(3) NOT NULL,
+    qua_isbn           CHAR(13) NOT NULL,
+    qua_numero_paginas NUMERIC(5) NOT NULL,
+    qua_sinopse        VARCHAR(255) NOT NULL,
+    qua_altura_cm      NUMERIC(3) NOT NULL,
+    qua_largura_cm     NUMERIC(3) NOT NULL,
+    qua_profundidade   NUMERIC(3) NOT NULL,
+    qua_peso_gramas    NUMERIC(5) NOT NULL,
+    qua_codigo_barras  VARCHAR(13) NOT NULL,
+    qua_is_ativo       BOOLEAN NOT NULL,
+    qua_gpr_id         NUMERIC(3) NOT NULL
+);
+
+ALTER TABLE quadrinhos
+    ADD CONSTRAINT fk_qua_gpr FOREIGN KEY ( qua_gpr_id ) REFERENCES grupos_precificacao ( gpr_id );
+
+
+
+
+
+
+
 CREATE SEQUENCE cli_sq
     START WITH 1
     INCREMENT BY 1
@@ -146,3 +198,24 @@ CREATE TRIGGER tg_set_bcc_id
 BEFORE INSERT ON bandeiras_cartao_credito
 FOR EACH ROW
 EXECUTE FUNCTION set_bcc_id();
+
+CREATE SEQUENCE qua_sq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE FUNCTION set_qua_id() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    NEW.qua_id := nextval('qua_sq');
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tg_set_qua_id
+BEFORE INSERT ON quadrinhos
+FOR EACH ROW
+EXECUTE FUNCTION set_qua_id();
