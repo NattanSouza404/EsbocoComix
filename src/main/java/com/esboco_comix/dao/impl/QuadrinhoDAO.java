@@ -39,7 +39,7 @@ public class QuadrinhoDAO implements IDAO<Quadrinho> {
             List<Quadrinho> quadrinhos = new ArrayList<>();
 
             while (rs.next()){                
-                quadrinhos.add(mapearResultToQuadrinho(rs));
+                quadrinhos.add(mapearEntidade(rs));
             }
 
             return quadrinhos;
@@ -69,7 +69,7 @@ public class QuadrinhoDAO implements IDAO<Quadrinho> {
                 throw new Exception("Quadrinho não encontrado!");
             }
             
-            return mapearResultToQuadrinho(rs);
+            return mapearEntidade(rs);
         } catch (Exception e){
             throw e;
         } finally {
@@ -88,7 +88,7 @@ public class QuadrinhoDAO implements IDAO<Quadrinho> {
         throw new UnsupportedOperationException("Unimplemented method 'deletar'");
     }
 
-    private Quadrinho mapearResultToQuadrinho(ResultSet rs) throws SQLException {
+    private Quadrinho mapearEntidade(ResultSet rs) throws SQLException {
         Quadrinho q = new Quadrinho();  
         q.setId(rs.getInt("qua_id"));
 

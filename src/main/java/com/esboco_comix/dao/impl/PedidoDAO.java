@@ -69,7 +69,7 @@ public class PedidoDAO implements IDAO<Pedido>{
             List<Pedido> pedidos = new ArrayList<>();
 
             while (rs.next()){                
-                pedidos.add(mapearToResultToPedido(rs));
+                pedidos.add(mapearEntidade(rs));
             }
 
             return pedidos;
@@ -98,7 +98,7 @@ public class PedidoDAO implements IDAO<Pedido>{
             if (!rs.next()) {
                 throw new Exception("Pedido não encontrado.");
             }
-            return mapearToResultToPedido(rs);    
+            return mapearEntidade(rs);    
         } catch (Exception e){
             throw e;
         } finally {
@@ -117,7 +117,7 @@ public class PedidoDAO implements IDAO<Pedido>{
         throw new UnsupportedOperationException("Unimplemented method 'deletar'");
     }
 
-    private Pedido mapearToResultToPedido(ResultSet rs) throws SQLException {
+    private Pedido mapearEntidade(ResultSet rs) throws SQLException {
         Pedido pedido = new Pedido();
         pedido.setId(rs.getInt("ped_id"));
         pedido.setIdCliente(rs.getInt("ped_cli_id"));

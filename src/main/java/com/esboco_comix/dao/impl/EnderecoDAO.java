@@ -84,7 +84,7 @@ public class EnderecoDAO implements IDAO<Endereco> {
             if (!rs.next()) {
                 throw new Exception("Endereço não encontrado.");
             }
-            return mapearResultToEndereco(rs);    
+            return mapearEntidade(rs);    
         } catch (Exception e){
             throw e;
         } finally {
@@ -182,7 +182,7 @@ public class EnderecoDAO implements IDAO<Endereco> {
     
             List<Endereco> enderecos = new ArrayList<>();
             while(rs.next()){
-                enderecos.add(mapearResultToEndereco(rs));
+                enderecos.add(mapearEntidade(rs));
             }
 
             return enderecos;    
@@ -194,7 +194,7 @@ public class EnderecoDAO implements IDAO<Endereco> {
         }
     }
 
-    private Endereco mapearResultToEndereco(ResultSet rs) throws SQLException {
+    private Endereco mapearEntidade(ResultSet rs) throws SQLException {
         Endereco e = new Endereco();        
         e.setId(rs.getInt("end_id"));
         e.setFraseCurta(rs.getString("end_frase_curta"));

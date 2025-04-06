@@ -74,7 +74,7 @@ public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
             if (!rs.next()) {
                 throw new Exception("Cartão de crédito não encontrado.");
             }
-            return mapearResultToCartaoCredito(rs);  
+            return mapearEntidade(rs);  
         } catch (Exception e){
             throw e;
         } finally {
@@ -161,7 +161,7 @@ public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
     
             List<CartaoCredito> cartoesCredito = new ArrayList<>();
             while(rs.next()){
-                cartoesCredito.add(mapearResultToCartaoCredito(rs));
+                cartoesCredito.add(mapearEntidade(rs));
             }
 
             return cartoesCredito;    
@@ -173,7 +173,7 @@ public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
         }
     }
 
-    private CartaoCredito mapearResultToCartaoCredito(ResultSet rs) throws Exception {
+    private CartaoCredito mapearEntidade(ResultSet rs) throws Exception {
         CartaoCredito c = new CartaoCredito();
         c.setId(rs.getInt("cre_id"));
         c.setNumero(rs.getString("cre_numero"));

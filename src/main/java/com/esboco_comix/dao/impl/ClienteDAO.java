@@ -85,7 +85,7 @@ public class ClienteDAO implements IDAO<Cliente> {
             List<Cliente> clientes = new ArrayList<>();
 
             while (rs.next()){                
-                clientes.add(mapearResultToCliente(rs));
+                clientes.add(mapearEntidade(rs));
             }
 
             return clientes;
@@ -115,7 +115,7 @@ public class ClienteDAO implements IDAO<Cliente> {
                 throw new Exception("Cliente não encontrado!");
             }
             
-            return mapearResultToCliente(rs);
+            return mapearEntidade(rs);
         } catch (Exception e){
             throw e;
         } finally {
@@ -219,7 +219,7 @@ public class ClienteDAO implements IDAO<Cliente> {
             List<Cliente> clientes = new ArrayList<>();
 
             while (rs.next()){                
-                clientes.add(mapearResultToCliente(rs));
+                clientes.add(mapearEntidade(rs));
             }
 
             return clientes;
@@ -320,7 +320,7 @@ public class ClienteDAO implements IDAO<Cliente> {
         }
     }
 
-    private Cliente mapearResultToCliente(ResultSet rs) throws SQLException {
+    private Cliente mapearEntidade(ResultSet rs) throws SQLException {
         Cliente c = new Cliente();  
         c.setId(rs.getInt("cli_id"));
         c.setNome(rs.getString("cli_nome"));
