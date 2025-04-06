@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 
+import com.esboco_comix.controller.CarrinhoController;
 import com.esboco_comix.controller.CartaoCreditoController;
 import com.esboco_comix.controller.ClienteController;
 import com.esboco_comix.controller.EnderecoController;
@@ -76,6 +77,9 @@ public class Servidor {
 
 		Tomcat.addServlet(context, "apipedido", new PedidoController());
 		context.addServletMapping("/pedido", "apipedido");
+
+		Tomcat.addServlet(context, "apicarrinho", new CarrinhoController());
+		context.addServletMapping("/carrinhoapi", "apicarrinho");
 	}
 
 	@Getter
