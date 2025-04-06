@@ -5,10 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.dao.IDAO;
-import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
@@ -50,7 +50,36 @@ public class PedidoDAO implements IDAO<Pedido>{
 
     @Override
     public List<Pedido> consultarTodos() throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'consultarTodos'");
+        Connection conn = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = conn.prepareStatement(
+            "SELECT * FROM pedidos;",
+            ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_READ_ONLY
+        );
+
+        try {
+            ResultSet rs = pst.executeQuery();
+
+            if (!rs.next()) {
+                throw new Exception("Nenhum registro encontrado de pedido.");
+            }
+            rs.beforeFirst();
+
+            List<Pedido> pedidos = new ArrayList<>();
+
+            while (rs.next()){                
+                pedidos.add(mapearToResultToPedido(rs));
+            }
+
+            return pedidos;
+        }
+        catch (Exception e){
+            throw e;
+        } finally {
+            pst.close();
+            conn.close();
+        }
     }
 
     @Override
