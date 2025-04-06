@@ -54,7 +54,28 @@ public class QuadrinhoDAO implements IDAO<Quadrinho> {
 
     @Override
     public Quadrinho consultarByID(int id) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'consultarByID'");
+        Connection connection = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = connection.prepareStatement(
+            "SELECT * FROM quadrinhos WHERE qua_id = ?"
+        );
+
+        try {
+            pst.setInt(1, id);
+
+            ResultSet rs = pst.executeQuery();
+    
+            if (!rs.next()){
+                throw new Exception("Quadrinho não encontrado!");
+            }
+            
+            return mapearResultToQuadrinho(rs);
+        } catch (Exception e){
+            throw e;
+        } finally {
+            connection.close();
+            pst.close();
+        }
     }
 
     @Override
@@ -70,10 +91,26 @@ public class QuadrinhoDAO implements IDAO<Quadrinho> {
     private Quadrinho mapearResultToQuadrinho(ResultSet rs) throws SQLException {
         Quadrinho q = new Quadrinho();  
         q.setId(rs.getInt("qua_id"));
-        q.setUrlImagem(rs.getString("qua_url_imagem"));
+
+        q.setAno(rs.getDate("qua_ano").toLocalDate());
         q.setTitulo(rs.getString("qua_titulo"));
+        q.setEditora(rs.getString("qua_editora"));
+        q.setEdicao(rs.getInt("qua_edicao"));
+        q.setIsbn(rs.getString("qua_isbn"));
+        q.setNumeroPaginas(rs.getInt("qua_numero_paginas"));
+        q.setSinopse(rs.getString("qua_sinopse"));
         q.setPreco(rs.getDouble("qua_preco"));
         q.setAutor(rs.getString("qua_autor"));
+
+        q.setAltura(rs.getInt("qua_altura_cm"));
+        q.setLargura(rs.getInt("qua_largura_cm"));
+        q.setProfundidade(rs.getInt("qua_profundidade"));
+        q.setPeso(rs.getInt("qua_peso_gramas"));
+        q.setIsAtivo(rs.getBoolean("qua_is_ativo"));
+
+        q.setCodigoBarras(rs.getString("qua_codigo_barras"));
+
+        q.setUrlImagem(rs.getString("qua_url_imagem"));
 
         return q;
     }
