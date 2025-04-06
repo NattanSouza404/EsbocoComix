@@ -1,5 +1,5 @@
 -- Gerado por Oracle SQL Developer Data Modeler 22.2.0.165.1149
---   em:        2025-04-05 11:22:10 BRT
+--   em:        2025-04-06 19:11:16 BRT
 --   site:      Oracle Database 11g
 --   tipo:      Oracle Database 11g
 
@@ -29,6 +29,16 @@ CREATE TABLE cartoes_credito (
 LOGGING;
 
 ALTER TABLE cartoes_credito ADD CONSTRAINT pk_cre PRIMARY KEY ( cre_id );
+
+CREATE TABLE cartoes_credito_pedido (
+    ccp_cre_id NUMBER(9) NOT NULL,
+    ccp_ped_id NUMBER(9) NOT NULL,
+    cpp_valor  NUMBER(6, 2) NOT NULL
+)
+LOGGING;
+
+ALTER TABLE cartoes_credito_pedido ADD CONSTRAINT pk_ccp PRIMARY KEY ( ccp_cre_id,
+                                                                       ccp_ped_id );
 
 CREATE TABLE categorias (
     cat_id   NUMBER(6) NOT NULL,
@@ -66,6 +76,27 @@ LOGGING;
 
 ALTER TABLE clientes ADD CONSTRAINT pk_cli PRIMARY KEY ( cli_id );
 
+CREATE TABLE cupons (
+    cup_id             NUMBER(9) NOT NULL,
+    cup_valor          NUMBER(5, 2) NOT NULL,
+    cup_is_promocional CHAR(1) NOT NULL,
+    cup_is_troca       CHAR(1) NOT NULL,
+    cup_is_ativo       CHAR(1) NOT NULL,
+    cup_cli_id         NUMBER(6) NOT NULL
+)
+LOGGING;
+
+ALTER TABLE cupons ADD CONSTRAINT pk_cup PRIMARY KEY ( cup_id );
+
+CREATE TABLE cupons_pedido (
+    cpe_cup_id NUMBER(9) NOT NULL,
+    cpe_ped_id NUMBER(9) NOT NULL
+)
+LOGGING;
+
+ALTER TABLE cupons_pedido ADD CONSTRAINT pk_cpe PRIMARY KEY ( cpe_cup_id,
+                                                              cpe_ped_id );
+
 CREATE TABLE enderecos (
     end_id               NUMBER(6) NOT NULL,
     end_frase_curta      VARCHAR2(30) NOT NULL,
@@ -88,6 +119,19 @@ LOGGING;
 
 ALTER TABLE enderecos ADD CONSTRAINT pk_end PRIMARY KEY ( end_id );
 
+CREATE TABLE estoque (
+    est_qua_id               unknown 
+--  ERROR: Datatype UNKNOWN is not allowed 
+    ,
+    est_quantidade_total     unknown 
+--  ERROR: Datatype UNKNOWN is not allowed 
+    ,
+    est_quantidade_bloqueada unknown 
+--  ERROR: Datatype UNKNOWN is not allowed 
+
+)
+LOGGING;
+
 CREATE TABLE grupos_precificacao (
     gpr_id NUMBER(3) NOT NULL
 )
@@ -96,14 +140,14 @@ LOGGING;
 ALTER TABLE grupos_precificacao ADD CONSTRAINT pk_gpr PRIMARY KEY ( gpr_id );
 
 CREATE TABLE itens_pedido (
-    ite_ped_id  NUMBER(9) NOT NULL,
-    ite_quad_id NUMBER(6) NOT NULL,
+    ite_ped_id     NUMBER(9) NOT NULL,
+    ite_qua_id     NUMBER(6) NOT NULL,
     ite_quantidade NUMBER(2) NOT NULL
 )
 LOGGING;
 
 ALTER TABLE itens_pedido ADD CONSTRAINT pk_ite PRIMARY KEY ( ite_ped_id,
-                                                             ite_quad_id );
+                                                             ite_qua_id );
 
 CREATE TABLE log_transacao (
     data_hora           unknown 
@@ -121,7 +165,8 @@ LOGGING;
 CREATE TABLE pedidos (
     ped_id     NUMBER(9) NOT NULL,
     ped_cli_id NUMBER(6) NOT NULL,
-    ped_status VARCHAR2(20) NOT NULL 
+    ped_status VARCHAR2(20) NOT NULL,
+    ped_end_id NUMBER(6) NOT NULL
 )
 LOGGING;
 
@@ -129,7 +174,7 @@ ALTER TABLE pedidos ADD CONSTRAINT pk_ped PRIMARY KEY ( ped_id );
 
 CREATE TABLE quadrinhos (
     qua_id             NUMBER(6) NOT NULL,
-    qua_preco          NUMBER(6,2) NOT NULL,
+    qua_preco          NUMBER(6, 2) NOT NULL,
     qua_autor          VARCHAR2(100) NOT NULL,
     qua_ano            DATE NOT NULL,
     qua_titulo         VARCHAR2(100) NOT NULL,
@@ -151,6 +196,26 @@ LOGGING;
 
 ALTER TABLE quadrinhos ADD CONSTRAINT pk_qua PRIMARY KEY ( qua_id );
 
+ALTER TABLE cartoes_credito_pedido
+    ADD CONSTRAINT fk_ccp_cre FOREIGN KEY ( ccp_cre_id )
+        REFERENCES cartoes_credito ( cre_id )
+    NOT DEFERRABLE;
+
+ALTER TABLE cartoes_credito_pedido
+    ADD CONSTRAINT fk_ccp_ped FOREIGN KEY ( ccp_ped_id )
+        REFERENCES pedidos ( ped_id )
+    NOT DEFERRABLE;
+
+ALTER TABLE cupons_pedido
+    ADD CONSTRAINT fk_cpe_cup FOREIGN KEY ( cpe_cup_id )
+        REFERENCES cupons ( cup_id )
+    NOT DEFERRABLE;
+
+ALTER TABLE cupons_pedido
+    ADD CONSTRAINT fk_cpe_ped FOREIGN KEY ( cpe_ped_id )
+        REFERENCES pedidos ( ped_id )
+    NOT DEFERRABLE;
+
 ALTER TABLE categorias_quadrinho
     ADD CONSTRAINT fk_cqu_cat FOREIGN KEY ( cqu_cat_id )
         REFERENCES categorias ( cat_id )
@@ -171,6 +236,11 @@ ALTER TABLE cartoes_credito
         REFERENCES clientes ( cli_id )
     NOT DEFERRABLE;
 
+ALTER TABLE cupons
+    ADD CONSTRAINT fk_cup_cli FOREIGN KEY ( cup_cli_id )
+        REFERENCES clientes ( cli_id )
+    NOT DEFERRABLE;
+
 ALTER TABLE enderecos
     ADD CONSTRAINT fk_end_cli FOREIGN KEY ( end_cli_id )
         REFERENCES clientes ( cli_id )
@@ -182,13 +252,18 @@ ALTER TABLE itens_pedido
     NOT DEFERRABLE;
 
 ALTER TABLE itens_pedido
-    ADD CONSTRAINT fk_ite_qua FOREIGN KEY ( ite_quad_id )
+    ADD CONSTRAINT fk_ite_qua FOREIGN KEY ( ite_qua_id )
         REFERENCES quadrinhos ( qua_id )
     NOT DEFERRABLE;
 
 ALTER TABLE pedidos
     ADD CONSTRAINT fk_ped_cli FOREIGN KEY ( ped_cli_id )
         REFERENCES clientes ( cli_id )
+    NOT DEFERRABLE;
+
+ALTER TABLE pedidos
+    ADD CONSTRAINT fk_ped_end FOREIGN KEY ( ped_end_id )
+        REFERENCES enderecos ( end_id )
     NOT DEFERRABLE;
 
 ALTER TABLE quadrinhos
@@ -200,9 +275,9 @@ ALTER TABLE quadrinhos
 
 -- Relatório do Resumo do Oracle SQL Developer Data Modeler: 
 -- 
--- CREATE TABLE                            11
+-- CREATE TABLE                            15
 -- CREATE INDEX                             0
--- ALTER TABLE                             19
+-- ALTER TABLE                             28
 -- CREATE VIEW                              0
 -- ALTER VIEW                               0
 -- CREATE PACKAGE                           0
@@ -238,5 +313,5 @@ ALTER TABLE quadrinhos
 -- ORDS ENABLE SCHEMA                       0
 -- ORDS ENABLE OBJECT                       0
 -- 
--- ERRORS                                   4
+-- ERRORS                                   6
 -- WARNINGS                                 0
