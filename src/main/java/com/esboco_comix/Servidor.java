@@ -17,6 +17,7 @@ import com.esboco_comix.controller.CartaoCreditoController;
 import com.esboco_comix.controller.ClienteController;
 import com.esboco_comix.controller.EnderecoController;
 import com.esboco_comix.controller.QuadrinhoController;
+import com.esboco_comix.controller.PedidoController;
 
 import lombok.Getter;
 
@@ -72,6 +73,9 @@ public class Servidor {
 
 		Tomcat.addServlet(context, "apiquadrinho", new QuadrinhoController());
 		context.addServletMapping("/quadrinho", "apiquadrinho");
+
+		Tomcat.addServlet(context, "apipedido", new PedidoController());
+		context.addServletMapping("/pedido", "apipedido");
 	}
 
 	@Getter
