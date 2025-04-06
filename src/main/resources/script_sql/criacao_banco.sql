@@ -39,9 +39,6 @@ CREATE TABLE enderecos (
     end_cli_id           NUMERIC(6) NOT NULL
 );
 
-ALTER TABLE enderecos
-    ADD CONSTRAINT fk_end_cli FOREIGN KEY ( end_cli_id ) REFERENCES clientes ( cli_id );
-
 CREATE TABLE bandeiras_cartao_credito (
     bcc_id   NUMERIC(2) PRIMARY KEY,
     bcc_nome VARCHAR(20) NOT NULL
@@ -56,12 +53,6 @@ CREATE TABLE cartoes_credito (
     cre_bcc_id           NUMERIC(2) NOT NULL,
     cre_cli_id           NUMERIC(6) NOT NULL
 );
-
-ALTER TABLE cartoes_credito
-    ADD CONSTRAINT fk_cre_bcc FOREIGN KEY ( cre_bcc_id ) REFERENCES bandeiras_cartao_credito ( bcc_id );
-
-ALTER TABLE cartoes_credito
-    ADD CONSTRAINT fk_cre_cli FOREIGN KEY ( cre_cli_id ) REFERENCES clientes ( cli_id );
 
 CREATE TABLE grupos_precificacao (
     gpr_id NUMERIC(3) PRIMARY KEY
@@ -88,5 +79,51 @@ CREATE TABLE quadrinhos (
     qua_url_imagem     VARCHAR(255)
 );
 
+CREATE TABLE categorias (
+    cat_id   NUMERIC(6) PRIMARY KEY,
+    cat_nome VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE categorias_quadrinho (
+    cqu_cat_id NUMERIC(6) PRIMARY KEY,
+    cqu_qua_id NUMERIC(6) NOT NULL
+);
+
+CREATE TABLE itens_pedido (
+    ite_ped_id  NUMERIC(9) PRIMARY KEY,
+    ite_qua_id NUMERIC(6) NOT NULL,
+    ite_quantidade NUMERIC(2) NOT NULL
+);
+
+CREATE TABLE pedidos (
+    ped_id     NUMERIC(9) PRIMARY KEY,
+    ped_cli_id NUMERIC(6) NOT NULL,
+    ped_status VARCHAR(20) NOT NULL
+);
+
+ALTER TABLE enderecos
+    ADD CONSTRAINT fk_end_cli FOREIGN KEY ( end_cli_id ) REFERENCES clientes ( cli_id );
+
+ALTER TABLE cartoes_credito
+    ADD CONSTRAINT fk_cre_bcc FOREIGN KEY ( cre_bcc_id ) REFERENCES bandeiras_cartao_credito ( bcc_id );
+
+ALTER TABLE cartoes_credito
+    ADD CONSTRAINT fk_cre_cli FOREIGN KEY ( cre_cli_id ) REFERENCES clientes ( cli_id );
+
 ALTER TABLE quadrinhos
     ADD CONSTRAINT fk_qua_gpr FOREIGN KEY ( qua_gpr_id ) REFERENCES grupos_precificacao ( gpr_id );
+
+ALTER TABLE categorias_quadrinho
+    ADD CONSTRAINT fk_cqu_cat FOREIGN KEY ( cqu_cat_id ) REFERENCES categorias ( cat_id );
+
+ALTER TABLE categorias_quadrinho
+    ADD CONSTRAINT fk_cqu_qua FOREIGN KEY ( cqu_qua_id ) REFERENCES quadrinhos ( qua_id );
+
+ALTER TABLE itens_pedido
+    ADD CONSTRAINT fk_ite_ped FOREIGN KEY ( ite_ped_id ) REFERENCES pedidos ( ped_id );
+
+ALTER TABLE itens_pedido
+    ADD CONSTRAINT fk_ite_qua FOREIGN KEY ( ite_qua_id ) REFERENCES quadrinhos ( qua_id );
+
+ALTER TABLE pedidos
+    ADD CONSTRAINT fk_ped_cli FOREIGN KEY ( ped_cli_id ) REFERENCES clientes ( cli_id );

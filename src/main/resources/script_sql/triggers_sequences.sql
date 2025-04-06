@@ -150,3 +150,28 @@ CREATE TRIGGER tg_set_qua_id
 BEFORE INSERT ON quadrinhos
 FOR EACH ROW
 EXECUTE FUNCTION set_qua_id();
+
+
+
+
+-- Pedidos
+CREATE SEQUENCE ped_sq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE FUNCTION set_ped_id() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    NEW.ped_id := nextval('ped_sq');
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tg_set_ped_id
+BEFORE INSERT ON pedidos
+FOR EACH ROW
+EXECUTE FUNCTION set_ped_id();

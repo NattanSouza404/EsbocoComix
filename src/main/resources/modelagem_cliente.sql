@@ -97,7 +97,8 @@ ALTER TABLE grupos_precificacao ADD CONSTRAINT pk_gpr PRIMARY KEY ( gpr_id );
 
 CREATE TABLE itens_pedido (
     ite_ped_id  NUMBER(9) NOT NULL,
-    ite_quad_id NUMBER(6) NOT NULL
+    ite_quad_id NUMBER(6) NOT NULL,
+    ite_quantidade NUMBER(2) NOT NULL
 )
 LOGGING;
 
@@ -120,9 +121,7 @@ LOGGING;
 CREATE TABLE pedidos (
     ped_id     NUMBER(9) NOT NULL,
     ped_cli_id NUMBER(6) NOT NULL,
-    ped_status unknown 
---  ERROR: Datatype UNKNOWN is not allowed 
-
+    ped_status VARCHAR2(20) NOT NULL 
 )
 LOGGING;
 
