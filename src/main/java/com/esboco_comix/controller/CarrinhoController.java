@@ -2,7 +2,6 @@ package com.esboco_comix.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,24 +39,38 @@ public class CarrinhoController extends HttpServlet {
     }
 
     @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            iniciarSessao(req);
+
+            Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");    
+            ItemCarrinho itemCarrinho = jsonToObject(req, ItemCarrinho.class); 
+
+            carrinhoService.adicionar(itemCarrinho, carrinho);
+
+            session.setAttribute("carrinho", carrinho);
+
+            retornarRespostaJson(
+                resp, 
+                session.getAttribute("carrinho"),
+                HttpServletResponse.SC_CREATED
+            ); 
+
+        } catch (Exception e) {
+            estourarErro(resp, e);
+        }
+    }
+
+    @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         try {
             iniciarSessao(req);
 
-            String opcao = Optional.ofNullable(req.getParameter("opcao")).orElse("default");
             Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");    
             ItemCarrinho itemCarrinho = jsonToObject(req, ItemCarrinho.class); 
 
-            switch (opcao) {
-                case "adicionar": 
-                    carrinhoService.adicionar(itemCarrinho, carrinho);
-                    break;
-
-                case "atualizarquantidade":
-                    carrinhoService.atualizarQuantidade(itemCarrinho, carrinho);
-                    break;
-            }
+            carrinhoService.atualizarQuantidade(itemCarrinho, carrinho);
 
             session.setAttribute("carrinho", carrinho);
 
