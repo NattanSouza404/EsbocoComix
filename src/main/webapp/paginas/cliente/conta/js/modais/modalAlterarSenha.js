@@ -1,5 +1,5 @@
 import { criarElemento, criarElementoInput } from "/js/script.js";
-import { atualizarCliente } from "/js/api.js";
+import { atualizarCliente } from "/js/api/apiCliente.js";
 import { BotaoFechar } from "/js/componentes/botoes/BotaoFechar.js";
 import { BotaoSalvar } from "/js/componentes/botoes/BotaoSalvar.js";
 import { Modal } from "/js/componentes/componentes.js";

@@ -1,5 +1,5 @@
 import { criarElemento, montarCartaoCreditoPorForm } from "/js/script.js";
-import { atualizarCartaoCredito, deletarCartaoCredito } from "/js/api.js";
+import { atualizarCartaoCredito, deletarCartaoCredito } from "/js/api/apiCartaoCredito.js";;
 import { SecaoFormsCartaoCredito } from "/js/componentes/secaoCartaoCredito.js";
 import { BotaoFechar } from "/js/componentes/botoes/BotaoFechar.js";
 import { Modal } from "/js/componentes/componentes.js";

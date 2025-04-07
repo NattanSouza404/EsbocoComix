@@ -1,4 +1,4 @@
-import { retornarAllClientes } from "/js/api.js";
+import { retornarAllClientes } from "/js/api/apiCliente.js";
 import { montarClientePorForm } from "/js/script.js";
 import TabelaClientes from "/paginas/admin/clientes/js/tabelaClientes.js";
 

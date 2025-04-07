@@ -1,4 +1,4 @@
-import { atualizarCliente } from "../../../../js/api.js";
+import { atualizarCliente } from "/js/api/apiCliente.js";
 import { modalTransacoes } from "./modalTransacoes.js";
 
 export default class TabelaClientes extends HTMLTableElement {

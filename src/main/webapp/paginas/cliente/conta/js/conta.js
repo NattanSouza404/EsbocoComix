@@ -1,10 +1,15 @@
 import { DadosPessoaisConta, DadosEnderecoConta, DadosCartaoCreditoConta } from "./secoesConta.js";
-import { retornarCliente, retornarEnderecos, retornarCartoesCredito } from "/js/api.js";
+
+import { retornarCliente } from "/js/api/apiCliente.js";
+import { retornarEnderecos } from "/js/api/apiEndereco.js";
+import { retornarCartoesCredito } from "/js/api/apiCartaoCredito.js";
+
 import { NavegacaoConta } from "./navegacaoConta.js";
 import { ModalAlterarCartaoCredito } from "./modais/modalAlterarCartaoCredito.js";
 import { ModalAlterarEndereco } from "./modais/modalAlterarEndereco.js";
 import { ModalAlterarDadosPessoais } from "./modais/modalAlterarDadosPessoais.js";
 import { ModalAlterarSenha } from "./modais/modalAlterarSenha.js";
+
 
 let promessaCliente = (async () => {
     const uRLSearchParams = new URLSearchParams(window.location.search);
