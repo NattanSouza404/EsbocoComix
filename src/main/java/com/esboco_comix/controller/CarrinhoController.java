@@ -85,6 +85,22 @@ public class CarrinhoController extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            iniciarSessao(req);
+
+            Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
+            ItemCarrinho itemCarrinho = jsonToObject(req, ItemCarrinho.class);
+
+            carrinhoService.deletar(itemCarrinho, carrinho);
+
+            resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        } catch (Exception e) {
+            estourarErro(resp, e);
+        }
+    }
+
     private void iniciarSessao(HttpServletRequest req) {
         if (session != null){
             return;

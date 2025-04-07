@@ -16,9 +16,21 @@ public class CarrinhoService {
 
         for (int i = 0; i < itens.size(); i++) {
             if (itens.get(i).getIdQuadrinho() == itemCarrinho.getIdQuadrinho()){
-                itens.set(i, itemCarrinho);
+                itens.get(i).setQuantidade(itemCarrinho.getQuantidade());
             }
         }
+    }
+
+    public void deletar(ItemCarrinho itemCarrinho, Carrinho carrinho) {
+        List<ItemCarrinho> itens = carrinho.getItensCarrinho();
+
+        for (ItemCarrinho it : itens) {
+            if (it.getIdQuadrinho() == itemCarrinho.getIdQuadrinho()){
+                itens.remove(it);
+                return;
+            }
+        }
+
     }
 
 }
