@@ -1,4 +1,4 @@
-import { enviarPedido } from "/js/api/apiPedido";
+import { enviarPedido } from "/js/api/apiPedido.js";
 import { retornarCarrinho } from "/js/api/apiCarrinho.js";
 
 const carrinho = await retornarCarrinho();
