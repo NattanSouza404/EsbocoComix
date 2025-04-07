@@ -1,7 +1,6 @@
 package com.esboco_comix.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,15 +16,15 @@ import static com.esboco_comix.controller.utils.ServletUtil.*;
 
 public class CarrinhoController extends HttpServlet {
 
-    private HttpSession session;
-
     private CarrinhoService carrinhoService = new CarrinhoService();
+
+    private SessionManager sessionManager = new SessionManager();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         try {
-            iniciarSessao(req);
+            HttpSession session = sessionManager.retornarSessao(req);
 
             retornarRespostaJson(
                 resp, 
@@ -41,9 +40,8 @@ public class CarrinhoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            iniciarSessao(req);
-
-            Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");    
+            HttpSession session = sessionManager.retornarSessao(req);
+            Carrinho carrinho = sessionManager.retornarCarrinhoSessao();
             ItemCarrinho itemCarrinho = jsonToObject(req, ItemCarrinho.class); 
 
             carrinhoService.adicionar(itemCarrinho, carrinho);
@@ -65,9 +63,8 @@ public class CarrinhoController extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         try {
-            iniciarSessao(req);
-
-            Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");    
+            HttpSession session = sessionManager.retornarSessao(req);
+            Carrinho carrinho = sessionManager.retornarCarrinhoSessao();
             ItemCarrinho itemCarrinho = jsonToObject(req, ItemCarrinho.class); 
 
             carrinhoService.atualizarQuantidade(itemCarrinho, carrinho);
@@ -88,9 +85,9 @@ public class CarrinhoController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            iniciarSessao(req);
+            HttpSession session = sessionManager.retornarSessao(req);
+            Carrinho carrinho = sessionManager.retornarCarrinhoSessao();
 
-            Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
             ItemCarrinho itemCarrinho = jsonToObject(req, ItemCarrinho.class);
 
             carrinhoService.deletar(itemCarrinho, carrinho);
@@ -99,22 +96,5 @@ public class CarrinhoController extends HttpServlet {
         } catch (Exception e) {
             estourarErro(resp, e);
         }
-    }
-
-    private void iniciarSessao(HttpServletRequest req) {
-        if (session != null){
-            return;
-        }
-
-        session = req.getSession();
-
-        Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
-    
-        if (carrinho == null){
-            carrinho = new Carrinho();
-            carrinho.setItensCarrinho(new ArrayList<>());
-        }
-
-        session.setAttribute("carrinho", carrinho);
     }
 }
