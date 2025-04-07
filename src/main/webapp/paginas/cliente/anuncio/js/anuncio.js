@@ -1,4 +1,5 @@
 import { retornarQuadrinho } from "/js/api/apiQuadrinho.js";
+import { adicionarItemAoCarrinho } from "/js/api/apiCarrinho.js";
 
 const uRLSearchParams = new URLSearchParams(window.location.search);
 const quadrinho = await retornarQuadrinho(uRLSearchParams.get('id'));
@@ -58,3 +59,16 @@ corpoTabela.innerHTML = `
 `
 
 document.getElementById('tabela-info').append(corpoTabela);
+
+window.adicionarItem = () => {
+
+    adicionarItemAoCarrinho(
+        {
+            idQuadrinho: quadrinho.id,
+            preco: quadrinho.preco,
+            quantidade: document.getElementsByName('quantidade')[0].value,
+            nome: quadrinho.titulo
+        } 
+    )
+
+};
