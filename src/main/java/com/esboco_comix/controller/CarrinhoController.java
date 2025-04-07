@@ -9,11 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.model.Carrinho;
 import com.esboco_comix.model.ItemCarrinho;
-import com.esboco_comix.service.CarrinhoService;
 
 public class CarrinhoController extends AbstractController {
-
-    private CarrinhoService carrinhoService = new CarrinhoService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,7 +33,7 @@ public class CarrinhoController extends AbstractController {
             ItemCarrinho itemCarrinho = jsonToObject(req, ItemCarrinho.class); 
             Carrinho carrinho = retornarCarrinhoSessao(req);
 
-            carrinhoService.adicionar(itemCarrinho, carrinho);
+            carrinho.adicionar(itemCarrinho);
 
             retornarRespostaJson(
                 resp, 
@@ -56,7 +53,7 @@ public class CarrinhoController extends AbstractController {
             Carrinho carrinho = retornarCarrinhoSessao(req);
             ItemCarrinho itemCarrinho = jsonToObject(req, ItemCarrinho.class); 
 
-            carrinhoService.atualizarQuantidade(itemCarrinho, carrinho);
+            carrinho.atualizarQuantidade(itemCarrinho);
 
             retornarRespostaJson(
                 resp, 
@@ -75,7 +72,7 @@ public class CarrinhoController extends AbstractController {
             Carrinho carrinho = retornarCarrinhoSessao(req);
             ItemCarrinho itemCarrinho = jsonToObject(req, ItemCarrinho.class);
 
-            carrinhoService.deletar(itemCarrinho, carrinho);
+            carrinho.deletar(itemCarrinho);
 
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         } catch (Exception e) {
