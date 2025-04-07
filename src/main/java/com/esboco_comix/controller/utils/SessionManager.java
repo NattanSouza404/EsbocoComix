@@ -1,4 +1,4 @@
-package com.esboco_comix.controller;
+package com.esboco_comix.controller.utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -7,14 +7,14 @@ import com.esboco_comix.model.Carrinho;
 import com.esboco_comix.model.entidades.Cliente;
 
 public class SessionManager {
-    private HttpSession session;
 
-    public HttpSession retornarSessao(HttpServletRequest req) {
-        this.session = req.getSession();
-        return this.session;
+    public static HttpSession getSession(HttpServletRequest req) {
+        return req.getSession();
     }
 
-    public Carrinho retornarCarrinhoSessao(){
+    public static Carrinho retornarCarrinhoSessao(HttpServletRequest req){
+        HttpSession session = getSession(req);
+
         Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
 
         if (carrinho == null) {
@@ -25,7 +25,9 @@ public class SessionManager {
         return carrinho;   
     }
     
-    public Cliente retornarClienteSessao(){
+    public static Cliente retornarClienteSessao(HttpServletRequest req){
+        HttpSession session = getSession(req);
+
         Cliente cliente = (Cliente) session.getAttribute("cliente");
 
         if (cliente == null){
