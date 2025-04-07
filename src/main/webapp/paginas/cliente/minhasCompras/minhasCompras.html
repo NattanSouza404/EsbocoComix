@@ -1,133 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minhas Compras</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/paginas/cliente/minhasCompras/css/minhasCompras.css">
 </head>
+
 <body class="bg-light">
     <nav id="main-nav"></nav>
 
     <div class="container my-5">
         <h1 class="mb-4 text-center">Minhas Compras</h1>
 
-        <!-- Tabela de Pedidos -->
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th>#</th>
-                        <th>Pedido</th>
-                        <th>Data</th>
-                        <th>Valor Total</th>
-                        <th>Status</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Exemplo de Pedidos -->
-                    <tr>
-                        <td>1</td>
-                        <td>Pedido #001</td>
-                        <td>25/03/2025</td>
-                        <td>R$ 150,00</td>
-                        <td>Entregue</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" onclick="pedirTroca(this)">Pedir Troca</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Pedido #002</td>
-                        <td>20/03/2025</td>
-                        <td>R$ 80,00</td>
-                        <td>Em Transporte</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" onclick="pedirTroca(this)" disabled>Pedir Troca</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Pedido #003</td>
-                        <td>15/03/2025</td>
-                        <td>R$ 50,00</td>
-                        <td>Entregue</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" onclick="pedirTroca(this)">Pedir Troca</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="container mt-4">
-            <!-- Parent Row -->
-            <div class="p-3 mb-3 bg-primary text-white rounded">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5>Parent Item 1</h5>
-                        <p>Main Details of Parent Item</p>
-                    </div>
-                    <button class="btn btn-light btn-sm">Operate on Parent</button>
-                </div>
-            </div>
-        
-            <!-- Subrows -->
-            <div class="ps-4">
-                <div class="p-3 mb-2 bg-light rounded border">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6>Sub Item 1.1</h6>
-                            <p>Details about Sub Item 1.1</p>
-                        </div>
-                        <button class="btn btn-secondary btn-sm">Operate on Sub Item</button>
-                    </div>
-                </div>
-                <div class="p-3 mb-2 bg-light rounded border">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6>Sub Item 1.2</h6>
-                            <p>Details about Sub Item 1.2</p>
-                        </div>
-                        <button class="btn btn-secondary btn-sm">Operate on Sub Item</button>
-                    </div>
-                </div>
-            </div>
-        
-            <!-- Another Parent Row -->
-            <div class="p-3 mb-3 bg-primary text-white rounded">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5>Parent Item 2</h5>
-                        <p>Main Details of Parent Item</p>
-                    </div>
-                    <button class="btn btn-light btn-sm">Operate on Parent</button>
-                </div>
-            </div>
-        
-            <!-- Subrows -->
-            <div class="ps-4">
-                <div class="p-3 mb-2 bg-light rounded border">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6>Sub Item 2.1</h6>
-                            <p>Details about Sub Item 2.1</p>
-                        </div>
-                        <button class="btn btn-secondary btn-sm">Operate on Sub Item</button>
-                    </div>
-                </div>
-                <div class="p-3 mb-2 bg-light rounded border">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6>Sub Item 2.2</h6>
-                            <p>Details about Sub Item 2.2</p>
-                        </div>
-                        <button class="btn btn-secondary btn-sm">Operate on Sub Item</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+        <div id="container-compras" class="container mt-4"></div>
     </div>
 
     <!-- Modal para Solicitação de Troca -->
@@ -146,7 +33,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="motivoTroca" class="form-label">Motivo da Troca</label>
-                            <textarea class="form-control" id="motivoTroca" rows="3" placeholder="Descreva o motivo da troca"></textarea>
+                            <textarea class="form-control" id="motivoTroca" rows="3"
+                                placeholder="Descreva o motivo da troca"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Enviar Solicitação</button>
                     </form>
@@ -157,17 +45,8 @@
 
     <footer id="main-footer"></footer>
 
-    <script>
-        const pedirTroca = (button) => {
-            const row = button.parentElement.parentElement;
-            const pedido = row.querySelector('td:nth-child(2)').textContent;
-            const modal = new bootstrap.Modal(document.getElementById('trocaModal'));
-
-            document.getElementById('pedidoId').value = pedido;
-            modal.show();
-        };
-    </script>
-
     <script type="module" src="js/loadPage.js"></script>
+    <script type="module" src="/paginas/cliente/minhasCompras/js/minhasCompras.js"></script>
 </body>
+
 </html>

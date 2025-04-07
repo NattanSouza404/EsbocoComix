@@ -65,24 +65,33 @@
         </div>
 
         <!-- Resumo -->
-        <div class="mb-4">
+        <div id="resumo" class="mb-4">
             <p class="fw-bold">Resumo</p>
-            <p>Valor dos Produtos: R$ 60,00</p>
-            <p>Frete: R$ 10,00</p>
-            <p>Desconto do Cupom: R$ 0,00</p>
-            <hr>
-            <p>Total Restante: R$ 70,00</p>
+            <table id="tabela-produtos" class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <th>Nome</th>
+                    <th>Quantidade</th>
+                    <th>Preço</th>
+                    <th>Total</th>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+            
         </div>
 
         <!-- Botão Finalizar Compra -->
         <div class="text-center">
-            <button class="btn btn-primary btn-lg">Finalizar Compra</button>
+            <button id="me-clica" class="btn btn-primary btn-lg">Finalizar Compra</button>
         </div>
     </div>
 
     <footer id="main-footer"></footer>
 
     <script type="module" src="js/loadPage.js"></script>
+    <script type="module" src="/paginas/cliente/compra/js/compra.js"></script>
 </body>
 
 </html>
