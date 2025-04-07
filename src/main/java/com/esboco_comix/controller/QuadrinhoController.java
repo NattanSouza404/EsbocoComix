@@ -1,18 +1,16 @@
 package com.esboco_comix.controller;
 
-import static com.esboco_comix.controller.utils.ServletUtil.*;
-
 import java.io.IOException;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.service.QuadrinhoService;
 
-public class QuadrinhoController extends HttpServlet {
+public class QuadrinhoController extends AbstractController {
 
     private QuadrinhoService quadrinhoService = new QuadrinhoService();
 

@@ -6,17 +6,17 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.esboco_comix.controller.pedidos.PedidoAlterarSenha;
 import com.esboco_comix.controller.pedidos.PedidoCadastrarCliente;
-import static com.esboco_comix.controller.utils.ServletUtil.*;
+import com.esboco_comix.controller.utils.AbstractController;
+
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.service.ClienteService;
 
-public class ClienteController extends HttpServlet {
+public class ClienteController extends AbstractController {
     private static ClienteService clienteService = new ClienteService();
 
     @Override

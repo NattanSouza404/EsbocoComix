@@ -3,16 +3,14 @@ package com.esboco_comix.controller;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.service.PedidoService;
 
-import static com.esboco_comix.controller.utils.ServletUtil.*;
-
-public class PedidoController extends HttpServlet {
+public class PedidoController extends AbstractController {
 
     private PedidoService pedidoService = new PedidoService();
 
