@@ -10,4 +10,8 @@ import lombok.Setter;
 @Setter
 public class Carrinho {
     private List<ItemCarrinho> itensCarrinho = new ArrayList<>();
+
+    public void esvaziar() {
+        itensCarrinho.clear();
+    }
 }
