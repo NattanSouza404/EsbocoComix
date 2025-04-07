@@ -18,9 +18,19 @@ public class PedidoController extends AbstractController {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         try {
+            String parametroId = req.getParameter("idcliente");
+            Object objetoResposta = null;
+
+            if (parametroId != null){
+                int id = Integer.parseInt(parametroId);
+                objetoResposta = pedidoService.consultarPorIDCliente(id);
+            } else {
+                objetoResposta = pedidoService.consultarTodos();
+            }
+
             retornarRespostaJson(
                 resp, 
-                pedidoService.consultarTodos(),
+                objetoResposta,
                 HttpServletResponse.SC_OK
             ); 
 

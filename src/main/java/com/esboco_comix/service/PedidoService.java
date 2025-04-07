@@ -35,4 +35,14 @@ public class PedidoService {
         return pedidos;
     }
 
+    public List<Pedido> consultarPorIDCliente(int idCliente) throws Exception{
+        List<Pedido> pedidos = pedidoDAO.consultarByIDCliente(idCliente); 
+
+        for (Pedido p : pedidos) {
+            p.setItensPedido(itemPedidoDAO.consultarByIDPedido(p.getId()));
+        }
+
+        return pedidos;
+    }
+
 }

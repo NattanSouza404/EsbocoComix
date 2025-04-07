@@ -124,5 +124,40 @@ public class PedidoDAO implements IDAO<Pedido>{
         pedido.setStatus(rs.getString("ped_status"));
         return pedido;
     }
+
+    public List<Pedido> consultarByIDCliente(int idCliente) throws Exception {
+        Connection conn = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = conn.prepareStatement(
+            "SELECT * FROM pedidos where ped_cli_id = ?;",
+            ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_READ_ONLY
+        );
+
+        try {
+            pst.setInt(1, idCliente);
+
+            ResultSet rs = pst.executeQuery();
+
+            if (!rs.next()) {
+                throw new Exception("Nenhum registro encontrado de pedido.");
+            }
+            rs.beforeFirst();
+
+            List<Pedido> pedidos = new ArrayList<>();
+
+            while (rs.next()){                
+                pedidos.add(mapearEntidade(rs));
+            }
+
+            return pedidos;
+        }
+        catch (Exception e){
+            throw e;
+        } finally {
+            pst.close();
+            conn.close();
+        }
+    }
     
 }
