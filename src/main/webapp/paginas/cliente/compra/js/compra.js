@@ -112,7 +112,6 @@ document.getElementById('me-clica').onclick = () => {
     enviarPedido(
         {
             idCliente: idCliente,
-            itensPedido: itensPedido,
             enderecoEntrega: {
                 id: idEndereco
             },
