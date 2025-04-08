@@ -1,12 +1,24 @@
 # Esboço Comix
 
-Projeto de LES
+## Descrição
 
-Créditos dos icones:
+E-commerce de revistas em quadrinhos.
+Esse projeto foi criado e desenvolvido para a disciplina de Laboratório de Engenharia de Software.
+
+<img src="https://github.com/user-attachments/assets/f7bd76b6-f7e9-4e31-afc4-01e208f55978" height="400px" />
+
+## Tecnologias
+- Java
+- JDBC
+- PostgreSQL
+- HTML, CSS e JS
+- Bootstrap
+- Python
+- Gemini AI
+
+## Créditos
+
+Ícones retirados de Flaticon feitos por:
 - FACH
 - Freepik
 - Febrian Hidayat
-
-<a href="https://www.flaticon.com/br/icones-gratis/bate-papo-ai" title="bate-papo ai ícones">Bate-papo ai ícones criados por FACH - Flaticon</a>
-<a href="https://www.flaticon.com/br/icones-gratis/do-utilizador" title="do utilizador ícones">Do utilizador ícones criados por Freepik - Flaticon</a>
-<a href="https://www.flaticon.com/br/icones-gratis/enviei" title="enviei ícones">Enviei ícones criados por Febrian Hidayat - Flaticon</a>
