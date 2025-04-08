@@ -12,7 +12,10 @@ public class Pedido {
     private int id;
     private int idCliente;
     private String status;
+    private Double valorFrete;
 
-    private Endereco enderecoEntrega;
     private List<ItemPedido> itensPedido = new ArrayList<>();
+    private Endereco enderecoEntrega;
+    // TODO private List<CartaoCreditoPedido> cartoesCreditoPedidos = new ArrayList<>();
+    
 }

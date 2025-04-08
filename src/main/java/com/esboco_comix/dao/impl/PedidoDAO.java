@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.dao.IDAO;
+import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
@@ -20,14 +21,16 @@ public class PedidoDAO implements IDAO<Pedido>{
 
         PreparedStatement pst = connection.prepareStatement(
             "INSERT INTO pedidos("+
-                "ped_cli_id, ped_status)"+
-                "VALUES (?, ?);",
+                "ped_cli_id, ped_status, ped_end_id, ped_valor_frete)"+
+                "VALUES (?, ?, ?, ?);",
                 Statement.RETURN_GENERATED_KEYS
         );
 
         try {
             pst.setInt(1, e.getIdCliente());
             pst.setString(2, e.getStatus());
+            pst.setInt(3, e.getEnderecoEntrega().getId());
+            pst.setDouble(4, e.getValorFrete());
 
             if (pst.executeUpdate() == 0){
                 throw new Exception("Inserção de pedido não executada!");
@@ -122,6 +125,13 @@ public class PedidoDAO implements IDAO<Pedido>{
         pedido.setId(rs.getInt("ped_id"));
         pedido.setIdCliente(rs.getInt("ped_cli_id"));
         pedido.setStatus(rs.getString("ped_status"));
+        
+        Endereco endereco = new Endereco();
+        endereco.setId(rs.getInt("ped_end_id"));
+        pedido.setEnderecoEntrega(endereco);
+
+        pedido.setValorFrete(rs.getDouble("ped_valor_frete"));
+
         return pedido;
     }
 
