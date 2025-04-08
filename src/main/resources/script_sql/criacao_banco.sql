@@ -99,7 +99,16 @@ CREATE TABLE itens_pedido (
 CREATE TABLE pedidos (
     ped_id     NUMERIC(9) PRIMARY KEY,
     ped_cli_id NUMERIC(6) NOT NULL,
-    ped_status VARCHAR(20) NOT NULL
+    ped_status VARCHAR(20) NOT NULL,
+    ped_end_id NUMERIC(6) NOT NULL,
+    ped_valor_frete NUMERIC(4,2) NOT NULL
+);
+
+CREATE TABLE cartoes_credito_pedido (
+    ccp_cre_id NUMERIC(9) NOT NULL,
+    ccp_ped_id NUMERIC(9) NOT NULL,
+    cpp_valor  NUMERIC(6, 2) NOT NULL,
+    PRIMARY KEY(ccp_cre_id, ccp_ped_id)
 );
 
 ALTER TABLE enderecos
@@ -128,3 +137,9 @@ ALTER TABLE itens_pedido
 
 ALTER TABLE pedidos
     ADD CONSTRAINT fk_ped_cli FOREIGN KEY ( ped_cli_id ) REFERENCES clientes ( cli_id );
+
+ALTER TABLE cartoes_credito_pedido
+    ADD CONSTRAINT fk_ccp_cre FOREIGN KEY ( ccp_cre_id ) REFERENCES cartoes_credito ( cre_id );
+
+ALTER TABLE cartoes_credito_pedido
+    ADD CONSTRAINT fk_ccp_ped FOREIGN KEY ( ccp_ped_id ) REFERENCES pedidos ( ped_id );
