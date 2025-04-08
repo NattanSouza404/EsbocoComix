@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.esboco_comix.model.Carrinho;
-import com.esboco_comix.model.entidades.Cliente;
 
 public abstract class AbstractController extends HttpServlet {
     
@@ -18,10 +17,6 @@ public abstract class AbstractController extends HttpServlet {
 
     public Carrinho retornarCarrinhoSessao(HttpServletRequest req){
         return SessionManager.retornarCarrinhoSessao(req);  
-    }
-    
-    public Cliente retornarClienteSessao(HttpServletRequest req){
-        return SessionManager.retornarClienteSessao(req);
     }
 
     public void retornarRespostaJson(HttpServletResponse resp, Object object, int sc) throws IOException {
