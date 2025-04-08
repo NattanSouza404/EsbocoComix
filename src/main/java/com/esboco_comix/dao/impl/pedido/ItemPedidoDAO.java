@@ -8,13 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.dao.IDAO;
 import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
-public class ItemPedidoDAO implements IDAO<ItemPedido> {
+public class ItemPedidoDAO {
 
-    @Override
     public ItemPedido inserir(ItemPedido e) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
@@ -41,16 +39,6 @@ public class ItemPedidoDAO implements IDAO<ItemPedido> {
             connection.close();
             pst.close();
         }
-    }
-
-    @Override
-    public List<ItemPedido> consultarTodos() throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'consultarTodos'");
-    }
-
-    @Override
-    public ItemPedido consultarByID(int id) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'consultarByID'");
     }
 
     public ItemPedido consultarByID(int idPedido, int idQuadrinho) throws Exception {
@@ -111,16 +99,6 @@ public class ItemPedidoDAO implements IDAO<ItemPedido> {
             connection.close();
             pst.close();
         }
-    }
-
-    @Override
-    public ItemPedido atualizar(ItemPedido e) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
-    }
-
-    @Override
-    public void deletar(ItemPedido e) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'deletar'");
     }
 
     private ItemPedido mapearEntidade(ResultSet rs) throws SQLException {

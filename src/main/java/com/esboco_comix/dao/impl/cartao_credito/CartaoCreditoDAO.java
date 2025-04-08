@@ -7,15 +7,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.dao.IDAO;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.utils.ConexaoFactory;
 
-public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
+public class CartaoCreditoDAO {
 
     private BandeiraCartaoDAO bandeiraCartaoDAO = new BandeiraCartaoDAO();
 
-    @Override
     public CartaoCredito inserir(CartaoCredito c) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
@@ -53,12 +51,6 @@ public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
         }
     }
 
-    @Override
-    public List<CartaoCredito> consultarTodos() throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'consultarTodos'");
-    }
-
-    @Override
     public CartaoCredito consultarByID(int id) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
@@ -83,7 +75,6 @@ public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
         }
     }
 
-    @Override
     public CartaoCredito atualizar(CartaoCredito c) throws Exception {
         Connection conn = ConexaoFactory.getConexao(); 
     
@@ -117,7 +108,6 @@ public class CartaoCreditoDAO implements IDAO<CartaoCredito> {
         }
     }
 
-    @Override
     public void deletar(CartaoCredito c) throws Exception {
         Connection conn = ConexaoFactory.getConexao();
 

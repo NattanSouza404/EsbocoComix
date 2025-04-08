@@ -3,25 +3,12 @@ package com.esboco_comix.dao.impl.cartao_credito;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
 
-import com.esboco_comix.dao.IDAO;
 import com.esboco_comix.model.enuns.BandeiraCartao;
 import com.esboco_comix.utils.ConexaoFactory;
 
-public class BandeiraCartaoDAO implements IDAO<BandeiraCartao> {
+public class BandeiraCartaoDAO {
 
-    @Override
-    public BandeiraCartao inserir(BandeiraCartao e) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'inserir'");
-    }
-
-    @Override
-    public List<BandeiraCartao> consultarTodos() throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'consultarTodos'");
-    }
-
-    @Override
     public BandeiraCartao consultarByID(int id) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
@@ -44,16 +31,6 @@ public class BandeiraCartaoDAO implements IDAO<BandeiraCartao> {
             connection.close();
             pst.close();
         }
-    }
-
-    @Override
-    public BandeiraCartao atualizar(BandeiraCartao e) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
-    }
-
-    @Override
-    public void deletar(BandeiraCartao e) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'deletar'");
     }
 
     public int consultarIDByNome(String nome) throws Exception {

@@ -7,18 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.dao.IDAO;
 import com.esboco_comix.model.entidades.Quadrinho;
 import com.esboco_comix.utils.ConexaoFactory;
 
-public class QuadrinhoDAO implements IDAO<Quadrinho> {
+public class QuadrinhoDAO {
 
-    @Override
-    public Quadrinho inserir(Quadrinho e) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'inserir'");
-    }
-
-    @Override
     public List<Quadrinho> consultarTodos() throws Exception {
         Connection conn = ConexaoFactory.getConexao();
 
@@ -51,8 +44,7 @@ public class QuadrinhoDAO implements IDAO<Quadrinho> {
             conn.close();
         }
     }
-
-    @Override
+    
     public Quadrinho consultarByID(int id) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
@@ -76,16 +68,6 @@ public class QuadrinhoDAO implements IDAO<Quadrinho> {
             connection.close();
             pst.close();
         }
-    }
-
-    @Override
-    public Quadrinho atualizar(Quadrinho e) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
-    }
-
-    @Override
-    public void deletar(Quadrinho e) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'deletar'");
     }
 
     private Quadrinho mapearEntidade(ResultSet rs) throws SQLException {

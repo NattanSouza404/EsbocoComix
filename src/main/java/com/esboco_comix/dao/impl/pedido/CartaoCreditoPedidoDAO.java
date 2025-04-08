@@ -5,15 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
-import com.esboco_comix.dao.IDAO;
 import com.esboco_comix.model.entidades.CartaoCreditoPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
-public class CartaoCreditoPedidoDAO implements IDAO<CartaoCreditoPedido>{
+public class CartaoCreditoPedidoDAO {
 
-    @Override
     public CartaoCreditoPedido inserir(CartaoCreditoPedido e) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
@@ -46,11 +43,6 @@ public class CartaoCreditoPedidoDAO implements IDAO<CartaoCreditoPedido>{
             connection.close();
             pst.close();
         }
-    }
-
-    @Override
-    public List<CartaoCreditoPedido> consultarTodos() throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'consultarTodos'");
     }
 
     public CartaoCreditoPedido consultarByIDPedido(int id) throws Exception {
@@ -102,21 +94,6 @@ public class CartaoCreditoPedidoDAO implements IDAO<CartaoCreditoPedido>{
             pst.close();
         }
 
-    }
-
-    @Override
-    public CartaoCreditoPedido atualizar(CartaoCreditoPedido e) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
-    }
-
-    @Override
-    public void deletar(CartaoCreditoPedido e) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'deletar'");
-    }
-
-    @Override
-    public CartaoCreditoPedido consultarByID(int id) throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'consultarByID'");
     }
 
     private CartaoCreditoPedido mapearEntidade(ResultSet rs) throws SQLException {

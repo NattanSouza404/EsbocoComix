@@ -8,13 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.dao.IDAO;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.utils.ConexaoFactory;
 
-public class EnderecoDAO implements IDAO<Endereco> {
+public class EnderecoDAO {
 
-    @Override
     public Endereco inserir(Endereco e) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
@@ -62,13 +60,7 @@ public class EnderecoDAO implements IDAO<Endereco> {
         }
 
     }
-        
-    @Override
-    public List<Endereco> consultarTodos() throws Exception {
-        throw new UnsupportedOperationException("Unimplemented method 'consultarTodos'");
-    }
 
-    @Override
     public Endereco consultarByID(int id) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
@@ -93,7 +85,6 @@ public class EnderecoDAO implements IDAO<Endereco> {
         }
     }
 
-    @Override
     public Endereco atualizar(Endereco e) throws Exception {
         Connection conn = ConexaoFactory.getConexao(); 
     
@@ -138,7 +129,6 @@ public class EnderecoDAO implements IDAO<Endereco> {
         } 
     }
 
-    @Override
     public void deletar(Endereco e) throws Exception {
         Connection conn = ConexaoFactory.getConexao();
 
