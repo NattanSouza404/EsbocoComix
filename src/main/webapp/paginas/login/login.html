@@ -23,9 +23,12 @@
       <div class="col-md-3 mb-4">
         <div class="card">
           <img src="/img/imagem-do-usuario-com-fundo-preto.png" class="card-img-top img-fluid custom-img">
-          <a class="card-body text-center" href="/index.html">
-            <button class="btn btn-primary btn-lg">Entrar como cliente</button>
-          </a>
+          <div class="card-body text-center">
+            <button type="button" class="btn btn-primary btn btn-primary btn-lg" data-bs-toggle="modal"
+              data-bs-target="#loginModal">
+              Entrar como cliente
+            </button>
+          </div>
         </div>
       </div>
 
@@ -40,9 +43,31 @@
     </div>
   </div>
 
+  <!-- Login Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="selectCliente" class="form-label">Selecione o cliente a ser logado</label>
+              <select id="selectCliente" class="form-select" required></select>
+            </div>
+            <button type="submit" class="btn btn-success">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer id="main-footer"></footer>
 
   <script type="module" src="/js/loadPage.js"></script>
+  <script type="module" src="/paginas/login/js/login.js"></script>
 </body>
 
 </html>
