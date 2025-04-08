@@ -1,5 +1,61 @@
 import { enviarPedido } from "/js/api/apiPedido.js";
 import { retornarCarrinho } from "/js/api/apiCarrinho.js";
+import { retornarEnderecos } from "/js/api/apiEndereco.js";
+import { retornarCartoesCredito } from "/js/api/apiCartaoCredito.js";
+
+const enderecos = await retornarEnderecos(
+    localStorage.getItem('idcliente')
+);
+
+function calcularFrete(cep) {
+    let hash = 0;
+
+    for (let i = 0; i < cep.length; i++) {
+        hash += cep.charCodeAt(i);
+    }
+
+    // Deixa o valor entre 5 e 20
+    return (hash % (20 - 5 + 1)) + 5;
+}
+
+enderecos.forEach(endereco => {
+    const valorFrete = calcularFrete(endereco.cep);
+
+    const option = document.createElement('option');
+    option.value = JSON.stringify(
+        { id: endereco.id, valorFrete: valorFrete }
+    );
+
+    option.textContent = `${endereco.fraseCurta} - Frete: R$ ${valorFrete},00`;
+
+    document.getElementById('endereco').append(option);
+});
+
+const cartoesCredito = await retornarCartoesCredito(
+    localStorage.getItem('idcliente')
+);
+
+Array.from(document.getElementsByClassName('select-cartao'))
+    .forEach(select => {
+        cartoesCredito.forEach(cartao => {
+            const option = document.createElement('option');
+            option.value = cartao.id;
+            option.textContent = `${cartao.numero}: (${cartao.bandeiraCartao})`;
+
+            select.append(option);
+        });
+    });
+
+cartoesCredito.forEach(cartao => {
+    const div = document.createElement('div');
+
+    div.className = 'd-flex mb-3';
+    div.innerHTML = `
+        
+    `;
+
+    document.getElementById('cartoes').append(div);
+});
 
 const carrinho = await retornarCarrinho();
 
@@ -7,10 +63,10 @@ carrinho.itensCarrinho.forEach(item => {
     const tr = document.createElement('tr');
 
     tr.innerHTML = `
-            <td>${item.nome}</td>
-            <td>${item.quantidade}</td>
-            <td>R$ ${item.preco}</td>
-            <td>R$ ${item.preco * item.quantidade}</td>
+        <td>${item.nome}</td>
+        <td>${item.quantidade}</td>
+        <td>R$ ${item.preco}</td>
+        <td>R$ ${item.preco * item.quantidade}</td>
     `;
 
     document.querySelector('#tabela-produtos tbody')
@@ -22,7 +78,6 @@ let valorTotal = 0;
 carrinho.itensCarrinho.forEach(item => {
     valorTotal += item.preco * item.quantidade;
 });
-
 
 const info = document.createElement('div');
 info.innerHTML = `
@@ -46,20 +101,32 @@ carrinho.itensCarrinho.forEach(item => {
     )
 });
 
-const idCliente = localStorage.getItem('idcliente');
+document.getElementById('me-clica').onclick = () => {
 
-document.getElementById('me-clica').onclick = () => enviarPedido(
-    {
-        "idCliente": idCliente,
-        "itensPedido": itensPedido,
-        //"cartoesCredito": [
-        //    {"id": 5, "valorPago:": 30}
-        //],
-        //"cupomPromocional": {
-        //   "id": 2
-        //},
-        //"cupons": [
-        //    {"id": 5 }, {"id": 1 }
-        //]
-    }
-);
+    const idCliente = localStorage.getItem('idcliente');
+    const endereco = JSON.parse(document.getElementById('endereco').value);
+
+    const idEndereco = endereco.id;
+    const valorFrete = endereco.valorFrete;
+
+    enviarPedido(
+        {
+            idCliente: idCliente,
+            itensPedido: itensPedido,
+            enderecoEntrega: {
+                id: idEndereco
+            },
+            valorFrete: valorFrete,
+            //"cartoesCreditoPedido": [
+            //    {"id": 5, "valorPago:": 30}
+            //],
+            //"cupomPromocional": {
+            //   "id": 2
+            //},
+            //"cupons": [
+            //    {"id": 5 }, {"id": 1 }
+            //]
+        }
+    
+    )
+};
