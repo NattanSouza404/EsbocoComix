@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.model.carrinho.Carrinho;
-import com.esboco_comix.model.carrinho.ItemCarrinho;
+import com.esboco_comix.model.entidades.ItemPedido;
 
 public class CarrinhoController extends AbstractController {
 
@@ -30,7 +30,7 @@ public class CarrinhoController extends AbstractController {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            ItemCarrinho itemCarrinho = jsonToObject(req, ItemCarrinho.class); 
+            ItemPedido itemCarrinho = jsonToObject(req, ItemPedido.class); 
             Carrinho carrinho = retornarCarrinhoSessao(req);
 
             carrinho.adicionar(itemCarrinho);
@@ -51,7 +51,7 @@ public class CarrinhoController extends AbstractController {
 
         try {
             Carrinho carrinho = retornarCarrinhoSessao(req);
-            ItemCarrinho itemCarrinho = jsonToObject(req, ItemCarrinho.class); 
+            ItemPedido itemCarrinho = jsonToObject(req, ItemPedido.class); 
 
             carrinho.atualizarQuantidade(itemCarrinho);
 
@@ -70,7 +70,7 @@ public class CarrinhoController extends AbstractController {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             Carrinho carrinho = retornarCarrinhoSessao(req);
-            ItemCarrinho itemCarrinho = jsonToObject(req, ItemCarrinho.class);
+            ItemPedido itemCarrinho = jsonToObject(req, ItemPedido.class);
 
             carrinho.deletar(itemCarrinho);
 
