@@ -26,12 +26,18 @@ pedidos.forEach(pedido => {
     div.innerHTML = `
         <div class="p-3 mb-3 text-white rounded secao-superior">
             <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h5>Código #${pedido.id}</h5>
-                    <p>Valor total: R$ ${valorTotal}</p>
-                    <p>Status: ${pedido.status}</p>
-                    <p>Data: ${pedido.data}</p>
+                <h5 class="mb-3">Código: <span class="fw-normal">#${pedido.id}</span></h5>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p class="mb-1"><strong>Valor total:</strong> R$ ${valorTotal}</p>
+                        <p class="mb-1"><strong>Frete:</strong> R$ ${pedido.valorFrete}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-1"><strong>Endereço:</strong> ${pedido.enderecoEntrega.id}</p>
+                        <p class="mb-1"><strong>Status:</strong> ${pedido.status}</p>
+                    </div>
                 </div>
+                <p class="mt-2"><strong>Data:</strong> ${pedido.data}</p>
                 <div>
                     <button class="btn btn-light btn-sm botao-troca">Pedir Troca</button>
                 </div>
