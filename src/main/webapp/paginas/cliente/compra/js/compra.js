@@ -46,9 +46,11 @@ carrinho.itensCarrinho.forEach(item => {
     )
 });
 
+const idCliente = localStorage.getItem('idcliente');
+
 document.getElementById('me-clica').onclick = () => enviarPedido(
     {
-        "idCliente": 45,
+        "idCliente": idCliente,
         "itensPedido": itensPedido,
         //"cartoesCredito": [
         //    {"id": 5, "valorPago:": 30}

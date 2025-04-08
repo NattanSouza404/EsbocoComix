@@ -10,33 +10,11 @@ import { ModalAlterarEndereco } from "./modais/modalAlterarEndereco.js";
 import { ModalAlterarDadosPessoais } from "./modais/modalAlterarDadosPessoais.js";
 import { ModalAlterarSenha } from "./modais/modalAlterarSenha.js";
 
+const idCliente = localStorage.getItem('idcliente');
 
-let promessaCliente = (async () => {
-    const uRLSearchParams = new URLSearchParams(window.location.search);
-    const cliente = await retornarCliente(
-        uRLSearchParams.get('idcliente')
-    );
-    console.log("Variavel global inicializada cliente:", cliente);
-    return cliente;
-})();
-
-let promessaEnderecos = (async () => {
-    const uRLSearchParams = new URLSearchParams(window.location.search);
-    const enderecos = await retornarEnderecos(
-        uRLSearchParams.get('idcliente')
-    );
-    console.log("Variavel global inicializada endereços:", enderecos);
-    return enderecos;
-})();
-
-let promessaCartoesCredito = (async () => {
-    const uRLSearchParams = new URLSearchParams(window.location.search);
-    const cartoesCredito = await retornarCartoesCredito(
-        uRLSearchParams.get('idcliente')
-    );
-    console.log("Variavel global inicializada cartões de crédito:", cartoesCredito);
-    return cartoesCredito;
-})();
+const cliente = await retornarCliente(idCliente);
+const enderecos = await retornarEnderecos(idCliente);
+const cartoesCredito = await retornarCartoesCredito(idCliente);
 
 const dadosEndereco = document.getElementById('dados-endereco');
 const dadosCartaoCredito = document.getElementById('dados-cartao-credito');
@@ -51,47 +29,34 @@ document.body.append(modalAlterarSenha);
 document.body.append(modalAlterarCartaoCredito)
 document.body.append(modalAlterarEndereco);
 
-promessaCliente.then((cliente) => {
-    modalAlterarDadosPessoais.atualizar(cliente);
-    modalAlterarSenha.atualizar(cliente);
+modalAlterarDadosPessoais.atualizar(cliente);
+modalAlterarSenha.atualizar(cliente);
 
-    const containerDadosPessoais = document.getElementById('dados-pessoais');
-    containerDadosPessoais.append(new DadosPessoaisConta(cliente));
-});
+const containerDadosPessoais = document.getElementById('dados-pessoais');
+containerDadosPessoais.append(new DadosPessoaisConta(cliente));
 
-promessaEnderecos.then((enderecos) => {
-    let contador = 1;
-    enderecos.forEach(
-        (e) => {
-            const endereco = new DadosEnderecoConta(e);
-            endereco.titulo.textContent = contador+"º Endereço";
-            dadosEndereco.append(endereco);
-            contador++;
-        }
-    )
-});
+let contador = 1;
+enderecos.forEach(
+    (e) => {
+        const endereco = new DadosEnderecoConta(e);
+        endereco.titulo.textContent = contador+"º Endereço";
+        dadosEndereco.append(endereco);
+        contador++;
+    }
+)
 
-promessaCartoesCredito.then((cartoes) => {
-    let contador = 1;
-    cartoes.forEach(
-        (e) => {
-            const cartao = new DadosCartaoCreditoConta(e);
-            cartao.titulo.textContent = contador+"º Cartão";
-            dadosCartaoCredito.append(cartao);
-            contador++;
-        }
-    )
-});
+contador = 1;
+cartoesCredito.forEach(
+    (e) => {
+        const cartao = new DadosCartaoCreditoConta(e);
+        cartao.titulo.textContent = contador+"º Cartão";
+        dadosCartaoCredito.append(cartao);
+        contador++;
+    }
+)
 
-promessaCliente.then((cliente) => {
-    promessaEnderecos.then((enderecos) => {
-        modalAlterarEndereco.atualizar(enderecos, cliente);
-    });
-
-    promessaCartoesCredito.then((cartoes) => {
-        modalAlterarCartaoCredito.atualizar(cartoes, cliente);
-    });
-})
+modalAlterarEndereco.atualizar(enderecos, cliente);
+modalAlterarCartaoCredito.atualizar(cartoesCredito, cliente);
 
 const navegacaoConta = new NavegacaoConta();
 const opcoesConta = document.getElementById('opcoes-conta');

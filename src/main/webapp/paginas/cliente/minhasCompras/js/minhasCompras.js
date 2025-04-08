@@ -5,7 +5,7 @@ const pedirTroca = () => {
     modal.show();
 };
 
-const idCliente = 45;
+const idCliente = localStorage.getItem('idcliente');
 
 const pedidos = await retornarPedidos(idCliente);
 

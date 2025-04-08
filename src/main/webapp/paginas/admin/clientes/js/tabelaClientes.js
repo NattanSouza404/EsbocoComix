@@ -72,7 +72,7 @@ export default class TabelaClientes extends HTMLTableElement {
             btn = document.createElement('button');
             btn.textContent = "Editar";
             btn.type = "button";
-            btn.onclick = () => window.location.replace('/conta?idcliente='+c.id);
+            btn.onclick = () => this.editarCliente(c);
             td.append(btn);
         
             btn = document.createElement('button');
@@ -89,6 +89,11 @@ export default class TabelaClientes extends HTMLTableElement {
             this.tBody.append(tableRow); 
         });
         
+    }
+
+    editarCliente(c){
+       localStorage.setItem('idcliente', c.id);
+       window.location.replace('/conta');
     }
 }
 
