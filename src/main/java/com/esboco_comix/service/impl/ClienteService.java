@@ -1,13 +1,13 @@
-package com.esboco_comix.service;
+package com.esboco_comix.service.impl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.esboco_comix.controller.pedidos.PedidoAlterarSenha;
-import com.esboco_comix.controller.pedidos.PedidoCadastrarCliente;
-import com.esboco_comix.dao.impl.ClienteDAO;
+import com.esboco_comix.dao.impl.cliente.ClienteDAO;
+import com.esboco_comix.dto.PedidoAlterarSenha;
+import com.esboco_comix.dto.PedidoCadastrarCliente;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;

@@ -1,8 +1,8 @@
-package com.esboco_comix.service;
+package com.esboco_comix.service.impl;
 
 import java.util.List;
 
-import com.esboco_comix.dao.impl.EnderecoDAO;
+import com.esboco_comix.dao.impl.endereco.EnderecoDAO;
 import com.esboco_comix.model.entidades.Endereco;
 
 public class EnderecoService {

@@ -1,9 +1,9 @@
-package com.esboco_comix.service;
+package com.esboco_comix.service.impl;
 
 import java.util.List;
 
-import com.esboco_comix.dao.impl.ItemPedidoDAO;
-import com.esboco_comix.dao.impl.PedidoDAO;
+import com.esboco_comix.dao.impl.pedido.ItemPedidoDAO;
+import com.esboco_comix.dao.impl.pedido.PedidoDAO;
 import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
 

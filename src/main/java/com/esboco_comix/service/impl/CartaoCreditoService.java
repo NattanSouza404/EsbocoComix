@@ -1,8 +1,8 @@
-package com.esboco_comix.service;
+package com.esboco_comix.service.impl;
 
 import java.util.List;
 
-import com.esboco_comix.dao.impl.CartaoCreditoDAO;
+import com.esboco_comix.dao.impl.cartao_credito.CartaoCreditoDAO;
 import com.esboco_comix.model.entidades.CartaoCredito;
 
 public class CartaoCreditoService {

@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 
-import com.esboco_comix.controller.CarrinhoController;
-import com.esboco_comix.controller.CartaoCreditoController;
-import com.esboco_comix.controller.ClienteController;
-import com.esboco_comix.controller.EnderecoController;
-import com.esboco_comix.controller.QuadrinhoController;
-import com.esboco_comix.controller.PedidoController;
+import com.esboco_comix.controller.impl.CarrinhoController;
+import com.esboco_comix.controller.impl.CartaoCreditoController;
+import com.esboco_comix.controller.impl.ClienteController;
+import com.esboco_comix.controller.impl.EnderecoController;
+import com.esboco_comix.controller.impl.PedidoController;
+import com.esboco_comix.controller.impl.QuadrinhoController;
 
 import lombok.Getter;
 

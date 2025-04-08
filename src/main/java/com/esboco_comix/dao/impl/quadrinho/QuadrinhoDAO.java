@@ -1,4 +1,4 @@
-package com.esboco_comix.dao.impl;
+package com.esboco_comix.dao.impl.quadrinho;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

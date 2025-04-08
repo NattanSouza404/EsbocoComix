@@ -3,7 +3,7 @@ package com.esboco_comix.webapp.paginas.cadastrar_cliente;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import com.esboco_comix.controller.pedidos.PedidoCadastrarCliente;
+import com.esboco_comix.dto.PedidoCadastrarCliente;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.webapp.utils.FormElement;
 

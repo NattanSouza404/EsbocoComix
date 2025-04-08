@@ -3,7 +3,7 @@ package com.esboco_comix.controller.utils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.esboco_comix.model.Carrinho;
+import com.esboco_comix.model.carrinho.Carrinho;
 
 public class SessionManager {
 

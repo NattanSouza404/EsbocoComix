@@ -1,6 +1,6 @@
-package com.esboco_comix.service;
+package com.esboco_comix.service.impl;
 
-import com.esboco_comix.dao.impl.QuadrinhoDAO;
+import com.esboco_comix.dao.impl.quadrinho.QuadrinhoDAO;
 import com.esboco_comix.model.entidades.Quadrinho;
 
 public class QuadrinhoService {

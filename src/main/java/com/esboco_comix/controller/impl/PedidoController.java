@@ -1,4 +1,4 @@
-package com.esboco_comix.controller;
+package com.esboco_comix.controller.impl;
 
 import java.io.IOException;
 
@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.esboco_comix.controller.utils.AbstractController;
-import com.esboco_comix.model.Carrinho;
+import com.esboco_comix.model.carrinho.Carrinho;
 import com.esboco_comix.model.entidades.Pedido;
-import com.esboco_comix.service.PedidoService;
+import com.esboco_comix.service.impl.PedidoService;
 
 public class PedidoController extends AbstractController {
 

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.esboco_comix.model.Carrinho;
+import com.esboco_comix.model.carrinho.Carrinho;
 
 public abstract class AbstractController extends HttpServlet {
     

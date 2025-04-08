@@ -1,4 +1,4 @@
-package com.esboco_comix.model;
+package com.esboco_comix.model.carrinho;
 
 import lombok.Getter;
 import lombok.Setter;

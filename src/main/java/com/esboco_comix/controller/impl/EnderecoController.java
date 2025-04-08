@@ -1,4 +1,4 @@
-package com.esboco_comix.controller;
+package com.esboco_comix.controller.impl;
 
 import java.io.IOException;
 
@@ -7,15 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.esboco_comix.controller.utils.AbstractController;
-import com.esboco_comix.model.entidades.CartaoCredito;
-import com.esboco_comix.service.CartaoCreditoService;
+import com.esboco_comix.model.entidades.Endereco;
+import com.esboco_comix.service.impl.EnderecoService;
 
-public class CartaoCreditoController extends AbstractController {
+public class EnderecoController extends AbstractController {
 
-    private CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
+    private static EnderecoService enderecoService = new EnderecoService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
         try {
 
             String parametroIdCliente = req.getParameter("idcliente");
@@ -25,7 +26,7 @@ public class CartaoCreditoController extends AbstractController {
 
                 retornarRespostaJson(
                     resp,
-                    cartaoCreditoService.consultarByIDCliente(id),
+                    enderecoService.consultarByIDCliente(id),
                     HttpServletResponse.SC_OK
                 );
                 return;
@@ -34,17 +35,30 @@ public class CartaoCreditoController extends AbstractController {
         } catch (Exception e) {
             estourarErro(resp, e);
         }
+    }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            Endereco enderecoToAdd = jsonToObject(req, Endereco.class);
+            retornarRespostaJson(
+                resp,
+                enderecoService.inserir(enderecoToAdd),
+                HttpServletResponse.SC_CREATED
+            );
+        } catch (Exception e) {
+            estourarErro(resp, e);
+        }
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
         try {
-            CartaoCredito cartaoCredito = jsonToObject(req, CartaoCredito.class);
+            Endereco enderecoToUpdate = jsonToObject(req, Endereco.class);
             retornarRespostaJson(
                 resp,
-                cartaoCreditoService.atualizar(cartaoCredito),
+                enderecoService.atualizar(enderecoToUpdate),
                 HttpServletResponse.SC_OK
             );
         } catch (Exception e) {
@@ -55,8 +69,8 @@ public class CartaoCreditoController extends AbstractController {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            CartaoCredito cartaoCredito = jsonToObject(req, CartaoCredito.class);
-            cartaoCreditoService.deletar(cartaoCredito);
+            Endereco endereco = jsonToObject(req, Endereco.class);
+            enderecoService.deletar(endereco);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         } catch (Exception e) {
             estourarErro(resp, e);

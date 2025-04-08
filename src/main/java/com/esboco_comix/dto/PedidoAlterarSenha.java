@@ -1,4 +1,4 @@
-package com.esboco_comix.controller.pedidos;
+package com.esboco_comix.dto;
 
 import com.esboco_comix.model.entidades.Cliente;
 

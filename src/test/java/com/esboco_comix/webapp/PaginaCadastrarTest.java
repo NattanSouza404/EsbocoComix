@@ -2,7 +2,7 @@ package com.esboco_comix.webapp;
 
 import org.junit.Test;
 
-import com.esboco_comix.controller.pedidos.PedidoCadastrarCliente;
+import com.esboco_comix.dto.PedidoCadastrarCliente;
 import com.esboco_comix.webapp.paginas.cadastrar_cliente.PaginaCadastrar;
 import com.esboco_comix.webapp.teste_factories.ClienteTesteFactory;
 import com.esboco_comix.webapp.teste_factories.EnderecoTesteFactory;

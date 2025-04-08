@@ -1,4 +1,4 @@
-package com.esboco_comix.model;
+package com.esboco_comix.model.carrinho;
 
 import java.util.ArrayList;
 import java.util.List;

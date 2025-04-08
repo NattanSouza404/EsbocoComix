@@ -1,4 +1,4 @@
-package com.esboco_comix.controller;
+package com.esboco_comix.controller.impl;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -9,12 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.esboco_comix.controller.pedidos.PedidoAlterarSenha;
-import com.esboco_comix.controller.pedidos.PedidoCadastrarCliente;
 import com.esboco_comix.controller.utils.AbstractController;
-
+import com.esboco_comix.dto.PedidoAlterarSenha;
+import com.esboco_comix.dto.PedidoCadastrarCliente;
 import com.esboco_comix.model.entidades.Cliente;
-import com.esboco_comix.service.ClienteService;
+import com.esboco_comix.service.impl.ClienteService;
 
 public class ClienteController extends AbstractController {
     private static ClienteService clienteService = new ClienteService();

@@ -1,4 +1,4 @@
-package com.esboco_comix.controller;
+package com.esboco_comix.controller.impl;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.esboco_comix.controller.utils.AbstractController;
-import com.esboco_comix.service.QuadrinhoService;
+import com.esboco_comix.service.impl.QuadrinhoService;
 
 public class QuadrinhoController extends AbstractController {
 

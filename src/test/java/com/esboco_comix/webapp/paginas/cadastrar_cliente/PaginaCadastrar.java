@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.esboco_comix.controller.pedidos.PedidoCadastrarCliente;
+import com.esboco_comix.dto.PedidoCadastrarCliente;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.webapp.webdriver.DriverTeste;
 
