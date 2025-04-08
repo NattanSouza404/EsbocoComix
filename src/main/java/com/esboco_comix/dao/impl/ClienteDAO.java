@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.dao.IDAO;
-import com.esboco_comix.dao.impl.utils.DAOUtil;
+import com.esboco_comix.dao.utils.DAOUtil;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Telefone;
 import com.esboco_comix.utils.ConexaoFactory;

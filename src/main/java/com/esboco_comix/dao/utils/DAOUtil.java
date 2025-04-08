@@ -1,4 +1,4 @@
-package com.esboco_comix.dao.impl.utils;
+package com.esboco_comix.dao.utils;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
