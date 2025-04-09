@@ -1,0 +1,11 @@
+@import url(/css/style.css);
+
+.celula-produto {
+    justify-items: center;
+    padding: 8px;
+}
+
+.celula-produto img {
+    height: 80px;
+    align-self: center;
+}

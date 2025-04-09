@@ -7,7 +7,10 @@ carrinho.itensCarrinho.forEach(item => {
     const linha = document.createElement('tr');
 
     linha.innerHTML = `
-        <td>${item.nome}</td>
+        <td class="celula-produto">
+            <p class="text-center">${item.nome}</p> 
+            <img class="img-carrinho" src="${item.urlImagem}">
+        </td>
         <td class="product-price">R$ ${item.preco}</td>
         <td class="product-quantity">
             <input name="quantidade" value=${item.quantidade}>

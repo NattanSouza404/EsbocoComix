@@ -67,7 +67,8 @@ window.adicionarItem = () => {
             idQuadrinho: quadrinho.id,
             preco: quadrinho.preco,
             quantidade: document.getElementsByName('quantidade')[0].value,
-            nome: quadrinho.titulo
+            nome: quadrinho.titulo,
+            urlImagem: quadrinho.urlImagem
         } 
     )
 
