@@ -1,3 +1,4 @@
+import { calcularValorTotal } from "/js/script.js";
 import { atualizarItemCarrinho, deletarItemCarrinho } from "/js/api/apiCarrinho.js";
 import { retornarCarrinho } from "/js/api/apiCarrinho.js";
 
@@ -47,10 +48,6 @@ carrinho.itensCarrinho.forEach(item => {
         .append(linha);
 });
 
-let valorTotal = 0;
-
-carrinho.itensCarrinho.forEach(item => {
-    valorTotal += item.preco * item.quantidade;
-});
+let valorTotal = calcularValorTotal(carrinho);
 
 document.getElementById('total-carrinho').textContent = `R$ ${valorTotal}`;

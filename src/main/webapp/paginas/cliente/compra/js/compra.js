@@ -2,21 +2,11 @@ import { enviarPedido } from "/js/api/apiPedido.js";
 import { retornarCarrinho } from "/js/api/apiCarrinho.js";
 import { retornarEnderecos } from "/js/api/apiEndereco.js";
 import { retornarCartoesCredito } from "/js/api/apiCartaoCredito.js";
+import { calcularValorTotal, calcularFrete } from "/js/script.js";
 
 const enderecos = await retornarEnderecos(
     localStorage.getItem('idcliente')
 );
-
-function calcularFrete(cep) {
-    let hash = 0;
-
-    for (let i = 0; i < cep.length; i++) {
-        hash += cep.charCodeAt(i);
-    }
-
-    // Deixa o valor entre 5 e 20
-    return (hash % (20 - 5 + 1)) + 5;
-}
 
 enderecos.forEach(endereco => {
     const valorFrete = calcularFrete(endereco.cep);
@@ -46,17 +36,6 @@ Array.from(document.getElementsByClassName('select-cartao'))
         });
     });
 
-cartoesCredito.forEach(cartao => {
-    const div = document.createElement('div');
-
-    div.className = 'd-flex mb-3';
-    div.innerHTML = `
-        
-    `;
-
-    document.getElementById('cartoes').append(div);
-});
-
 const carrinho = await retornarCarrinho();
 
 carrinho.itensCarrinho.forEach(item => {
@@ -73,19 +52,18 @@ carrinho.itensCarrinho.forEach(item => {
         .append(tr);
 });
 
-let valorTotal = 0;
+let valorTotal = calcularValorTotal(carrinho);
 
-carrinho.itensCarrinho.forEach(item => {
-    valorTotal += item.preco * item.quantidade;
-});
+const endereco2 = JSON.parse(document.getElementById('endereco').value);
+const valorFrete2 = endereco2.valorFrete;
 
 const info = document.createElement('div');
 info.innerHTML = `
     <p>Valor dos Produtos: R$ ${valorTotal}</p>
-    <p>Frete: R$ 10,00</p>
+    <p>Frete: R$ ${valorFrete2},00</p>
     <p>Desconto do Cupom: R$ 0,00</p>
     <hr>
-    <p>Total Restante: R$ 70,00</p>
+    <p>Total Restante: R$ ${parseFloat(valorTotal) + parseFloat(valorFrete2)},00</p>
 `
 
 document.getElementById('resumo').append(info);
