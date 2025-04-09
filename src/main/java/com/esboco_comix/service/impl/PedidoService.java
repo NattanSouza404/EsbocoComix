@@ -15,7 +15,7 @@ public class PedidoService {
 
     public Pedido inserir(Pedido pedido, Carrinho carrinho) throws Exception {
         pedido.setStatus("APROVADA");
-        pedido.setItensPedido(carrinho.getItensCarrinho());
+        pedido.setItensPedido(carrinho.getItensPedido());
         
         Pedido pedidoInserido = pedidoDAO.inserir(pedido);
 

@@ -9,8 +9,4 @@ public class ItemPedido {
     private int idPedido;
     private int idQuadrinho;
     private int quantidade;
-
-    // TODO retirar futuramente
-    private double preco;
-    private String nome;
 }
