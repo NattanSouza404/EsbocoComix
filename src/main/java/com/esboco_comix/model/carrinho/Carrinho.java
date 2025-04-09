@@ -13,7 +13,11 @@ import lombok.Setter;
 public class Carrinho {
     private List<ItemPedido> itensCarrinho = new ArrayList<>();
 
-    public void adicionar(ItemPedido itemCarrinho) {
+    public void adicionar(ItemPedido itemCarrinho) throws Exception {
+        if (itemCarrinho.getQuantidade() < 1){
+            throw new Exception("Item do carrinho deve ter quantidade maior que 0!");
+        }
+
         itensCarrinho.add((itemCarrinho));
     }
 
@@ -26,7 +30,11 @@ public class Carrinho {
         }
     }
 
-    public void atualizarQuantidade(ItemPedido item) {
+    public void atualizarQuantidade(ItemPedido item) throws Exception {
+        if (item.getQuantidade() < 1){
+            throw new Exception("Item do carrinho deve ter quantidade maior que 0!");
+        }
+
         for (int i = 0; i < itensCarrinho.size(); i++) {
             if (itensCarrinho.get(i).getIdQuadrinho() == item.getIdQuadrinho()){
                 itensCarrinho.get(i).setQuantidade(item.getQuantidade());
