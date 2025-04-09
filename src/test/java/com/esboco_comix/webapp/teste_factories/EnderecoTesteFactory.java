@@ -15,8 +15,8 @@ public class EnderecoTesteFactory {
         e.setFraseCurta("Casa");
         
         e.setLogradouro("Limoeiro");
-        e.setTipoLogradouro(TipoLogradouro.RUA.getNome());
-        e.setTipoResidencial(TipoResidencial.CASA.getNome());
+        e.setTipoLogradouro(TipoLogradouro.RUA);
+        e.setTipoResidencial(TipoResidencial.CASA);
         e.setIsCobranca(true);
         e.setIsEntrega(true);
         e.setIsResidencial(true);

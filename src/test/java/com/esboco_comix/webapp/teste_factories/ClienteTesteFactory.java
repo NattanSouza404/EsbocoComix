@@ -15,12 +15,12 @@ public class ClienteTesteFactory {
         cliente.setCpf("11122233344");
         cliente.setEmail("jorge@email.com");
         cliente.setDataNascimento(LocalDate.of(2013, 2, 3));
-        cliente.setGenero(Genero.MASCULINO.getNome());
+        cliente.setGenero(Genero.MASCULINO);
 
         Telefone t = new Telefone();
         t.setDdd("11");
         t.setNumero("99999999");
-        t.setTipo(TipoTelefone.CELULAR.getNome());
+        t.setTipo(TipoTelefone.CELULAR);
         cliente.setTelefone(t);
 
         return cliente;

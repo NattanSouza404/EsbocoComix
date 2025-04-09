@@ -26,8 +26,8 @@ public class FormEndereco {
         form.preencherInput("cep", e.getCep());
         form.preencherInput("observacoes", e.getObservacoes());
         form.preencherInput("logradouro", e.getLogradouro());
-        form.preencherInput("tipoLogradouro", e.getTipoLogradouro());
-        form.preencherInput("tipoResidencial", e.getTipoResidencial());
+        form.preencherInput("tipoLogradouro", e.getTipoLogradouro().name());
+        form.preencherInput("tipoResidencial", e.getTipoResidencial().name());
         form.preencherInput("numero", e.getNumero());
     }
 

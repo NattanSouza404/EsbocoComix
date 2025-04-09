@@ -23,7 +23,7 @@ public class FormDadosPessoais {
         form.preencherInput("nome", c.getNome());
         form.preencherInput("cpf", c.getCpf());
         form.preencherInput("email", c.getEmail());
-        form.preencherInput("tipoTelefone", c.getTelefone().getTipo());
+        form.preencherInput("tipoTelefone", c.getTelefone().getTipo().name());
         form.preencherInput("ddd", c.getTelefone().getDdd());
         form.preencherInput("numero", c.getTelefone().getNumero());
         form.preencherInputData("dataNascimento", c.getDataNascimento(), driver);
