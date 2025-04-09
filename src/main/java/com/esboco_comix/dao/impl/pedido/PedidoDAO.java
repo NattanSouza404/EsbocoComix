@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.model.entidades.Pedido;
-import com.esboco_comix.model.entidades.StatusPedido;
+import com.esboco_comix.model.enuns.StatusPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class PedidoDAO {

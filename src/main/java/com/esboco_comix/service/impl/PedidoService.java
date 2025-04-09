@@ -7,7 +7,7 @@ import com.esboco_comix.dao.impl.pedido.PedidoDAO;
 import com.esboco_comix.model.carrinho.Carrinho;
 import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
-import com.esboco_comix.model.entidades.StatusPedido;
+import com.esboco_comix.model.enuns.StatusPedido;
 
 public class PedidoService {
 

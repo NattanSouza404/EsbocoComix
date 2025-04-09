@@ -3,6 +3,8 @@ package com.esboco_comix.model.entidades;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.model.enuns.StatusPedido;
+
 import lombok.Getter;
 import lombok.Setter;
 
