@@ -24,8 +24,10 @@ export class FormularioDadosPessoais extends HTMLFormElement {
         select.name = 'genero';
         this.secaoDadosPessoais.append(select);
 
-        GENEROS.forEach(genero => {
-            select.append(criarElemento('option', genero));
+        GENEROS.forEach(({ nome, valor }) => {
+            let option = criarElemento('option', nome);
+            option.value = valor;
+            select.append(option);
         });
 
         this.secaoDadosPessoais.append(criarElemento('label', "Data de Nascimento"));
@@ -52,8 +54,10 @@ export class FormularioDadosPessoais extends HTMLFormElement {
         select.name = "tipoTelefone";
         this.secaoTelefone.append(select);
 
-        TIPOS_TELEFONE.forEach(genero => {
-            select.append(criarElemento('option', genero));
+        TIPOS_TELEFONE.forEach(({ nome, valor }) => {
+            let option = criarElemento('option', nome);
+            option.value = valor;
+            select.append(option);
         });
 
         this.secaoTelefone.append(criarElemento('label', "DDD"));

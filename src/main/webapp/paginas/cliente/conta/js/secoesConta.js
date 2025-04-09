@@ -1,4 +1,3 @@
-import { getNomeBandeiraCartao } from "/js/dados.js";
 import { criarElemento } from "/js/script.js";
 
 export class DadosPessoaisConta extends HTMLElement {
@@ -104,7 +103,7 @@ export class DadosCartaoCreditoConta extends HTMLElement {
             "Número Cartão":        cartaoCredito.numero,
             "Código de Segurança":  cartaoCredito.codigoSeguranca,
             "Nome impresso":        cartaoCredito.nomeImpresso,
-            "Bandeira do Cartão":   getNomeBandeiraCartao(cartaoCredito.bandeiraCartao),
+            "Bandeira do Cartão":   cartaoCredito.bandeiraCartao,
             "Preferencial":         cartaoCredito.isPreferencial,
         };
 

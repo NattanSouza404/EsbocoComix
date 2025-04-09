@@ -35,8 +35,9 @@ export class FormularioEndereco extends HTMLFormElement {
         select.name = "tipoResidencial";
         mainDiv.append(select);
 
-        TIPOS_RESIDENCIAL.forEach((tipoResidencial) => {
-            let option = criarElemento('option', tipoResidencial);
+        TIPOS_RESIDENCIAL.forEach(({ nome, valor }) => {
+            let option = criarElemento('option', nome);
+            option.value = valor;
             select.append(option);
         });
 
@@ -50,12 +51,13 @@ export class FormularioEndereco extends HTMLFormElement {
         select = document.createElement('select');
         select.name = "tipoLogradouro";
         mainDiv.append(select);
-    
-        TIPOS_LOGRADOURO.forEach((tipoLogradouro) => {
-            let option = criarElemento('option', tipoLogradouro);
+
+        TIPOS_LOGRADOURO.forEach(({ nome, valor }) => {
+            let option = criarElemento('option', nome);
+            option.value = valor;
             select.append(option);
         });
-
+    
         mainDiv.append(criarElemento('label', 'CEP'));
         mainDiv.append(criarElementoInput('cep', '00000-000'));
 
