@@ -1,5 +1,6 @@
 import { retornarQuadrinho } from "/js/api/apiQuadrinho.js";
 import { adicionarItemAoCarrinho } from "/js/api/apiCarrinho.js";
+import { formatarPreco } from "/js/script.js";
 
 const uRLSearchParams = new URLSearchParams(window.location.search);
 const quadrinho = await retornarQuadrinho(uRLSearchParams.get('id'));
@@ -13,7 +14,7 @@ document.getElementById('secao-imagem').append(img);
 
 document.getElementById('header-produto').innerHTML = `
     <h1 class="card-title">${quadrinho.titulo}</h1>
-    <p class="card-text fs-4 text-success">${formatarPreco(quadrinho.preco)}}</p>
+    <p class="card-text fs-4 text-success">${formatarPreco(quadrinho.preco)}</p>
 `
 
 const corpoTabela = document.createElement('tbody');
