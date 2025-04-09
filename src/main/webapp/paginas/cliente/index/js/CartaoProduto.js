@@ -1,3 +1,5 @@
+import { formatarPreco } from "/js/script.js";
+
 export class CartaoProduto extends HTMLDivElement {
     constructor(quadrinho){
         super();
@@ -10,7 +12,7 @@ export class CartaoProduto extends HTMLDivElement {
               <div class="card-body text-center">
                 <h5 class="card-title">${quadrinho.titulo}</h5>
                 <p class="card-text">${quadrinho.autor}</p>
-                <p class="price text-success fw-bold">R$ ${quadrinho.preco}</p>
+                <p class="price text-success fw-bold">${formatarPreco(quadrinho.preco)}</p>
                 <a href="/anuncio?id=${quadrinho.id}" class="btn btn-warning text-white">Comprar</a>
               </div>
             </div>

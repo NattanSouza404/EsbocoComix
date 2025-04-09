@@ -1,3 +1,4 @@
+import { formatarPreco } from "/js/script.js";
 import { retornarPedidos } from "/js/api/apiPedido.js";
 
 const pedirTroca = () => {
@@ -29,8 +30,8 @@ pedidos.forEach(pedido => {
                 <h5 class="mb-3">Código: <span class="fw-normal">#${pedido.id}</span></h5>
                 <div class="row">
                     <div class="col-sm-6">
-                        <p class="mb-1"><strong>Valor total:</strong> R$ ${valorTotal}</p>
-                        <p class="mb-1"><strong>Frete:</strong> R$ ${pedido.valorFrete}</p>
+                        <p class="mb-1"><strong>Valor total:</strong> ${formatarPreco(valorTotal)}</p>
+                        <p class="mb-1"><strong>Frete:</strong> ${formatarPreco(pedido.valorFrete)}</p>
                     </div>
                     <div class="col-sm-6">
                         <p class="mb-1"><strong>Endereço:</strong> ${pedido.enderecoEntrega.id}</p>

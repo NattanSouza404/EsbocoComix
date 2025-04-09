@@ -1,4 +1,4 @@
-import { calcularValorTotal } from "/js/script.js";
+import { calcularValorTotal, formatarPreco } from "/js/script.js";
 import { atualizarItemCarrinho, deletarItemCarrinho } from "/js/api/apiCarrinho.js";
 import { retornarCarrinho } from "/js/api/apiCarrinho.js";
 
@@ -12,11 +12,11 @@ carrinho.itensCarrinho.forEach(item => {
             <p class="text-center">${item.nome}</p> 
             <img class="img-carrinho" src="${item.urlImagem}">
         </td>
-        <td class="product-price">R$ ${item.preco}</td>
+        <td class="product-price">${formatarPreco(item.preco)}</td>
         <td class="product-quantity">
             <input name="quantidade" value=${item.quantidade}>
         </td>
-        <td class="product-total">R$ ${item.quantidade * item.preco}</td>
+        <td class="product-total">${formatarPreco(item.quantidade * item.preco)}</td>
     `;
 
     const td = document.createElement('td');
@@ -50,4 +50,4 @@ carrinho.itensCarrinho.forEach(item => {
 
 let valorTotal = calcularValorTotal(carrinho);
 
-document.getElementById('total-carrinho').textContent = `R$ ${valorTotal}`;
+document.getElementById('total-carrinho').textContent = `${formatarPreco(valorTotal)}`;

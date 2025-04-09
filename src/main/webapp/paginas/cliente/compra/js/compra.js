@@ -2,7 +2,7 @@ import { enviarPedido } from "/js/api/apiPedido.js";
 import { retornarCarrinho } from "/js/api/apiCarrinho.js";
 import { retornarEnderecos } from "/js/api/apiEndereco.js";
 import { retornarCartoesCredito } from "/js/api/apiCartaoCredito.js";
-import { calcularValorTotal, calcularFrete } from "/js/script.js";
+import { calcularValorTotal, calcularFrete, formatarPreco } from "/js/script.js";
 
 const enderecos = await retornarEnderecos(
     localStorage.getItem('idcliente')
@@ -16,7 +16,7 @@ enderecos.forEach(endereco => {
         { id: endereco.id, valorFrete: valorFrete }
     );
 
-    option.textContent = `${endereco.fraseCurta} - Frete: R$ ${valorFrete},00`;
+    option.textContent = `${endereco.fraseCurta} - Frete: ${formatarPreco(valorFrete)}`;
 
     document.getElementById('endereco').append(option);
 });
@@ -44,8 +44,8 @@ carrinho.itensCarrinho.forEach(item => {
     tr.innerHTML = `
         <td>${item.nome}</td>
         <td>${item.quantidade}</td>
-        <td>R$ ${item.preco}</td>
-        <td>R$ ${item.preco * item.quantidade}</td>
+        <td>${formatarPreco(item.preco)}</td>
+        <td>${formatarPreco(item.preco * item.quantidade)}</td>
     `;
 
     document.querySelector('#tabela-produtos tbody')
@@ -59,11 +59,11 @@ const valorFrete2 = endereco2.valorFrete;
 
 const info = document.createElement('div');
 info.innerHTML = `
-    <p>Valor dos Produtos: R$ ${valorTotal}</p>
-    <p>Frete: R$ ${valorFrete2},00</p>
+    <p>Valor dos Produtos: ${formatarPreco(valorTotal)}</p>
+    <p>Frete: ${formatarPreco(valorFrete2)}</p>
     <p>Desconto do Cupom: R$ 0,00</p>
     <hr>
-    <p>Total Restante: R$ ${parseFloat(valorTotal) + parseFloat(valorFrete2)},00</p>
+    <p>Total Restante: ${formatarPreco(valorTotal + valorFrete2)}</p>
 `
 
 document.getElementById('resumo').append(info);

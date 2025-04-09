@@ -126,3 +126,12 @@ export function calcularFrete(cep) {
     // Deixa o valor entre 5 e 20
     return (hash % (20 - 5 + 1)) + 5;
 }
+
+export function formatarPreco(preco) {
+    return preco.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}

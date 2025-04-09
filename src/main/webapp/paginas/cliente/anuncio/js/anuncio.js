@@ -13,7 +13,7 @@ document.getElementById('secao-imagem').append(img);
 
 document.getElementById('header-produto').innerHTML = `
     <h1 class="card-title">${quadrinho.titulo}</h1>
-    <p class="card-text fs-4 text-success">R$ ${quadrinho.preco}</p>
+    <p class="card-text fs-4 text-success">${formatarPreco(quadrinho.preco)}}</p>
 `
 
 const corpoTabela = document.createElement('tbody');
