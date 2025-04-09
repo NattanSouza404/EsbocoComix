@@ -11,7 +11,7 @@ import lombok.Setter;
 public class Pedido {
     private int id;
     private int idCliente;
-    private String status;
+    private StatusPedido status;
     private Double valorFrete;
 
     private List<ItemPedido> itensPedido = new ArrayList<>();

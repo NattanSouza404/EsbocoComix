@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.model.entidades.Pedido;
+import com.esboco_comix.model.entidades.StatusPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class PedidoDAO {
@@ -26,7 +27,7 @@ public class PedidoDAO {
 
         try {
             pst.setInt(1, e.getIdCliente());
-            pst.setString(2, e.getStatus());
+            pst.setString(2, e.getStatus().name());
             pst.setInt(3, e.getEnderecoEntrega().getId());
             pst.setDouble(4, e.getValorFrete());
 
@@ -110,7 +111,7 @@ public class PedidoDAO {
         Pedido pedido = new Pedido();
         pedido.setId(rs.getInt("ped_id"));
         pedido.setIdCliente(rs.getInt("ped_cli_id"));
-        pedido.setStatus(rs.getString("ped_status"));
+        pedido.setStatus(StatusPedido.valueOf(rs.getString("ped_status")));
         
         Endereco endereco = new Endereco();
         endereco.setId(rs.getInt("ped_end_id"));

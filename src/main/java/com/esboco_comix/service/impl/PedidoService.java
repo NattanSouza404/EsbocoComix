@@ -7,6 +7,7 @@ import com.esboco_comix.dao.impl.pedido.PedidoDAO;
 import com.esboco_comix.model.carrinho.Carrinho;
 import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
+import com.esboco_comix.model.entidades.StatusPedido;
 
 public class PedidoService {
 
@@ -14,7 +15,7 @@ public class PedidoService {
     private ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
 
     public Pedido inserir(Pedido pedido, Carrinho carrinho) throws Exception {
-        pedido.setStatus("APROVADA");
+        pedido.setStatus(StatusPedido.APROVADO);
         pedido.setItensPedido(carrinho.getItensPedido());
         
         Pedido pedidoInserido = pedidoDAO.inserir(pedido);
