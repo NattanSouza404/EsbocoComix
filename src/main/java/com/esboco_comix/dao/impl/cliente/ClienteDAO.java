@@ -12,6 +12,8 @@ import java.util.List;
 import com.esboco_comix.dao.utils.DAOUtil;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Telefone;
+import com.esboco_comix.model.enuns.Genero;
+import com.esboco_comix.model.enuns.TipoTelefone;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class ClienteDAO {
@@ -30,14 +32,14 @@ public class ClienteDAO {
 
         try {
             pst.setString(1, c.getNome());
-            pst.setString(2, c.getGenero());
+            pst.setString(2, c.getGenero().name());
             pst.setDate(3, Date.valueOf(c.getDataNascimento()));
             pst.setString(4, c.getCpf());
             pst.setString(5, c.getEmail());
             pst.setString(6, c.getHashSenha());
             pst.setString(7, c.getSaltSenha());
             pst.setInt(8, c.getRanking());
-            pst.setString(9, c.getTelefone().getTipo());
+            pst.setString(9, c.getTelefone().getTipo().name());
             pst.setString(10, c.getTelefone().getDdd());
             pst.setString(11, c.getTelefone().getNumero());
             pst.setBoolean(12, true);
@@ -96,7 +98,6 @@ public class ClienteDAO {
         }
     }
 
-
     public Cliente consultarByID(int id) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
@@ -122,7 +123,6 @@ public class ClienteDAO {
         }   
     }
 
-
     public Cliente atualizar(Cliente c) throws Exception {
         Connection conn = ConexaoFactory.getConexao(); 
     
@@ -135,11 +135,11 @@ public class ClienteDAO {
     
         try {
             pst.setString(1, c.getNome());
-            pst.setString(2, c.getGenero());
+            pst.setString(2, c.getGenero().name());
             pst.setDate(3, Date.valueOf(c.getDataNascimento()));
             pst.setString(4, c.getCpf());
             pst.setString(5, c.getEmail());
-            pst.setString(6, c.getTelefone().getTipo());
+            pst.setString(6, c.getTelefone().getTipo().name());
             pst.setString(7, c.getTelefone().getDdd());
             pst.setString(8, c.getTelefone().getNumero());
             pst.setInt(9, c.getId());
@@ -321,7 +321,7 @@ public class ClienteDAO {
         Cliente c = new Cliente();  
         c.setId(rs.getInt("cli_id"));
         c.setNome(rs.getString("cli_nome"));
-        c.setGenero(rs.getString("cli_genero"));
+        c.setGenero(Genero.valueOf(rs.getString("cli_genero")));
         c.setDataNascimento(rs.getDate("cli_dt_nascimento").toLocalDate());
         c.setCpf(rs.getString("cli_cpf"));
         c.setEmail(rs.getString("cli_email"));
@@ -329,7 +329,7 @@ public class ClienteDAO {
         c.setIsAtivo(rs.getBoolean("cli_is_ativo"));
 
         Telefone telefone = new Telefone();
-        telefone.setTipo(rs.getString("cli_tel_tipo"));
+        telefone.setTipo(TipoTelefone.valueOf(rs.getString("cli_tel_tipo")));
         telefone.setDdd(rs.getString("cli_tel_ddd"));
         telefone.setNumero(rs.getString("cli_tel_numero"));
         c.setTelefone(telefone);

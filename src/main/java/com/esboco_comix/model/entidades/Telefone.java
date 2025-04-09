@@ -1,5 +1,7 @@
 package com.esboco_comix.model.entidades;
 
+import com.esboco_comix.model.enuns.TipoTelefone;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,5 +10,5 @@ import lombok.Setter;
 public class Telefone {
     private String ddd;
     private String numero;
-    private String tipo;
+    private TipoTelefone tipo;
 }

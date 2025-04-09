@@ -3,6 +3,7 @@ package com.esboco_comix.model.entidades;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.esboco_comix.model.enuns.Genero;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -13,7 +14,7 @@ import lombok.Setter;
 public class Cliente {
     private Integer id;
     private String  nome;
-    private String  genero;
+    private Genero  genero;
     private LocalDate dataNascimento;
     private String  cpf;
     private String  email;

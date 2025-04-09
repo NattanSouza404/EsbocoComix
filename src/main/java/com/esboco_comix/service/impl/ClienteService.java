@@ -11,6 +11,7 @@ import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
+import com.esboco_comix.model.enuns.Genero;
 import com.esboco_comix.service.validador.CartaoCreditoValidador;
 import com.esboco_comix.service.validador.ClienteValidador;
 import com.esboco_comix.service.validador.EnderecoValidador;
@@ -84,7 +85,7 @@ public class ClienteService {
 
         String genero = parametrosFiltro.get("genero");
         if (genero != null && genero.length() > 0){
-            filtro.setGenero(genero);
+            filtro.setGenero(Genero.valueOf(genero));
         }
 
         String email = parametrosFiltro.get("email");

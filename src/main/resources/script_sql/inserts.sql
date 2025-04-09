@@ -1,8 +1,8 @@
-INSERT INTO bandeiras_cartao_credito (bcc_nome) VALUES ('Mastercard');
-INSERT INTO bandeiras_cartao_credito (bcc_nome) VALUES ('Visa');
-INSERT INTO bandeiras_cartao_credito (bcc_nome) VALUES ('American Express');
-INSERT INTO bandeiras_cartao_credito (bcc_nome) VALUES ('Hipercard');
-INSERT INTO bandeiras_cartao_credito (bcc_nome) VALUES ('Elo');
+INSERT INTO bandeiras_cartao_credito (bcc_nome) VALUES ('MASTERCARD');
+INSERT INTO bandeiras_cartao_credito (bcc_nome) VALUES ('VISA');
+INSERT INTO bandeiras_cartao_credito (bcc_nome) VALUES ('AMERICAN_EXPRESS');
+INSERT INTO bandeiras_cartao_credito (bcc_nome) VALUES ('HIPERCARD');
+INSERT INTO bandeiras_cartao_credito (bcc_nome) VALUES ('ELO');
 
 INSERT INTO quadrinhos(
 	qua_preco, qua_autor, qua_ano, qua_titulo, qua_editora, qua_edicao, qua_isbn, qua_numero_paginas, qua_sinopse, qua_altura_cm, qua_largura_cm, qua_profundidade, qua_peso_gramas, qua_codigo_barras, qua_is_ativo, qua_gpr_id, qua_url_imagem)

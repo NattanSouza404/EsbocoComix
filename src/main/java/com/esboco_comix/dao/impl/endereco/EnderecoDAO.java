@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.model.entidades.Endereco;
+import com.esboco_comix.model.enuns.TipoLogradouro;
+import com.esboco_comix.model.enuns.TipoResidencial;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class EnderecoDAO {
@@ -28,8 +30,8 @@ public class EnderecoDAO {
         try {
             pst.setString(1, e.getFraseCurta());
             pst.setString(2, e.getLogradouro());
-            pst.setString(3, e.getTipoLogradouro());
-            pst.setString(4, e.getTipoResidencial());
+            pst.setString(3, e.getTipoLogradouro().name());
+            pst.setString(4, e.getTipoResidencial().name());
             pst.setString(5, e.getNumero());
             pst.setString(6, e.getBairro());
             pst.setString(7, e.getCep());
@@ -101,8 +103,8 @@ public class EnderecoDAO {
         try {
             pst.setString(1, e.getFraseCurta());
             pst.setString(2, e.getLogradouro());
-            pst.setString(3, e.getTipoLogradouro());
-            pst.setString(4, e.getTipoResidencial());
+            pst.setString(3, e.getTipoLogradouro().name());
+            pst.setString(4, e.getTipoResidencial().name());
             pst.setString(5, e.getNumero());
             pst.setString(6, e.getBairro());
             pst.setString(7, e.getCep());
@@ -189,8 +191,8 @@ public class EnderecoDAO {
         e.setId(rs.getInt("end_id"));
         e.setFraseCurta(rs.getString("end_frase_curta"));
         e.setLogradouro(rs.getString("end_logradouro"));
-        e.setTipoLogradouro(rs.getString("end_tipo_logradouro"));
-        e.setTipoResidencial(rs.getString("end_tipo_residencial"));
+        e.setTipoLogradouro(TipoLogradouro.valueOf(rs.getString("end_tipo_logradouro")));
+        e.setTipoResidencial(TipoResidencial.valueOf(rs.getString("end_tipo_residencial")));
         e.setNumero(rs.getString("end_numero"));
         e.setBairro(rs.getString("end_bairro"));
         e.setCep(rs.getString("end_cep"));

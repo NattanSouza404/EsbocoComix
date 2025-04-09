@@ -1,5 +1,7 @@
 package com.esboco_comix.model.entidades;
 
+import com.esboco_comix.model.enuns.TipoLogradouro;
+import com.esboco_comix.model.enuns.TipoResidencial;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -11,8 +13,8 @@ public class Endereco {
     private int id;
     private String fraseCurta;
     private String logradouro;
-    private String tipoLogradouro;
-    private String tipoResidencial;
+    private TipoLogradouro tipoLogradouro;
+    private TipoResidencial tipoResidencial;
     private String numero;
     private String bairro;
     private String cep;

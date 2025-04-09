@@ -4,13 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum Genero {
-    MASCULINO("Masculino"),
-    FEMININO("Feminino"),
-    OUTRO("Outro");
-    
-    private String nome;
-        
-    Genero(String nome) {
-        this.nome = nome;
-    }
+    MASCULINO,
+    FEMININO,
+    OUTRO;
 }

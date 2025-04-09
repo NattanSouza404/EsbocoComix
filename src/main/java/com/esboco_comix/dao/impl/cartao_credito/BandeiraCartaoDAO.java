@@ -24,7 +24,7 @@ public class BandeiraCartaoDAO {
             if (!rs.next()) {
                 throw new Exception("Bandeira de cartão de crédito não encontrada.");
             }
-            return BandeiraCartao.getBandeiraByNome(rs.getString("bcc_nome"));
+            return BandeiraCartao.valueOf(rs.getString("bcc_nome"));
         } catch (Exception e){
             throw e;
         } finally {
