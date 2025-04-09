@@ -44,12 +44,9 @@ public class PedidoController extends AbstractController {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             Pedido pedido = jsonToObject(req, Pedido.class);
-
             Carrinho carrinho = retornarCarrinhoSessao(req);
-            pedido.setItensPedido(carrinho.getItensCarrinho());
-
-            Pedido pedidoInserido = pedidoService.inserir(pedido);
-            carrinho.esvaziar();
+            
+            Pedido pedidoInserido = pedidoService.inserir(pedido, carrinho);
 
             retornarRespostaJson(
                 resp,

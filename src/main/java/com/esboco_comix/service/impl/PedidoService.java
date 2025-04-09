@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.esboco_comix.dao.impl.pedido.ItemPedidoDAO;
 import com.esboco_comix.dao.impl.pedido.PedidoDAO;
+import com.esboco_comix.model.carrinho.Carrinho;
 import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
 
@@ -12,8 +13,10 @@ public class PedidoService {
     private PedidoDAO pedidoDAO = new PedidoDAO();
     private ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
 
-    public Pedido inserir(Pedido pedido) throws Exception {
+    public Pedido inserir(Pedido pedido, Carrinho carrinho) throws Exception {
         pedido.setStatus("APROVADA");
+        pedido.setItensPedido(carrinho.getItensCarrinho());
+        
         Pedido pedidoInserido = pedidoDAO.inserir(pedido);
 
         for (ItemPedido item : pedido.getItensPedido()) {
@@ -21,6 +24,8 @@ public class PedidoService {
             ItemPedido itemInserido = itemPedidoDAO.inserir(item);
             pedidoInserido.getItensPedido().add(itemInserido);
         }
+
+        carrinho.esvaziar();
 
         return pedidoInserido;
     }
