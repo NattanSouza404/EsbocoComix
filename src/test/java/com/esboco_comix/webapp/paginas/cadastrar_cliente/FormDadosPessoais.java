@@ -3,7 +3,7 @@ package com.esboco_comix.webapp.paginas.cadastrar_cliente;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import com.esboco_comix.dto.PedidoCadastrarCliente;
+import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.webapp.utils.FormElement;
 
@@ -17,7 +17,7 @@ public class FormDadosPessoais {
         this.form = new FormElement(webDriver.findElement(By.id("cadastrar-dados-pessoais")));
     }
 
-    public void preencherCliente(PedidoCadastrarCliente pedido) throws InterruptedException {
+    public void preencherCliente(CadastrarClienteDTO pedido) throws InterruptedException {
         Cliente c = pedido.getCliente();
 
         form.preencherInput("nome", c.getNome());

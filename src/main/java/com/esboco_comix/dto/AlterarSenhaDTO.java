@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PedidoAlterarSenha {
+public class AlterarSenhaDTO {
     private Cliente cliente;
     private String senhaAntiga;
     private String senhaNova;

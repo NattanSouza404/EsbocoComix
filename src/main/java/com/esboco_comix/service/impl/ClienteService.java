@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.esboco_comix.dao.impl.cliente.ClienteDAO;
-import com.esboco_comix.dto.PedidoAlterarSenha;
-import com.esboco_comix.dto.PedidoCadastrarCliente;
+import com.esboco_comix.dto.AlterarSenhaDTO;
+import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
@@ -25,7 +25,7 @@ public class ClienteService {
     private EnderecoValidador enderecoValidador = new EnderecoValidador();
     private CartaoCreditoValidador cartaoCreditoValidador = new CartaoCreditoValidador();
 
-    public PedidoCadastrarCliente inserir(PedidoCadastrarCliente pedido) throws Exception {
+    public CadastrarClienteDTO inserir(CadastrarClienteDTO pedido) throws Exception {
         clienteValidador.validarCadastro(pedido);
         for (Endereco e : pedido.getEnderecos()) {
             enderecoValidador.validar(e);
@@ -53,7 +53,7 @@ public class ClienteService {
             cartoesCredito.add(cartaoCreditoService.inserir(c));
         }
 
-        PedidoCadastrarCliente pedidoInserido = new PedidoCadastrarCliente();
+        CadastrarClienteDTO pedidoInserido = new CadastrarClienteDTO();
         pedidoInserido.setCliente(clienteInserido);
         pedidoInserido.setEnderecos(enderecosInseridos);
         pedidoInserido.setCartoesCredito(cartoesCredito);
@@ -113,7 +113,7 @@ public class ClienteService {
         return clienteDAO.atualizar(c);
     }
 
-    public Cliente atualizarSenha(PedidoAlterarSenha pedido) throws Exception {
+    public Cliente atualizarSenha(AlterarSenhaDTO pedido) throws Exception {
         Cliente c = pedido.getCliente();
         Cliente clienteInserido = clienteDAO.consultarHashSaltPorID(c.getId());
 

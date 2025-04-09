@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.esboco_comix.controller.utils.AbstractController;
-import com.esboco_comix.dto.PedidoAlterarSenha;
-import com.esboco_comix.dto.PedidoCadastrarCliente;
+import com.esboco_comix.dto.AlterarSenhaDTO;
+import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.service.impl.ClienteService;
 
@@ -67,7 +67,7 @@ public class ClienteController extends AbstractController {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            PedidoCadastrarCliente pedidoCadastrarCliente = jsonToObject(req, PedidoCadastrarCliente.class);
+            CadastrarClienteDTO pedidoCadastrarCliente = jsonToObject(req, CadastrarClienteDTO.class);
 
             retornarRespostaJson(
                 resp,
@@ -93,7 +93,7 @@ public class ClienteController extends AbstractController {
                     break;
 
                 case "atualizarsenha":
-                    PedidoAlterarSenha pedido = jsonToObject(req, PedidoAlterarSenha.class);
+                    AlterarSenhaDTO pedido = jsonToObject(req, AlterarSenhaDTO.class);
                     objetoResposta = clienteService.atualizarSenha(pedido);
                     break;
 

@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PedidoCadastrarCliente {
+public class CadastrarClienteDTO {
     private Cliente cliente;
     private List<Endereco> enderecos;
     private List<CartaoCredito> cartoesCredito;
