@@ -1,8 +1,8 @@
 export class Modal {
-    constructor(id, title, content) {
+    constructor(id, title, contentElement) {
         this.id = id;
         this.title = title;
-        this.content = content;
+        this.contentElement = contentElement;
         this.modalElement = null;
         this.createModal();
     }
@@ -16,9 +16,7 @@ export class Modal {
                             <h5 id="${this.id}-label" class="modal-title">${this.title}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            ${this.content}
-                        </div>
+                        <div class="modal-body"></div>
                         <div class="modal-footer"></div>
                     </div>
                 </div>
@@ -27,6 +25,10 @@ export class Modal {
 
         document.body.insertAdjacentHTML('beforeend', modalHTML);
         this.modalElement = document.getElementById(this.id);
+
+        this.modalElement.getElementsByClassName('modal-body')[0].append(
+            this.contentElement
+        );
     }
 
     show() {

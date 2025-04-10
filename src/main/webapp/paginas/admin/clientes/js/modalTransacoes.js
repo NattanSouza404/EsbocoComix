@@ -1,11 +1,19 @@
-import { Modal } from "../../../../js/componentes/modal.js";
+import { Modal } from "/js/componentes/modal.js";
 
-export const modalTransacoes = new Modal('modal-consultar-transacoes', "Transações", 
-    `
-        <div id="consultar-transacoes">
-            <h3>Transações de Maurício da Silva</h3>
-  
-            <table>
+export default class ModalTransacoes extends Modal {
+    constructor(){
+        super('modal-consultar-transacoes', "Transações", ConteudoModalTransacoes());
+    }
+}
+
+function ConteudoModalTransacoes(){
+    const conteudoModal = document.createElement('div');
+    conteudoModal.id = 'consultar-transacoes';
+
+    conteudoModal.innerHTML = `
+        <h3>Transações de Maurício da Silva</h3>
+
+        <table>
             <tbody><tr>
                 <th>ID</th>
                 <th>Data e hora</th>
@@ -24,7 +32,9 @@ export const modalTransacoes = new Modal('modal-consultar-transacoes', "Transaç
                 <td>R$ 40,00</td>
                 <td>Entregue</td>
             </tr>
-            </tbody></table>
+            </tbody>
+        </table>
+    `;
 
-        </div>
-      `)
+    return conteudoModal;
+}

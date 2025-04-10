@@ -1,12 +1,12 @@
 import { atualizarCliente } from "/js/api/apiCliente.js";
-import { modalTransacoes } from "./modalTransacoes.js";
+import ModalTransacoes from "./modalTransacoes.js";
 
 export default class TabelaClientes extends HTMLTableElement {
     
     constructor(){
         super();
 
-        this.modalTransacoes = modalTransacoes;
+        this.modalTransacoes = new ModalTransacoes();
 
         this.colunas = [
             'Nome', "Gênero", "Data de Nascimento", "CPF", "E-mail", "Ranking", "Status", "Operações"
