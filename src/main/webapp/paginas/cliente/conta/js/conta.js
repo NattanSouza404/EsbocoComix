@@ -66,9 +66,17 @@ const botoes = [
     { id: 'btn-editar-cadastro', texto: "Editar Cadastro", acao: () => modalAlterarDadosPessoais.toggleDisplay() },
     { id: 'btn-alterar-senha', texto: 'Alterar senha', acao: () => modalAlterarSenha.toggleDisplay() },
     { id: 'btn-alterar-endereco', texto: 'Editar endereço', acao: () => modalAlterarEndereco.toggleDisplay() },
-    { id: 'btn-alterar-cartao-credito', texto: 'Editar Cartão de Crédito', acao: () => modalAlterarCartaoCredito.toggleDisplay() }
 ];
 
 botoes.forEach(({ id, texto, acao }) => {
     navegacaoConta.adicionarBotao(id, texto, acao);
 });
+
+navegacaoConta.append(
+    document.createRange().createContextualFragment(
+        `<button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
+            data-bs-target="#modal-alterar-cartao-credito">
+            Editar Cartão de crédito
+        </button>`)
+    .firstChild
+);

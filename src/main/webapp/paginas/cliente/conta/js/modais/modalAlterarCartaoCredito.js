@@ -2,53 +2,34 @@ import { criarElemento, montarCartaoCreditoPorForm } from "/js/script.js";
 import { atualizarCartaoCredito, deletarCartaoCredito } from "/js/api/apiCartaoCredito.js";;
 import { SecaoFormsCartaoCredito } from "/js/componentes/secaoCartaoCredito.js";
 import { BotaoFechar } from "/js/componentes/botoes/BotaoFechar.js";
-import { Modal } from "/js/componentes/componentes.js";
+import { Modal } from "/js/componentes/modal.js";
 
 export class ModalAlterarCartaoCredito extends Modal {
-    constructor(cartoesCreditos){
-        super();
+    constructor(){
+        const conteudoModal = ConteudoModalAlterarCartaoCredito();
 
-        this.id = 'modal-alterar-cartao-credito';
-        this.cartoesCreditos = cartoesCreditos;
+        super('modal-alterar-cartao-credito', "Alterar Cartão Crédito", conteudoModal);
 
-        this.conteudoModal = this.initConteudoModal();
-
-        this.append(this.conteudoModal);
-    }
-
-    initConteudoModal(){
-        const conteudoModal = document.createElement('div');
-        conteudoModal.className = "conteudo-modal";
-
-        conteudoModal.append(new BotaoFechar(
-            () => this.toggleDisplay()
-        ));
-
-        this.secaoForm = new SecaoFormsCartaoCredito();
-        this.secaoForm.id = 'alterar-cartao-credito';
-
-        this.secaoForm.buttonAddCartao.onclick = () => {
-            const form = this.secaoForm.adicionarCartaoCredito();
+        conteudoModal.buttonAddCartao.onclick = () => {
+            const form = conteudoModal.adicionarCartaoCredito();
             form.botaoRemover.onclick = () => {
-                this.enviarPedidoDeletar(form);
+                this.enviarDelecao(form);
             };
             form.botaoRemover.type = 'button';
             form.append(this.criarBotaoAtualizar(form));
         }
 
-        conteudoModal.append(this.secaoForm);
-
-        return conteudoModal;
+        this.conteudoModal = conteudoModal;   
     }
 
     atualizar(cartoes, cliente){
         this.cartoes = cartoes;
         this.cliente = cliente;
 
-        this.secaoForm.container.textContent = '';
+        this.conteudoModal.container.textContent = '';
 
         cartoes.forEach(e => {
-            const form = this.secaoForm.adicionarCartaoCredito();
+            const form = this.conteudoModal.adicionarCartaoCredito();
             form.botaoRemover.onclick = () => {
                 this.enviarDelecao(form);
             };
@@ -88,3 +69,9 @@ export class ModalAlterarCartaoCredito extends Modal {
 }
 
 customElements.define('alterar-cartao-credito', ModalAlterarCartaoCredito);
+
+function ConteudoModalAlterarCartaoCredito() {
+    const secaoForm = new SecaoFormsCartaoCredito();
+    secaoForm.id = 'alterar-cartao-credito';
+    return secaoForm;
+}
