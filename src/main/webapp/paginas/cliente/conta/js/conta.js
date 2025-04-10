@@ -26,7 +26,6 @@ const modalAlterarSenha = new ModalAlterarSenha();
 
 document.body.append(modalAlterarDadosPessoais);
 document.body.append(modalAlterarSenha);
-document.body.append(modalAlterarCartaoCredito)
 document.body.append(modalAlterarEndereco);
 
 modalAlterarDadosPessoais.atualizar(cliente);
