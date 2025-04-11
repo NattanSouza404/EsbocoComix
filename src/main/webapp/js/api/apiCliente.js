@@ -75,10 +75,46 @@ export async function atualizarCliente(cliente, opcao){
             return;
         }
 
+        cliente.id = localStorage.getItem('idcliente');
+
         let url = "/cliente";
         if (opcao != null){
             url += "?opcao="+opcao;
         }
+
+        const option = {
+            method: 'PUT',
+            headers:{'Content-Type': 'application/json'},
+            body: JSON.stringify(cliente)
+        }
+
+        const result = await fetch(url, option);
+
+        if (result.status === 200) {
+            alert('Atualizado com sucesso!');
+        }
+        else {
+            const resposta = await result.json();
+            alert("Erro ao atualizar: "+resposta.erro);
+        }
+
+    } catch (error){
+        console.error('Erro ao atualizar:', error);
+        document.getElementById("resultados").textContent = "Erro ao atualizar.";
+    }
+    
+}
+
+export async function atualizarSenha(cliente){
+
+    try {
+        const confirmacaoUsuario = confirm("Deseja mesmo atualizar ?"); 
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+
+        let url = "/cliente?opcao=atualizarsenha";
 
         const option = {
             method: 'PUT',
