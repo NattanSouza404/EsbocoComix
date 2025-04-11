@@ -17,6 +17,8 @@ export async function atualizarEndereco(endereco){
             return;
         }
 
+        endereco.idCliente = localStorage.getItem('idcliente');
+
         let url = "/endereco";
 
         const option = {

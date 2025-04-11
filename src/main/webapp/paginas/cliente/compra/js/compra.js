@@ -94,15 +94,19 @@ document.getElementById('me-clica').onclick = () => {
                 id: idEndereco
             },
             valorFrete: valorFrete,
-            //"cartoesCreditoPedido": [
-            //    {"id": 5, "valorPago:": 30}
-            //],
-            //"cupomPromocional": {
-            //   "id": 2
-            //},
-            //"cupons": [
-            //    {"id": 5 }, {"id": 1 }
-            //]
+
+            cartoesCreditoPedido: [
+                { id: 5, valorPago: 30}
+            ],
+
+            cuponsPedido: [
+                { idCupom: 1 }
+            ],
+
+            cartoesCreditoPedido: [
+                { idCartaoCredito: 30, valor: 30 }
+            ],
+            
         }
     
     )

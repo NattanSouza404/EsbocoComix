@@ -1,7 +1,6 @@
 export class CartaoDadosPessoais extends HTMLElement {
-    constructor(cliente) {
+    constructor() {
         super();
-        this.atualizar(cliente);
     }
 
     async atualizar(cliente) {

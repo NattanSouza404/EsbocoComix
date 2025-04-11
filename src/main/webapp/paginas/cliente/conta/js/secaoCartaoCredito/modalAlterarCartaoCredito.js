@@ -1,7 +1,6 @@
 import { criarElemento, montarCartaoCreditoPorForm } from "/js/script.js";
 import { atualizarCartaoCredito, deletarCartaoCredito } from "/js/api/apiCartaoCredito.js";;
 import { SecaoFormsCartaoCredito } from "/js/componentes/secaoCartaoCredito.js";
-import { BotaoFechar } from "/js/componentes/botoes/BotaoFechar.js";
 import { Modal } from "/js/componentes/modal.js";
 
 export class ModalAlterarCartaoCredito extends Modal {
@@ -22,9 +21,8 @@ export class ModalAlterarCartaoCredito extends Modal {
         this.conteudoModal = conteudoModal;   
     }
 
-    atualizar(cartoes, cliente){
+    atualizar(cartoes){
         this.cartoes = cartoes;
-        this.cliente = cliente;
 
         this.conteudoModal.container.textContent = '';
 
@@ -45,7 +43,6 @@ export class ModalAlterarCartaoCredito extends Modal {
         if (form.cartaoCredito != null){
             cartao.id = form.cartaoCredito.id;
         }
-        cartao.idCliente = this.cliente.id;
         atualizarCartaoCredito(cartao);
     }
 

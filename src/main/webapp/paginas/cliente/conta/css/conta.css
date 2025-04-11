@@ -1,29 +1,32 @@
 @import url(/css/style.css);
 @import url(/css/crud_cliente.css);
 
-#opcoes-conta {
-    justify-self: center;
-
-    margin-top: 1%;
-}
-
-#conta {
+#container-conta {
     display: flex;
     margin-top: 1%;
 
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
-#dados-pessoais, .endereco-conta, .cartao-credito-conta {
+#nav-lateral {
+    width: 20%;
+    max-width: 20%;
+}
+
+#nav-lateral img {
+    height: 40px;
+}
+
+#container-conta section {
     padding: 16px;
     justify-self: center;
 
     border: solid 1px black;
     border-radius: 2%;
-}
 
-#dados-pessoais {
-    width: 25%;
+    width: 60%;
+    max-width: 60%;
+
     height: fit-content;
 }
 
@@ -40,6 +43,3 @@
     justify-self: center;
 }
 
-#nav-lateral img {
-    height: 40px;
-}
