@@ -1,14 +1,15 @@
-import { DadosPessoaisConta, DadosEnderecoConta, DadosCartaoCreditoConta } from "./secoesConta.js";
-
 import { retornarCliente } from "/js/api/apiCliente.js";
 import { retornarEnderecos } from "/js/api/apiEndereco.js";
 import { retornarCartoesCredito } from "/js/api/apiCartaoCredito.js";
 
-import { NavegacaoConta } from "./navegacaoConta.js";
-import { ModalAlterarCartaoCredito } from "./modais/modalAlterarCartaoCredito.js";
-import { ModalAlterarEndereco } from "./modais/modalAlterarEndereco.js";
-import { ModalAlterarDadosPessoais } from "./modais/modalAlterarDadosPessoais.js";
-import { ModalAlterarSenha } from "./modais/modalAlterarSenha.js";
+import { ModalAlterarCartaoCredito } from "./secaoCartaoCredito/modalAlterarCartaoCredito.js";
+import { ModalAlterarEndereco } from "./secaoEndereco/modalAlterarEndereco.js";
+import { ModalAlterarDadosPessoais } from "./secaoDadosPessoais/modalAlterarDadosPessoais.js";
+import { ModalAlterarSenha } from "./secaoDadosPessoais/modalAlterarSenha.js";
+import { toggleDisplay } from "/js/script.js";
+import { CartaoDadosPessoais } from "./secaoDadosPessoais/CartaoDadosPessoais.js";
+import { CartaoEndereco } from "./secaoEndereco/CartaoEndereco.js";
+import { CartaoCartaoCredito } from "./secaoCartaoCredito/CartaoCartaoCredito.js";
 
 const idCliente = localStorage.getItem('idcliente');
 
@@ -32,12 +33,12 @@ modalAlterarDadosPessoais.atualizar(cliente);
 modalAlterarSenha.atualizar(cliente);
 
 const containerDadosPessoais = document.getElementById('dados-pessoais');
-containerDadosPessoais.append(new DadosPessoaisConta(cliente));
+containerDadosPessoais.append(new CartaoDadosPessoais(cliente));
 
 let contador = 1;
 enderecos.forEach(
     (e) => {
-        const endereco = new DadosEnderecoConta(e);
+        const endereco = new CartaoEndereco(e);
         endereco.titulo.textContent = contador+"º Endereço";
         dadosEndereco.append(endereco);
         contador++;
@@ -47,7 +48,7 @@ enderecos.forEach(
 contador = 1;
 cartoesCredito.forEach(
     (e) => {
-        const cartao = new DadosCartaoCreditoConta(e);
+        const cartao = new CartaoCartaoCredito(e);
         cartao.titulo.textContent = contador+"º Cartão";
         dadosCartaoCredito.append(cartao);
         contador++;
@@ -57,25 +58,4 @@ cartoesCredito.forEach(
 modalAlterarEndereco.atualizar(enderecos, cliente);
 modalAlterarCartaoCredito.atualizar(cartoesCredito, cliente);
 
-const navegacaoConta = new NavegacaoConta();
-const opcoesConta = document.getElementById('opcoes-conta');
-opcoesConta.append(navegacaoConta);
-
-const botoes = [
-    { id: 'btn-editar-cadastro', texto: "Editar Cadastro", acao: () => modalAlterarDadosPessoais.toggleDisplay() },
-    { id: 'btn-alterar-senha', texto: 'Alterar senha', acao: () => modalAlterarSenha.toggleDisplay() },
-    { id: 'btn-alterar-endereco', texto: 'Editar endereço', acao: () => modalAlterarEndereco.toggleDisplay() },
-];
-
-botoes.forEach(({ id, texto, acao }) => {
-    navegacaoConta.adicionarBotao(id, texto, acao);
-});
-
-navegacaoConta.append(
-    document.createRange().createContextualFragment(
-        `<button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
-            data-bs-target="#modal-alterar-cartao-credito">
-            Editar Cartão de crédito
-        </button>`)
-    .firstChild
-);
+window.toggleDisplay = toggleDisplay;

@@ -39,3 +39,7 @@
 #dados-endereco h3, #dados-cartao-credito h3 {
     justify-self: center;
 }
+
+#nav-lateral img {
+    height: 40px;
+}

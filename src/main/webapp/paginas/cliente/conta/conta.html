@@ -1,18 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/paginas/cliente/conta/css/conta.css">
 </head>
+
 <body>
 
     <nav id="main-nav"></nav>
 
-    <div id="opcoes-conta"></div>
+    <div id="opcoes-conta">
+        <nav>
+            <button id="btn-editar-cadastro" onclick="toggleDisplay('modal-alterar-dados-pessoais')">Editar Cadastro</button>
+            <button id="btn-alterar-senha" onclick="toggleDisplay('modal-alterar-senha')">Alterar senha</button>
+            <button id="btn-alterar-endereco" onclick="toggleDisplay('modal-alterar-endereco')">Editar endereço</button>
+            <button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
+                data-bs-target="#modal-alterar-cartao-credito">
+                Editar Cartão de crédito</button>
+        </nav>
+    </div>
 
     <div id="conta" class="py-5">
+        <div id="nav-lateral" class="d-flex flex-column align-items-start " style="height: 100vh; width: 250px;">
+            <button type="button" class="btn btn-primary mb-2">
+                <img src="/img/imagem-do-usuario-com-fundo-preto.png">Dados Pessoais</button>
+            <button type="button" class="btn btn-success mb-2">
+                <img src="/img/imagem-do-usuario-com-fundo-preto.png">Endereços</button>
+            <button type="button" class="btn btn-secondary mb-2">
+                <img src="/img/imagem-do-usuario-com-fundo-preto.png">Cartões de Crédito</button>
+        </div>
+
         <div id="dados-pessoais"></div>
         <div id="dados-endereco"></div>
         <div id="dados-cartao-credito"></div>
@@ -24,4 +44,5 @@
     <script type="module" src="/js/loadPage.js"></script>
     <script type="module" src="/paginas/cliente/conta/js/conta.js"></script>
 </body>
+
 </html>
