@@ -175,3 +175,30 @@ CREATE TRIGGER tg_set_ped_id
 BEFORE INSERT ON pedidos
 FOR EACH ROW
 EXECUTE FUNCTION set_ped_id();
+
+
+
+
+
+-- Cupons
+
+CREATE SEQUENCE cup_sq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE FUNCTION set_cup_id() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    NEW.cup_id := nextval('cup_sq');
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tg_set_cup_id
+BEFORE INSERT ON cupons
+FOR EACH ROW
+EXECUTE FUNCTION set_cup_id();

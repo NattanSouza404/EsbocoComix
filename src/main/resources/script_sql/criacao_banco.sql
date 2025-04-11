@@ -111,6 +111,21 @@ CREATE TABLE cartoes_credito_pedido (
     PRIMARY KEY(ccp_cre_id, ccp_ped_id)
 );
 
+CREATE TABLE cupons (
+    cup_id             NUMERIC(9) PRIMARY KEY,
+    cup_valor          NUMERIC(5, 2) NOT NULL,
+    cup_is_promocional BOOLEAN NOT NULL,
+    cup_is_troca       BOOLEAN NOT NULL,
+    cup_is_ativo       BOOLEAN NOT NULL,
+    cup_cli_id         NUMERIC(6) NOT NULL
+);
+
+CREATE TABLE cupons_pedido (
+    cpe_cup_id NUMERIC(9),
+    cpe_ped_id NUMERIC(9),
+    PRIMARY KEY(cpe_cup_id, cpe_ped_id)
+);
+
 ALTER TABLE enderecos
     ADD CONSTRAINT fk_end_cli FOREIGN KEY ( end_cli_id ) REFERENCES clientes ( cli_id );
 
@@ -143,3 +158,12 @@ ALTER TABLE cartoes_credito_pedido
 
 ALTER TABLE cartoes_credito_pedido
     ADD CONSTRAINT fk_ccp_ped FOREIGN KEY ( ccp_ped_id ) REFERENCES pedidos ( ped_id );
+
+ALTER TABLE cupons
+    ADD CONSTRAINT fk_cup_cli FOREIGN KEY ( cup_cli_id ) REFERENCES clientes ( cli_id );
+
+ALTER TABLE cupons_pedido
+    ADD CONSTRAINT fk_cpe_cup FOREIGN KEY ( cpe_cup_id ) REFERENCES cupons ( cup_id );
+
+ALTER TABLE cupons_pedido
+    ADD CONSTRAINT fk_cpe_ped FOREIGN KEY ( cpe_ped_id ) REFERENCES pedidos ( ped_id );
