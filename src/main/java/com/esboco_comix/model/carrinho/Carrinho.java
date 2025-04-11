@@ -19,6 +19,13 @@ public class Carrinho {
             throw new Exception("Item do carrinho deve ter quantidade maior que 0!");
         }
 
+        for (ItemCarrinhoDTO item : itensCarrinho) {
+            if (item.getIdQuadrinho() == itemCarrinho.getIdQuadrinho()){
+                item.setQuantidade(item.getQuantidade() + itemCarrinho.getQuantidade());
+                return;
+            }
+        }
+
         itensCarrinho.add((itemCarrinho));
     }
 
