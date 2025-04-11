@@ -41,9 +41,8 @@ export class ModalAlterarEndereco extends Modal {
         return conteudoModal;
     }
     
-    atualizar(enderecos, cliente){
+    atualizar(enderecos){
         this.enderecos = enderecos;
-        this.cliente = cliente;
 
         this.secaoForm.container.textContent = '';
 
@@ -64,7 +63,6 @@ export class ModalAlterarEndereco extends Modal {
         if (form.endereco != null){
             endereco.id = form.endereco.id;
         }
-        endereco.idCliente = this.cliente.id;
         atualizarEndereco(endereco);
     }
 
