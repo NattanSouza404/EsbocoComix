@@ -2,7 +2,6 @@ import { retornarCliente } from "/js/api/apiCliente.js";
 import { retornarEnderecos } from "/js/api/apiEndereco.js";
 import { retornarCartoesCredito } from "/js/api/apiCartaoCredito.js";
 
-import { toggleDisplay } from "/js/script.js";
 import { SecaoDadosPessoais } from "./secaoDadosPessoais/SecaoDadosPessoais.js";
 import { SecaoCartaoCredito } from "./secaoCartaoCredito/SecaoCartaoCredito.js";
 import { SecaoEndereco } from "./secaoEndereco/SecaoEndereco.js";
@@ -37,5 +36,4 @@ function trocarSecao(idSecao){
     });
 }
 
-window.toggleDisplay = toggleDisplay;
 window.trocarSecao = (idSecao) => trocarSecao(idSecao);

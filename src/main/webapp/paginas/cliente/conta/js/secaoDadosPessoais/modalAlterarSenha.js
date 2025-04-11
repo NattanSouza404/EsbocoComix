@@ -1,69 +1,23 @@
 import { criarElemento, criarElementoInput } from "/js/script.js";
-import { atualizarCliente } from "/js/api/apiCliente.js";
-import { BotaoFechar } from "/js/componentes/botoes/BotaoFechar.js";
+import { atualizarSenha } from "/js/api/apiCliente.js";
 import { BotaoSalvar } from "/js/componentes/botoes/BotaoSalvar.js";
-import { Modal } from "/js/componentes/componentes.js";
+import { Modal } from "/js/componentes/modal.js";
 
 export class ModalAlterarSenha extends Modal {
 
-    constructor(){
-        super();
-        this.id = 'modal-alterar-senha';
-        this.append(this.initConteudoModal());
-    }
+    constructor() {
+        const conteudoModal = ConteudoModalAlterarSenha();
 
-    initConteudoModal(){
-        const conteudoModal = document.createElement('div');
-        conteudoModal.className = "conteudo-modal";
+        super('modal-alterar-senha', "Alterar Senha", conteudoModal);
 
-        conteudoModal.append(new BotaoFechar(
-            () => this.toggleDisplay()
-        ));
-
-        const form = document.createElement('form');
-        form.id = 'alterar-senha';
-
-        const aviso = document.createElement('p');
-        aviso.className = 'aviso';
-        aviso.innerHTML = 
-            "A senha deve ser composta de pelo menos <br/>"+
-            "8 caracteres, ter letras maiúsculas e <br/>"+
-            "minúsculas além de conter caracteres especiais.";
-        form.append(aviso);
-
-        const dadosFormulario = document.createElement('div');
-        dadosFormulario.className = 'dados-formulario';
-
-        let label = criarElemento('label', 'Senha Antiga');
-        let input = criarElementoInput('senhaAntiga', null, 'password');
-        input.autocomplete = "password";
-        dadosFormulario.append(label);
-        dadosFormulario.append(input);
-
-        label = criarElemento('label', 'Nova senha');
-        input = criarElementoInput('senhaNova', null, 'password');
-        input.autocomplete = "new-password";
-        dadosFormulario.append(label);
-        dadosFormulario.append(input);
-
-        label = criarElemento('label', 'Confirme a senha');
-        input = criarElementoInput('senhaConfirmacao', null, 'password');
-        input.autocomplete = "new-password";
-        dadosFormulario.append(label);
-        dadosFormulario.append(input);
-
-        form.append(dadosFormulario);
-
-        form.append(new BotaoSalvar(
+        conteudoModal.append(new BotaoSalvar(
             () => this.enviarFormulario(this.cliente)
         ));
 
-        conteudoModal.append(form);
-
-        return conteudoModal;
+        this.conteudoModal = conteudoModal;
     }
 
-    atualizar(cliente){
+    atualizar(cliente) {
         this.cliente = cliente;
     }
 
@@ -80,8 +34,44 @@ export class ModalAlterarSenha extends Modal {
             "senhaConfirmacao": formData.get('senhaConfirmacao')
         };
 
-        atualizarCliente(pedidoAlterarSenha, 'atualizarsenha');
+        atualizarSenha(pedidoAlterarSenha);
     }
 }
 
-customElements.define('alterar-senha', ModalAlterarSenha);
+function ConteudoModalAlterarSenha() {
+    const form = document.createElement('form');
+    form.id = 'alterar-senha';
+
+    const aviso = document.createElement('p');
+    aviso.className = 'aviso';
+    aviso.innerHTML =
+        "A senha deve ser composta de pelo menos <br/>" +
+        "8 caracteres, ter letras maiúsculas e <br/>" +
+        "minúsculas além de conter caracteres especiais.";
+    form.append(aviso);
+
+    const dadosFormulario = document.createElement('div');
+    dadosFormulario.className = 'dados-formulario';
+
+    let label = criarElemento('label', 'Senha Antiga');
+    let input = criarElementoInput('senhaAntiga', null, 'password');
+    input.autocomplete = "password";
+    dadosFormulario.append(label);
+    dadosFormulario.append(input);
+
+    label = criarElemento('label', 'Nova senha');
+    input = criarElementoInput('senhaNova', null, 'password');
+    input.autocomplete = "new-password";
+    dadosFormulario.append(label);
+    dadosFormulario.append(input);
+
+    label = criarElemento('label', 'Confirme a senha');
+    input = criarElementoInput('senhaConfirmacao', null, 'password');
+    input.autocomplete = "new-password";
+    dadosFormulario.append(label);
+    dadosFormulario.append(input);
+
+    form.append(dadosFormulario);
+
+    return form;
+}

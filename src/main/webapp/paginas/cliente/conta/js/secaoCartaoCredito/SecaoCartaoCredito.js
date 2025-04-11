@@ -27,7 +27,7 @@ export class SecaoCartaoCredito extends HTMLElement {
     }
 
     atualizar(cartoes) {
-        if (cartoes) {
+        if (Array.isArray(cartoes)) {
             this.containerCartoes.innerHTML = "";
 
             let contador = 1;

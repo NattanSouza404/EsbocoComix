@@ -1,41 +1,23 @@
 import { montarClientePorForm } from "/js/script.js";
 import { atualizarCliente } from "/js/api/apiCliente.js";
 import { FormularioDadosPessoais } from "/js/componentes/forms/formDadosPessoais.js";
-import { BotaoFechar } from "/js/componentes/botoes/BotaoFechar.js";
+import { Modal } from "/js/componentes/modal.js";
 import { BotaoSalvar } from "/js/componentes/botoes/BotaoSalvar.js";
-import { Modal } from "/js/componentes/componentes.js";
 
 export class ModalAlterarDadosPessoais extends Modal {
 
     constructor(){
-        super();
+        const conteudoModal = ConteudoModalAlterarDadosPessoais();
 
-        this.id = 'modal-alterar-dados-pessoais';
-        this.conteudoModal = this.initConteudoModal();
+        super('modal-alterar-dados-pessoais', "Editar Dados Pessoais", conteudoModal);
 
-        this.append(this.conteudoModal);
-    }
-
-    initConteudoModal(){
-        const conteudoModal = document.createElement('div');
-        conteudoModal.className = "conteudo-modal";
-
-        conteudoModal.append(new BotaoFechar(
-            () => this.toggleDisplay()
-        ));
-
-        this.form = new FormularioDadosPessoais();
-        this.form.id = 'alterar-dados-pessoais';
-
-        this.form.append(new BotaoSalvar(
+        conteudoModal.append(new BotaoSalvar(
             () => {
-                this.enviarAtualizacao(this.cliente);
+                this.enviarAtualizacao();
             }
         ));
 
-        conteudoModal.append(this.form);
-
-        return conteudoModal;
+        this.form = conteudoModal;
     }
 
     atualizar(cliente){
@@ -44,13 +26,13 @@ export class ModalAlterarDadosPessoais extends Modal {
     }
 
     async enviarAtualizacao(){
-        const form = document.getElementById("alterar-dados-pessoais");
-        const cliente = montarClientePorForm(form);
-
-        cliente.id = this.cliente.id;
-        
+        const cliente = montarClientePorForm(this.form);
         atualizarCliente(cliente);
     }
 }
 
-customElements.define('alterar-dados-pessoais', ModalAlterarDadosPessoais);
+function ConteudoModalAlterarDadosPessoais(){
+    const form = new FormularioDadosPessoais();
+    form.id = 'alterar-dados-pessoais';
+    return form;
+}

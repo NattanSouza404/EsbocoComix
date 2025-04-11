@@ -1,13 +1,3 @@
-export function toggleDisplay(id){
-    const modal = document.getElementById(id);
-
-    if (modal.style.display === 'none' || modal.style.display === ""){
-        modal.style.display = 'flex';
-    } else {
-        modal.style.display = 'none';
-    }
-}
-
 export function criarElemento(tag, texto){
     const element = document.createElement(tag);
     element.textContent = texto;

@@ -9,7 +9,6 @@ export class SecaoEndereco extends HTMLElement {
         this.style.display = 'none';
 
         this.modalAlterarEndereco = new ModalAlterarEndereco();
-        document.body.append(this.modalAlterarEndereco);
 
         this.containerEnderecos = document.createElement('div');
         this.append(this.containerEnderecos);
@@ -17,8 +16,9 @@ export class SecaoEndereco extends HTMLElement {
         const div = document.createElement('div');
 
         div.innerHTML = `
-            <button id="btn-alterar-endereco" onclick="toggleDisplay('modal-alterar-endereco')">
-                Editar endereço
+            <button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
+                data-bs-target="#modal-alterar-endereco">
+                Editar Endereço
             </button>
         `;
 

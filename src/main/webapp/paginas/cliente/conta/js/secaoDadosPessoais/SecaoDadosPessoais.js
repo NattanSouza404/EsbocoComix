@@ -10,10 +10,7 @@ export class SecaoDadosPessoais extends HTMLElement {
         this.style.display = 'block';
 
         this.modalAlterarDadosPessoais = new ModalAlterarDadosPessoais();
-        document.body.append(this.modalAlterarDadosPessoais);
-
         this.modalAlterarSenha = new ModalAlterarSenha();
-        document.body.append(this.modalAlterarSenha);
 
         this.cartaoDadosPessoais = new CartaoDadosPessoais();
         this.append(this.cartaoDadosPessoais);
@@ -21,8 +18,14 @@ export class SecaoDadosPessoais extends HTMLElement {
         const div = document.createElement('div');
 
         div.innerHTML = `
-        <button id="btn-editar-cadastro" onclick="toggleDisplay('modal-alterar-dados-pessoais')">Editar Cadastro</button>
-            <button id="btn-alterar-senha" onclick="toggleDisplay('modal-alterar-senha')">Alterar senha</button>
+            <button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
+                data-bs-target="#modal-alterar-dados-pessoais">
+                Editar Cadastro
+            </button>
+            <button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
+                data-bs-target="#modal-alterar-senha">
+                Alterar Senha
+            </button>
         `;
 
         this.append(div);

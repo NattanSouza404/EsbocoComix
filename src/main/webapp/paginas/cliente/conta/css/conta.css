@@ -9,8 +9,16 @@
 }
 
 #nav-lateral {
-    width: 20%;
-    max-width: 20%;
+    width: 15%;
+    max-width: 15%;
+}
+
+#nav-lateral button {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 16px;
+    align-items: center;
 }
 
 #nav-lateral img {
