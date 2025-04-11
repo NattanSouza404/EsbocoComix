@@ -18,6 +18,7 @@ public class Pedido {
 
     private List<ItemPedido> itensPedido = new ArrayList<>();
     private Endereco enderecoEntrega;
-    // TODO private List<CartaoCreditoPedido> cartoesCreditoPedidos = new ArrayList<>();
     
+    private List<CartaoCreditoPedido> cartoesCreditoPedido = new ArrayList<>();
+    private List<CupomPedido> cuponsPedido = new ArrayList<>();
 }
