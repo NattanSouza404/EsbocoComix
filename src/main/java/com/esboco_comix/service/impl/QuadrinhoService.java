@@ -1,5 +1,7 @@
 package com.esboco_comix.service.impl;
 
+import java.util.List;
+
 import com.esboco_comix.dao.impl.quadrinho.QuadrinhoDAO;
 import com.esboco_comix.model.entidades.Quadrinho;
 
@@ -11,7 +13,7 @@ public class QuadrinhoService {
         return quadrinhoDAO.consultarByID(id);
     }
 
-    public Object consultarTodos() throws Exception {
+    public List<Quadrinho> consultarTodos() throws Exception {
         return quadrinhoDAO.consultarTodos();
     }
     
