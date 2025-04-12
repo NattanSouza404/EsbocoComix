@@ -16,49 +16,42 @@
         <h1 class="mb-4 text-center">Finalizar Compra</h1>
 
         <!-- Seção de Endereço -->
-        <div class="mb-4">
+        <section id="secao-selecao-endereco" class="mb-4">
             <label for="endereco" class="form-label">Selecione o Endereço:</label>
             <select id="endereco" class="form-select"></select>
             <button class="btn btn-primary btn-sm mt-2">+ Adicionar novo endereço</button>
-        </div>
+        </section>
 
         <!-- Seção de Cupons -->
-        <div class="mb-4">
+        <section id="secao-cupons" class="mb-4">
             <p class="fw-bold">Adicionar Cupons</p>
-            <select class="form-select mt-2">
-                <option selected>Cupom Promocional R$ 10 </option>
-            </select>
 
-            <select class="form-select mt-2">
-                <option selected>Cupom de Troca R$ 20</option>
-            </select>
+            <div id="cupons"></div>
+
+            <button id="btn-adicionar-cupom" class="btn btn-primary btn-sm mt-2">
+                + Adicionar cupom à compra
+            </button>
 
             <p class="mt-2">Cupons aplicados:</p>
             <p class="mt-2">- Cupom Promocional R$ 10</p>
             <p class="mt-2">- Cupom de Troca R$ 10</p>
-            <button class="btn btn-primary btn-sm mt-2">+ Adicionar cupom à compra</button>
-        </div>
+        </section>
 
-        <div class="mb-4">
+        <section id="secao-cartoes" class="mb-4">
             <p class="fw-bold">Cartões de Crédito</p>
-            <div id="cartoes">
-                <div class="d-flex mb-3">
-                    <select class="form-select me-2 select-cartao"></select>
-                    <input type="number" class="form-control" placeholder="Valor a pagar" min="0">
-                    <button class="btn btn-primary btn-sm">Remover</button>
-                </div>
-                <div class="d-flex mb-3">
-                    <select class="form-select me-2 select-cartao"></select>
-                    <input type="number" class="form-control" placeholder="Valor a pagar" min="0">
-                    <button class="btn btn-primary btn-sm">Remover</button>
-                </div>
-            </div>
-            <button class="btn btn-secondary btn-sm mt-2">+ Adicionar outro cartão</button>
-            <button class="btn btn-primary btn-sm mt-2">+ Adicionar novo cartão</button>
-        </div>
+
+            <div id="cartoes"></div>
+
+            <button id="btn-adicionar-cartao" class="btn btn-secondary btn-sm mt-2">
+                + Adicionar outro cartão
+            </button>
+            <button id="btn-cadastrar-novo-cartao" class="btn btn-primary btn-sm mt-2">
+                + Cadastrar novo cartão
+            </button>
+        </section>
 
         <!-- Resumo -->
-        <div id="resumo" class="mb-4">
+        <section id="resumo" class="mb-4">
             <p class="fw-bold">Resumo</p>
             <table id="tabela-produtos" class="table table-bordered table-hover">
                 <thead class="table-dark">
@@ -71,11 +64,11 @@
 
                 </tbody>
             </table>
-        </div>
+        </section>
 
         <!-- Botão Finalizar Compra -->
         <div class="text-center">
-            <button id="me-clica" class="btn btn-primary btn-lg">Finalizar Compra</button>
+            <button id="btn-enviar-pedido" class="btn btn-primary btn-lg">Finalizar Compra</button>
         </div>
     </div>
 
