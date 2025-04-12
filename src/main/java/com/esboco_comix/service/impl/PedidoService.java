@@ -1,7 +1,9 @@
 package com.esboco_comix.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.esboco_comix.dao.impl.cartao_credito.CartaoCreditoDAO;
 import com.esboco_comix.dao.impl.cupom.CupomDAO;
@@ -10,6 +12,7 @@ import com.esboco_comix.dao.impl.pedido.CupomPedidoDAO;
 import com.esboco_comix.dao.impl.pedido.ItemPedidoDAO;
 import com.esboco_comix.dao.impl.pedido.PedidoDAO;
 import com.esboco_comix.dao.impl.quadrinho.QuadrinhoDAO;
+import com.esboco_comix.dto.ItemCarrinhoDTO;
 import com.esboco_comix.model.carrinho.Carrinho;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.CartaoCreditoPedido;
@@ -40,7 +43,15 @@ public class PedidoService {
             throw new Exception("Nenhuma forma de pagamento foi provida!");
         }
 
-        double valorTotalPedido = calcularValorTotalPedido(pedido);
+        Set<Integer> idsCartao = new HashSet<>();
+
+        for (CartaoCreditoPedido cartao : pedido.getCartoesCreditoPedido()) {
+            if (!idsCartao.add(cartao.getIdCartaoCredito())){
+                throw new Exception("Não é possível usar o mesmo cartão duas vezes no mesmo pedido!");
+            }
+        }
+
+        double valorTotalPedido = calcularValorTotalPedido(pedido, carrinho);
         double valorTotalPago = calcularValorFormaPagamento(pedido);
 
         if (valorTotalPago != valorTotalPedido){
@@ -97,7 +108,6 @@ public class PedidoService {
             throw new Exception("Não é possível usar mais de um cupom promocional na mesma compra!");
         }
 
-
         double valorTotal = 0;
 
         for (CartaoCreditoPedido cartao : pedido.getCartoesCreditoPedido()) {
@@ -117,14 +127,16 @@ public class PedidoService {
         return valorTotal;
     }
 
-    private double calcularValorTotalPedido(Pedido pedido) throws Exception {
+    private double calcularValorTotalPedido(Pedido pedido, Carrinho carrinho) throws Exception {
         
         double valorTotal = 0;
 
-        for (ItemPedido item : pedido.getItensPedido()) {
+        for (ItemCarrinhoDTO item : carrinho.getItensCarrinho()) {
             Quadrinho quadrinho = quadrinhoDAO.consultarByID(item.getIdQuadrinho());
             valorTotal += quadrinho.getPreco() * item.getQuantidade();
         }
+
+        valorTotal += pedido.getValorFrete();
 
         return valorTotal;
     }
