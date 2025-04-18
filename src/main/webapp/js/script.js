@@ -43,6 +43,13 @@ export function formatarDataParaInput(array){
     return `${ano}-${mes}-${dia}`;
 }
 
+export function formatarData(array) {
+    const ano = array[0];
+    const mes = ('0' + array[1]).slice(-2);
+    const dia = ('0' + array[2]).slice(-2);
+    return `${dia}/${mes}/${ano}`;
+}
+
 export function montarClientePorForm(form){
     const formData = new FormData(form);
 

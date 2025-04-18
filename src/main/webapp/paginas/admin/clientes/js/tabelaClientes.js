@@ -1,5 +1,6 @@
 import { atualizarCliente } from "/js/api/apiCliente.js";
 import ModalTransacoes from "./modalTransacoes.js";
+import { formatarData } from "/js/script.js";
 
 export default class TabelaClientes extends HTMLTableElement {
     
@@ -7,13 +8,6 @@ export default class TabelaClientes extends HTMLTableElement {
         super();
 
         this.modalTransacoes = new ModalTransacoes();
-
-        this.colunas = [
-            'Nome', "Gênero", "Data de Nascimento", "CPF", "E-mail", "Ranking", "Status", "Operações"
-        ];
-        this.atributosTabelaCliente = [
-            'nome', 'genero', "dataNascimento", 'cpf', 'email', 'ranking', 'isAtivo'
-        ];
 
         this.id = "tabela-clientes";
         
@@ -23,11 +17,17 @@ export default class TabelaClientes extends HTMLTableElement {
 
     initCabecalho(){
         let tr = document.createElement('tr');
-        this.colunas.forEach(c => {
-            let th = document.createElement('th');
-            th.textContent = c;
-            tr.append(th);
-        })
+
+        tr.innerHTML = `
+            <th>Nome</th>
+            <th>Gênero</th>
+            <th>Data de Nascimento</th>
+            <th>CPF</th><th>E-mail</th>
+            <th>Ranking</th>
+            <th>Status</th>
+            <th>Operações</th>
+        `;
+
         return tr;
     }
 
@@ -43,23 +43,15 @@ export default class TabelaClientes extends HTMLTableElement {
 
             let tableRow = document.createElement('tr');
 
-            Object.entries(c).forEach(
-                ([chave, valor]) => {
-                    if (!this.atributosTabelaCliente.includes(chave)){
-                        return;
-                    }
-
-                    let td = document.createElement('td');
-                    tableRow.append(td);
-
-                    if (chave === 'isAtivo'){
-                        td.textContent = (valor === true) ? 'Ativo' : "Inativo";
-                        return;
-                    }
-
-                    td.textContent = valor; 
-                }
-            );
+            tableRow.innerHTML = `
+                <td>${c.nome}</td>
+                <td>${c.genero}</td>
+                <td>${formatarData(c.dataNascimento)}</td>
+                <td>${c.cpf}</td>
+                <td>${c.email}</td>
+                <td>${c.ranking}</td>
+                <td>${(c.ativo === true) ? 'Ativo' : "Inativo"}</td>
+            `;
         
             let td = document.createElement('td');
         
