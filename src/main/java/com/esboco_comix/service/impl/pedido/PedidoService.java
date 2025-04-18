@@ -1,41 +1,38 @@
-package com.esboco_comix.service.impl;
+package com.esboco_comix.service.impl.pedido;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.esboco_comix.dao.impl.cartao_credito.CartaoCreditoDAO;
-import com.esboco_comix.dao.impl.cupom.CupomDAO;
+import javax.servlet.http.HttpSession;
+
+import com.esboco_comix.controller.session.Carrinho;
 import com.esboco_comix.dao.impl.pedido.CartaoCreditoPedidoDAO;
 import com.esboco_comix.dao.impl.pedido.CupomPedidoDAO;
 import com.esboco_comix.dao.impl.pedido.ItemPedidoDAO;
 import com.esboco_comix.dao.impl.pedido.PedidoDAO;
-import com.esboco_comix.dao.impl.quadrinho.QuadrinhoDAO;
-import com.esboco_comix.dto.ItemCarrinhoDTO;
-import com.esboco_comix.model.carrinho.Carrinho;
-import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.CartaoCreditoPedido;
-import com.esboco_comix.model.entidades.Cupom;
 import com.esboco_comix.model.entidades.CupomPedido;
 import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
-import com.esboco_comix.model.entidades.Quadrinho;
 import com.esboco_comix.model.enuns.StatusPedido;
+import com.esboco_comix.service.impl.CarrinhoService;
 
 public class PedidoService {
+
+    private CarrinhoService carrinhoService = new CarrinhoService();
+    private CalculadoraPedido calculadora = new CalculadoraPedido();
 
     private PedidoDAO pedidoDAO = new PedidoDAO();
     private ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
     private CartaoCreditoPedidoDAO cartaoCreditoPedidoDAO = new CartaoCreditoPedidoDAO();
     private CupomPedidoDAO cupomPedidoDAO = new CupomPedidoDAO();
-    private CupomDAO cupomDAO = new CupomDAO();
-    private QuadrinhoDAO quadrinhoDAO = new QuadrinhoDAO();
-    private CartaoCreditoDAO cartaoCreditoDAO = new CartaoCreditoDAO();
 
-    public Pedido inserir(Pedido pedido, Carrinho carrinho) throws Exception {
+    public Pedido inserir(Pedido pedido, HttpSession session) throws Exception {
 
-        if (carrinho.getItensCarrinho().isEmpty()) {
+        Carrinho carrinho = carrinhoService.retornarCarrinhoSessao(session);
+
+        if (carrinho.isVazio()) {
             throw new Exception("Nenhum item presente no carrinho!");
         }
 
@@ -51,15 +48,15 @@ public class PedidoService {
             }
         }
 
-        double valorTotalPedido = calcularValorTotalPedido(pedido, carrinho);
-        double valorTotalPago = calcularValorFormaPagamento(pedido);
+        double valorTotalPedido = calculadora.calcularValorTotalPedido(pedido, carrinho);
+        double valorTotalPago = calculadora.calcularValorFormaPagamento(pedido);
 
         if (valorTotalPago != valorTotalPedido){
             throw new Exception("Valor pago não condiz com valor do pedido!");
         }
 
         pedido.setStatus(StatusPedido.APROVADO);
-        pedido.setItensPedido(carrinho.getItensPedido());
+        pedido.setItensPedido(carrinho.esvaziar());
 
         Pedido pedidoInserido = pedidoDAO.inserir(pedido);
 
@@ -81,64 +78,7 @@ public class PedidoService {
             pedidoInserido.getCuponsPedido().add(cupomPedidoInserido);
         }
 
-        carrinho.esvaziar();
-
         return pedidoInserido;
-    }
-
-    private double calcularValorFormaPagamento(Pedido pedido) throws Exception {
-        List<Cupom> cuponsAplicados = new ArrayList<>();
-
-        int quantCupomPromocional = 0;
-        for (CupomPedido cupom : pedido.getCuponsPedido()) {
-            Cupom cupomBanco = cupomDAO.consultarByID(cupom.getIdCupom());
-
-            if (!cupomBanco.isAtivo()){
-                throw new Exception("Cupom inválido para essa compra!");
-            }
-
-            if (cupomBanco.isPromocional()){
-                quantCupomPromocional += 1;
-            }
-
-            cuponsAplicados.add(cupomBanco);
-        }
-
-        if (quantCupomPromocional > 1){
-            throw new Exception("Não é possível usar mais de um cupom promocional na mesma compra!");
-        }
-
-        double valorTotal = 0;
-
-        for (CartaoCreditoPedido cartao : pedido.getCartoesCreditoPedido()) {
-            CartaoCredito cartaoBanco = cartaoCreditoDAO.consultarByID(cartao.getIdCartaoCredito());
-
-            if (pedido.getIdCliente() != cartaoBanco.getIdCliente()){
-                throw new Exception("Cartão de crédito não pertence ao cliente da compra!");
-            }
-
-            valorTotal += cartao.getValor();
-        }
-
-        for (Cupom cupom : cuponsAplicados) {
-            valorTotal += cupom.getValor();
-        }
-
-        return valorTotal;
-    }
-
-    private double calcularValorTotalPedido(Pedido pedido, Carrinho carrinho) throws Exception {
-        
-        double valorTotal = 0;
-
-        for (ItemCarrinhoDTO item : carrinho.getItensCarrinho()) {
-            Quadrinho quadrinho = quadrinhoDAO.consultarByID(item.getIdQuadrinho());
-            valorTotal += quadrinho.getPreco() * item.getQuantidade();
-        }
-
-        valorTotal += pedido.getValorFrete();
-
-        return valorTotal;
     }
 
     public List<Pedido> consultarTodos() throws Exception {

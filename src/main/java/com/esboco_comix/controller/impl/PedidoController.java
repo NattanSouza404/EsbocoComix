@@ -7,9 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.esboco_comix.controller.utils.AbstractController;
-import com.esboco_comix.model.carrinho.Carrinho;
 import com.esboco_comix.model.entidades.Pedido;
-import com.esboco_comix.service.impl.PedidoService;
+import com.esboco_comix.service.impl.pedido.PedidoService;
 
 public class PedidoController extends AbstractController {
 
@@ -44,9 +43,8 @@ public class PedidoController extends AbstractController {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             Pedido pedido = jsonToObject(req, Pedido.class);
-            Carrinho carrinho = retornarCarrinhoSessao(req);
             
-            Pedido pedidoInserido = pedidoService.inserir(pedido, carrinho);
+            Pedido pedidoInserido = pedidoService.inserir(pedido, getSession(req));
 
             retornarRespostaJson(
                 resp,
