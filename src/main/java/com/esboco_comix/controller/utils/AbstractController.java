@@ -7,16 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.esboco_comix.model.carrinho.Carrinho;
-
 public abstract class AbstractController extends HttpServlet {
     
     public HttpSession getSession(HttpServletRequest req) {
-        return SessionManager.getSession(req);
-    }
-
-    public Carrinho retornarCarrinhoSessao(HttpServletRequest req){
-        return SessionManager.retornarCarrinhoSessao(req);  
+        return req.getSession();
     }
 
     public void retornarRespostaJson(HttpServletResponse resp, Object object, int sc) throws IOException {

@@ -1,4 +1,4 @@
-package com.esboco_comix.model.carrinho;
+package com.esboco_comix.controller.session;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +15,6 @@ public class Carrinho {
     private List<ItemCarrinhoDTO> itensCarrinho = new ArrayList<>();
 
     public void adicionar(ItemCarrinhoDTO itemCarrinho) throws Exception {
-        if (itemCarrinho.getQuantidade() < 1){
-            throw new Exception("Item do carrinho deve ter quantidade maior que 0!");
-        }
-
         for (ItemCarrinhoDTO item : itensCarrinho) {
             if (item.getIdQuadrinho() == itemCarrinho.getIdQuadrinho()){
                 item.setQuantidade(item.getQuantidade() + itemCarrinho.getQuantidade());
@@ -26,10 +22,10 @@ public class Carrinho {
             }
         }
 
-        itensCarrinho.add((itemCarrinho));
+        itensCarrinho.add(itemCarrinho);
     }
 
-    public void deletar(ItemCarrinhoDTO itemCarrinho){
+    public void deletar(ItemCarrinhoDTO itemCarrinho) throws Exception {
         for (ItemCarrinhoDTO item : itensCarrinho) {
             if (item.getIdQuadrinho() == itemCarrinho.getIdQuadrinho()){
                 itensCarrinho.remove(item);
@@ -39,10 +35,6 @@ public class Carrinho {
     }
 
     public void atualizarQuantidade(ItemCarrinhoDTO item) throws Exception {
-        if (item.getQuantidade() < 1){
-            throw new Exception("Item do carrinho deve ter quantidade maior que 0!");
-        }
-
         for (int i = 0; i < itensCarrinho.size(); i++) {
             if (itensCarrinho.get(i).getIdQuadrinho() == item.getIdQuadrinho()){
                 itensCarrinho.get(i).setQuantidade(item.getQuantidade());
@@ -50,16 +42,19 @@ public class Carrinho {
         }
     }
 
-    public void esvaziar() {
-        itensCarrinho.clear();
-    }
-
-    public List<ItemPedido> getItensPedido(){
+    public List<ItemPedido> esvaziar() {
         List<ItemPedido> itensPedido = new ArrayList<>();
         for (ItemCarrinhoDTO itemCarrinhoDTO : itensCarrinho) {
             itensPedido.add(itemCarrinhoDTO.toItemPedido());
         }
+
+        itensCarrinho.clear();
+
         return itensPedido;
+    }
+
+    public boolean isVazio() {
+        return itensCarrinho.isEmpty();
     }
 
 }
