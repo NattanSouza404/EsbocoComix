@@ -1,6 +1,7 @@
 import { atualizarCliente } from "/js/api/apiCliente.js";
 import ModalTransacoes from "./modalTransacoes.js";
 import { formatarData } from "/js/script.js";
+import ModalCupomPromocional from "./modalCupomPromocional.js";
 
 export default class TabelaClientes extends HTMLTableElement {
     
@@ -8,6 +9,7 @@ export default class TabelaClientes extends HTMLTableElement {
         super();
 
         this.modalTransacoes = new ModalTransacoes();
+        this.modalCupomPromocional = new ModalCupomPromocional();
 
         this.id = "tabela-clientes";
         
@@ -58,13 +60,19 @@ export default class TabelaClientes extends HTMLTableElement {
             let btn = document.createElement('button');
             btn.textContent = "Consultar Transações";
             btn.type = "button";
-            btn.onclick = () => this.modalTransacoes.show();
+            btn.onclick = () => this.modalTransacoes.show(c);
             td.append(btn);
         
             btn = document.createElement('button');
             btn.textContent = "Editar";
             btn.type = "button";
             btn.onclick = () => this.editarCliente(c);
+            td.append(btn);
+
+            btn = document.createElement('button');
+            btn.textContent = "Adicionar Cupom";
+            btn.type = "button";
+            btn.onclick = () => this.modalCupomPromocional.show(c);
             td.append(btn);
         
             btn = document.createElement('button');

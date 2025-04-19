@@ -44,4 +44,8 @@ export class Modal {
     destroy() {
         this.modalElement.remove();
     }
+
+    mudarTitulo(titulo){
+        document.getElementById(`${this.id}-label`).textContent = titulo;
+    }
 }

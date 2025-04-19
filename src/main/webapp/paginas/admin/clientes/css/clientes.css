@@ -75,3 +75,8 @@
     padding: 8px;
     text-align: center;
 }
+
+#form-adicionar-cupom-promocional {
+    display: flex;
+    flex-direction: column;
+}

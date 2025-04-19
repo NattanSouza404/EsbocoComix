@@ -1,8 +1,60 @@
+import { retornarPedidos } from "/js/api/apiPedido.js";
 import { Modal } from "/js/componentes/modal.js";
 
 export default class ModalTransacoes extends Modal {
     constructor(){
-        super('modal-consultar-transacoes', "Transações", ConteudoModalTransacoes());
+        const conteudoModal = ConteudoModalTransacoes();
+        super('modal-consultar-transacoes', "Transações", conteudoModal);
+        
+        this.conteudoModal = conteudoModal;
+        this.tabela = conteudoModal.querySelector('table');
+        this.tbody = conteudoModal.querySelector('tbody');
+        this.aviso = conteudoModal.querySelector('.aviso');
+
+        this.esconderTabela();
+    }
+
+    async show(cliente){
+        this.cliente = cliente;
+
+        super.mudarTitulo(`Transações de ${this.cliente.nome}`);
+        const pedidos = await retornarPedidos(this.cliente.id);
+
+        if (Array.isArray(pedidos)){
+            this.tbody.innerHTML = '';
+
+            this.mostrarTabela();
+            
+            pedidos.forEach(pedido => {
+                const tr = document.createElement('tr');
+
+                tr.innerHTML = `
+                    <td>${pedido.data}</td>
+                    <td>????</td>
+                    <td>${pedido.status}</td>
+                `;
+
+                this.tbody.append(tr);
+            });
+
+            super.show();
+
+            return;
+        }
+
+        this.esconderTabela();
+
+        super.show();
+    }
+
+    mostrarTabela(){
+        this.tabela.style.display = 'block';
+        this.aviso.style.display = 'none';
+    }
+
+    esconderTabela(){
+        this.tabela.style.display = 'none';
+        this.aviso.style.display = 'block';
     }
 }
 
@@ -11,29 +63,16 @@ function ConteudoModalTransacoes(){
     conteudoModal.id = 'consultar-transacoes';
 
     conteudoModal.innerHTML = `
-        <h3>Transações de Maurício da Silva</h3>
-
         <table>
-            <tbody><tr>
-                <th>ID</th>
+            <thead>
                 <th>Data e hora</th>
                 <th>Valor Transação</th>
                 <th>Status</th>
-            </tr>
-            <tr>
-                <td>876</td>
-                <td>01/03/2024 11:00:00</td>
-                <td>R$ 80,00</td>
-                <td>Entregue</td>
-            </tr>
-            <tr>
-                <td>879</td>
-                <td>01/07/2024 12:00:00</td>
-                <td>R$ 40,00</td>
-                <td>Entregue</td>
-            </tr>
-            </tbody>
+            </thead>
+            <tbody></tbody>
         </table>
+
+        <p class="aviso text-center">Nenhum pedido.</p>
     `;
 
     return conteudoModal;
