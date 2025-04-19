@@ -157,5 +157,30 @@ public class PedidoDAO {
             conn.close();
         }
     }
+
+    public Pedido atualizarStatus(Pedido p) throws Exception {
+        Connection conn = ConexaoFactory.getConexao(); 
+    
+        PreparedStatement pst = conn.prepareStatement(
+            "UPDATE pedidos set "+
+                "ped_status = ? WHERE ped_id = ?;"
+        );
+    
+        try {
+            pst.setString(1, p.getStatus().name());
+            pst.setInt(2, p.getId());
+
+            if (pst.executeUpdate() == 0) {
+                throw new Exception("Atualização não foi sucedida!");
+            }
+
+            return consultarByID(p.getId());
+        } catch (Exception e){
+            throw e;
+        } finally {
+            pst.close();
+            conn.close();
+        } 
+    }
     
 }

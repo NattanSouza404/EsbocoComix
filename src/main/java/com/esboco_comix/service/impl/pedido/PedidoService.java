@@ -55,7 +55,7 @@ public class PedidoService {
             throw new Exception("Valor pago não condiz com valor do pedido!");
         }
 
-        pedido.setStatus(StatusPedido.APROVADO);
+        pedido.setStatus(StatusPedido.EM_PROCESSAMENTO);
         pedido.setItensPedido(carrinho.esvaziar());
 
         Pedido pedidoInserido = pedidoDAO.inserir(pedido);
@@ -99,6 +99,10 @@ public class PedidoService {
         }
 
         return pedidos;
+    }
+
+    public Pedido atualizarStatus(Pedido pedido) throws Exception {
+        return pedidoDAO.atualizarStatus(pedido);
     }
 
 }

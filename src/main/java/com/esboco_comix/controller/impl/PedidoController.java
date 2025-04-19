@@ -56,4 +56,24 @@ public class PedidoController extends AbstractController {
             estourarErro(resp, e);
         }
     }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
+        try {
+            Pedido pedido = jsonToObject(req, Pedido.class);
+
+            if (req.getParameter("opcao").equals("atualizarstatus")){
+                retornarRespostaJson(
+                    resp,
+                    pedidoService.atualizarStatus(pedido),
+                    HttpServletResponse.SC_OK
+                );
+            }
+
+            
+        } catch (Exception e) {
+            estourarErro(resp, e);
+        }
+    }
 }

@@ -43,3 +43,34 @@ export async function enviarPedido(pedido) {
         console.error('Erro ao realizar pedido:', error);
     }
 }
+
+export async function atualizarStatusPedido(pedido){
+    try {
+        const confirmacaoUsuario = confirm("Deseja mesmo atualizar o status desse pedido?"); 
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+
+        let url = "/pedido?opcao=atualizarstatus";
+
+        const option = {
+            method: 'PUT',
+            headers:{'Content-Type': 'application/json'},
+            body: JSON.stringify(pedido)
+        }
+
+        const result = await fetch(url, option);
+
+        if (result.status === 200) {
+            alert('Atualizado com sucesso!');
+        }
+        else {
+            const resposta = await result.json();
+            alert("Erro ao atualizar: "+resposta.erro);
+        }
+
+    } catch (error){
+        console.error('Erro ao atualizar:', error);
+    }
+}
