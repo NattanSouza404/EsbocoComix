@@ -25,6 +25,20 @@ Dentre as funcionalidades do sistema, podemos citar:
 - Python
 - Gemini AI
 
+## Configurações
+Para usar esse programa, é necessário ter um arquivo chamado config.properties, dentro da pasta src/main/resources. Esse arquivo deve ter essa estrutura: 
+
+```
+[DEFAULT]
+api.key=INSIRA_SUA_CHAVE_GEMINI
+
+database.driver=org.postgresql.Driver
+database.url=jdbc:postgresql://localhost:5432/projeto_les
+database.user=postgres
+database.password=admin123
+```
+Obs.: os valores presentes servem apenas como exemplo.
+
 ## Créditos
 
 Ícones retirados de Flaticon feitos por:
