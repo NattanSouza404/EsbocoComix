@@ -1,5 +1,6 @@
 package com.esboco_comix.model.entidades;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Pedido {
     private int idCliente;
     private StatusPedido status;
     private Double valorFrete;
+    private LocalDateTime data;
 
     private List<ItemPedido> itensPedido = new ArrayList<>();
     private Endereco enderecoEntrega;

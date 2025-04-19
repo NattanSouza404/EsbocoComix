@@ -118,6 +118,7 @@ public class PedidoDAO {
         pedido.setEnderecoEntrega(endereco);
 
         pedido.setValorFrete(rs.getDouble("ped_valor_frete"));
+        pedido.setData(rs.getTimestamp("ped_data").toLocalDateTime());
 
         return pedido;
     }

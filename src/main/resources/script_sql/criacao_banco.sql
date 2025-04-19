@@ -101,7 +101,8 @@ CREATE TABLE pedidos (
     ped_cli_id NUMERIC(6) NOT NULL,
     ped_status VARCHAR(20) NOT NULL,
     ped_end_id NUMERIC(6) NOT NULL,
-    ped_valor_frete NUMERIC(4,2) NOT NULL
+    ped_valor_frete NUMERIC(4,2) NOT NULL,
+    ped_data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE cartoes_credito_pedido (

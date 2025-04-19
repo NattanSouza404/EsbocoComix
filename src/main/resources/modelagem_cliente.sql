@@ -167,7 +167,8 @@ CREATE TABLE pedidos (
     ped_cli_id NUMBER(6) NOT NULL,
     ped_status VARCHAR2(20) NOT NULL,
     ped_end_id NUMBER(6) NOT NULL,
-    ped_valor_frete NUMBER(4,2) NOT NULL
+    ped_valor_frete NUMBER(4,2) NOT NULL,
+    ped_data TIMESTAMP NOT NULL
 )
 LOGGING;
 
