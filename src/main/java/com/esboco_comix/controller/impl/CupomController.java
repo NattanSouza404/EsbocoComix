@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.esboco_comix.controller.utils.AbstractController;
+import com.esboco_comix.model.entidades.Cupom;
 import com.esboco_comix.service.impl.CupomService;
 
 public class CupomController extends AbstractController {
@@ -30,6 +31,21 @@ public class CupomController extends AbstractController {
                 return;
             }
 
+        } catch (Exception e) {
+            estourarErro(resp, e);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            Cupom cupom = jsonToObject(req, Cupom.class);
+
+            retornarRespostaJson(
+                resp,
+                cupomService.inserir(cupom),
+                HttpServletResponse.SC_CREATED
+            );
         } catch (Exception e) {
             estourarErro(resp, e);
         }
