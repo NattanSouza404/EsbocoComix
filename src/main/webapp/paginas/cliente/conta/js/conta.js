@@ -16,7 +16,7 @@ const secaoDadosPessoais = new SecaoDadosPessoais(cliente);
 const secaoCartaoCredito = new SecaoCartaoCredito(cartoesCredito);
 const secaoEndereco = new SecaoEndereco(enderecos);
 
-const container = document.getElementById('container-conta');
+const container = document.getElementById('secoes-conta');
 const secoes = [
     secaoDadosPessoais, secaoCartaoCredito, secaoEndereco
 ];
