@@ -47,3 +47,5 @@ async function enviarCliente(){
 }
 
 window.enviarCliente = enviarCliente;
+
+document.getElementById('navbar-nav').remove();
