@@ -1,10 +1,8 @@
 import { formatarPreco } from "/js/script.js";
 import { retornarPedidos } from "/js/api/apiPedido.js";
+import ModalPedirTroca from "./modalPedirTroca.js";
 
-const pedirTroca = () => {
-    const modal = new bootstrap.Modal(document.getElementById('trocaModal'));
-    modal.show();
-};
+const modalPedirTroca = new ModalPedirTroca();
 
 const idCliente = localStorage.getItem('idcliente');
 
@@ -47,7 +45,9 @@ pedidos.forEach(pedido => {
     `;
 
     const button = div.getElementsByClassName('botao-troca')[0];
-    button.onclick = () => pedirTroca();
+    button.onclick = () => {
+        modalPedirTroca.show(pedido)  
+    };
 
     const containerItensPedido = document.createElement("div");
     containerItensPedido.className = "ps-4";
@@ -69,7 +69,9 @@ pedidos.forEach(pedido => {
         `
 
         const button = div2.getElementsByClassName('botao-troca')[0];
-        button.onclick = () => pedirTroca();
+        button.onclick = () => {
+            modalPedirTroca.show(pedido)  
+        };
 
         containerItensPedido.append(div2);
     });
