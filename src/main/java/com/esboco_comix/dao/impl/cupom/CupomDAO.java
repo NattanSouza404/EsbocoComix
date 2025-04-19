@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +71,41 @@ public class CupomDAO {
             pst.close();
         }
 
+    }
+
+    public Cupom inserir(Cupom c) throws Exception {
+        Connection connection = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = connection.prepareStatement(
+            "INSERT INTO cupons("+
+                "cup_cli_id, cup_is_ativo, cup_is_promocional, cup_is_troca, cup_valor) "+
+                "VALUES (?, ?, ?, ?, ?) ",
+                Statement.RETURN_GENERATED_KEYS
+        );
+
+        try {
+            pst.setInt(1, c.getIdCliente());
+            pst.setBoolean(2, true);
+            pst.setBoolean(3, c.isPromocional());
+            pst.setBoolean(4, c.isTroca());
+            pst.setDouble(5, c.getValor());
+    
+            if (pst.executeUpdate() == 0){
+                throw new Exception("Inserção de cupom não executada!");
+            }
+            ResultSet rs = pst.getGeneratedKeys();
+            Cupom cupomInserido = null;
+            if (rs.next()){
+                cupomInserido = consultarByID(rs.getInt(1));
+            }
+
+            return cupomInserido;
+        } catch (Exception ex){
+            throw ex;
+        } finally {
+            connection.close();
+            pst.close();
+        }
     }
 
     private Cupom mapearEntidade(ResultSet rs) throws SQLException {
