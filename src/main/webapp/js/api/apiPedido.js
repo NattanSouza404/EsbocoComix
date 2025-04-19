@@ -1,6 +1,11 @@
 export async function retornarPedidos(idCliente){
     try {
-        const response = await fetch("/pedido?idcliente="+idCliente);
+
+        let url = '/pedido';
+        if (idCliente !== null && idCliente !== undefined){
+            url += '?idcliente='+idCliente;
+        }
+        const response = await fetch(url);
         return await response.json();
     } catch (error) {
         console.error('Erro buscando dados:', error);
