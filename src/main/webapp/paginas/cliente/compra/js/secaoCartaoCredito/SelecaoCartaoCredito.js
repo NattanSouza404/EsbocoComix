@@ -26,6 +26,10 @@ export class SelecaoCartaoCredito extends HTMLDivElement {
             option.value = cartao.id;
             option.textContent = `${cartao.numero}: (${cartao.bandeiraCartao})`;
 
+            if (cartao.isPreferencial === true){
+                option.selected = true;
+            }
+
             select.append(option);
         });
     }

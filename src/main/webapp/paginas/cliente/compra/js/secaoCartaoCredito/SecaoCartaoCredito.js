@@ -6,9 +6,16 @@ export class SecaoCartaoCredito {
         this.cartoesCredito = cartoesCredito;
 
         this.containerCartoes = document.getElementById('cartoes');
+        this.btnAdicionarCartao = document.getElementById('btn-adicionar-cartao');
+
+        if (!Array.isArray(cartoesCredito) || cartoesCredito.length == 0){
+            this.containerCartoes.innerHTML = '<p>Você não possui nenhum cartão de crédito.</p>'
+            this.btnAdicionarCartao.parentNode.removeChild(this.btnAdicionarCartao);
+            return;
+        }
 
         this.adicionarCartaoCredito();
-        document.getElementById('btn-adicionar-cartao').onclick = () => this.adicionarCartaoCredito();
+        this.btnAdicionarCartao.onclick = () => this.adicionarCartaoCredito();
     }
 
     adicionarCartaoCredito(){

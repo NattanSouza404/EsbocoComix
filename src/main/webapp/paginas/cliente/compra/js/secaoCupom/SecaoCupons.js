@@ -5,12 +5,18 @@ export class SecaoCupom {
     constructor(cupons){
 
         this.cupons = cupons;
-
         this.containerCupons = document.getElementById('cupons');
+        this.btnAdicionarCupom = document.getElementById('btn-adicionar-cupom');
+
+        if (!Array.isArray(cupons) || cupons.length == 0){
+            this.containerCupons.innerHTML = '<p>Você não possui nenhum cupom.</p>'
+            this.btnAdicionarCupom.parentNode.removeChild(this.btnAdicionarCupom);
+            return;
+        }
 
         this.adicionarCupom();
 
-        document.getElementById('btn-adicionar-cupom').onclick = () => this.adicionarCupom();
+        this.btnAdicionarCupom.onclick = () => this.adicionarCupom();
     }
 
     adicionarCupom(){
