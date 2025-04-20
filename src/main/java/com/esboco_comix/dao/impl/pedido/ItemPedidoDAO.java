@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.model.entidades.ItemPedido;
+import com.esboco_comix.model.enuns.StatusItemPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class ItemPedidoDAO {
@@ -106,7 +107,71 @@ public class ItemPedidoDAO {
         item.setIdPedido(rs.getInt("ite_ped_id"));
         item.setIdQuadrinho(rs.getInt("ite_qua_id"));
         item.setQuantidade(rs.getInt("ite_quantidade"));
+
+        String status = rs.getString("ite_status");
+        if (status != null){
+            item.setStatus(StatusItemPedido.valueOf(status));
+        }
+
         return item;
+    }
+
+    public List<ItemPedido> consultarPedidosTroca() throws Exception {
+        Connection connection = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = connection.prepareStatement(
+            "SELECT * FROM itens_pedido WHERE ite_status IS NOT NULL;",
+            ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_READ_ONLY
+        );
+
+        try {
+
+            ResultSet rs = pst.executeQuery();
+    
+            if (!rs.next()) {
+                throw new Exception("Nenhum pedido de troca encontrado.");
+            }
+            rs.beforeFirst();
+    
+            List<ItemPedido> itens = new ArrayList<>();
+            while(rs.next()){
+                itens.add(mapearEntidade(rs));
+            }
+
+            return itens;    
+        } catch (Exception e){
+            throw e;
+        } finally {
+            connection.close();
+            pst.close();
+        }
+    }
+
+    public ItemPedido atualizarStatus(ItemPedido item) throws Exception {
+        Connection conn = ConexaoFactory.getConexao(); 
+    
+        PreparedStatement pst = conn.prepareStatement(
+            "UPDATE itens_pedido set "+
+                "ite_status = ? WHERE ite_ped_id = ? AND ite_qua_id = ?;"
+        );
+    
+        try {
+            pst.setString(1, item.getStatus().name());
+            pst.setInt(2, item.getIdPedido());
+            pst.setInt(3, item.getIdQuadrinho());
+
+            if (pst.executeUpdate() == 0) {
+                throw new Exception("Atualização não foi sucedida!");
+            }
+
+            return consultarByID(item.getIdPedido(), item.getIdQuadrinho());
+        } catch (Exception e){
+            throw e;
+        } finally {
+            pst.close();
+            conn.close();
+        } 
     }
 
 }
