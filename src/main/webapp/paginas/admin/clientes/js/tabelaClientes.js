@@ -52,7 +52,7 @@ export default class TabelaClientes extends HTMLTableElement {
                 <td>${c.cpf}</td>
                 <td>${c.email}</td>
                 <td>${c.ranking}</td>
-                <td>${(c.ativo === true) ? 'Ativo' : "Inativo"}</td>
+                <td>${(c.isAtivo === true) ? 'Ativo' : "Inativo"}</td>
             `;
         
             let td = document.createElement('td');
