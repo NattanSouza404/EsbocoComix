@@ -44,11 +44,13 @@ export class ContainerNav extends HTMLDivElement {
                             <button class="btn position-relative dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="/img/bell.svg" alt="Bell Icon" width="30">
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notificationCount">
-                                    1
+                                    3
                                 </span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" id="notificationsDropdown">
-                                <li class="dropdown-item">Notificação!</li>
+                                <li class="dropdown-item">"Conancraft" removido do carrinho: Fora de estoque!</li>
+                                <li class="dropdown-item">Bloqueio do "Menino Maluquinho" irá expirar em 5 minutos!</li>
+                                <li class="dropdown-item">Troca para o pedido #61 aceita!</li>
                             </ul>
                         </div>
                     </li>
