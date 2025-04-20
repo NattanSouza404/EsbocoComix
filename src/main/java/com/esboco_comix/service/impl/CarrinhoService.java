@@ -11,8 +11,8 @@ public class CarrinhoService {
         Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
 
         if (carrinho == null) {
-            carrinho = new Carrinho();
             session.setAttribute("carrinho", new Carrinho());
+            carrinho = (Carrinho) session.getAttribute("carrinho");
         }
 
         return carrinho; 
