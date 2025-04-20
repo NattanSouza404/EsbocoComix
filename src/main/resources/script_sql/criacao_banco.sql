@@ -93,6 +93,7 @@ CREATE TABLE itens_pedido (
     ite_ped_id  NUMERIC(9),
     ite_qua_id NUMERIC(6),
     ite_quantidade NUMERIC(2) NOT NULL,
+    ite_status VARCHAR(20),
 	PRIMARY KEY(ite_ped_id, ite_qua_id)
 );
 

@@ -142,7 +142,8 @@ ALTER TABLE grupos_precificacao ADD CONSTRAINT pk_gpr PRIMARY KEY ( gpr_id );
 CREATE TABLE itens_pedido (
     ite_ped_id     NUMBER(9) NOT NULL,
     ite_qua_id     NUMBER(6) NOT NULL,
-    ite_quantidade NUMBER(2) NOT NULL
+    ite_quantidade NUMBER(2) NOT NULL,
+    ite_status VARCHAR2(20)
 )
 LOGGING;
 
