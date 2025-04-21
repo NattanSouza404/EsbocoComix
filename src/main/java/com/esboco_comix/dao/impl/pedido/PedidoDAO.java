@@ -54,7 +54,7 @@ public class PedidoDAO {
         Connection conn = ConexaoFactory.getConexao();
 
         PreparedStatement pst = conn.prepareStatement(
-            "SELECT * FROM pedidos;",
+            "SELECT * FROM pedidos ORDER BY ped_data DESC;",
             ResultSet.TYPE_SCROLL_INSENSITIVE,
             ResultSet.CONCUR_READ_ONLY
         );
@@ -127,7 +127,7 @@ public class PedidoDAO {
         Connection conn = ConexaoFactory.getConexao();
 
         PreparedStatement pst = conn.prepareStatement(
-            "SELECT * FROM pedidos where ped_cli_id = ?;",
+            "SELECT * FROM pedidos where ped_cli_id = ? ORDER BY ped_data DESC;;",
             ResultSet.TYPE_SCROLL_INSENSITIVE,
             ResultSet.CONCUR_READ_ONLY
         );
