@@ -3,15 +3,14 @@ package com.esboco_comix.service.impl.pedido;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.controller.session.Carrinho;
 import com.esboco_comix.dao.impl.cartao_credito.CartaoCreditoDAO;
 import com.esboco_comix.dao.impl.cupom.CupomDAO;
 import com.esboco_comix.dao.impl.quadrinho.QuadrinhoDAO;
-import com.esboco_comix.dto.ItemCarrinhoDTO;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.CartaoCreditoPedido;
 import com.esboco_comix.model.entidades.Cupom;
 import com.esboco_comix.model.entidades.CupomPedido;
+import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.model.entidades.Quadrinho;
 
@@ -62,11 +61,11 @@ public class CalculadoraPedido {
         return valorTotal;
     }
 
-    public double calcularValorTotalPedido(Pedido pedido, Carrinho carrinho) throws Exception {
+    public double calcularValorTotalPedido(Pedido pedido, List<ItemPedido> itensPedido) throws Exception {
 
         double valorTotal = 0;
 
-        for (ItemCarrinhoDTO item : carrinho.getItensCarrinho()) {
+        for (ItemPedido item : itensPedido) {
             Quadrinho quadrinho = quadrinhoDAO.consultarByID(item.getIdQuadrinho());
             valorTotal += quadrinho.getPreco() * item.getQuantidade();
         }
