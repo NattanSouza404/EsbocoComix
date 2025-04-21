@@ -43,18 +43,21 @@ public class Carrinho {
     }
 
     public List<ItemPedido> esvaziar() {
-        List<ItemPedido> itensPedido = new ArrayList<>();
-        for (ItemCarrinhoDTO itemCarrinhoDTO : itensCarrinho) {
-            itensPedido.add(itemCarrinhoDTO.toItemPedido());
-        }
-
+        List<ItemPedido> itensPedido = getItensPedido();
         itensCarrinho.clear();
-
         return itensPedido;
     }
 
     public boolean isVazio() {
         return itensCarrinho.isEmpty();
+    }
+
+    public List<ItemPedido> getItensPedido(){
+        List<ItemPedido> itensPedido = new ArrayList<>();
+        for (ItemCarrinhoDTO itemCarrinhoDTO : itensCarrinho) {
+            itensPedido.add(itemCarrinhoDTO.toItemPedido());
+        }
+        return itensPedido;
     }
 
 }
