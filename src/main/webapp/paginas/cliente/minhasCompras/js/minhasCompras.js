@@ -1,4 +1,4 @@
-import { formatarPreco } from "/js/script.js";
+import { formatarPreco, formatarDateTime } from "/js/script.js";
 import { retornarPedidos } from "/js/api/apiPedido.js";
 import ModalPedirTroca from "./modalPedirTroca.js";
 
@@ -7,17 +7,6 @@ const modalPedirTroca = new ModalPedirTroca();
 const idCliente = localStorage.getItem('idcliente');
 
 const pedidos = await retornarPedidos(idCliente);
-
-let valorTotal = 0;
-
-pedidos.forEach(pedido => {
-    pedido.itensPedido.forEach(item => {
-        valorTotal += item.quantidade * 2;
-    });
-
-    pedido.data = '02/02/2022';
-}
-);
 
 pedidos.forEach(pedido => {
     const div = document.createElement('div');
@@ -28,7 +17,7 @@ pedidos.forEach(pedido => {
                 <h5 class="mb-3">Código: <span class="fw-normal">#${pedido.id}</span></h5>
                 <div class="row">
                     <div class="col-sm-6">
-                        <p class="mb-1"><strong>Valor total:</strong> ${formatarPreco(valorTotal)}</p>
+                        <p class="mb-1"><strong>Valor total:</strong> ${formatarPreco(pedido.valorTotal)}</p>
                         <p class="mb-1"><strong>Frete:</strong> ${formatarPreco(pedido.valorFrete)}</p>
                     </div>
                     <div class="col-sm-6">
@@ -36,7 +25,7 @@ pedidos.forEach(pedido => {
                         <p class="mb-1"><strong>Status:</strong> ${pedido.status}</p>
                     </div>
                 </div>
-                <p class="mt-2"><strong>Data:</strong> ${pedido.data}</p>
+                <p class="mt-2"><strong>Data:</strong> ${formatarDateTime(pedido.data)}</p>
                 <div>
                     <button class="btn btn-light btn-sm botao-troca">Pedir Troca</button>
                 </div>
@@ -70,7 +59,7 @@ pedidos.forEach(pedido => {
 
         const button = div2.getElementsByClassName('botao-troca')[0];
         button.onclick = () => {
-            modalPedirTroca.show(pedido)  
+            modalPedirTroca.abrir(item)  
         };
 
         containerItensPedido.append(div2);

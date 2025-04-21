@@ -1,3 +1,4 @@
+import { atualizarStatusItemPedido } from "/js/api/apiPedidoTroca.js";
 import { atualizarStatusPedido } from "/js/api/apiPedido.js";
 import { Modal } from "/js/componentes/modal.js";
 
@@ -8,15 +9,29 @@ export default class ModalPedirTroca extends Modal {
         super('modal-pedir-troca', "Pedir Troca", conteudoModal);
 
         this.conteudoModal = conteudoModal;
-
-        this.conteudoModal.querySelector('button').onclick = () => {
-            this.enviarFormulario()
-        }
     }
 
     show(pedido){
         const idPedido = this.conteudoModal.querySelector('#pedido-id');
         idPedido.value = pedido.id;
+
+        this.conteudoModal.querySelector('button').onclick = () => {
+            this.enviarFormulario()
+        }
+
+        super.show();
+    }
+
+    abrir(item){
+        const idItem = this.conteudoModal.querySelector('#pedido-id');
+        idItem.value = item.idPedido+" - "+item.idQuadrinho;
+
+        this.item = item;
+
+        this.conteudoModal.querySelector('button').onclick = () => {
+            this.enviarFormularioItemPedido()
+        }
+
         super.show();
     }
     
@@ -27,6 +42,16 @@ export default class ModalPedirTroca extends Modal {
         };
 
         atualizarStatusPedido(pedido);
+    }
+
+    enviarFormularioItemPedido(){
+        const item = {
+            idPedido: this.item.idPedido,
+            idQuadrinho: this.item.idQuadrinho,
+            status: "TROCA_SOLICITADA"
+        };
+    
+        atualizarStatusItemPedido(item);
     }
 
 }
