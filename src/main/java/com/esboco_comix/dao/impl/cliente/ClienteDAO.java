@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.dao.utils.DAOUtil;
+import com.esboco_comix.dto.FiltrarClienteDTO;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Telefone;
 import com.esboco_comix.model.enuns.Genero;
@@ -63,7 +63,6 @@ public class ClienteDAO {
             pst.close();
         }
     }
-
 
     public List<Cliente> consultarTodos() throws Exception {
         Connection conn = ConexaoFactory.getConexao();
@@ -179,32 +178,68 @@ public class ClienteDAO {
         }
     }
 
-    public List<Cliente> consultarTodos(Cliente filtro) throws Exception {
+    /***
+     * Operador ILIKE somente suportado pelo PostgreSQL
+     */
+    public List<Cliente> consultarTodos(FiltrarClienteDTO filtro) throws Exception {
         Connection conn = ConexaoFactory.getConexao();
 
+        StringBuilder query = new StringBuilder("SELECT * FROM clientes WHERE 1=1");
+
+        List<Object> params = new ArrayList<>();
+
+        if (filtro.getNome() != null) {
+            query.append(" AND cli_nome ILIKE ?");
+            params.add("%" + filtro.getNome() + "%");
+        }
+
+        if (filtro.getGenero() != null) {
+            query.append(" AND cli_genero = ?");
+            params.add(filtro.getGenero());
+        }
+
+        if (filtro.getDataNascimento() != null) {
+            query.append(" AND cli_dt_nascimento = ?");
+            params.add(filtro.getDataNascimento());
+        }
+
+        if (filtro.getCpf() != null) {
+            query.append(" AND cli_cpf LIKE ?");
+            params.add("%" + filtro.getCpf() + "%");
+        }
+
+        if (filtro.getEmail() != null) {
+            query.append(" AND cli_email ILIKE ?");
+            params.add("%" + filtro.getEmail() + "%");
+        }
+
+        if (filtro.getIsAtivo() != null) {
+            query.append(" AND cli_is_ativo = ?");
+            params.add(filtro.getIsAtivo());
+        }
+
+        if (filtro.getRanking() != null) {
+            query.append(" AND cli_ranking = ?");
+            params.add(filtro.getRanking());
+        }
+
         PreparedStatement pst = conn.prepareStatement(
-            "SELECT * FROM clientes " +
-                "WHERE (cli_nome LIKE COALESCE(?, cli_nome)) "+
-                "AND (cli_genero LIKE COALESCE(?, cli_genero)) "+
-                "AND (cli_dt_nascimento = COALESCE(?, cli_dt_nascimento)) "+
-                "AND (cli_cpf LIKE COALESCE(?, cli_cpf)) "+
-                "AND (cli_email LIKE COALESCE(?, cli_email)) "+
-                "AND (cli_ranking = COALESCE(?, cli_ranking)) "+
-                "AND (cli_is_ativo = ? OR ? IS NULL) ",
+            query.toString(),
             ResultSet.TYPE_SCROLL_INSENSITIVE,
             ResultSet.CONCUR_READ_ONLY
         );
-
+        
         try {
-            DAOUtil.setParametroComCoringa(pst, 1, filtro.getNome());
-            DAOUtil.setParametroComCoringa(pst, 2, filtro.getGenero());
-            DAOUtil.setParametroComCoringa(pst, 3, filtro.getDataNascimento());
-            DAOUtil.setParametroComCoringa(pst, 4, filtro.getCpf());
-            DAOUtil.setParametroComCoringa(pst, 5, filtro.getEmail());
-            DAOUtil.setParametroComCoringa(pst, 6, filtro.getRanking());
 
-            pst.setObject(7, filtro.getIsAtivo(), java.sql.Types.BOOLEAN);
-            pst.setObject(8, filtro.getIsAtivo(), java.sql.Types.BOOLEAN);
+            for (int i = 0; i < params.size(); i++) {
+               
+                if (params.get(i) instanceof Enum){
+                    pst.setObject(i + 1, ((Enum<?>) params.get(i)).name());
+                    continue;
+                }
+
+                pst.setObject(i + 1, params.get(i));
+            }
 
             ResultSet rs = pst.executeQuery();
 

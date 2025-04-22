@@ -3,11 +3,13 @@ package com.esboco_comix.service.impl;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.esboco_comix.dao.impl.cliente.ClienteDAO;
 import com.esboco_comix.dto.AlterarSenhaDTO;
 import com.esboco_comix.dto.CadastrarClienteDTO;
+import com.esboco_comix.dto.FiltrarClienteDTO;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
@@ -66,44 +68,8 @@ public class ClienteService {
         return clienteDAO.consultarTodos();
     }
 
-    public List<Cliente> consultarTodos(Map<String, String> parametrosFiltro) throws Exception {
-        Cliente filtro = new Cliente();
-        String nome = parametrosFiltro.get("nome");
-        if (nome != null && nome.length() > 0){
-            filtro.setNome(nome);
-        }
-
-        String cpf = parametrosFiltro.get("cpf");
-        if (cpf != null && cpf.length() > 0){
-            filtro.setCpf(cpf);
-        }
-
-        String dataNascimento = parametrosFiltro.get("dataNascimento");
-        if (dataNascimento != null && dataNascimento.length() > 0){
-            filtro.setDataNascimento(LocalDate.parse(dataNascimento));
-        }
-
-        String genero = parametrosFiltro.get("genero");
-        if (genero != null && genero.length() > 0){
-            filtro.setGenero(Genero.valueOf(genero));
-        }
-
-        String email = parametrosFiltro.get("email");
-        if (email != null && email.length() > 0){
-            filtro.setEmail(email);
-        }
-
-        String ranking = parametrosFiltro.get("ranking");
-        if (ranking != null && ranking.length() > 0 && !ranking.equals("undefined")){
-            filtro.setRanking(Integer.parseInt(ranking));
-        }
-
-        String isAtivo = parametrosFiltro.get("isAtivo");
-        if (isAtivo != null && isAtivo.length() > 0){
-            filtro.setIsAtivo(Boolean.valueOf(isAtivo));
-        }
-
-        return clienteDAO.consultarTodos(filtro);
+    public List<Cliente> consultarTodos(HttpServletRequest req) throws Exception {
+        return clienteDAO.consultarTodos(mapearToFiltrarClienteDTO(req));
     }
 
     public Cliente consultarByID(int id) throws Exception {
@@ -143,6 +109,47 @@ public class ClienteService {
         String saltSenha = CriptografadorSenha.generateSalt();
         c.setHashSenha(CriptografadorSenha.hashSenha(senhaNova, saltSenha));
         c.setSaltSenha(saltSenha);
+    }
+
+    private FiltrarClienteDTO mapearToFiltrarClienteDTO(HttpServletRequest req) {
+        FiltrarClienteDTO filtro = new FiltrarClienteDTO();
+        
+        String nome = req.getParameter("nome");
+        if (!nome.isBlank()){
+            filtro.setNome(nome);
+        }
+
+        String cpf = req.getParameter("cpf");
+        if (!cpf.isBlank()){
+            filtro.setCpf(cpf);
+        }
+
+        String dataNascimento = req.getParameter("dataNascimento");
+        if (!dataNascimento.isBlank()){
+            filtro.setDataNascimento(LocalDate.parse(dataNascimento));
+        }
+
+        String genero = req.getParameter("genero");
+        if (!genero.isBlank()){
+            filtro.setGenero(Genero.valueOf(genero));
+        }
+
+        String email = req.getParameter("email");
+        if (!email.isBlank()){
+            filtro.setEmail(email);
+        }
+
+        String ranking = req.getParameter("ranking");
+        if (!ranking.isBlank()){
+            filtro.setRanking(Integer.parseInt(ranking));
+        }
+
+        String isAtivo = req.getParameter("isAtivo");
+        if (!isAtivo.isBlank()){
+            filtro.setIsAtivo(Boolean.valueOf(isAtivo));
+        }
+
+        return filtro;
     }
 
 }
