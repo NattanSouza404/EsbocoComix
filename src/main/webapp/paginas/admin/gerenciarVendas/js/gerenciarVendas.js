@@ -1,14 +1,12 @@
 import { formatarPreco, formatarDateTime } from "/js/script.js";
-import { retornarPedidos, atualizarStatusPedido } from "/js/api/apiPedido.js";
-import { retornarPedidosTroca } from "/js/api/apiPedidoTroca.js";
-import { atualizarStatusItemPedido} from "/js/api/apiPedidoTroca.js";
+import { retornarPedidos, atualizarStatusPedido, atualizarStatusItemPedido } from "/js/api/apiPedido.js";
 
 const tabelaBody = document.getElementById("orderTable");
 
 const pedidos = await retornarPedidos();
 
 let contador = 1;
-pedidos.forEach(pedido => {
+pedidos.pedidos.forEach(pedido => {
     const tr = document.createElement('tr');
 
     tr.innerHTML = `
@@ -56,12 +54,10 @@ pedidos.forEach(pedido => {
 
 const tabelaPedidoTroca = document.getElementById('tabela-pedido-troca');
 
-const pedidosTroca = await retornarPedidosTroca();
-
 contador = 1;
 
-if (Array.isArray(pedidosTroca) && pedidosTroca.length != 0){
-    pedidosTroca.forEach(pedidoTroca => {
+if (Array.isArray(pedidos.itensPedido) && pedidos.itensPedido != 0){
+    pedidos.itensPedido.forEach(pedidoTroca => {
         const tr = document.createElement('tr');
         
         tr.innerHTML = `

@@ -1,5 +1,7 @@
 package com.esboco_comix.dto;
 
+import java.util.List;
+
 import com.esboco_comix.model.entidades.Pedido;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
@@ -14,4 +16,5 @@ public class PedidoDTO {
     
     private String nomeCliente;
     private double valorTotal;
+    private List<ItemPedidoDTO> itensPedidoDTO;
 }

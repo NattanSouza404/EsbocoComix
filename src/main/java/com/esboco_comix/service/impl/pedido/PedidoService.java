@@ -13,12 +13,16 @@ import com.esboco_comix.dao.impl.pedido.CartaoCreditoPedidoDAO;
 import com.esboco_comix.dao.impl.pedido.CupomPedidoDAO;
 import com.esboco_comix.dao.impl.pedido.ItemPedidoDAO;
 import com.esboco_comix.dao.impl.pedido.PedidoDAO;
+import com.esboco_comix.dao.impl.quadrinho.QuadrinhoDAO;
+import com.esboco_comix.dto.ConsultarPedidosDTO;
+import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoDTO;
 import com.esboco_comix.model.entidades.CartaoCreditoPedido;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.CupomPedido;
 import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
+import com.esboco_comix.model.entidades.Quadrinho;
 import com.esboco_comix.model.enuns.StatusPedido;
 import com.esboco_comix.service.impl.CarrinhoService;
 
@@ -32,6 +36,7 @@ public class PedidoService {
     private CartaoCreditoPedidoDAO cartaoCreditoPedidoDAO = new CartaoCreditoPedidoDAO();
     private CupomPedidoDAO cupomPedidoDAO = new CupomPedidoDAO();
     private ClienteDAO clienteDAO = new ClienteDAO();
+    private QuadrinhoDAO quadrinhoDAO = new QuadrinhoDAO();
 
     public Pedido inserir(Pedido pedido, HttpSession session) throws Exception {
 
@@ -86,14 +91,19 @@ public class PedidoService {
         return pedidoInserido;
     }
 
-    public List<PedidoDTO> consultarTodos() throws Exception {
+    public ConsultarPedidosDTO consultarTodos() throws Exception {
+        ConsultarPedidosDTO dto = new ConsultarPedidosDTO();
+
         List<PedidoDTO> pedidosDTO = new ArrayList<>();
 
         for (Pedido p : pedidoDAO.consultarTodos()) {
             pedidosDTO.add(montarDTO(p));
         }
 
-        return pedidosDTO;
+        dto.setPedidos(pedidosDTO);
+        dto.setItensPedido(consultarPedidosTroca());
+
+        return dto;
     }
 
     public List<PedidoDTO> consultarPorIDCliente(int idCliente) throws Exception {
@@ -106,19 +116,56 @@ public class PedidoService {
         return pedidos;
     }
 
-    public Pedido atualizarStatus(Pedido pedido) throws Exception {
-        return pedidoDAO.atualizarStatus(pedido);
+    public Pedido atualizarStatus(PedidoDTO pedido) throws Exception {
+        return pedidoDAO.atualizarStatus(
+            pedido.getPedido()
+        );
+    }
+
+    public ItemPedido atualizarStatus(ItemPedidoDTO itemPedidoDTO) throws Exception {
+        return itemPedidoDAO.atualizarStatus(
+            itemPedidoDTO.getItemPedido()
+        );
+    }
+
+    public List<ItemPedidoDTO> consultarPedidosTroca() throws Exception{
+        List<ItemPedidoDTO> itens = new ArrayList<>();
+
+        for (ItemPedido itemPedido : itemPedidoDAO.consultarPedidosTroca()) {
+            Pedido pedido = pedidoDAO.consultarByID(itemPedido.getIdPedido());
+            Cliente cliente = clienteDAO.consultarByID(pedido.getIdCliente());
+            Quadrinho quadrinho = quadrinhoDAO.consultarByID(itemPedido.getIdQuadrinho());
+
+            ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO();
+            itemPedidoDTO.setItemPedido(itemPedido);
+
+            itemPedidoDTO.setNomeCliente(cliente.getNome());
+            itemPedidoDTO.setNomeQuadrinho(quadrinho.getTitulo());
+
+            itens.add(itemPedidoDTO);
+        }
+
+        return itens;
     }
 
     private PedidoDTO montarDTO(Pedido pedido) throws Exception {
-        pedido.setItensPedido(itemPedidoDAO.consultarByIDPedido(pedido.getId()));
+        List<ItemPedidoDTO> itemPedidoDTOs = new ArrayList<>();
+        List<ItemPedido> itensPedido = itemPedidoDAO.consultarByIDPedido(pedido.getId()); 
+        
+        for (ItemPedido itemPedido : itensPedido) {
+            ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO();
+            itemPedidoDTO.setItemPedido(itemPedido);
+            itemPedidoDTO.setNomeQuadrinho(quadrinhoDAO.consultarByID(itemPedido.getIdQuadrinho()).getTitulo());
+            itemPedidoDTOs.add(itemPedidoDTO);
+        }
 
         Cliente cliente = clienteDAO.consultarByID(pedido.getIdCliente());
 
         PedidoDTO pedidoDTO = new PedidoDTO();
         pedidoDTO.setPedido(pedido);
         pedidoDTO.setNomeCliente(cliente.getNome());
-        pedidoDTO.setValorTotal(calculadora.calcularValorTotalPedido(pedido, pedido.getItensPedido()));
+        pedidoDTO.setValorTotal(calculadora.calcularValorTotalPedido(pedido, itensPedido));
+        pedidoDTO.setItensPedidoDTO(itemPedidoDTOs);
 
         return pedidoDTO;
     }

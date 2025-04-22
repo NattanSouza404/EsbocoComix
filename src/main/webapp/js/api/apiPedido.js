@@ -52,12 +52,43 @@ export async function atualizarStatusPedido(pedido){
             return;
         }
 
-        let url = "/pedido?opcao=atualizarstatus";
+        let url = "/pedido?opcao=atualizarstatuspedido";
 
         const option = {
             method: 'PUT',
             headers:{'Content-Type': 'application/json'},
             body: JSON.stringify(pedido)
+        }
+
+        const result = await fetch(url, option);
+
+        if (result.status === 200) {
+            alert('Atualizado com sucesso!');
+        }
+        else {
+            const resposta = await result.json();
+            alert("Erro ao atualizar: "+resposta.erro);
+        }
+
+    } catch (error){
+        console.error('Erro ao atualizar:', error);
+    }
+}
+
+export async function atualizarStatusItemPedido(item){
+    try {
+        const confirmacaoUsuario = confirm("Deseja mesmo pedir troca para esse item?"); 
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+
+        let url = "/pedido?opcao=atualizarstatusitem";
+
+        const option = {
+            method: 'PUT',
+            headers:{'Content-Type': 'application/json'},
+            body: JSON.stringify(item)
         }
 
         const result = await fetch(url, option);

@@ -19,7 +19,6 @@ import com.esboco_comix.controller.impl.ClienteController;
 import com.esboco_comix.controller.impl.CupomController;
 import com.esboco_comix.controller.impl.EnderecoController;
 import com.esboco_comix.controller.impl.PedidoController;
-import com.esboco_comix.controller.impl.PedidoTrocaController;
 import com.esboco_comix.controller.impl.QuadrinhoController;
 
 import lombok.Getter;
@@ -85,9 +84,6 @@ public class Servidor {
 
 		Tomcat.addServlet(context, "apicupom", new CupomController());
 		context.addServletMapping("/cupom", "apicupom");
-
-		Tomcat.addServlet(context, "apipedidotroca", new PedidoTrocaController());
-		context.addServletMapping("/pedidotroca", "apipedidotroca");
 	}
 
 	@Getter
