@@ -21,6 +21,7 @@ export default class TabelaClientes extends HTMLTableElement {
         let tr = document.createElement('tr');
 
         tr.innerHTML = `
+            <th>#</th>
             <th>Nome</th>
             <th>Gênero</th>
             <th>Data de Nascimento</th>
@@ -41,11 +42,14 @@ export default class TabelaClientes extends HTMLTableElement {
             return;
         }
 
+        let contador = 1;
+
         clientes.forEach(c => {
 
             let tableRow = document.createElement('tr');
 
             tableRow.innerHTML = `
+                <td>${contador}</td>
                 <td>${c.nome}</td>
                 <td>${c.genero}</td>
                 <td>${formatarData(c.dataNascimento)}</td>
@@ -87,6 +91,8 @@ export default class TabelaClientes extends HTMLTableElement {
             tableRow.append(td);
         
             this.tBody.append(tableRow); 
+
+            contador++;
         });
         
     }
