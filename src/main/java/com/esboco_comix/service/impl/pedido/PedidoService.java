@@ -1,9 +1,7 @@
 package com.esboco_comix.service.impl.pedido;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,31 +14,38 @@ import com.esboco_comix.dto.ConsultarPedidosDTO;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoDTO;
 import com.esboco_comix.model.entidades.CartaoCreditoPedido;
+import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.CupomPedido;
 import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
-import com.esboco_comix.model.entidades.Quadrinho;
 import com.esboco_comix.model.enuns.StatusItemPedido;
 import com.esboco_comix.model.enuns.StatusPedido;
 import com.esboco_comix.service.impl.CarrinhoService;
+import com.esboco_comix.service.impl.CartaoCreditoService;
 import com.esboco_comix.service.impl.ClienteService;
 import com.esboco_comix.service.impl.CupomService;
 import com.esboco_comix.service.impl.QuadrinhoService;
 
 public class PedidoService {
 
-    private CalculadoraPedido calculadora = new CalculadoraPedido();
-    private PedidoValidator validator = new PedidoValidator(calculadora);
-
     private CarrinhoService carrinhoService = new CarrinhoService();
     private ClienteService clienteService = new ClienteService();
-    private QuadrinhoService quadrinhoService = new QuadrinhoService();
     private CupomService cupomService = new CupomService();
-
+    private QuadrinhoService quadrinhoService = new QuadrinhoService();
+    private CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
+    
     private PedidoDAO pedidoDAO = new PedidoDAO();
     private ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
     private CartaoCreditoPedidoDAO cartaoCreditoPedidoDAO = new CartaoCreditoPedidoDAO();
     private CupomPedidoDAO cupomPedidoDAO = new CupomPedidoDAO();
+
+    private CalculadoraPedido calculadora = new CalculadoraPedido(
+        this.cupomService,
+        this.quadrinhoService,
+        this.cartaoCreditoService
+    );
+
+    private PedidoValidator validator = new PedidoValidator(calculadora);
 
     public Pedido inserir(Pedido pedido, HttpSession session) throws Exception {
 
@@ -79,67 +84,62 @@ public class PedidoService {
     }
 
     public ConsultarPedidosDTO consultarTodos() throws Exception {
+        List<PedidoDTO> pedidoDTOs = pedidoDAO.consultarTodos();
+
+        for (PedidoDTO pedidoDTO : pedidoDTOs) {
+            pedidoDTO.setValorTotal(calculadora.calcularValorTotalPedido(pedidoDTO.getPedido(), pedidoDTO.getPedido().getItensPedido()));
+        }
+
         return new ConsultarPedidosDTO(
-            pedidoDAO.consultarTodos(),
+            pedidoDTOs,
             itemPedidoDAO.consultarPedidosTroca()
         );
     }
 
     public List<PedidoDTO> consultarPorIDCliente(int idCliente) throws Exception {
-        List<PedidoDTO> pedidoDTO = pedidoDAO.consultarByIDCliente(idCliente);
+        List<PedidoDTO> pedidosDTO = pedidoDAO.consultarByIDCliente(idCliente);
 
-        Map<Integer, List<ItemPedidoDTO>> itensMap = new HashMap<>();
-
-        for (ItemPedidoDTO itemPedidoDTO : itemPedidoDAO.consultarByIDCliente(idCliente)) {
-            int idPedido = itemPedidoDTO.getItemPedido().getIdPedido();
-            
-            if (itensMap.get(idPedido) == null){
-                itensMap.put(idPedido, 
-                    Arrays.asList(itemPedidoDTO)
-                );
-                continue;
-            }
-
-            itensMap.get(idPedido)
-                .add(itemPedidoDTO);
+        for (PedidoDTO p : pedidosDTO) {
+            p.setValorTotal(calculadora.calcularValorTotalPedido(p.getPedido(), p.getPedido().getItensPedido()));
         }
 
-        for (PedidoDTO p : pedidoDTO) {
-            p.setItensPedidoDTO(
-                itensMap.get(p.getPedido().getId())
-            );
-        }
-
-        return pedidoDTO;
+        return pedidosDTO;
     }
 
-    public Pedido atualizarStatus(PedidoDTO pedido) throws Exception {
-        if (pedido.getPedido().getStatus().equals(StatusPedido.TROCA_ACEITA)){
-            List<ItemPedido> itensPedido = itemPedidoDAO.consultarByIDPedido(pedido.getPedido().getId());
+    public Pedido atualizarStatus(PedidoDTO pedidoDTO) throws Exception {
+        Pedido pedido = pedidoDTO.getPedido();
 
-            List<Quadrinho> quadrinhos = quadrinhoService.consultarTodos();
-            double valor = calculadora.calcularValorTotalPedido(quadrinhos, itensPedido);
+        if (pedidoDTO.getPedido().getStatus().equals(StatusPedido.TROCA_ACEITA)){
+            List<ItemPedidoDTO> itensPedidoDTO = itemPedidoDAO.consultarByIDPedido(pedido.getId());
+            List<ItemPedido> itensPedido = new ArrayList<>();
+            
+            for (ItemPedidoDTO itemPedidoDTO : itensPedidoDTO) {
+                itensPedido.add(itemPedidoDTO.getItemPedido());
+            }
 
-            cupomService.inserir(
-                cupomService.gerarCupomTroca(pedido.getPedido().getIdCliente(), valor)
+            cupomService.gerarCupomTroca(
+                pedido.getIdCliente(),
+                calculadora.calcularValorTotalPedido(pedido, itensPedido)
             );
         }
 
         return pedidoDAO.atualizarStatus(
-            pedido.getPedido()
+            pedido
         );
     }
 
     public ItemPedido atualizarStatus(ItemPedidoDTO itemPedidoDTO) throws Exception {
         if (itemPedidoDTO.getItemPedido().getStatus().equals(StatusItemPedido.TROCA_ACEITA)){
-            Quadrinho quadrinho = quadrinhoService.consultarByID(itemPedidoDTO.getItemPedido().getIdQuadrinho());
-            double valor = quadrinho.getPreco() * itemPedidoDTO.getItemPedido().getQuantidade(); 
+            ItemPedido itemPedido = itemPedidoDTO.getItemPedido();
 
+            Cliente cliente = clienteService.consultarByIDPedido(itemPedido.getIdPedido()); 
+            double valor = calculadora.calcularItemPedido(itemPedido);
+            
             cupomService.inserir(
-                cupomService.gerarCupomTroca(clienteService.consultarByIDPedido(
-                    itemPedidoDTO.getItemPedido().getIdPedido()
-                ).getId(), 
-                valor)
+                cupomService.gerarCupomTroca(
+                    cliente.getId(), 
+                    valor
+                )
             );
         }
 

@@ -7,14 +7,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoDTO;
 import com.esboco_comix.model.entidades.Endereco;
+import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.model.enuns.StatusPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class PedidoDAO {
+
+    private ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
 
     public Pedido inserir(Pedido e) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
@@ -83,6 +88,22 @@ public class PedidoDAO {
                 ));
             }
 
+            Map<Integer, List<ItemPedidoDTO>> itensMap = itemPedidoDAO.consultarTodos();
+
+            for (PedidoDTO p : pedidos) {
+                List<ItemPedidoDTO> itens = itensMap.get(p.getPedido().getId());
+
+                List<ItemPedido> itensPedidos = new ArrayList<>();
+                for (ItemPedidoDTO i : itens) {
+                    itensPedidos.add(
+                        i.getItemPedido()
+                    );
+                }
+
+                p.getPedido().setItensPedido(itensPedidos);
+                p.setItensPedidoDTO(itens);
+            }
+
             return pedidos;
         }
         catch (Exception e){
@@ -125,6 +146,22 @@ public class PedidoDAO {
                     rs.getString("cli_nome"),
                     0.0, null
                 ));
+            }
+
+            Map<Integer, List<ItemPedidoDTO>> itensMap = itemPedidoDAO.consultarByIDCliente(idCliente);
+
+            for (PedidoDTO p : pedidos) {
+                List<ItemPedidoDTO> itens = itensMap.get(p.getPedido().getId());
+
+                List<ItemPedido> itensPedidos = new ArrayList<>();
+                for (ItemPedidoDTO i : itens) {
+                    itensPedidos.add(
+                        i.getItemPedido()
+                    );
+                }
+
+                p.getPedido().setItensPedido(itensPedidos);
+                p.setItensPedidoDTO(itens);
             }
 
             return pedidos;

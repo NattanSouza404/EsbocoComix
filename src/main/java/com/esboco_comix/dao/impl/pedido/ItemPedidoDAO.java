@@ -6,7 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.model.entidades.ItemPedido;
@@ -70,7 +73,7 @@ public class ItemPedidoDAO {
 
     }
 
-    public List<ItemPedido> consultarByIDPedido(int idPedido) throws Exception {
+    public List<ItemPedidoDTO> consultarByIDPedido(int idPedido) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
         PreparedStatement pst = connection.prepareStatement(
@@ -89,9 +92,15 @@ public class ItemPedidoDAO {
             }
             rs.beforeFirst();
     
-            List<ItemPedido> itens = new ArrayList<>();
+            List<ItemPedidoDTO> itens = new ArrayList<>();
             while(rs.next()){
-                itens.add(mapearEntidade(rs));
+                itens.add(
+                    new ItemPedidoDTO(
+                        mapearEntidade(rs),
+                        null,
+                        null
+                    )
+                );
             }
 
             return itens;    
@@ -185,7 +194,7 @@ public class ItemPedidoDAO {
         } 
     }
 
-    public List<ItemPedidoDTO> consultarByIDCliente(int idCliente) throws Exception {
+    public Map<Integer, List<ItemPedidoDTO>> consultarByIDCliente(int idCliente) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
         PreparedStatement pst = connection.prepareStatement(
@@ -209,13 +218,91 @@ public class ItemPedidoDAO {
             }
             rs.beforeFirst();
     
-            List<ItemPedidoDTO> itens = new ArrayList<>();
+            Map<Integer, List<ItemPedidoDTO>> itens = new HashMap<>();
             while(rs.next()){
-                    itens.add(new ItemPedidoDTO(
-                    mapearEntidade(rs),
-                    rs.getString("qua_titulo"),
-                    rs.getString("cli_nome")
-                ));
+
+                int idPedido = rs.getInt("ite_ped_id");
+                
+                if (itens.get(idPedido) == null){
+                    itens.put(
+                        idPedido, 
+                        Arrays.asList(
+                            new ItemPedidoDTO(
+                                mapearEntidade(rs),
+                                rs.getString("qua_titulo"),
+                                rs.getString("cli_nome")
+                            )
+                        )
+                    );
+                    continue;
+                }
+
+                itens.get(idPedido).add(
+                    new ItemPedidoDTO(
+                        mapearEntidade(rs),
+                        rs.getString("qua_titulo"),
+                        rs.getString("cli_nome")
+                    )
+                );
+            }
+
+            return itens;    
+        } catch (Exception e){
+            throw e;
+        } finally {
+            connection.close();
+            pst.close();
+        }
+    }
+
+    public Map<Integer, List<ItemPedidoDTO>> consultarTodos() throws Exception {
+        Connection connection = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = connection.prepareStatement(
+            """
+            SELECT itens_pedido.*, qua_titulo, qua_preco, cli_nome FROM itens_pedido
+                JOIN quadrinhos ON ite_qua_id = qua_id
+                JOIN pedidos ON ite_ped_id = ped_id
+                JOIN clientes ON ped_cli_id = cli_id
+            """,
+            ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_READ_ONLY
+        );
+
+        try {
+            ResultSet rs = pst.executeQuery();
+    
+            if (!rs.next()) {
+                throw new Exception("Nenhum pedido de troca encontrado.");
+            }
+            rs.beforeFirst();
+    
+            Map<Integer, List<ItemPedidoDTO>> itens = new HashMap<>();
+            while(rs.next()){
+
+                int idPedido = rs.getInt("ite_ped_id");
+                
+                if (itens.get(idPedido) == null){
+                    itens.put(
+                        idPedido, 
+                        Arrays.asList(
+                            new ItemPedidoDTO(
+                                mapearEntidade(rs),
+                                rs.getString("qua_titulo"),
+                                rs.getString("cli_nome")
+                            )
+                        )
+                    );
+                    continue;
+                }
+
+                itens.get(idPedido).add(
+                    new ItemPedidoDTO(
+                        mapearEntidade(rs),
+                        rs.getString("qua_titulo"),
+                        rs.getString("cli_nome")
+                    )
+                );
             }
 
             return itens;    
