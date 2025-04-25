@@ -1,5 +1,4 @@
-import { atualizarStatusItemPedido } from "/js/api/apiPedidoTroca.js";
-import { atualizarStatusPedido } from "/js/api/apiPedido.js";
+import { atualizarStatusPedido, atualizarStatusItemPedido } from "/js/api/apiPedido.js";
 import { Modal } from "/js/componentes/modal.js";
 
 export default class ModalPedirTroca extends Modal {
