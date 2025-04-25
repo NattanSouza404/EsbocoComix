@@ -29,4 +29,14 @@ public class CupomService {
         return cupomDAO.inserir(cupom);
     }
 
+    public Cupom gerarCupomTroca(int idCliente, double valor) {
+        Cupom cupom = new Cupom();
+        cupom.setAtivo(true);
+        cupom.setIdCliente(idCliente);
+        cupom.setTroca(true);
+        cupom.setPromocional(false);
+        cupom.setValor(valor);
+        return cupom;
+    }
+
 }
