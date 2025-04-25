@@ -112,20 +112,6 @@ public class ItemPedidoDAO {
         }
     }
 
-    private ItemPedido mapearEntidade(ResultSet rs) throws SQLException {
-        ItemPedido item = new ItemPedido();  
-        item.setIdPedido(rs.getInt("ite_ped_id"));
-        item.setIdQuadrinho(rs.getInt("ite_qua_id"));
-        item.setQuantidade(rs.getInt("ite_quantidade"));
-
-        String status = rs.getString("ite_status");
-        if (status != null){
-            item.setStatus(StatusItemPedido.valueOf(status));
-        }
-
-        return item;
-    }
-
     public List<ItemPedidoDTO> consultarPedidosTroca() throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
@@ -168,6 +154,70 @@ public class ItemPedidoDAO {
         }
     }
 
+    public Map<Integer, List<ItemPedidoDTO>> consultarTodos() throws Exception {
+        Connection connection = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = connection.prepareStatement(
+            """
+            SELECT itens_pedido.*, qua_titulo, qua_preco, cli_nome FROM itens_pedido
+                JOIN quadrinhos ON ite_qua_id = qua_id
+                JOIN pedidos ON ite_ped_id = ped_id
+                JOIN clientes ON ped_cli_id = cli_id
+            """,
+            ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_READ_ONLY
+        );
+
+        try {
+            ResultSet rs = pst.executeQuery();
+    
+            if (!rs.next()) {
+                throw new Exception("Nenhum pedido de troca encontrado.");
+            }
+            rs.beforeFirst();
+
+            return toMap(rs); 
+        } catch (Exception e){
+            throw e;
+        } finally {
+            connection.close();
+            pst.close();
+        }
+    }
+
+    public Map<Integer, List<ItemPedidoDTO>> consultarByIDCliente(int idCliente) throws Exception {
+        Connection connection = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = connection.prepareStatement(
+            """
+            SELECT itens_pedido.*, qua_titulo, qua_preco, cli_nome FROM itens_pedido
+                JOIN quadrinhos ON ite_qua_id = qua_id
+                JOIN pedidos ON ite_ped_id = ped_id
+                JOIN clientes ON ped_cli_id = cli_id
+            WHERE cli_id = ?;
+            """,
+            ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_READ_ONLY
+        );
+
+        try {
+            pst.setInt(1, idCliente);
+            ResultSet rs = pst.executeQuery();
+    
+            if (!rs.next()) {
+                throw new Exception("Nenhum pedido de troca encontrado.");
+            }
+            rs.beforeFirst();
+
+            return toMap(rs);    
+        } catch (Exception e){
+            throw e;
+        } finally {
+            connection.close();
+            pst.close();
+        }
+    }
+
     public ItemPedido atualizarStatus(ItemPedido item) throws Exception {
         Connection conn = ConexaoFactory.getConexao(); 
     
@@ -194,124 +244,52 @@ public class ItemPedidoDAO {
         } 
     }
 
-    public Map<Integer, List<ItemPedidoDTO>> consultarByIDCliente(int idCliente) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+    private ItemPedido mapearEntidade(ResultSet rs) throws SQLException {
+        ItemPedido item = new ItemPedido();  
+        item.setIdPedido(rs.getInt("ite_ped_id"));
+        item.setIdQuadrinho(rs.getInt("ite_qua_id"));
+        item.setQuantidade(rs.getInt("ite_quantidade"));
 
-        PreparedStatement pst = connection.prepareStatement(
-            """
-            SELECT itens_pedido.*, qua_titulo, qua_preco, cli_nome FROM itens_pedido
-                JOIN quadrinhos ON ite_qua_id = qua_id
-                JOIN pedidos ON ite_ped_id = ped_id
-                JOIN clientes ON ped_cli_id = cli_id
-            WHERE cli_id = ?;
-            """,
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
-            pst.setInt(1, idCliente);
-            ResultSet rs = pst.executeQuery();
-    
-            if (!rs.next()) {
-                throw new Exception("Nenhum pedido de troca encontrado.");
-            }
-            rs.beforeFirst();
-    
-            Map<Integer, List<ItemPedidoDTO>> itens = new HashMap<>();
-            while(rs.next()){
-
-                int idPedido = rs.getInt("ite_ped_id");
-                
-                if (itens.get(idPedido) == null){
-                    itens.put(
-                        idPedido, 
-                        Arrays.asList(
-                            new ItemPedidoDTO(
-                                mapearEntidade(rs),
-                                rs.getString("qua_titulo"),
-                                rs.getString("cli_nome")
-                            )
-                        )
-                    );
-                    continue;
-                }
-
-                itens.get(idPedido).add(
-                    new ItemPedidoDTO(
-                        mapearEntidade(rs),
-                        rs.getString("qua_titulo"),
-                        rs.getString("cli_nome")
-                    )
-                );
-            }
-
-            return itens;    
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
+        String status = rs.getString("ite_status");
+        if (status != null){
+            item.setStatus(StatusItemPedido.valueOf(status));
         }
+
+        return item;
     }
 
-    public Map<Integer, List<ItemPedidoDTO>> consultarTodos() throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+    private Map<Integer, List<ItemPedidoDTO>> toMap(ResultSet rs) throws Exception {
+        Map<Integer, List<ItemPedidoDTO>> itens = new HashMap<>();
+        
+        while(rs.next()){
 
-        PreparedStatement pst = connection.prepareStatement(
-            """
-            SELECT itens_pedido.*, qua_titulo, qua_preco, cli_nome FROM itens_pedido
-                JOIN quadrinhos ON ite_qua_id = qua_id
-                JOIN pedidos ON ite_ped_id = ped_id
-                JOIN clientes ON ped_cli_id = cli_id
-            """,
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
-        );
+            int idPedido = rs.getInt("ite_ped_id");
+            
+            if (itens.get(idPedido) == null){
+                itens.put(
+                    idPedido, 
+                    Arrays.asList(
 
-        try {
-            ResultSet rs = pst.executeQuery();
-    
-            if (!rs.next()) {
-                throw new Exception("Nenhum pedido de troca encontrado.");
-            }
-            rs.beforeFirst();
-    
-            Map<Integer, List<ItemPedidoDTO>> itens = new HashMap<>();
-            while(rs.next()){
-
-                int idPedido = rs.getInt("ite_ped_id");
-                
-                if (itens.get(idPedido) == null){
-                    itens.put(
-                        idPedido, 
-                        Arrays.asList(
-                            new ItemPedidoDTO(
-                                mapearEntidade(rs),
-                                rs.getString("qua_titulo"),
-                                rs.getString("cli_nome")
-                            )
+                        new ItemPedidoDTO(
+                            mapearEntidade(rs),
+                            rs.getString("qua_titulo"),
+                            rs.getString("cli_nome")
                         )
-                    );
-                    continue;
-                }
-
-                itens.get(idPedido).add(
-                    new ItemPedidoDTO(
-                        mapearEntidade(rs),
-                        rs.getString("qua_titulo"),
-                        rs.getString("cli_nome")
                     )
                 );
+                continue;
             }
 
-            return itens;    
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
+            itens.get(idPedido).add(
+                new ItemPedidoDTO(
+                    mapearEntidade(rs),
+                    rs.getString("qua_titulo"),
+                    rs.getString("cli_nome")
+                )
+            );
         }
+
+        return itens;
     }
 
 }

@@ -88,21 +88,10 @@ public class PedidoDAO {
                 ));
             }
 
-            Map<Integer, List<ItemPedidoDTO>> itensMap = itemPedidoDAO.consultarTodos();
-
-            for (PedidoDTO p : pedidos) {
-                List<ItemPedidoDTO> itens = itensMap.get(p.getPedido().getId());
-
-                List<ItemPedido> itensPedidos = new ArrayList<>();
-                for (ItemPedidoDTO i : itens) {
-                    itensPedidos.add(
-                        i.getItemPedido()
-                    );
-                }
-
-                p.getPedido().setItensPedido(itensPedidos);
-                p.setItensPedidoDTO(itens);
-            }
+            inserirItensPedido(
+                pedidos,
+                itemPedidoDAO.consultarTodos()
+            );
 
             return pedidos;
         }
@@ -148,21 +137,9 @@ public class PedidoDAO {
                 ));
             }
 
-            Map<Integer, List<ItemPedidoDTO>> itensMap = itemPedidoDAO.consultarByIDCliente(idCliente);
-
-            for (PedidoDTO p : pedidos) {
-                List<ItemPedidoDTO> itens = itensMap.get(p.getPedido().getId());
-
-                List<ItemPedido> itensPedidos = new ArrayList<>();
-                for (ItemPedidoDTO i : itens) {
-                    itensPedidos.add(
-                        i.getItemPedido()
-                    );
-                }
-
-                p.getPedido().setItensPedido(itensPedidos);
-                p.setItensPedidoDTO(itens);
-            }
+            inserirItensPedido(
+                pedidos, itemPedidoDAO.consultarByIDCliente(idCliente) 
+            );
 
             return pedidos;
         }
@@ -198,22 +175,6 @@ public class PedidoDAO {
         }
     }
 
-    private Pedido mapearEntidade(ResultSet rs) throws SQLException {
-        Pedido pedido = new Pedido();
-        pedido.setId(rs.getInt("ped_id"));
-        pedido.setIdCliente(rs.getInt("ped_cli_id"));
-        pedido.setStatus(StatusPedido.valueOf(rs.getString("ped_status")));
-        
-        Endereco endereco = new Endereco();
-        endereco.setId(rs.getInt("ped_end_id"));
-        pedido.setEnderecoEntrega(endereco);
-
-        pedido.setValorFrete(rs.getDouble("ped_valor_frete"));
-        pedido.setData(rs.getTimestamp("ped_data").toLocalDateTime());
-
-        return pedido;
-    }
-
     public Pedido atualizarStatus(Pedido p) throws Exception {
         Connection conn = ConexaoFactory.getConexao(); 
     
@@ -237,6 +198,38 @@ public class PedidoDAO {
             pst.close();
             conn.close();
         } 
+    }
+
+    private Pedido mapearEntidade(ResultSet rs) throws SQLException {
+        Pedido pedido = new Pedido();
+        pedido.setId(rs.getInt("ped_id"));
+        pedido.setIdCliente(rs.getInt("ped_cli_id"));
+        pedido.setStatus(StatusPedido.valueOf(rs.getString("ped_status")));
+        
+        Endereco endereco = new Endereco();
+        endereco.setId(rs.getInt("ped_end_id"));
+        pedido.setEnderecoEntrega(endereco);
+
+        pedido.setValorFrete(rs.getDouble("ped_valor_frete"));
+        pedido.setData(rs.getTimestamp("ped_data").toLocalDateTime());
+
+        return pedido;
+    }
+
+    private void inserirItensPedido(List<PedidoDTO> pedidos, Map<Integer, List<ItemPedidoDTO>> itensMap) throws Exception {
+        for (PedidoDTO p : pedidos) {
+            List<ItemPedidoDTO> itens = itensMap.get(p.getPedido().getId());
+
+            List<ItemPedido> itensPedidos = new ArrayList<>();
+            for (ItemPedidoDTO i : itens) {
+                itensPedidos.add(
+                    i.getItemPedido()
+                );
+            }
+
+            p.getPedido().setItensPedido(itensPedidos);
+            p.setItensPedidoDTO(itens);
+        }
     }
     
 }
