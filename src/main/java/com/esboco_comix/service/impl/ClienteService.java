@@ -152,4 +152,8 @@ public class ClienteService {
         return filtro;
     }
 
+    public Cliente consultarByIDPedido(int idPedido) throws Exception {
+        return clienteDAO.consultarByIDPedido(idPedido);
+    }
+
 }
