@@ -14,8 +14,6 @@ export class SecaoCupom {
             return;
         }
 
-        this.adicionarCupom();
-
         this.btnAdicionarCupom.onclick = () => this.adicionarCupom();
     }
 
