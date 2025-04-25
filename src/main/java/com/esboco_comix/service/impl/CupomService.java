@@ -9,6 +9,10 @@ public class CupomService {
 
     private CupomDAO cupomDAO = new CupomDAO();
 
+    public Cupom consultarByID(int id) throws Exception{
+        return cupomDAO.consultarByID(id);
+    }
+
     public List<Cupom> consultarByIDCliente(int idCliente) throws Exception {
         return cupomDAO.consultarByIDCliente(idCliente);
     }
@@ -29,14 +33,15 @@ public class CupomService {
         return cupomDAO.inserir(cupom);
     }
 
-    public Cupom gerarCupomTroca(int idCliente, double valor) {
+    public Cupom gerarCupomTroca(int idCliente, double valor) throws Exception {
         Cupom cupom = new Cupom();
         cupom.setAtivo(true);
         cupom.setIdCliente(idCliente);
         cupom.setTroca(true);
         cupom.setPromocional(false);
         cupom.setValor(valor);
-        return cupom;
+
+        return inserir(cupom);
     }
 
 }

@@ -2,6 +2,8 @@ package com.esboco_comix.service.impl.pedido;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.esboco_comix.dao.impl.cartao_credito.CartaoCreditoDAO;
 import com.esboco_comix.dao.impl.cupom.CupomDAO;
@@ -74,4 +76,19 @@ public class CalculadoraPedido {
 
         return valorTotal;
     }
+
+    public double calcularValorTotalPedido(List<Quadrinho> quadrinhos, List<ItemPedido> itensPedido) {
+        Map<Integer, Quadrinho> quadrinhoMap = quadrinhos.stream()
+            .collect(Collectors.toMap(Quadrinho::getId, quadrinho -> quadrinho));
+
+        double valor = 0;
+        for (ItemPedido itemPedido : itensPedido) {
+            Quadrinho quadrinho = quadrinhoMap.get(itemPedido.getIdQuadrinho());
+            if (quadrinho != null) {
+                valor += quadrinho.getPreco() * itemPedido.getQuantidade();
+            }
+        }
+
+        return valor;
+}
 }
