@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.dto.PedidoDTO;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.model.enuns.StatusPedido;
@@ -50,11 +51,15 @@ public class PedidoDAO {
         }
     }
 
-    public List<Pedido> consultarTodos() throws Exception {
+    public List<PedidoDTO> consultarTodos() throws Exception {
         Connection conn = ConexaoFactory.getConexao();
 
         PreparedStatement pst = conn.prepareStatement(
-            "SELECT * FROM pedidos ORDER BY ped_data DESC;",
+            """
+            SELECT pedidos.*, cli_nome FROM pedidos
+                JOIN clientes ON ped_cli_id = cli_id
+            ORDER BY ped_data DESC;
+            """,
             ResultSet.TYPE_SCROLL_INSENSITIVE,
             ResultSet.CONCUR_READ_ONLY
         );
@@ -67,10 +72,59 @@ public class PedidoDAO {
             }
             rs.beforeFirst();
 
-            List<Pedido> pedidos = new ArrayList<>();
+            List<PedidoDTO> pedidos = new ArrayList<>();
 
-            while (rs.next()){                
-                pedidos.add(mapearEntidade(rs));
+            while (rs.next()){       
+                pedidos.add(new PedidoDTO(
+                    mapearEntidade(rs),
+                    rs.getString("cli_nome"),
+                    0.0, 
+                    null
+                ));
+            }
+
+            return pedidos;
+        }
+        catch (Exception e){
+            throw e;
+        } finally {
+            pst.close();
+            conn.close();
+        }
+    }
+
+    public List<PedidoDTO> consultarByIDCliente(int idCliente) throws Exception {
+        Connection conn = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = conn.prepareStatement(
+            """
+            SELECT pedidos.*, cli_nome FROM pedidos
+                JOIN clientes ON ped_cli_id = cli_id
+            WHERE ped_cli_id = ? 
+            ORDER BY ped_data DESC;
+            """,
+            ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_READ_ONLY
+        );
+
+        try {
+            pst.setInt(1, idCliente);
+
+            ResultSet rs = pst.executeQuery();
+
+            if (!rs.next()) {
+                throw new Exception("Nenhum registro encontrado de pedido.");
+            }
+            rs.beforeFirst();
+
+            List<PedidoDTO> pedidos = new ArrayList<>();
+
+            while (rs.next()){
+                pedidos.add(new PedidoDTO(
+                    mapearEntidade(rs),
+                    rs.getString("cli_nome"),
+                    0.0, null
+                ));
             }
 
             return pedidos;
@@ -121,41 +175,6 @@ public class PedidoDAO {
         pedido.setData(rs.getTimestamp("ped_data").toLocalDateTime());
 
         return pedido;
-    }
-
-    public List<Pedido> consultarByIDCliente(int idCliente) throws Exception {
-        Connection conn = ConexaoFactory.getConexao();
-
-        PreparedStatement pst = conn.prepareStatement(
-            "SELECT * FROM pedidos where ped_cli_id = ? ORDER BY ped_data DESC;;",
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
-            pst.setInt(1, idCliente);
-
-            ResultSet rs = pst.executeQuery();
-
-            if (!rs.next()) {
-                throw new Exception("Nenhum registro encontrado de pedido.");
-            }
-            rs.beforeFirst();
-
-            List<Pedido> pedidos = new ArrayList<>();
-
-            while (rs.next()){                
-                pedidos.add(mapearEntidade(rs));
-            }
-
-            return pedidos;
-        }
-        catch (Exception e){
-            throw e;
-        } finally {
-            pst.close();
-            conn.close();
-        }
     }
 
     public Pedido atualizarStatus(Pedido p) throws Exception {

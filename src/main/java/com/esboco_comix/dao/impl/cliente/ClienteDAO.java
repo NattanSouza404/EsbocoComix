@@ -264,6 +264,34 @@ public class ClienteDAO {
         }
     }
 
+    public Cliente consultarByIDPedido(int idPedido) throws Exception {
+        Connection connection = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = connection.prepareStatement(
+            "SELECT * FROM clientes WHERE cli_id = ("+
+            "   SELECT ped_cli_id FROM pedidos"+
+            "   WHERE ped_id = ?"+
+            ");"
+        );
+
+        try {
+            pst.setInt(1, idPedido);
+
+            ResultSet rs = pst.executeQuery();
+    
+            if (!rs.next()){
+                throw new Exception("Cliente não encontrado!");
+            }
+            
+            return mapearEntidade(rs);
+        } catch (Exception e){
+            throw e;
+        } finally {
+            connection.close();
+            pst.close();
+        }
+    }
+
     public Cliente atualizarSenha(Cliente c) throws Exception {
         Connection conn = ConexaoFactory.getConexao(); 
     
