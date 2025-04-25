@@ -1,9 +1,14 @@
 import { formatarPreco, formatarDateTime } from "/js/script.js";
 import { retornarPedidos, atualizarStatusPedido, atualizarStatusItemPedido } from "/js/api/apiPedido.js";
 
+document.getElementById("main-container").style.display = 'none';
+
 const tabelaBody = document.getElementById("orderTable");
 
 const pedidos = await retornarPedidos();
+
+document.getElementById("loading").style.display = 'none';
+document.getElementById("main-container").style.display = 'block';
 
 let contador = 1;
 pedidos.pedidos.forEach(pedido => {
