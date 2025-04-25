@@ -42,7 +42,7 @@ pedidos.forEach(pedido => {
     containerItensPedido.className = "ps-4";
     div.append(containerItensPedido);
 
-    pedido.itensPedido.forEach(item => {
+    pedido.itensPedidoDTO.forEach(item => {
 
         const div2 = document.createElement('div');
         div2.className = "p-3 mb-2 bg-light rounded border";
@@ -50,8 +50,11 @@ pedidos.forEach(pedido => {
         div2.innerHTML = `
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h6>Quadrinho id: ${item.idQuadrinho}</h6>
+                    <h6>Produto: ${item.nomeQuadrinho}</h6>
                     <p>Quantidade: ${item.quantidade} unidades</p>
+                    ${item.status !== null && item.status !== undefined ? 
+                        `<p>${item.status}</p>` : ''
+                    }
                 </div>
                 <button class="btn btn-secondary btn-sm botao-troca">Pedir Troca</button>
             </div>
