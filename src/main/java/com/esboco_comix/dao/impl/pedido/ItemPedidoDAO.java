@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -266,16 +265,19 @@ public class ItemPedidoDAO {
             int idPedido = rs.getInt("ite_ped_id");
             
             if (itens.get(idPedido) == null){
+                List<ItemPedidoDTO> lista = new ArrayList<>();
+
+                lista.add(
+                    new ItemPedidoDTO(
+                        mapearEntidade(rs),
+                        rs.getString("qua_titulo"),
+                        rs.getString("cli_nome")
+                    )
+                );
+
                 itens.put(
                     idPedido, 
-                    Arrays.asList(
-
-                        new ItemPedidoDTO(
-                            mapearEntidade(rs),
-                            rs.getString("qua_titulo"),
-                            rs.getString("cli_nome")
-                        )
-                    )
+                    lista
                 );
                 continue;
             }
