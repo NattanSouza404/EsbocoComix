@@ -131,7 +131,7 @@ public class ItemPedidoDAO {
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()) {
-                throw new Exception("Nenhum pedido de troca encontrado.");
+                return new ArrayList<>();
             }
             rs.beforeFirst();
     
