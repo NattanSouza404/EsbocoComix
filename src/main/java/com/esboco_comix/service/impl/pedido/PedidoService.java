@@ -77,7 +77,8 @@ public class PedidoService {
         for (CupomPedido cupom : pedido.getCuponsPedido()) {
             cupom.setIdPedido(pedidoInserido.getId());
             CupomPedido cupomPedidoInserido = cupomPedidoDAO.inserir(cupom);
-            pedidoInserido.getCuponsPedido().add(cupomPedidoInserido);
+            pedidoInserido.getCuponsPedido().add(cupomPedidoInserido);  
+            cupomService.inativar(cupom.getIdCupom());
         }
 
         return pedidoInserido;
@@ -86,8 +87,9 @@ public class PedidoService {
     public ConsultarPedidosDTO consultarTodos() throws Exception {
         List<PedidoDTO> pedidoDTOs = pedidoDAO.consultarTodos();
 
-        for (PedidoDTO pedidoDTO : pedidoDTOs) {
-            pedidoDTO.setValorTotal(calculadora.calcularValorTotalPedido(pedidoDTO.getPedido(), pedidoDTO.getPedido().getItensPedido()));
+        for (PedidoDTO dto : pedidoDTOs) {
+            Pedido pedido = dto.getPedido();
+            dto.setValorTotal(calculadora.calcularValorTotalPedido(pedido, pedido.getItensPedido()));
         }
 
         return new ConsultarPedidosDTO(
@@ -99,8 +101,9 @@ public class PedidoService {
     public List<PedidoDTO> consultarPorIDCliente(int idCliente) throws Exception {
         List<PedidoDTO> pedidosDTO = pedidoDAO.consultarByIDCliente(idCliente);
 
-        for (PedidoDTO p : pedidosDTO) {
-            p.setValorTotal(calculadora.calcularValorTotalPedido(p.getPedido(), p.getPedido().getItensPedido()));
+        for (PedidoDTO dto : pedidosDTO) {
+            Pedido pedido = dto.getPedido();
+            dto.setValorTotal(calculadora.calcularValorTotalPedido(pedido, pedido.getItensPedido()));
         }
 
         return pedidosDTO;
@@ -108,8 +111,30 @@ public class PedidoService {
 
     public Pedido atualizarStatus(PedidoDTO pedidoDTO) throws Exception {
         Pedido pedido = pedidoDTO.getPedido();
+        Pedido pedidoNoBanco = pedidoDAO.consultarByID(pedido.getId());
 
-        if (pedidoDTO.getPedido().getStatus().equals(StatusPedido.TROCA_ACEITA)){
+        StatusPedido status = pedido.getStatus();
+        StatusPedido statusNoBanco = pedidoNoBanco.getStatus();
+
+        List<ItemPedidoDTO> itens = itemPedidoDAO.consultarByIDPedido(pedido.getId());
+
+        for (ItemPedidoDTO item : itens) {
+            if (item.getItemPedido().getStatus() != null){
+                throw new Exception("Esse pedido já possui item com pedido de troca/devolução!");
+            }
+        }
+        
+        if (statusNoBanco == StatusPedido.TROCA_CONCLUIDA || statusNoBanco == StatusPedido.DEVOLUCAO_CONCLUIDA){
+            throw new Exception("Não é possível alterar pedido com troca ou devolução já concluída!");
+        }
+
+        if (status.equals(StatusPedido.TROCA_SOLICITADA) || status.equals(StatusPedido.DEVOLUCAO_SOLICITADA)){
+            if (!pedidoNoBanco.getStatus().equals(StatusPedido.ENTREGUE)){
+                throw new Exception("Não se pode pedir troca ou devolução se o pedido não foi entregue!");
+            }
+        }
+
+        if (status.equals(StatusPedido.TROCA_CONCLUIDA) || status.equals(StatusPedido.DEVOLUCAO_CONCLUIDA)){
             List<ItemPedidoDTO> itensPedidoDTO = itemPedidoDAO.consultarByIDPedido(pedido.getId());
             List<ItemPedido> itensPedido = new ArrayList<>();
             
@@ -123,29 +148,38 @@ public class PedidoService {
             );
         }
 
-        return pedidoDAO.atualizarStatus(
-            pedido
-        );
+        return pedidoDAO.atualizarStatus(pedido);
     }
 
     public ItemPedido atualizarStatus(ItemPedidoDTO itemPedidoDTO) throws Exception {
-        if (itemPedidoDTO.getItemPedido().getStatus().equals(StatusItemPedido.TROCA_ACEITA)){
-            ItemPedido itemPedido = itemPedidoDTO.getItemPedido();
+        ItemPedido item = itemPedidoDTO.getItemPedido();
+        
+        Pedido pedidoNoBanco = pedidoDAO.consultarByID(item.getIdPedido());
+        StatusPedido statusPedidoBanco = pedidoNoBanco.getStatus();
 
-            Cliente cliente = clienteService.consultarByIDPedido(itemPedido.getIdPedido()); 
-            double valor = calculadora.calcularItemPedido(itemPedido);
-            
-            cupomService.inserir(
-                cupomService.gerarCupomTroca(
-                    cliente.getId(), 
-                    valor
-                )
-            );
+        if (statusPedidoBanco != StatusPedido.ENTREGUE){
+            throw new Exception("Pedido não entregue ou pedido de troca/devolução dos itens já foi realizado!");   
         }
 
-        return itemPedidoDAO.atualizarStatus(
-            itemPedidoDTO.getItemPedido()
-        );
+        StatusItemPedido statusItemPedido = item.getStatus();
+        StatusItemPedido statusItemPedidoNoBanco = itemPedidoDAO.consultarByID(item.getIdPedido(), item.getIdQuadrinho()).getStatus();
+
+        if (statusItemPedidoNoBanco == StatusItemPedido.TROCA_CONCLUIDA || statusItemPedido == StatusItemPedido.DEVOLUCAO_CONCLUIDA){
+            throw new Exception("Troca ou devolução do item já foi realizada");
+        }
+
+        if (statusItemPedido == StatusItemPedido.TROCA_CONCLUIDA || statusItemPedido == StatusItemPedido.DEVOLUCAO_CONCLUIDA){
+
+            Cliente cliente = clienteService.consultarByIDPedido(item.getIdPedido());  
+            
+            cupomService.gerarCupomTroca(
+                cliente.getId(), 
+                calculadora.calcularItemPedido(item)
+            );
+
+        }
+
+        return itemPedidoDAO.atualizarStatus(item);
     }
 
 }
