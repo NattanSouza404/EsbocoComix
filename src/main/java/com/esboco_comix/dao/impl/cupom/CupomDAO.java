@@ -43,7 +43,7 @@ public class CupomDAO {
         Connection connection = ConexaoFactory.getConexao();
 
         PreparedStatement pst = connection.prepareStatement(
-            "SELECT * FROM cupons WHERE cup_cli_id = ?;",
+            "SELECT * FROM cupons WHERE cup_cli_id = ? AND cup_is_ativo;",
             ResultSet.TYPE_SCROLL_INSENSITIVE,
             ResultSet.CONCUR_READ_ONLY
         );
@@ -106,6 +106,30 @@ public class CupomDAO {
             connection.close();
             pst.close();
         }
+    }
+
+    public Cupom inativar(int id) throws Exception {
+        Connection conn = ConexaoFactory.getConexao(); 
+    
+        PreparedStatement pst = conn.prepareStatement(
+            "UPDATE cupons SET cup_is_ativo = false WHERE cup_id = ?;"
+        );
+
+        try {
+            pst.setInt(1, id);
+
+            if (pst.executeUpdate() == 0) {
+                throw new Exception("Atualização não foi sucedida!");
+            }
+
+            return consultarByID(id);
+        } catch (Exception ex){
+            throw ex;
+        } finally {
+            pst.close();
+            conn.close();
+        }
+
     }
 
     private Cupom mapearEntidade(ResultSet rs) throws SQLException {

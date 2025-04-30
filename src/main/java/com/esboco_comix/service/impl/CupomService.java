@@ -33,6 +33,10 @@ public class CupomService {
         return cupomDAO.inserir(cupom);
     }
 
+    public Cupom inativar(int id) throws Exception {
+        return cupomDAO.inativar(id);
+    }
+
     public Cupom gerarCupomTroca(int idCliente, double valor) throws Exception {
         Cupom cupom = new Cupom();
         cupom.setAtivo(true);
