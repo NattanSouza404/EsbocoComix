@@ -38,6 +38,7 @@ public class Carrinho {
         for (int i = 0; i < itensCarrinho.size(); i++) {
             if (itensCarrinho.get(i).getIdQuadrinho() == item.getIdQuadrinho()){
                 itensCarrinho.get(i).setQuantidade(item.getQuantidade());
+                return;
             }
         }
     }
