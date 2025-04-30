@@ -1,8 +1,8 @@
-package com.esboco_comix.webapp;
+package com.esboco_comix.webapp.crud_cliente;
 
 import org.junit.Test;
 
-import com.esboco_comix.webapp.paginas.clientes.PaginaClientes;
+import com.esboco_comix.webapp.crud_cliente.cadastrar_cliente.PaginaClientes;
 
 public class PaginaClientesTest {
 

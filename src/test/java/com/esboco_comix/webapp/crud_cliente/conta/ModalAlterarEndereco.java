@@ -1,4 +1,4 @@
-package com.esboco_comix.webapp.paginas.conta;
+package com.esboco_comix.webapp.crud_cliente.conta;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.esboco_comix.webapp.utils.FormElement;
+import com.esboco_comix.webapp.utils.web_element.FormElement;
 
 public class ModalAlterarEndereco {
 

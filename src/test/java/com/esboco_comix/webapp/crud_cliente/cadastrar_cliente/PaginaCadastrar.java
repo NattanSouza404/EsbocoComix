@@ -1,4 +1,4 @@
-package com.esboco_comix.webapp.paginas.cadastrar_cliente;
+package com.esboco_comix.webapp.crud_cliente.cadastrar_cliente;
 
 import java.util.List;
 
@@ -9,7 +9,8 @@ import org.openqa.selenium.WebElement;
 
 import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.model.entidades.Endereco;
-import com.esboco_comix.webapp.webdriver.DriverTeste;
+import com.esboco_comix.webapp.crud_cliente.clientes.SecaoEnderecos;
+import com.esboco_comix.webapp.utils.web_driver.DriverTeste;
 
 public class PaginaCadastrar {
 

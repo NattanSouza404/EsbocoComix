@@ -1,8 +1,8 @@
-package com.esboco_comix.webapp.paginas.conta;
+package com.esboco_comix.webapp.crud_cliente.conta;
 
 import org.openqa.selenium.WebDriver;
 
-import com.esboco_comix.webapp.webdriver.DriverTeste;
+import com.esboco_comix.webapp.utils.web_driver.DriverTeste;
 
 public class PaginaConta {
 

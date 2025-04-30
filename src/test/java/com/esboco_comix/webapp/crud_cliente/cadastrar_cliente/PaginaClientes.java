@@ -1,11 +1,11 @@
-package com.esboco_comix.webapp.paginas.clientes;
+package com.esboco_comix.webapp.crud_cliente.cadastrar_cliente;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import com.esboco_comix.webapp.webdriver.DriverTeste;
+import com.esboco_comix.webapp.utils.web_driver.DriverTeste;
 
 public class PaginaClientes {
 

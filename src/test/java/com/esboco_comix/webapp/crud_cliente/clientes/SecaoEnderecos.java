@@ -1,4 +1,4 @@
-package com.esboco_comix.webapp.paginas.cadastrar_cliente;
+package com.esboco_comix.webapp.crud_cliente.clientes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.esboco_comix.model.entidades.Endereco;
+import com.esboco_comix.webapp.crud_cliente.cadastrar_cliente.FormEndereco;
 
 public class SecaoEnderecos {
     private List<FormEndereco> forms;

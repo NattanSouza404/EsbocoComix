@@ -1,14 +1,14 @@
-package com.esboco_comix.webapp;
+package com.esboco_comix.webapp.crud_cliente;
 
 import java.time.LocalDate;
 
 import org.junit.Test;
 
-import com.esboco_comix.webapp.paginas.conta.ModalAlterarCartaoCredito;
-import com.esboco_comix.webapp.paginas.conta.ModalAlterarDadosPessoais;
-import com.esboco_comix.webapp.paginas.conta.ModalAlterarEndereco;
-import com.esboco_comix.webapp.paginas.conta.ModalAlterarSenha;
-import com.esboco_comix.webapp.paginas.conta.PaginaConta;
+import com.esboco_comix.webapp.crud_cliente.conta.ModalAlterarCartaoCredito;
+import com.esboco_comix.webapp.crud_cliente.conta.ModalAlterarDadosPessoais;
+import com.esboco_comix.webapp.crud_cliente.conta.ModalAlterarEndereco;
+import com.esboco_comix.webapp.crud_cliente.conta.ModalAlterarSenha;
+import com.esboco_comix.webapp.crud_cliente.conta.PaginaConta;
 
 public class PaginaContaTest {
      @Test

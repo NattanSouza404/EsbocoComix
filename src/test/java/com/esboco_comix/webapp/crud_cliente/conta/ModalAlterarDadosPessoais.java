@@ -1,4 +1,4 @@
-package com.esboco_comix.webapp.paginas.conta;
+package com.esboco_comix.webapp.crud_cliente.conta;
 
 import java.time.LocalDate;
 

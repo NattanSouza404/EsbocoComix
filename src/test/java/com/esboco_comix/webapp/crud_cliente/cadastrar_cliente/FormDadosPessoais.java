@@ -1,11 +1,11 @@
-package com.esboco_comix.webapp.paginas.cadastrar_cliente;
+package com.esboco_comix.webapp.crud_cliente.cadastrar_cliente;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.model.entidades.Cliente;
-import com.esboco_comix.webapp.utils.FormElement;
+import com.esboco_comix.webapp.utils.web_element.FormElement;
 
 public class FormDadosPessoais {
 

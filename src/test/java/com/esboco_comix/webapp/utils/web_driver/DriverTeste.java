@@ -1,4 +1,4 @@
-package com.esboco_comix.webapp.webdriver;
+package com.esboco_comix.webapp.utils.web_driver;
 
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;

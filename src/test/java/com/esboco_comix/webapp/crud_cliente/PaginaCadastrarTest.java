@@ -1,11 +1,11 @@
-package com.esboco_comix.webapp;
+package com.esboco_comix.webapp.crud_cliente;
 
 import org.junit.Test;
 
 import com.esboco_comix.dto.CadastrarClienteDTO;
-import com.esboco_comix.webapp.paginas.cadastrar_cliente.PaginaCadastrar;
-import com.esboco_comix.webapp.teste_factories.ClienteTesteFactory;
-import com.esboco_comix.webapp.teste_factories.EnderecoTesteFactory;
+import com.esboco_comix.webapp.crud_cliente.cadastrar_cliente.PaginaCadastrar;
+import com.esboco_comix.webapp.utils.teste_factories.ClienteTesteFactory;
+import com.esboco_comix.webapp.utils.teste_factories.EnderecoTesteFactory;
 
 public class PaginaCadastrarTest {
 
