@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.esboco_comix.controller.session.Carrinho;
 import com.esboco_comix.model.entidades.CartaoCreditoPedido;
+import com.esboco_comix.model.entidades.CupomPedido;
 import com.esboco_comix.model.entidades.Pedido;
 
 public class PedidoValidator {
@@ -21,10 +22,22 @@ public class PedidoValidator {
         }
 
         Set<Integer> idsCartao = new HashSet<>();
-
         for (CartaoCreditoPedido cartao : pedido.getCartoesCreditoPedido()) {
             if (!idsCartao.add(cartao.getIdCartaoCredito())){
                 throw new Exception("Não é possível usar o mesmo cartão duas vezes no mesmo pedido!");
+            }
+        }
+
+        for (CartaoCreditoPedido cc : pedido.getCartoesCreditoPedido()) {
+            if (cc.getValor() < 10){
+                throw new Exception("Valor do cartão de crédito deve ser no mínimo R$ 10,00");
+            }
+        }
+
+        Set<Integer> idsCupom = new HashSet<>();
+        for (CupomPedido cupom : pedido.getCuponsPedido()) {
+            if (!idsCupom.add(cupom.getIdCupom())){
+                throw new Exception("Não é possível usar o mesmo cupom duas vezes no mesmo pedido!");
             }
         }
 
