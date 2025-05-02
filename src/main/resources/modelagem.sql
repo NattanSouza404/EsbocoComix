@@ -1,5 +1,5 @@
 -- Gerado por Oracle SQL Developer Data Modeler 22.2.0.165.1149
---   em:        2025-04-06 19:11:16 BRT
+--   em:        2025-05-01 23:29:59 BRT
 --   site:      Oracle Database 11g
 --   tipo:      Oracle Database 11g
 
@@ -119,18 +119,25 @@ LOGGING;
 
 ALTER TABLE enderecos ADD CONSTRAINT pk_end PRIMARY KEY ( end_id );
 
-CREATE TABLE estoque (
-    est_qua_id               unknown 
---  ERROR: Datatype UNKNOWN is not allowed 
-    ,
-    est_quantidade_total     unknown 
---  ERROR: Datatype UNKNOWN is not allowed 
-    ,
-    est_quantidade_bloqueada unknown 
---  ERROR: Datatype UNKNOWN is not allowed 
-
+CREATE TABLE entrada_estoque (
+    ees_id      NUMBER(6) NOT NULL,
+    ees_qua_id      NUMBER(6) NOT NULL,
+    ees_quantidade  NUMBER(5) NOT NULL,
+    ees_valor_custo NUMBER(6, 2) NOT NULL,
+    ees_dt_entrada  TIMESTAMP NOT NULL,
+    ees_fornecedor  VARCHAR2(100) NOT NULL
 )
 LOGGING;
+
+ALTER TABLE entrada_estoque ADD CONSTRAINT pk_ees PRIMARY KEY ( ees_id );
+
+CREATE TABLE estoque (
+    est_qua_id           NUMBER(6) NOT NULL,
+    est_quantidade_total NUMBER(6)
+)
+LOGGING;
+
+ALTER TABLE estoque ADD CONSTRAINT pk_est PRIMARY KEY ( est_qua_id );
 
 CREATE TABLE grupos_precificacao (
     gpr_id NUMBER(3) NOT NULL
@@ -143,7 +150,7 @@ CREATE TABLE itens_pedido (
     ite_ped_id     NUMBER(9) NOT NULL,
     ite_qua_id     NUMBER(6) NOT NULL,
     ite_quantidade NUMBER(2) NOT NULL,
-    ite_status VARCHAR2(20)
+    ite_status     VARCHAR2(20)
 )
 LOGGING;
 
@@ -164,12 +171,12 @@ CREATE TABLE log_transacao (
 LOGGING;
 
 CREATE TABLE pedidos (
-    ped_id     NUMBER(9) NOT NULL,
-    ped_cli_id NUMBER(6) NOT NULL,
-    ped_status VARCHAR2(20) NOT NULL,
-    ped_end_id NUMBER(6) NOT NULL,
-    ped_valor_frete NUMBER(4,2) NOT NULL,
-    ped_data TIMESTAMP NOT NULL
+    ped_id          NUMBER(9) NOT NULL,
+    ped_cli_id      NUMBER(6) NOT NULL,
+    ped_status      VARCHAR2(20) NOT NULL,
+    ped_end_id      NUMBER(6) NOT NULL,
+    ped_valor_frete NUMBER(4, 2) NOT NULL,
+    ped_data        TIMESTAMP NOT NULL
 )
 LOGGING;
 
@@ -244,9 +251,19 @@ ALTER TABLE cupons
         REFERENCES clientes ( cli_id )
     NOT DEFERRABLE;
 
+ALTER TABLE entrada_estoque
+    ADD CONSTRAINT fk_ees_qua FOREIGN KEY ( ees_qua_id )
+        REFERENCES quadrinhos ( qua_id )
+    NOT DEFERRABLE;
+
 ALTER TABLE enderecos
     ADD CONSTRAINT fk_end_cli FOREIGN KEY ( end_cli_id )
         REFERENCES clientes ( cli_id )
+    NOT DEFERRABLE;
+
+ALTER TABLE estoque
+    ADD CONSTRAINT fk_est_qua FOREIGN KEY ( est_qua_id )
+        REFERENCES quadrinhos ( qua_id )
     NOT DEFERRABLE;
 
 ALTER TABLE itens_pedido
@@ -278,9 +295,9 @@ ALTER TABLE quadrinhos
 
 -- Relatório do Resumo do Oracle SQL Developer Data Modeler: 
 -- 
--- CREATE TABLE                            15
+-- CREATE TABLE                            16
 -- CREATE INDEX                             0
--- ALTER TABLE                             28
+-- ALTER TABLE                             31
 -- CREATE VIEW                              0
 -- ALTER VIEW                               0
 -- CREATE PACKAGE                           0
@@ -316,5 +333,5 @@ ALTER TABLE quadrinhos
 -- ORDS ENABLE SCHEMA                       0
 -- ORDS ENABLE OBJECT                       0
 -- 
--- ERRORS                                   6
+-- ERRORS                                   3
 -- WARNINGS                                 0

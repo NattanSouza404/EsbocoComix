@@ -89,6 +89,20 @@ CREATE TABLE categorias_quadrinho (
     cqu_qua_id NUMERIC(6) NOT NULL
 );
 
+CREATE TABLE estoque (
+    est_qua_id           NUMERIC(6) PRIMARY KEY,
+    est_quantidade_total NUMERIC(6) NOT NULL
+);
+
+CREATE TABLE entrada_estoque (
+    ees_id          NUMERIC(6) PRIMARY KEY,
+    ees_qua_id      NUMERIC(6) NOT NULL,
+    ees_quantidade  NUMERIC(5) NOT NULL,
+    ees_valor_custo NUMERIC(6, 2) NOT NULL,
+    ees_dt_entrada  TIMESTAMP NOT NULL,
+    ees_fornecedor  VARCHAR(100) NOT NULL
+);
+
 CREATE TABLE itens_pedido (
     ite_ped_id  NUMERIC(9),
     ite_qua_id NUMERIC(6),
@@ -169,3 +183,9 @@ ALTER TABLE cupons_pedido
 
 ALTER TABLE cupons_pedido
     ADD CONSTRAINT fk_cpe_ped FOREIGN KEY ( cpe_ped_id ) REFERENCES pedidos ( ped_id );
+
+ALTER TABLE estoque
+    ADD CONSTRAINT fk_est_qua FOREIGN KEY ( est_qua_id ) REFERENCES quadrinhos ( qua_id );
+
+ALTER TABLE entrada_estoque
+    ADD CONSTRAINT fk_ees_qua FOREIGN KEY ( ees_qua_id ) REFERENCES quadrinhos ( qua_id );

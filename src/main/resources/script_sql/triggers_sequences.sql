@@ -154,6 +154,32 @@ EXECUTE FUNCTION set_qua_id();
 
 
 
+-- Entrada estoque
+
+CREATE SEQUENCE ees_sq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE FUNCTION set_ees_id() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    NEW.ees_id := nextval('ees_sq');
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tg_set_ees_id
+BEFORE INSERT ON entrada_estoque
+FOR EACH ROW
+EXECUTE FUNCTION set_ees_id();
+
+
+
+
 -- Pedidos
 CREATE SEQUENCE ped_sq
     START WITH 1
