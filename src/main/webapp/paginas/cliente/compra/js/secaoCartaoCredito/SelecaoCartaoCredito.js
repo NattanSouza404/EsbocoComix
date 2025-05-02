@@ -1,3 +1,5 @@
+import { mascararNumeroCartao } from "/js/script.js";
+
 export class SelecaoCartaoCredito extends HTMLDivElement {
     constructor(cartoesCredito) {
         super();
@@ -24,7 +26,7 @@ export class SelecaoCartaoCredito extends HTMLDivElement {
         cartoesCredito.forEach(cartao => {
             const option = document.createElement('option');
             option.value = cartao.id;
-            option.textContent = `${cartao.numero}: (${cartao.bandeiraCartao})`;
+            option.textContent = `Cartão ${cartao.bandeiraCartao} nº ${mascararNumeroCartao(cartao.numero)}`;
 
             if (cartao.isPreferencial === true){
                 option.selected = true;

@@ -4,6 +4,10 @@ export function criarElemento(tag, texto){
     return element;
 }
 
+export function mascararNumeroCartao(numero){
+    return '**** **** **** ' + numero.slice(-4);
+}
+
 export function criarElementoInput(name, placeholder, type){
     const input = document.createElement('input'); 
     
