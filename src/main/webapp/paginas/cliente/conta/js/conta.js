@@ -6,7 +6,13 @@ import { SecaoDadosPessoais } from "./secaoDadosPessoais/SecaoDadosPessoais.js";
 import { SecaoCartaoCredito } from "./secaoCartaoCredito/SecaoCartaoCredito.js";
 import { SecaoEndereco } from "./secaoEndereco/SecaoEndereco.js";
 
-const idCliente = localStorage.getItem('idcliente');
+let idCliente = localStorage.getItem('idcliente');
+
+if (idCliente === null || idCliente === undefined){
+    const urlParams = new URLSearchParams(window.location.search);
+    localStorage.setItem('idcliente', urlParams.get('idcliente'));
+    idCliente = localStorage.getItem("idcliente");
+}
 
 const cliente = await retornarCliente(idCliente);
 const enderecos = await retornarEnderecos(idCliente);
