@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.esboco_comix.dto.QuadrinhoDTO;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.CartaoCreditoPedido;
 import com.esboco_comix.model.entidades.Cupom;
@@ -70,12 +71,13 @@ public class CalculadoraPedido {
     }
 
     public double calcularValorTotalPedido(Pedido pedido, List<ItemPedido> itensPedido) throws Exception {
-        Map<Integer, Quadrinho> quadrinhoMap = quadrinhoService.consultarTodos().stream()
-            .collect(Collectors.toMap(Quadrinho::getId, quadrinho -> quadrinho));
+        Map<Integer, QuadrinhoDTO> quadrinhoMap = quadrinhoService.consultarTodos().stream()
+            .collect(Collectors.toMap((quadrinho) -> quadrinho.getQuadrinho().getId() , quadrinho -> quadrinho));
 
         double valor = 0;
         for (ItemPedido itemPedido : itensPedido) {
-            Quadrinho quadrinho = quadrinhoMap.get(itemPedido.getIdQuadrinho());
+            QuadrinhoDTO dto = quadrinhoMap.get(itemPedido.getIdQuadrinho());
+            Quadrinho quadrinho = dto.getQuadrinho();
 
             if (quadrinho == null) {
                 throw new Exception("Quadrinho do pedido não encontrado!");
@@ -91,7 +93,7 @@ public class CalculadoraPedido {
     }
 
     public double calcularItemPedido(ItemPedido itemPedido) throws Exception {
-        Quadrinho quadrinho = quadrinhoService.consultarByID(itemPedido.getIdQuadrinho());
-        return quadrinho.getPreco() * itemPedido.getQuantidade();
+        QuadrinhoDTO quadrinho = quadrinhoService.consultarByID(itemPedido.getIdQuadrinho());
+        return quadrinho.getQuadrinho().getPreco() * itemPedido.getQuantidade();
     }
 }

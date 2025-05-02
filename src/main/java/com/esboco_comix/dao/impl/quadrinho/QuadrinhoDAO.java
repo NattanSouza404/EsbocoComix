@@ -7,16 +7,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.dto.QuadrinhoDTO;
 import com.esboco_comix.model.entidades.Quadrinho;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class QuadrinhoDAO {
 
-    public List<Quadrinho> consultarTodos() throws Exception {
+    public List<QuadrinhoDTO> consultarTodos() throws Exception {
         Connection conn = ConexaoFactory.getConexao();
 
         PreparedStatement pst = conn.prepareStatement(
-            "SELECT * FROM quadrinhos;",
+            """
+            SELECT quadrinhos.*, est_quantidade_total FROM quadrinhos
+	            JOIN estoque ON est_qua_id = qua_id;
+            """,
             ResultSet.TYPE_SCROLL_INSENSITIVE,
             ResultSet.CONCUR_READ_ONLY
         );
@@ -29,10 +33,13 @@ public class QuadrinhoDAO {
             }
             rs.beforeFirst();
 
-            List<Quadrinho> quadrinhos = new ArrayList<>();
+            List<QuadrinhoDTO> quadrinhos = new ArrayList<>();
 
-            while (rs.next()){                
-                quadrinhos.add(mapearEntidade(rs));
+            while (rs.next()){
+                QuadrinhoDTO dto = new QuadrinhoDTO();
+                dto.setQuadrinho(mapearEntidade(rs));
+                dto.setQuantidadeEstoque(rs.getInt("est_quantidade_total"));
+                quadrinhos.add(dto);
             }
 
             return quadrinhos;
@@ -45,11 +52,15 @@ public class QuadrinhoDAO {
         }
     }
     
-    public Quadrinho consultarByID(int id) throws Exception {
+    public QuadrinhoDTO consultarByID(int id) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
         PreparedStatement pst = connection.prepareStatement(
-            "SELECT * FROM quadrinhos WHERE qua_id = ?"
+            """
+            SELECT quadrinhos.*, est_quantidade_total FROM quadrinhos
+	            JOIN estoque ON est_qua_id = qua_id
+            WHERE qua_id = ?;
+            """
         );
 
         try {
@@ -60,8 +71,12 @@ public class QuadrinhoDAO {
             if (!rs.next()){
                 throw new Exception("Quadrinho não encontrado!");
             }
+
+            QuadrinhoDTO dto = new QuadrinhoDTO();
+            dto.setQuadrinho(mapearEntidade(rs));
+            dto.setQuantidadeEstoque(rs.getInt("est_quantidade_total"));
             
-            return mapearEntidade(rs);
+            return dto;
         } catch (Exception e){
             throw e;
         } finally {
