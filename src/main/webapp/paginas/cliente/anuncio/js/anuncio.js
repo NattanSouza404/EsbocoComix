@@ -17,6 +17,8 @@ document.getElementById('header-produto').innerHTML = `
     <p class="card-text fs-4 text-success">${formatarPreco(quadrinho.preco)}</p>
 `
 
+document.getElementById('estoque').textContent = `Estoque: ${quadrinho.quantidadeEstoque}`
+
 const corpoTabela = document.createElement('tbody');
 corpoTabela.innerHTML = `
     <tbody>
