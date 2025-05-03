@@ -154,6 +154,32 @@ EXECUTE FUNCTION set_qua_id();
 
 
 
+-- Categorias
+CREATE SEQUENCE cat_sq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE FUNCTION set_cat_id() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    NEW.cat_id := nextval('cat_sq');
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tg_set_cat_id
+BEFORE INSERT ON categorias
+FOR EACH ROW
+EXECUTE FUNCTION set_cat_id();
+
+
+
+
+
 -- Entrada estoque
 
 CREATE SEQUENCE ees_sq

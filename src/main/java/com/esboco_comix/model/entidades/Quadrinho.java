@@ -1,6 +1,7 @@
 package com.esboco_comix.model.entidades;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -31,6 +32,9 @@ public class Quadrinho {
     private Boolean isAtivo;
 
     private String urlImagem;
+
+    private List<Categoria> categorias;
     
     // TODO Grupo precificação
+    // TODO deletar o atributo preço
 }

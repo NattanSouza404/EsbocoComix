@@ -19,6 +19,11 @@ document.getElementById('header-produto').innerHTML = `
 
 document.getElementById('estoque').textContent = `Estoque: ${quadrinho.quantidadeEstoque}`
 
+let categorias = '';
+quadrinho.categorias.forEach(categoria => {
+    categorias += categoria.nome+", ";
+});
+
 const corpoTabela = document.createElement('tbody');
 corpoTabela.innerHTML = `
     <tbody>
@@ -56,7 +61,7 @@ corpoTabela.innerHTML = `
             <td>Código de Barras: ${quadrinho.codigoBarras}</td>
         </tr>
         <tr>
-            <td>Categorias: ${quadrinho.categoria}</td>
+            <td>Categorias: ${categorias}</td>
         </tr>
     </tbody>
 `

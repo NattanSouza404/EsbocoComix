@@ -85,8 +85,9 @@ CREATE TABLE categorias (
 );
 
 CREATE TABLE categorias_quadrinho (
-    cqu_cat_id NUMERIC(6) PRIMARY KEY,
-    cqu_qua_id NUMERIC(6) NOT NULL
+    cqu_cat_id NUMERIC(6) NOT NULL,
+    cqu_qua_id NUMERIC(6) NOT NULL,
+    PRIMARY KEY(cqu_cat_id, cqu_qua_id)
 );
 
 CREATE TABLE estoque (

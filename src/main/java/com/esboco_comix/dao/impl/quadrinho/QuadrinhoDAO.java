@@ -6,12 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.esboco_comix.dto.QuadrinhoDTO;
+import com.esboco_comix.model.entidades.Categoria;
 import com.esboco_comix.model.entidades.Quadrinho;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class QuadrinhoDAO {
+    
+    private CategoriaDAO categoriaDAO = new CategoriaDAO();
 
     public List<QuadrinhoDTO> consultarTodos() throws Exception {
         Connection conn = ConexaoFactory.getConexao();
@@ -40,6 +44,15 @@ public class QuadrinhoDAO {
                 dto.setQuadrinho(mapearEntidade(rs));
                 dto.setQuantidadeEstoque(rs.getInt("est_quantidade_total"));
                 quadrinhos.add(dto);
+            }
+
+            Map<Integer, List<Categoria>> categorias = categoriaDAO.consultarTodos();
+
+            for (QuadrinhoDTO dto : quadrinhos) {
+                Quadrinho q = dto.getQuadrinho();
+                q.setCategorias(
+                    categorias.get(q.getId())
+                );
             }
 
             return quadrinhos;
@@ -75,7 +88,11 @@ public class QuadrinhoDAO {
             QuadrinhoDTO dto = new QuadrinhoDTO();
             dto.setQuadrinho(mapearEntidade(rs));
             dto.setQuantidadeEstoque(rs.getInt("est_quantidade_total"));
-            
+
+            dto.getQuadrinho().setCategorias(
+                categoriaDAO.consultarByIDQuadrinho(dto.getQuadrinho().getId())
+            );
+
             return dto;
         } catch (Exception e){
             throw e;
