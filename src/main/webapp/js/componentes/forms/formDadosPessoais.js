@@ -7,64 +7,75 @@ export class FormularioDadosPessoais extends HTMLFormElement {
 
         this.id = 'cadastrar-dados-pessoais';
 
-        this.header = document.createElement('div');
-        this.header.className = 'header-dados-cadastro';
-        this.header.append(criarElemento('p', 'Dados Pessoais'));
-        this.append(this.header);
+        this.innerHTML = `
+            <div class="header-dados-cadastro">
+                <p>Dados Pessoais</p>
+            </div>
 
-        this.secaoDadosPessoais = document.createElement('div');
-        this.secaoDadosPessoais.className = 'dados-formulario';
-        this.append(this.secaoDadosPessoais);
+            <div class="dados-formulario">
+                <label>
+                    Nome
+                    <input name="nome" placeholder="Seu nome"></input>
+                </label>
 
-        this.secaoDadosPessoais.append(criarElemento('label', "Nome"));
-        this.secaoDadosPessoais.append(criarElementoInput('nome', 'Seu nome'));
+                <label>
+                    Gênero
+                    <select name="genero"></select>
+                </label>
 
-        this.secaoDadosPessoais.append(criarElemento('label', "Gênero"));
-        let select = document.createElement('select');
-        select.name = 'genero';
-        this.secaoDadosPessoais.append(select);
+                <label>
+                    Data de Nascimento
+                    <input name="dataNascimento" type="date"></input>
+                </label>
 
+                <label>
+                    CPF
+                    <input name="cpf" type="date" placeholder="111.111.111-11"></input>
+                </label>
+
+                <label>
+                    E-mail
+                    <input name="email" type="email" placeholder="seuemail@email.com"></input>
+                </label>
+            </div>
+
+            <div class="header-dados-cadastro">
+                <p>Telefone</p>
+            </div>
+
+            <div class="dados-formulario">
+            
+                <label>
+                    Tipo de Telefone
+                    <select name="tipoTelefone"></select>
+                </label>
+
+                <label>
+                    DDD
+                    <input name="ddd" placeholder="11"></input>
+                </label>
+
+                <label>
+                    Número do Telefone
+                    <input name="numero" placeholder="11111-1111"></input>
+                </label>
+
+            </div>
+        `;
+        
+        let select = this.querySelector('[name="genero"]');
         GENEROS.forEach(({ nome, valor }) => {
-            let option = criarElemento('option', nome);
-            option.value = valor;
-            select.append(option);
+            select.insertAdjacentHTML('beforeend',
+                `<option value="${valor}">${nome}</option>`
+            );
         });
 
-        this.secaoDadosPessoais.append(criarElemento('label', "Data de Nascimento"));
-        this.secaoDadosPessoais.append(criarElementoInput('dataNascimento', null, 'date'));
-
-        this.secaoDadosPessoais.append(criarElemento('label', "CPF"));
-        this.secaoDadosPessoais.append(criarElementoInput('cpf', '111.111.111-11'));
-
-        this.secaoDadosPessoais.append(criarElemento('label', "E-mail"));
-        this.secaoDadosPessoais.append(criarElementoInput('email', 'seuemail@email.com', 'email'));
-
-        this.header = document.createElement('div');
-        this.header.className = 'header-dados-cadastro';
-        this.header.append(criarElemento('p', 'Telefone'));
-        this.append(this.header);
-
-        this.secaoTelefone = document.createElement('div');
-        this.secaoTelefone.className = 'dados-formulario';
-        this.append(this.secaoTelefone);
-
-        this.secaoTelefone.append(criarElemento('label', "Tipo do Telefone"));
-
-        select = document.createElement('select');
-        select.name = "tipoTelefone";
-        this.secaoTelefone.append(select);
-
+        select = this.querySelector('[name="tipoTelefone"]');
         TIPOS_TELEFONE.forEach(({ nome, valor }) => {
-            let option = criarElemento('option', nome);
-            option.value = valor;
-            select.append(option);
+            select.insertAdjacentHTML('beforeend',
+                `<option value="${valor}">${nome}</option>`
+            );
         });
-
-        this.secaoTelefone.append(criarElemento('label', "DDD"));
-        this.secaoTelefone.append(criarElementoInput('ddd', '11'));
-
-        this.secaoTelefone.append(criarElemento('label', 'Número do Telefone'));
-        this.secaoTelefone.append(criarElementoInput('numero', '11111-1111'));
     }
 
     atualizar(cliente){

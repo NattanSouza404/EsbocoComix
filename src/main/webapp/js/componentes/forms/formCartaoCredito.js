@@ -6,48 +6,62 @@ export class FormularioCartaoCredito extends HTMLFormElement {
         super();
 
         this.className = 'cartao-credito';
-        const div = document.createElement('div');
-        div.className = "numeracao";
 
-        this.numeroTitulo = criarElemento('p', '1');
-        div.append(this.numeroTitulo);
-        div.append(criarElemento('p', 'Cartão de Crédito'));
-        this.append(div);
+        this.innerHTML = `
+            <div class="numeracao">
+                <p class="numeroTitulo">1</p>
+                <p>Cartão de Crédito</p>
+            </div>
 
-        const mainDiv = document.createElement('div');
-        mainDiv.className = 'dados-cartao-credito';
-        this.append(mainDiv);
+            <div class="dados-cartao-credito">
+                <label>
+                    Número Cartão de Crédito
+                    <input name="numero" placeholder="xxxx.xxxx.xxxx.xxxx"></input>
+                </label>
 
-        mainDiv.append(criarElemento('label', 'Número Cartão de Crédito'));
-        mainDiv.append(criarElementoInput('numero'));
-        
-        mainDiv.append(criarElemento('label', 'Nome Impresso?'));
-        mainDiv.append(criarElementoInput('nomeImpresso'));
+                <label>
+                    Nome Impresso
+                    <input name="nomeImpresso" placeholder="NOME IMPRESSO"></input>
+                </label>
 
-        mainDiv.append(criarElemento('label', 'Código de Segurança'));
-        mainDiv.append(criarElementoInput('codigoSeguranca'));
+                <label>
+                    Código de Segurança
+                    <input name="codigoSeguranca" placeholder="xxx"></input>
+                </label>
 
-        mainDiv.append(criarElemento('label', 'É preferencial?'));
-        mainDiv.append(criarSelectSimOuNao('isPreferencial'));
+                <label>
+                    É preferencial?
+                    <select name="isPreferencial">
+                        <option value="true">Sim</option>
+                        <option value="false" selected>Não</option>
+                    </select>
+                </label>
 
-        mainDiv.append(criarElemento('label', 'Bandeira do Cartão'));
-        let select = document.createElement('select');
-        select.name = "bandeiraCartao";
-        mainDiv.append(select);
+                <label>
+                    Bandeira do Cartão
+                    <select name="bandeiraCartao"></select>
+                </label>
 
+            </div>
+
+            <button type="button" class="btn-remover">Remover</button>
+        `;
+
+        this.numeroTitulo = this.querySelector('.numeroTitulo');
+
+        let select = this.querySelector('[name="bandeiraCartao"]');
         BANDEIRAS_CARTAO.forEach(({ nome, valor }) => {
-            let option = criarElemento('option', nome);
-            option.value = valor;
-            select.append(option);
+            select.insertAdjacentHTML("beforeend", `
+                <option value="${valor}">${nome}</option>
+            `);
         });
 
-        this.botaoRemover = criarElemento('button', 'Remover');
+        this.botaoRemover = this.querySelector('.btn-remover');
         this.botaoRemover.onclick = () => {
             if (this.parentNode){
                 this.parentNode.removeChild(this);
             }
         };
-        this.append(this.botaoRemover);
     }
 
     setNumeroTitulo(numero){

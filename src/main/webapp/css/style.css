@@ -73,3 +73,13 @@ main {
     background-color: lightgreen;
     padding: 8px;
 }
+
+label {
+    display: block;
+    margin-bottom: 1em;
+}
+
+label > * {
+    display: block;
+    margin-top: 0.5em;
+}

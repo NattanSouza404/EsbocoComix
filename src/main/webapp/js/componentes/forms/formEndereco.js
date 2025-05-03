@@ -1,89 +1,127 @@
 import { TIPOS_LOGRADOURO, TIPOS_RESIDENCIAL } from "../../dados.js";
-import { criarElemento, criarElementoInput, criarSelectSimOuNao } from "../../script.js";
 
 export class FormularioEndereco extends HTMLFormElement {
     constructor(){
         super();
 
         this.className = 'endereco';
-        const div = document.createElement('div');
-        div.className = "numeracao";
 
-        this.numeroTitulo = criarElemento('p', '1');
-        div.append(this.numeroTitulo);
-        div.append(criarElemento('p', 'Endereço'));
-        this.append(div);
+        this.innerHTML = `
+            <div class="numeracao">
+                <p class="numeroTitulo">1</p>
+                <p>Endereço</p>
+            </div>
 
-        const mainDiv = document.createElement('div');
-        mainDiv.className = 'dados-endereco';
-        this.append(mainDiv);
+            <div class="dados-endereco">
+                <label>
+                    Frase curta para identificação
+                    <input name="fraseCurta" placeholder="Casa"></input>
+                </label>
+                
+                <label>
+                    É um endereço residencial?
 
-        mainDiv.append(criarElemento('label', 'Frase curta para identificação'));
-        mainDiv.append(criarElementoInput('fraseCurta'));
-        
-        mainDiv.append(criarElemento('label', 'É um endereço residencial?'));
-        mainDiv.append(criarSelectSimOuNao('isResidencial'));
+                    <select name="isResidencial">
+                        <option value="true">Sim</option>
+                        <option selected value="false">Não</option>
+                    </select>
+                </label>
+                
+                <label>
+                    É um endereço de cobrança?
 
-        mainDiv.append(criarElemento('label', 'É um endereço de cobrança?'));
-        mainDiv.append(criarSelectSimOuNao('isCobranca'));
+                    <select name="isCobranca">
+                        <option value="true">Sim</option>
+                        <option selected value="false">Não</option>
+                    </select>
+                </label>  
 
-        mainDiv.append(criarElemento('label', 'É um endereço de entrega?'));
-        mainDiv.append(criarSelectSimOuNao('isEntrega'));
+                <label>
+                    É um endereço de entrega?
 
-        mainDiv.append(criarElemento('label', 'Tipo de Logradouro'));
-        let select = document.createElement('select');
-        select.name = "tipoResidencial";
-        mainDiv.append(select);
+                    <select name="isEntrega">
+                        <option value="true">Sim</option>
+                        <option selected value="false">Não</option>
+                    </select>
+                </label>
+                
+                <label>
+                    Tipo Residencial
+                    <select name="tipoResidencial"></select>
+                </label>
+                
+                <label>
+                    Nº Endereço
+                    <input name="numero" placeholder="34"></input>
+                </label>
+                
+                <label>
+                    Logradouro
+                    <input name="logradouro" placeholder="Flores"></input>
+                </label>
+                
+                <label>
+                    Tipo de Logradouro
+                    <select name="tipoLogradouro"></select>
+                </label>
 
+                <label>
+                    CEP
+                    <input name="cep" placeholder="00000-000"></input>
+                </label>  
+
+                <label>
+                    Bairro
+                    <input name="bairro" placeholder="Vila Celestina"></bairro>
+                </label>
+                
+                <label>
+                    Cidade
+                    <input name="cidade" placeholder="Embu"></input>
+                </label>
+
+                <label>
+                    Estado
+                    <input name="estado" placeholder="São Paulo"></input>
+                </label>
+                
+                <label>
+                    País
+                    <input name="pais" placeholder="Brasil"></input>
+                </label>
+                
+                <label>
+                    Observações
+                    <input name="observacoes" placeholder="Perto do prédio..."></input>
+                </label>
+                
+            </div>
+
+            <button type="button" class="btn btn-primary btn-remover">Remover</button>
+        `;
+
+        this.numeroTitulo = this.getElementsByClassName('numeroTitulo')[0];
+
+        let select = this.querySelector('select[name="tipoResidencial"]');
         TIPOS_RESIDENCIAL.forEach(({ nome, valor }) => {
-            let option = criarElemento('option', nome);
-            option.value = valor;
-            select.append(option);
+            select.insertAdjacentHTML('beforeend',
+                `<option value="${valor}">${nome}</option>`
+            );
         });
 
-        mainDiv.append(criarElemento('label', 'Nº Endereço'));
-        mainDiv.append(criarElementoInput('numero'));
-
-        mainDiv.append(criarElemento('label', 'Logradouro'));
-        mainDiv.append(criarElementoInput('logradouro'));
-
-        mainDiv.append(criarElemento('label', 'Tipo de Logradouro'));
-        select = document.createElement('select');
-        select.name = "tipoLogradouro";
-        mainDiv.append(select);
-
+        select = this.querySelector('select[name="tipoLogradouro"]');
         TIPOS_LOGRADOURO.forEach(({ nome, valor }) => {
-            let option = criarElemento('option', nome);
-            option.value = valor;
-            select.append(option);
+            select.insertAdjacentHTML('beforeend',
+                `<option value="${valor}">${nome}</option>`
+            );
         });
-    
-        mainDiv.append(criarElemento('label', 'CEP'));
-        mainDiv.append(criarElementoInput('cep', '00000-000'));
 
-        mainDiv.append(criarElemento('label', 'Bairro'));
-        mainDiv.append(criarElementoInput('bairro'));
-
-        mainDiv.append(criarElemento('label', 'Cidade'));
-        mainDiv.append(criarElementoInput('cidade'));
-
-        mainDiv.append(criarElemento('label', 'Estado'));
-        mainDiv.append(criarElementoInput('estado'));
-
-        mainDiv.append(criarElemento('label', 'País'));
-        mainDiv.append(criarElementoInput('pais'));
-
-        mainDiv.append(criarElemento('label', 'Observações'));
-        mainDiv.append(criarElementoInput('observacoes', 'Perto do prédio...'));
-
-        this.botaoRemover = criarElemento('button', 'Remover');
-        this.botaoRemover.type = 'button';
+        this.botaoRemover = this.querySelector('.btn-remover');
         this.botaoRemover.onclick = () => {
             if (this.parentNode){
                 this.parentNode.removeChild(this);
             }
-        };
-        this.append(this.botaoRemover);
+        }
     }
 
     setNumeroTitulo(numero){
