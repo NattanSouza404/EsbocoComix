@@ -96,8 +96,6 @@ export class FormularioEndereco extends HTMLFormElement {
                 </label>
                 
             </div>
-
-            <button type="button" class="btn btn-primary btn-remover">Remover</button>
         `;
 
         this.numeroTitulo = this.getElementsByClassName('numeroTitulo')[0];
@@ -115,13 +113,6 @@ export class FormularioEndereco extends HTMLFormElement {
                 `<option value="${valor}">${nome}</option>`
             );
         });
-
-        this.botaoRemover = this.querySelector('.btn-remover');
-        this.botaoRemover.onclick = () => {
-            if (this.parentNode){
-                this.parentNode.removeChild(this);
-            }
-        }
     }
 
     setNumeroTitulo(numero){

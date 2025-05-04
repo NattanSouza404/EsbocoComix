@@ -30,7 +30,7 @@ export class FormularioDadosPessoais extends HTMLFormElement {
 
                 <label>
                     CPF
-                    <input name="cpf" type="date" placeholder="111.111.111-11"></input>
+                    <input name="cpf" placeholder="111.111.111-11"></input>
                 </label>
 
                 <label>

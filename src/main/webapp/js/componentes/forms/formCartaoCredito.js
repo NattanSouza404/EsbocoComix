@@ -43,8 +43,6 @@ export class FormularioCartaoCredito extends HTMLFormElement {
                 </label>
 
             </div>
-
-            <button type="button" class="btn-remover">Remover</button>
         `;
 
         this.numeroTitulo = this.querySelector('.numeroTitulo');
@@ -55,13 +53,6 @@ export class FormularioCartaoCredito extends HTMLFormElement {
                 <option value="${valor}">${nome}</option>
             `);
         });
-
-        this.botaoRemover = this.querySelector('.btn-remover');
-        this.botaoRemover.onclick = () => {
-            if (this.parentNode){
-                this.parentNode.removeChild(this);
-            }
-        };
     }
 
     setNumeroTitulo(numero){
