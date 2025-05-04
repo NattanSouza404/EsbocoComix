@@ -34,7 +34,13 @@ if (carrinho.itensCarrinho.length !== 0){
     
         button.onclick = () => {
             item.quantidade = linha.querySelector('input').value;
-            atualizarItemCarrinho(item);
+
+            const confirmacaoUsuario = confirm("Deseja mesmo atualizar quantidade desse item?"); 
+
+            if (confirmacaoUsuario){
+                atualizarItemCarrinho(item);
+            }
+            
         };
     
         td.append(button);
@@ -44,7 +50,12 @@ if (carrinho.itensCarrinho.length !== 0){
         button.className = "btn btn-danger btn-sm";
     
         button.onclick = () => {
-            deletarItemCarrinho(item);
+            const confirmacaoUsuario = confirm("Deseja mesmo deletar esse item?");
+
+            if (confirmacaoUsuario){
+                deletarItemCarrinho(item);
+            }
+ 
         };
     
         td.append(button);
