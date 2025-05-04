@@ -12,13 +12,6 @@ public class CartaoCreditoService {
         return cartaoCreditoDAO.inserir(c);
     }
 
-    public void inserir(List<CartaoCredito> cartoesCliente) throws Exception {
-        cartaoCreditoDAO.inserir(null);
-        for (CartaoCredito cc : cartoesCliente) {
-            inserir(cc);
-        }
-    }
-
     public List<CartaoCredito> consultarByIDCliente(int id) throws Exception {
         return cartaoCreditoDAO.consultarByIDCliente(id);
     }
@@ -28,16 +21,11 @@ public class CartaoCreditoService {
     }
 
     public CartaoCredito atualizar(CartaoCredito c) throws Exception{
-        if (c.getId() <= 0){
-            return cartaoCreditoDAO.inserir(c);
-        }
-
         return cartaoCreditoDAO.atualizar(c);
     }
 
     public void deletar(CartaoCredito c) throws Exception {
         cartaoCreditoDAO.deletar(c);
     }
-
 
 }

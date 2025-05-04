@@ -8,6 +8,38 @@ export async function retornarCartoesCredito(idCliente) {
     }
 }
 
+export async function inserirCartaoCredito(cartao){
+    try {
+        const confirmacaoUsuario = confirm("Deseja mesmo cadastrar esse cartão de crédito?");
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+
+        const url = "/cartaocredito";
+
+        const option = {
+            method: 'POST',
+            headers:{'Content-Type': 'application/json'},
+            body: JSON.stringify(cartao)
+        }
+
+        const result = await fetch(url, option);
+
+        if (result.status === 201) {
+            alert('Cadastrado com sucesso');
+        }
+        else {
+            const resposta = await result.json();
+            alert("Erro ao cadastrar: "+resposta.erro);
+        }
+        
+    }
+    catch (error){
+        console.error('Erro ao cadastrar:', error);
+    }
+} 
+
 export async function atualizarCartaoCredito(cartaoCredito){
 
     try {

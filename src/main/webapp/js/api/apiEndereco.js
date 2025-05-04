@@ -6,6 +6,38 @@ export async function retornarEnderecos(idCliente){
         console.error('Erro buscando dados:', error);
         document.getElementById("resultados").textContent = "Erro carregando dados.";
     }
+}
+
+export async function inserirEndereco(endereco){
+    try {
+        const confirmacaoUsuario = confirm("Deseja mesmo cadastrar esse endereço?");
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+
+        const url = "/endereco";
+
+        const option = {
+            method: 'POST',
+            headers:{'Content-Type': 'application/json'},
+            body: JSON.stringify(endereco)
+        }
+
+        const result = await fetch(url, option);
+
+        if (result.status === 201) {
+            alert('Cadastrado com sucesso');
+        }
+        else {
+            const resposta = await result.json();
+            alert("Erro ao cadastrar: "+resposta.erro);
+        }
+        
+    }
+    catch (error){
+        console.error('Erro ao cadastrar:', error);
+    }
 } 
 
 export async function atualizarEndereco(endereco){

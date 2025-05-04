@@ -18,10 +18,6 @@ public class EnderecoService {
     }
 
     public Endereco atualizar(Endereco e) throws Exception{
-        if (e.getId() <= 0){
-            return enderecoDAO.inserir(e);
-        }
-
         return enderecoDAO.atualizar(e);
     }
 
