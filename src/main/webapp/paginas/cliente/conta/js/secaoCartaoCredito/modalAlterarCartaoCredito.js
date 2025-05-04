@@ -1,74 +1,41 @@
-import { criarElemento, montarCartaoCreditoPorForm } from "/js/script.js";
-import { atualizarCartaoCredito, deletarCartaoCredito } from "/js/api/apiCartaoCredito.js";;
-import { SecaoFormsCartaoCredito } from "/js/componentes/secaoCartaoCredito.js";
+import { montarCartaoCreditoPorForm } from "/js/script.js";
+import { atualizarCartaoCredito } from "/js/api/apiCartaoCredito.js";;
 import { Modal } from "/js/componentes/modal.js";
+import { FormularioCartaoCredito } from "/js/componentes/forms/formCartaoCredito.js";
 
 export class ModalAlterarCartaoCredito extends Modal {
     constructor(){
-        const conteudoModal = ConteudoModalAlterarCartaoCredito();
+        const conteudoModal = ConteudoModal();
 
         super('modal-alterar-cartao-credito', "Alterar Cartão Crédito", conteudoModal);
 
-        conteudoModal.buttonAddCartao.onclick = () => {
-            const form = conteudoModal.adicionarCartaoCredito();
-            form.botaoRemover.onclick = () => {
-                this.enviarDelecao(form);
-            };
-            form.botaoRemover.type = 'button';
-            form.append(this.criarBotaoAtualizar(form));
-        }
+        this.conteudoModal = conteudoModal;
 
-        this.conteudoModal = conteudoModal;   
+        this.conteudoModal.querySelector('.btn-atualizar').onclick = () => {
+            this.enviarAtualizacao();
+        }; 
     }
 
-    atualizar(cartoes){
-        this.cartoes = cartoes;
-
-        this.conteudoModal.container.textContent = '';
-
-        cartoes.forEach(e => {
-            const form = this.conteudoModal.adicionarCartaoCredito();
-            form.botaoRemover.onclick = () => {
-                this.enviarDelecao(form);
-            };
-            form.botaoRemover.type = 'button';
-            form.botaoRemover.className = 'btn-remover';
-            form.append(this.criarBotaoAtualizar(form));
-            form.atualizar(e);
-        });
+    show(cartaoCredito){
+        this.conteudoModal.atualizar(cartaoCredito);
+        super.show();
     }
 
-    async enviarAtualizacao(form){
-        const cartao = montarCartaoCreditoPorForm(form);
-        if (form.cartaoCredito != null){
-            cartao.id = form.cartaoCredito.id;
-        }
+    async enviarAtualizacao(){
+        const cartao = montarCartaoCreditoPorForm(this.conteudoModal);
+        cartao.id = this.conteudoModal.cartaoCredito.id;
         atualizarCartaoCredito(cartao);
     }
 
-    async enviarDelecao(form){
-        const cartaoCredito = montarCartaoCreditoPorForm(form);
-        if (form.cartaoCredito != null){
-            cartaoCredito.id = form.cartaoCredito.id;
-        }
-        deletarCartaoCredito(cartaoCredito);
-    }
-
-    criarBotaoAtualizar(form){
-        const botaoAtualizar = criarElemento('button', 'Atualizar');
-        botaoAtualizar.type = "button";
-        botaoAtualizar.className = "btn-atualizar";
-        botaoAtualizar.onclick = () => {
-            this.enviarAtualizacao(form);
-        };
-        return botaoAtualizar;
-    }
 }
 
-customElements.define('alterar-cartao-credito', ModalAlterarCartaoCredito);
+function ConteudoModal() {
+    const form = new FormularioCartaoCredito();
+    form.id = 'alterar-cartao-credito';
 
-function ConteudoModalAlterarCartaoCredito() {
-    const secaoForm = new SecaoFormsCartaoCredito();
-    secaoForm.id = 'alterar-cartao-credito';
-    return secaoForm;
+    form.insertAdjacentHTML('beforeend', `
+        <button type="button" class="btn-atualizar">Atualizar</button>
+    `);
+
+    return form;
 }

@@ -15,20 +15,18 @@ export class SecaoDadosPessoais extends HTMLElement {
         this.cartaoDadosPessoais = new CartaoDadosPessoais();
         this.append(this.cartaoDadosPessoais);
 
-        const div = document.createElement('div');
-
-        div.innerHTML = `
-            <button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
-                data-bs-target="#modal-alterar-dados-pessoais">
-                Editar Cadastro
-            </button>
-            <button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
-                data-bs-target="#modal-alterar-senha">
-                Alterar Senha
-            </button>
-        `;
-
-        this.append(div);
+        this.insertAdjacentHTML('beforeend', `
+            <div>
+                <button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
+                    data-bs-target="#modal-alterar-dados-pessoais">
+                    Editar Cadastro
+                </button>
+                <button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
+                    data-bs-target="#modal-alterar-senha">
+                    Alterar Senha
+                </button>
+            </div>
+        `);
 
         this.atualizar(cliente);
     }

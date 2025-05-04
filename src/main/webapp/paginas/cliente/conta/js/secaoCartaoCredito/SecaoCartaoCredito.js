@@ -1,4 +1,5 @@
 import { CartaoCartaoCredito } from "./CartaoCartaoCredito.js";
+import { ModalAdicionarCartaoCredito } from "./modalAdicionarCartaoCredito.js";
 import { ModalAlterarCartaoCredito } from "./modalAlterarCartaoCredito.js";
 
 export class SecaoCartaoCredito extends HTMLElement {
@@ -9,19 +10,20 @@ export class SecaoCartaoCredito extends HTMLElement {
         this.style.display = 'none';
 
         this.modalAlterarCartaoCredito = new ModalAlterarCartaoCredito();
+        this.modalAdicionarCartaoCredito = new ModalAdicionarCartaoCredito();
 
-        this.containerCartoes = document.createElement('div');
-        this.append(this.containerCartoes);
+        this.insertAdjacentHTML('beforeend', `
+            <div class="container-cartoes"></div>
 
-        const div = document.createElement('div');
+            <div>
+                <button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
+                data-bs-target="#modal-adicionar-cartao-credito">
+                    Adicionar Cartão de crédito
+                </button>
+            </div>             
+        `);
 
-        div.innerHTML = `
-            <button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
-                data-bs-target="#modal-alterar-cartao-credito">
-                Editar Cartão de crédito</button>
-        `;
-
-        this.append(div);
+        this.containerCartoes = this.querySelector('.container-cartoes');
 
         this.atualizar(cartoes);
     }
@@ -33,14 +35,13 @@ export class SecaoCartaoCredito extends HTMLElement {
             let contador = 1;
             cartoes.forEach(
                 (e) => {
-                    const cartao = new CartaoCartaoCredito(e);
+                    const cartao = new CartaoCartaoCredito(e, this.modalAlterarCartaoCredito);
                     cartao.titulo.textContent = contador + "º Cartão";
                     this.containerCartoes.append(cartao);
                     contador++;
                 }
             )
 
-            this.modalAlterarCartaoCredito.atualizar(cartoes);
         }
 
     }

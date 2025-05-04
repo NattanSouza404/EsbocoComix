@@ -3,8 +3,8 @@ import { retornarEnderecos } from "/js/api/apiEndereco.js";
 import { retornarCartoesCredito } from "/js/api/apiCartaoCredito.js";
 
 import { SecaoDadosPessoais } from "./secaoDadosPessoais/SecaoDadosPessoais.js";
-import { SecaoCartaoCredito } from "./secaoCartaoCredito/SecaoCartaoCredito.js";
 import { SecaoEndereco } from "./secaoEndereco/SecaoEndereco.js";
+import { SecaoCartaoCredito } from "./secaoCartaoCredito/SecaoCartaoCredito.js";
 
 let idCliente = localStorage.getItem('idcliente');
 

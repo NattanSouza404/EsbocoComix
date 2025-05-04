@@ -1,14 +1,18 @@
+import { deletarEndereco } from "/js/api/apiEndereco.js";
 import { criarElemento } from "/js/script.js";
 
 export class CartaoEndereco extends HTMLElement {
-    constructor(endereco){
+    constructor(endereco, modalAlterarEndereco){
 
         super();
+        this.modalAlterarEndereco = modalAlterarEndereco;
 
         this.className = 'endereco-conta';
         this.titulo = criarElemento('h3', 'Endereço');
         this.append(this.titulo);
         this.atualizar(endereco);
+
+        this.endereco = endereco;
     }
 
     atualizar(endereco){
@@ -26,29 +30,34 @@ export class CartaoEndereco extends HTMLElement {
             msgTipoEndereco += "[Cobranca] ";
         }
 
-        if (endereco.observacoes === null){
-            endereco.observacoes = "";
-        }
+        const observacoes = endereco.observacoes !== null ? endereco.observacoes : "N/A";
 
-        const dados = {
-            "Frase Curta":          endereco.fraseCurta,
-            "Tipo do Endereço":     msgTipoEndereco,
-            "Tipo de Residência":   endereco.tipoResidencial,
-            "Nº":                   endereco.numero,
-            "Tipo Logradouro":      endereco.tipoLogradouro,
-            "CEP":                  endereco.cep,
-            "Bairro":               endereco.bairro,
-            "Cidade":               endereco.cidade,
-            "Estado":               endereco.estado,
-            "País":                 endereco.pais,
-            "Observações":          endereco.observacoes
+        this.insertAdjacentHTML('beforeend', `
+           <p>Frase Curta: ${endereco.fraseCurta}</p>
+            <p>Tipo do Endereço: ${msgTipoEndereco}</p>
+            <p>Tipo de Residência: ${endereco.tipoResidencial}</p>
+            <p>Nº: ${endereco.numero}</p>
+            <p>Tipo Logradouro: ${endereco.tipoLogradouro}</p>
+            <p>CEP: ${endereco.cep}</p>
+            <p>Bairro: ${endereco.bairro}</p>
+            <p>Cidade: ${endereco.cidade}</p>
+            <p>Estado: ${endereco.estado}</p>
+            <p>País: ${endereco.pais}</p>
+            <p>Observações: ${observacoes}</p>
+
+            <button class="btn-atualizar">Atualizar</button>
+            <button class="btn-deletar">Remover</button> 
+        `);
+
+        const btnAtualizar = this.querySelector('.btn-atualizar');
+        btnAtualizar.onclick = () => {
+            this.modalAlterarEndereco.show(this.endereco);
         };
 
-        Object.entries(dados).forEach(
-            ([chave, valor]) => {
-                this.append(criarElemento('p', chave+": "+valor));
-            }
-        );
+        const btnDeletar = this.querySelector('.btn-deletar');
+        btnDeletar.onclick = () => {
+            deletarEndereco(endereco);
+        };
     }
 }
 

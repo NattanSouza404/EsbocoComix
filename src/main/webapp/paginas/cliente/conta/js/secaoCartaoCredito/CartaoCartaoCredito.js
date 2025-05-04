@@ -1,31 +1,47 @@
-import { criarElemento } from "/js/script.js";
+import { deletarCartaoCredito } from "/js/api/apiCartaoCredito.js";
 
 export class CartaoCartaoCredito extends HTMLElement {
-    constructor(cartaoCredito){
+    constructor(cartaoCredito, modalAlterarCartaoCredito){
         super();
 
         this.className = 'cartao-credito-conta';
 
-        this.titulo = criarElemento('h3', '1º Cartão');
-        this.append(this.titulo);
+        this.modalAlterarCartaoCredito = modalAlterarCartaoCredito;
+
+        this.insertAdjacentHTML('beforeend', `
+            <h3>1º Cartão</h3>
+        `);
+
+        this.titulo = this.querySelector('h3');
+        
         this.atualizar(cartaoCredito);
+
+        this.cartaoCredito = cartaoCredito;
     }
 
     atualizar(cartaoCredito){
-        const dados = {
-            "Número Cartão":        cartaoCredito.numero,
-            "Código de Segurança":  cartaoCredito.codigoSeguranca,
-            "Nome impresso":        cartaoCredito.nomeImpresso,
-            "Bandeira do Cartão":   cartaoCredito.bandeiraCartao,
-            "Preferencial":         cartaoCredito.isPreferencial,
+        this.insertAdjacentHTML('beforeend', `
+            <p>Número Cartão: ${cartaoCredito.numero}</p>
+            <p>Código de Segurança: ${cartaoCredito.codigoSeguranca}</p>
+            <p>Nome impresso: ${cartaoCredito.nomeImpresso}</p>
+            <p>Bandeira do Cartão: ${cartaoCredito.bandeiraCartao}</p>
+            <p>Preferencial: ${cartaoCredito.isPreferencial}</p>
+
+            <button class="btn-atualizar">Atualizar</button>
+            <button class="btn-deletar">Remover</button> 
+        `);
+
+        const btnAtualizar = this.querySelector('.btn-atualizar');
+        btnAtualizar.onclick = () => {
+            this.modalAlterarCartaoCredito.show(this.cartaoCredito);
         };
 
-        Object.entries(dados).forEach(
-            ([chave, valor]) => {
-                this.append(criarElemento('p', chave+": "+valor));
-            }
-        );
+        const btnDeletar = this.querySelector('.btn-deletar');
+        btnDeletar.onclick = () => {
+            deletarCartaoCredito(this.cartaoCredito);
+        };
     }
+    
 }
 
 customElements.define('dados-cartao-credito', CartaoCartaoCredito) 

@@ -1,75 +1,42 @@
-import { criarElemento, montarEnderecoPorForm } from "/js/script.js";
-import { atualizarEndereco, deletarEndereco } from "/js/api/apiEndereco.js";
-import { SecaoFormsEndereco } from "/js/componentes/secaoEndereco.js";
+import { montarEnderecoPorForm } from "/js/script.js";
+import { atualizarEndereco } from "/js/api/apiEndereco.js";
 import { Modal } from "/js/componentes/modal.js";
+import { FormularioEndereco } from "/js/componentes/forms/formEndereco.js";
 
 export class ModalAlterarEndereco extends Modal {
 
     constructor() {
-        const conteudoModal = ConteudoModalAlterarEndereco();
+        const conteudoModal = ConteudoModal();
 
         super('modal-alterar-endereco', "Alterar Endereço", conteudoModal);
 
-        conteudoModal.botaoAddEndereco.onclick = () => {
-            const form = conteudoModal.adicionarEndereco();
-            form.botaoRemover.onclick = () => {
-                this.enviarDelecao(form);
-            };
-            form.botaoRemover.type = 'button';
-            form.botaoRemover.className = 'btn-remover';
-            form.append(this.criarBotaoAtualizar(form));
+        this.conteudoModal = conteudoModal;
+
+        this.conteudoModal.querySelector('.btn-atualizar').onclick = () => {
+            this.enviarAtualizacao();
         };
-
-        this.secaoForm = conteudoModal;
     }
 
-    atualizar(enderecos) {
-        this.enderecos = enderecos;
-
-        this.secaoForm.container.textContent = '';
-
-        enderecos.forEach(e => {
-            const form = this.secaoForm.adicionarEndereco();
-            form.botaoRemover.onclick = () => {
-                this.enviarDelecao(form);
-            };
-            form.botaoRemover.type = 'button';
-            form.botaoRemover.className = 'btn-remover';
-            form.append(this.criarBotaoAtualizar(form));
-            form.atualizar(e);
-        });
+    show(endereco){
+        this.conteudoModal.atualizar(endereco);
+        super.show();
     }
 
-    async enviarAtualizacao(form) {
-        const endereco = montarEnderecoPorForm(form);
-        if (form.endereco != null) {
-            endereco.id = form.endereco.id;
-        }
+    async enviarAtualizacao() {
+        const endereco = montarEnderecoPorForm(this.conteudoModal);
+        endereco.id = this.conteudoModal.endereco.id;
         atualizarEndereco(endereco);
-    }
-
-    async enviarDelecao(form) {
-        const endereco = montarEnderecoPorForm(form);
-        if (form.endereco != null) {
-            endereco.id = form.endereco.id;
-        }
-        deletarEndereco(endereco);
-    }
-
-    criarBotaoAtualizar(form) {
-        const botaoAtualizar = criarElemento('button', 'Atualizar');
-        botaoAtualizar.type = "button";
-        botaoAtualizar.className = "btn-atualizar";
-        botaoAtualizar.onclick = () => {
-            this.enviarAtualizacao(form);
-        };
-        return botaoAtualizar;
     }
 
 }
 
-function ConteudoModalAlterarEndereco() {
-    const secaoForm = new SecaoFormsEndereco();
-    secaoForm.id = 'alterar-endereco';
-    return secaoForm;
+function ConteudoModal() {
+    const form = new FormularioEndereco();
+    form.id = 'alterar-endereco';
+
+    form.insertAdjacentHTML('beforeend', `
+        <button type="button" class="btn-atualizar">Atualizar</button>
+    `);
+
+    return form;
 }

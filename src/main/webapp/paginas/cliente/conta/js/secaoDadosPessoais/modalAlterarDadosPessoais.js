@@ -2,7 +2,6 @@ import { montarClientePorForm } from "/js/script.js";
 import { atualizarCliente } from "/js/api/apiCliente.js";
 import { FormularioDadosPessoais } from "/js/componentes/forms/formDadosPessoais.js";
 import { Modal } from "/js/componentes/modal.js";
-import { BotaoSalvar } from "/js/componentes/botoes/BotaoSalvar.js";
 
 export class ModalAlterarDadosPessoais extends Modal {
 
@@ -11,11 +10,13 @@ export class ModalAlterarDadosPessoais extends Modal {
 
         super('modal-alterar-dados-pessoais', "Editar Dados Pessoais", conteudoModal);
 
-        conteudoModal.append(new BotaoSalvar(
-            () => {
-                this.enviarAtualizacao();
-            }
-        ));
+        conteudoModal.insertAdjacentHTML('beforeend', `
+            <button class="botao-salvar" type="button">Salvar</button>
+        `);
+
+        conteudoModal.querySelector('.botao-salvar').onclick = () => {
+            this.enviarAtualizacao();
+        };
 
         this.form = conteudoModal;
     }
