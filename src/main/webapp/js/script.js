@@ -1,43 +1,5 @@
-export function criarElemento(tag, texto){
-    const element = document.createElement(tag);
-    element.textContent = texto;
-    return element;
-}
-
 export function mascararNumeroCartao(numero){
     return '**** **** **** ' + numero.slice(-4);
-}
-
-export function criarElementoInput(name, placeholder, type){
-    const input = document.createElement('input'); 
-    
-    if (name != null){
-        input.name = name;
-    }
-
-    if (placeholder != null){
-        input.placeholder = placeholder;
-    }
-
-    if (type != null){
-        input.type = type;
-    }
-
-    return input;
-}
-
-export function criarSelectSimOuNao(name){
-    let select = document.createElement('select');
-    select.name = name;
-
-    let option = criarElemento('option', 'Não');
-    option.value = 'false';
-    select.append(option);
-    option = criarElemento('option', 'Sim');
-    option.value = 'true';
-    select.append(option);
-
-    return select;
 }
 
 export function formatarDataParaInput(array){

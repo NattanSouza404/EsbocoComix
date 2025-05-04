@@ -1,4 +1,3 @@
-import { criarElemento } from "/js/script.js";
 import { FormularioCartaoCredito } from "/js/componentes/forms/formCartaoCredito.js";
 
 export class SecaoFormsCartaoCredito extends HTMLElement {

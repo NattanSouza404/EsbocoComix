@@ -1,5 +1,4 @@
 import { BANDEIRAS_CARTAO } from "../../dados.js";
-import { criarElemento, criarElementoInput, criarSelectSimOuNao } from "../../script.js";
 
 export class FormularioCartaoCredito extends HTMLFormElement {
     constructor(){

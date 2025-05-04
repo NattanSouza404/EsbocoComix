@@ -1,4 +1,3 @@
-import { criarElemento, criarElementoInput } from "/js/script.js";
 import { atualizarSenha } from "/js/api/apiCliente.js";
 import { Modal } from "/js/componentes/modal.js";
 

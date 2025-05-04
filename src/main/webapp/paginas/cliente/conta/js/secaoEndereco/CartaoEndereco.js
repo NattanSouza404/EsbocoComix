@@ -1,5 +1,4 @@
 import { deletarEndereco } from "/js/api/apiEndereco.js";
-import { criarElemento } from "/js/script.js";
 
 export class CartaoEndereco extends HTMLElement {
     constructor(endereco, modalAlterarEndereco){
@@ -8,8 +7,13 @@ export class CartaoEndereco extends HTMLElement {
         this.modalAlterarEndereco = modalAlterarEndereco;
 
         this.className = 'endereco-conta';
-        this.titulo = criarElemento('h3', 'Endereço');
-        this.append(this.titulo);
+
+        this.insertAdjacentHTML('beforeend', `
+            <h3>Endereço</h3>
+        `);
+
+        this.titulo = this.querySelector('h3');
+
         this.atualizar(endereco);
 
         this.endereco = endereco;
@@ -33,7 +37,7 @@ export class CartaoEndereco extends HTMLElement {
         const observacoes = endereco.observacoes !== null ? endereco.observacoes : "N/A";
 
         this.insertAdjacentHTML('beforeend', `
-           <p>Frase Curta: ${endereco.fraseCurta}</p>
+            <p>Frase Curta: ${endereco.fraseCurta}</p>
             <p>Tipo do Endereço: ${msgTipoEndereco}</p>
             <p>Tipo de Residência: ${endereco.tipoResidencial}</p>
             <p>Nº: ${endereco.numero}</p>
