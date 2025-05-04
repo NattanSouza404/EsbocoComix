@@ -1,25 +1,26 @@
-import { FormularioDadosPessoais } from "../../../../js/componentes/forms/formDadosPessoais.js";
-import { criarElemento, criarElementoInput } from "../../../../js/script.js";
+import { FormularioDadosPessoais } from "/js/componentes/forms/formDadosPessoais.js";
 
 export class FormularioCadastrarDadosPessoais extends FormularioDadosPessoais {
     constructor(){
         super();
 
-        const header = document.createElement('div');
-        header.className = 'header-dados-cadastro';
-        header.append(criarElemento('p', 'Senha'));
-        this.append(header);
+        this.insertAdjacentHTML('beforeend', `
+            <div class="header-dados-cadastro">
+                <p>Senha</p>
+            </div>
 
-        this.secaoSenha = document.createElement('div');
-        this.secaoSenha.className = 'dados-formulario';
+            <div class="dados-formulario">
+                <label>
+                    Senha
+                    <input name="senhaNova" type="password"></input> 
+                </label>
 
-        this.secaoSenha.append(criarElemento('label', "Senha"));
-        this.secaoSenha.append(criarElementoInput('senhaNova', null, 'password'));
-
-        this.secaoSenha.append(criarElemento('label', "Confirme a senha"));
-        this.secaoSenha.append(criarElementoInput('senhaConfirmacao', null, 'password'));
-        
-        this.append(this.secaoSenha);
+                <label>
+                    Confirme a senha
+                    <input name="senhaConfirmacao" type="password"></input> 
+                </label>
+            </div>
+        `);
     }
 
 }
