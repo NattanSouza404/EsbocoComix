@@ -38,6 +38,20 @@ public class CartaoCreditoController extends AbstractController {
     }
 
     @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            CartaoCredito cartaoCreditoToAdd = jsonToObject(req, CartaoCredito.class);
+            retornarRespostaJson(
+                resp,
+                cartaoCreditoService.inserir(cartaoCreditoToAdd),
+                HttpServletResponse.SC_CREATED
+            );
+        } catch (Exception e) {
+            estourarErro(resp, e);
+        }
+    }
+
+    @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
         try {
