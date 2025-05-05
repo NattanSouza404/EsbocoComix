@@ -131,7 +131,7 @@ CREATE TABLE cartoes_credito_pedido (
 
 CREATE TABLE cupons (
     cup_id             NUMERIC(9) PRIMARY KEY,
-    cup_valor          NUMERIC(5, 2) NOT NULL,
+    cup_valor          NUMERIC(10, 2) NOT NULL,
     cup_is_promocional BOOLEAN NOT NULL,
     cup_is_troca       BOOLEAN NOT NULL,
     cup_is_ativo       BOOLEAN NOT NULL,

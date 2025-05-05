@@ -78,7 +78,7 @@ ALTER TABLE clientes ADD CONSTRAINT pk_cli PRIMARY KEY ( cli_id );
 
 CREATE TABLE cupons (
     cup_id             NUMBER(9) NOT NULL,
-    cup_valor          NUMBER(5, 2) NOT NULL,
+    cup_valor          NUMBER(10, 2) NOT NULL,
     cup_is_promocional CHAR(1) NOT NULL,
     cup_is_troca       CHAR(1) NOT NULL,
     cup_is_ativo       CHAR(1) NOT NULL,
