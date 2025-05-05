@@ -19,6 +19,5 @@ public class PedidoDTO {
     private Pedido pedido;
     
     private String nomeCliente;
-    private double valorTotal;
     private List<ItemPedidoDTO> itensPedidoDTO;
 }

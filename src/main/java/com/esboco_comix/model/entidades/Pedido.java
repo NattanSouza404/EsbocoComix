@@ -15,6 +15,7 @@ public class Pedido {
     private int id;
     private int idCliente;
     private StatusPedido status;
+    private Double valorTotal;
     private Double valorFrete;
     private LocalDateTime data;
 

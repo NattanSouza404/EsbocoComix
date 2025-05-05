@@ -59,6 +59,7 @@ public class PedidoService {
 
         pedido.setStatus(StatusPedido.EM_PROCESSAMENTO);
         pedido.setItensPedido(carrinho.esvaziar());
+        pedido.setValorTotal(calculadora.calcularValorTotalPedido(pedido, pedido.getItensPedido()));
 
         Pedido pedidoInserido = pedidoDAO.inserir(pedido);
 
@@ -85,28 +86,14 @@ public class PedidoService {
     }
 
     public ConsultarPedidosDTO consultarTodos() throws Exception {
-        List<PedidoDTO> pedidoDTOs = pedidoDAO.consultarTodos();
-
-        for (PedidoDTO dto : pedidoDTOs) {
-            Pedido pedido = dto.getPedido();
-            dto.setValorTotal(calculadora.calcularValorTotalPedido(pedido, pedido.getItensPedido()));
-        }
-
         return new ConsultarPedidosDTO(
-            pedidoDTOs,
+            pedidoDAO.consultarTodos(),
             itemPedidoDAO.consultarPedidosTroca()
         );
     }
 
     public List<PedidoDTO> consultarPorIDCliente(int idCliente) throws Exception {
-        List<PedidoDTO> pedidosDTO = pedidoDAO.consultarByIDCliente(idCliente);
-
-        for (PedidoDTO dto : pedidosDTO) {
-            Pedido pedido = dto.getPedido();
-            dto.setValorTotal(calculadora.calcularValorTotalPedido(pedido, pedido.getItensPedido()));
-        }
-
-        return pedidosDTO;
+        return pedidoDAO.consultarByIDCliente(idCliente);
     }
 
     public Pedido atualizarStatus(PedidoDTO pedidoDTO) throws Exception {

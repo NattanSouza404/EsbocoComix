@@ -26,8 +26,8 @@ public class PedidoDAO {
 
         PreparedStatement pst = connection.prepareStatement(
             "INSERT INTO pedidos("+
-                "ped_cli_id, ped_status, ped_end_id, ped_valor_frete)"+
-                "VALUES (?, ?, ?, ?);",
+                "ped_cli_id, ped_status, ped_end_id, ped_valor_total, ped_valor_frete)"+
+                "VALUES (?, ?, ?, ?, ?);",
                 Statement.RETURN_GENERATED_KEYS
         );
 
@@ -35,7 +35,8 @@ public class PedidoDAO {
             pst.setInt(1, e.getIdCliente());
             pst.setString(2, e.getStatus().name());
             pst.setInt(3, e.getEnderecoEntrega().getId());
-            pst.setDouble(4, e.getValorFrete());
+            pst.setDouble(4, e.getValorTotal());
+            pst.setDouble(5, e.getValorFrete());
 
             if (pst.executeUpdate() == 0){
                 throw new Exception("Inserção de pedido não executada!");
@@ -83,7 +84,6 @@ public class PedidoDAO {
                 pedidos.add(new PedidoDTO(
                     mapearEntidade(rs),
                     rs.getString("cli_nome"),
-                    0.0, 
                     null
                 ));
             }
@@ -133,7 +133,7 @@ public class PedidoDAO {
                 pedidos.add(new PedidoDTO(
                     mapearEntidade(rs),
                     rs.getString("cli_nome"),
-                    0.0, null
+                    null
                 ));
             }
 
@@ -205,6 +205,7 @@ public class PedidoDAO {
         pedido.setId(rs.getInt("ped_id"));
         pedido.setIdCliente(rs.getInt("ped_cli_id"));
         pedido.setStatus(StatusPedido.valueOf(rs.getString("ped_status")));
+        pedido.setValorTotal(rs.getDouble("ped_valor_total"));
         
         Endereco endereco = new Endereco();
         endereco.setId(rs.getInt("ped_end_id"));
