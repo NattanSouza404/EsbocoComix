@@ -37,6 +37,8 @@ export default class ModalCupomPromocional extends Modal {
 function ConteudoModalCupom(){
     const conteudoModal = document.createElement('form');
     conteudoModal.id = "form-adicionar-cupom-promocional";
+    conteudoModal.className = 'container';
+    conteudoModal.style.gap = '10px';
 
     conteudoModal.innerHTML = `
         <p id="nome-cliente"></p>
@@ -46,8 +48,10 @@ function ConteudoModalCupom(){
 
             <input type="number" name="valor"></input>
         </label>
-        
-        <button type="button" class="btn">Cadastrar cupom</button>
+
+        <div>
+            <button type="button" class="btn btn-primary">Cadastrar cupom</button>
+        </div>
     `;
 
     return conteudoModal;

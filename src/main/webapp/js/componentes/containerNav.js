@@ -24,7 +24,7 @@ export class ContainerNav extends HTMLDivElement {
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="/carrinho" class="nav-link">
+                        <a id="link-carrinho" href="/carrinho" class="nav-link">
                             <img src="/img/carrinho.png"> Carrinho
                         </a>
                     </li>

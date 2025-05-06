@@ -1,4 +1,4 @@
-import { formatarDateTime } from "/js/script.js";
+import { formatarDateTime, formatarPreco } from "/js/script.js";
 import { retornarPedidos } from "/js/api/apiPedido.js";
 import { Modal } from "/js/componentes/modal.js";
 
@@ -31,7 +31,8 @@ export default class ModalTransacoes extends Modal {
 
                 tr.innerHTML = `
                     <td>${formatarDateTime(pedido.data)}</td>
-                    <td>????</td>
+                    <td>${formatarPreco(pedido.valorTotal)}</td>
+                    <td>${formatarPreco(pedido.valorFrete)}</td>
                     <td>${pedido.status}</td>
                 `;
 
@@ -68,6 +69,7 @@ function ConteudoModalTransacoes(){
             <thead>
                 <th>Data e hora</th>
                 <th>Valor Transação</th>
+                <th>Valor frete</th>
                 <th>Status</th>
             </thead>
             <tbody></tbody>

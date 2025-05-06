@@ -44,12 +44,10 @@ pedidos.pedidos.forEach(pedido => {
 
     const select = tr.querySelector('select');
     select.value = pedido.status;
+    select.querySelector(`[value="${pedido.status}"`).disabled = true;
 
-    const button = tr.querySelector('button');
-
-    button.onclick = () => {
-        pedido.status = select.value;
-        atualizarStatusPedido(pedido);
+    tr.querySelector('button').onclick = () => {
+        confirmarAtualizarStatusPedido(pedido, select.value);
     }
 
     contador++;
@@ -67,12 +65,15 @@ if (Array.isArray(pedidos.itensPedido) && pedidos.itensPedido != 0){
         
         tr.innerHTML = `
             <td>${contador}</td>
-            <td>Pedido de troca #${contador}</td>
+            <td>Pedido de troca #${pedidoTroca.idPedido}</td>
             <td>${pedidoTroca.nomeCliente}</td>
             <td>${pedidoTroca.quantidade}x ${pedidoTroca.nomeQuadrinho}</td>
             <td class="order-status">${pedidoTroca.status}</td>
             <td>
-                <button class="btn btn-warning btn-sm">Alterar status para</button>
+                <button class="btn btn-warning btn-sm">
+                    Alterar status para
+                </button>
+
                 <select>
                     <option value="TROCA_SOLICITADA">Troca solicitada</option>
                     <option value="TROCA_ACEITA">Troca aceita</option>
@@ -89,13 +90,52 @@ if (Array.isArray(pedidos.itensPedido) && pedidos.itensPedido != 0){
 
         const select = tr.querySelector("select");
         select.value = pedidoTroca.status;
+        select.querySelector(`[value="${pedidoTroca.status}"`).disabled = true;
 
-        const button = tr.querySelector('button');
-        button.onclick = () => {
-            pedidoTroca.status = select.value;
-            atualizarStatusItemPedido(pedidoTroca);
+        tr.querySelector('button').onclick = () => {
+            confirmarAtualizarStatusItemPedido(pedidoTroca, select.value);
         };
     
         tabelaPedidoTroca.append(tr);
     });
+} else {
+    document.getElementById('secao-pedidos-troca').innerHTML = `
+        <p class="text-center">Nenhum pedido de troca</p>   
+    `;
+}
+
+function confirmarAtualizarStatusPedido(pedido, status){
+    const confirmacaoUsuario = confirm("Deseja mesmo atualizar o status desse pedido?");
+
+    if (confirmacaoUsuario){
+        pedido.status = status;
+
+        /*
+        if (pedido.status === 'TROCA_CONCLUIDA' || pedido.status === 'DEVOLUCAO_CONCLUIDA'){
+            if (confirm('Deseja retornar os itens para o estoque?')){
+                retornarPedidoAoEstoque(pedido);
+            }
+        }
+        */
+
+        atualizarStatusPedido(pedido);
+    }
+}
+
+function confirmarAtualizarStatusItemPedido(pedidoTroca, status){
+    const confirmacaoUsuario = confirm("Deseja mesmo atualizar o status desse item?");
+
+    if (confirmacaoUsuario){
+        pedidoTroca.status = status;
+
+        /*
+        if (pedidoTroca.status === 'TROCA_CONCLUIDA' || pedidoTroca.status === 'DEVOLUCAO_CONCLUIDA'){
+            if (confirm('Deseja retornar os itens para o estoque?')){
+                retornarItemAoEstoque(pedidoTroca);
+            }
+        }
+        */
+
+        atualizarStatusItemPedido(pedidoTroca);
+    }
 }
