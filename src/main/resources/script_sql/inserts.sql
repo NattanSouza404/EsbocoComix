@@ -77,4 +77,13 @@ INSERT INTO quadrinhos(
 	
 	10, 10, 2, 200, '1111111111111', true, 1, '/img/quadrinhos/turmadamonica.jpg');
 
-	
+-- A ajustar ainda
+INSERT INTO clientes VALUES ('JoÃ£o Vitor Sexto', 'MASCULINO', '1994-02-16', '1234567000 ', 'joao.sexto@email.com', 'eVWH2zBPZvnRSb/Waf7NjNZd5Aaf3hxUTD4Hj84d/m8=', 'kjNOl8a24urlsaVizzRAlQ==', 0, 'FIXO', '11', '922222222', true);
+INSERT INTO clientes VALUES ('Joana Dark', 'FEMININO', '2003-07-16', '1234567000 ', 'joana.dark@email.com', 'YN8xDKJobrYOtwAM2diri21rK/PobyrQaHm+kRn6+Ls=', '9uuancX3nMzK5DFKIWHm2w==', 0, 'FIXO', '22', '111111111', true);
+INSERT INTO clientes VALUES ('Melady', 'FEMININO', '2004-10-12', '11111111111', 'melady@email.com', 'an6sjSdfcrgfhSWTfk0NsNmMO00kskCejrGSgRUDb4U=', 'Migi0xes3JyrBueVo4CrUg==', 0, 'FIXO', '22', '922222222', true);
+INSERT INTO clientes VALUES ('Jorge dos Santos Menezes', 'MASCULINO', '1998-12-20', '11122233344', 'jorge@email.com', '696YDOwfrZKwB8Zc053W7AIU7IPVPEEpTBDaz2edWk8=', 'YIGCwc/BvOPLriML2n0zng==', 0, 'FIXO', '11', '99999999 ', true);
+
+INSERT INTO grupos_precificacao VALUES('a')
+
+insert INTO categorias_quadrinho(cqu_cat_id , cqu_qua_id ) VALUES (1, 2);
+insert INTO categorias(cat_nome) VALUES ('Alçai')
