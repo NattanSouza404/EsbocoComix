@@ -46,12 +46,6 @@ export async function enviarPedido(pedido) {
 
 export async function atualizarStatusPedido(pedido){
     try {
-        const confirmacaoUsuario = confirm("Deseja mesmo atualizar o status desse pedido?"); 
-
-        if (!confirmacaoUsuario){
-            return;
-        }
-
         let url = "/pedido?opcao=atualizarstatuspedido";
 
         const option = {
@@ -77,12 +71,6 @@ export async function atualizarStatusPedido(pedido){
 
 export async function atualizarStatusItemPedido(item){
     try {
-        const confirmacaoUsuario = confirm("Deseja mesmo pedir troca para esse item?"); 
-
-        if (!confirmacaoUsuario){
-            return;
-        }
-
         let url = "/pedido?opcao=atualizarstatusitem";
 
         const option = {
