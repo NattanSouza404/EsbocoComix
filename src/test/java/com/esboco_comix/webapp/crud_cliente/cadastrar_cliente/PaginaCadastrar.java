@@ -10,7 +10,7 @@ import org.openqa.selenium.WebElement;
 import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.webapp.crud_cliente.clientes.SecaoEnderecos;
-import com.esboco_comix.webapp.utils.web_driver.DriverTeste;
+import com.esboco_comix.webapp.utils.web_driver.DriverFactory;
 
 public class PaginaCadastrar {
 
@@ -24,7 +24,7 @@ public class PaginaCadastrar {
     private WebElement botaoEnviarCadastro;
 
     public PaginaCadastrar(){
-        this.driver = new DriverTeste();
+        this.driver = DriverFactory.criaDriver();
         driver.get(URL);
         this.formDadosPessoais = new FormDadosPessoais(driver);
         this.secaoEnderecos = new SecaoEnderecos(driver);

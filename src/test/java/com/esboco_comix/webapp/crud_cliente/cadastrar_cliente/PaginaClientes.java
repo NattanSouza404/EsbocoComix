@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import com.esboco_comix.webapp.utils.web_driver.DriverTeste;
+import com.esboco_comix.webapp.utils.web_driver.DriverFactory;
 
 public class PaginaClientes {
 
@@ -15,7 +15,7 @@ public class PaginaClientes {
     
 
     public PaginaClientes(){
-        this.driver = new DriverTeste();
+        this.driver = DriverFactory.criaDriver();
         driver.get(URL);
         
     }

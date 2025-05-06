@@ -2,23 +2,26 @@ package com.esboco_comix.webapp.fluxo_venda.index;
 
 import org.junit.Test;
 
-import com.esboco_comix.webapp.utils.web_driver.DriverTeste;
+import com.esboco_comix.webapp.utils.web_driver.DriverFactory;
 
 public class Teste {
     @Test
-    public void adicionarItemAoCarrinho(){
-        FluxoVenda index = new FluxoVenda(new DriverTeste());
+    public void realizaPedido(){
+        FluxoVenda fluxo = new FluxoVenda(DriverFactory.criaDriver());
         try {
-            index.adicionarItemAoCarrinho(0);
-            index.adicionarItemAoCarrinho(1);
+            fluxo.abrir("http://localhost:8080/");
+            fluxo.adicionarItemAoCarrinho(0);
+            fluxo.adicionarItemAoCarrinho(1);
 
-            index.abrirConta();
-            index.abrirCarrinho();
-            index.irParaCompra();
-            index.inserirValorCartao(0, 65.0);
-            index.realizarPedido();
+            fluxo.abrir("http://localhost:8080/conta?idcliente=45");
 
-            index.fechar();
+            fluxo.abrir("http://localhost:8080/carrinho");
+            fluxo.irParaCompra();
+
+            fluxo.inserirValorCartao(0, 65.0);
+            fluxo.realizarPedido();
+
+            fluxo.fechar();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -26,25 +29,12 @@ public class Teste {
 
     @Test
     public void mudarStatus(){
-        MudarStatus pagina = new MudarStatus(new DriverTeste());
+        MudarStatusPedido fluxo = new MudarStatusPedido(DriverFactory.criaDriver());
 
         try {
-            pagina.abrir();
-            pagina.mudarStatus("Entregue");
-            pagina.fechar();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void aceitarTroca(){
-        MudarStatus a = new MudarStatus(new DriverTeste());
-
-        try {
-            a.abrir();
-            a.mudarStatus("Troca concluída");
-            a.fechar();
+            fluxo.abrir("http://localhost:8080/admin/gerenciarVendas");
+            fluxo.mudarStatus("Entregue");
+            fluxo.fechar();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -53,16 +43,61 @@ public class Teste {
     @Test
     public void pedirTroca(){
         try {
-            PedirTroca pedirTroca = new PedirTroca(new DriverTeste());
+            PedirTrocaDevolucao fluxo = new PedirTrocaDevolucao(DriverFactory.criaDriver());
+            
+            fluxo.abrir("http://localhost:8080/conta?idcliente=45");
+            fluxo.abrir("http://localhost:8080/minhasCompras");
 
-            pedirTroca.abrir();
+            fluxo.pedirTroca();
 
-            pedirTroca.pedirTroca();
-
-            pedirTroca.fechar();
+            fluxo.fechar();
 
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void aceitarTroca(){
+        MudarStatusPedido fluxo = new MudarStatusPedido(DriverFactory.criaDriver());
+
+        try {
+            fluxo.abrir("http://localhost:8080/admin/gerenciarVendas");
+            fluxo.mudarStatus("Troca Concluída");
+            fluxo.fechar();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void pedirDevolucao(){
+        try {
+            PedirTrocaDevolucao fluxo = new PedirTrocaDevolucao(DriverFactory.criaDriver());
+            
+            fluxo.abrir("http://localhost:8080/conta?idcliente=45");
+            fluxo.abrir("http://localhost:8080/minhasCompras");
+
+            fluxo.pedirDevolucao();
+
+            fluxo.fechar();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void aceitarDevolucao(){
+        MudarStatusPedido fluxo = new MudarStatusPedido(DriverFactory.criaDriver());
+
+        try {
+            fluxo.abrir("http://localhost:8080/admin/gerenciarVendas");
+            fluxo.mudarStatus("Devolução concluída");
+            fluxo.fechar();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

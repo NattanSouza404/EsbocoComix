@@ -9,16 +9,19 @@ import com.esboco_comix.webapp.crud_cliente.conta.ModalAlterarDadosPessoais;
 import com.esboco_comix.webapp.crud_cliente.conta.ModalAlterarEndereco;
 import com.esboco_comix.webapp.crud_cliente.conta.ModalAlterarSenha;
 import com.esboco_comix.webapp.crud_cliente.conta.PaginaConta;
+import com.esboco_comix.webapp.utils.web_driver.DriverFactory;
 
 public class PaginaContaTest {
-     @Test
+    @Test
     public void editarCadastro() {
-        PaginaConta conta = new PaginaConta();
-        ModalAlterarDadosPessoais modal = conta.modalAlterarDadosPessoais;
-
-        modal.abrirModal();
+        PaginaConta conta = new PaginaConta(DriverFactory.criaDriver());
         
         try {
+            conta.abrir("http://localhost:8080/conta?idcliente=45");
+            ModalAlterarDadosPessoais modal = conta.modalAlterarDadosPessoais;
+    
+            modal.abrirModal();
+
             modal.preencherInput("nome", "Jorge dos Santos Menezes");
             modal.preencherInput("dataNascimento", LocalDate.of(1998, 12, 20));
             modal.enviar();
@@ -31,12 +34,13 @@ public class PaginaContaTest {
 
     @Test
     public void atualizarSenha() {
-        PaginaConta conta = new PaginaConta();
-        ModalAlterarSenha modal = conta.modalAlterarSenha;
-        
-        modal.abrirModal();
-        
+        PaginaConta conta = new PaginaConta(DriverFactory.criaDriver());
+
         try {
+            conta.abrir("http://localhost:8080/conta?idcliente=45");
+            ModalAlterarSenha modal = conta.modalAlterarSenha;
+            
+            modal.abrirModal();
             modal.preencherInput("senhaAntiga", "1234abC!");
             modal.preencherInput("senhaNova", "1234abC!");
             modal.preencherInput("senhaConfirmacao", "1234abC!");
@@ -51,12 +55,14 @@ public class PaginaContaTest {
     
     @Test
     public void atualizarEndereco() {
-        PaginaConta conta = new PaginaConta();
-        ModalAlterarEndereco modal = conta.modalAlterarEndereco;
-
-        modal.abrirModal();
+        PaginaConta conta = new PaginaConta(DriverFactory.criaDriver());
+        
         
         try {
+            conta.abrir("http://localhost:8080/conta?idcliente=45");
+            ModalAlterarEndereco modal = conta.modalAlterarEndereco;
+
+            modal.abrirModal();
             modal.preencherInput("numero", "25");
             modal.atualizar();
             conta.fechar();
@@ -67,13 +73,16 @@ public class PaginaContaTest {
 
     @Test
     public void inserirCartaoCredito() {
-        PaginaConta conta = new PaginaConta();
-        ModalAlterarCartaoCredito modal = conta.modalAlterarCartaoCredito;
-
-        modal.abrirModal();
-        modal.adicionarNovoCartao();
+        PaginaConta conta = new PaginaConta(DriverFactory.criaDriver());
         
         try {
+            conta.abrir("http://localhost:8080/conta?idcliente=45");
+
+            ModalAlterarCartaoCredito modal = conta.modalAlterarCartaoCredito;
+
+            modal.abrirModal();
+            modal.adicionarNovoCartao();
+
             modal.preencherInput("numero", "1111222233334444");
             modal.preencherInput("nomeImpresso", "JORGE DOS SANTOS MENEZES");
             modal.preencherInput("codigoSeguranca", "111");
@@ -89,11 +98,14 @@ public class PaginaContaTest {
 
     @Test
     public void deletarEndereco() {
-        PaginaConta conta = new PaginaConta();
-        ModalAlterarEndereco modal = conta.modalAlterarEndereco;
-
-        modal.abrirModal();
+        
         try {
+            PaginaConta conta = new PaginaConta(DriverFactory.criaDriver());
+            ModalAlterarEndereco modal = conta.modalAlterarEndereco;
+
+            conta.abrir("http://localhost:8080/conta?idcliente=45");
+            modal.abrirModal();
+
             modal.deletarEndereco();
             conta.fechar();
         } catch (InterruptedException e) {
@@ -104,11 +116,12 @@ public class PaginaContaTest {
 
     @Test
     public void deletarCartaoCredito() {
-        PaginaConta conta = new PaginaConta();
-        ModalAlterarCartaoCredito modal = conta.modalAlterarCartaoCredito;
-
-        modal.abrirModal();
         try {
+            PaginaConta conta = new PaginaConta(DriverFactory.criaDriver());
+            ModalAlterarCartaoCredito modal = conta.modalAlterarCartaoCredito;
+    
+            modal.abrirModal();
+
             modal.deletarCartaoCredito();
             conta.fechar();
         } catch (InterruptedException e) {
