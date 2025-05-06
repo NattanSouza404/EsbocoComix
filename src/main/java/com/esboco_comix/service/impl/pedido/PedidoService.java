@@ -24,6 +24,7 @@ import com.esboco_comix.service.impl.CarrinhoService;
 import com.esboco_comix.service.impl.CartaoCreditoService;
 import com.esboco_comix.service.impl.ClienteService;
 import com.esboco_comix.service.impl.CupomService;
+import com.esboco_comix.service.impl.EstoqueService;
 import com.esboco_comix.service.impl.QuadrinhoService;
 
 public class PedidoService {
@@ -33,6 +34,7 @@ public class PedidoService {
     private CupomService cupomService = new CupomService();
     private QuadrinhoService quadrinhoService = new QuadrinhoService();
     private CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
+    private EstoqueService estoqueService = new EstoqueService();
     
     private PedidoDAO pedidoDAO = new PedidoDAO();
     private ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
@@ -67,6 +69,8 @@ public class PedidoService {
             item.setIdPedido(pedidoInserido.getId());
             ItemPedido itemInserido = itemPedidoDAO.inserir(item);
             pedidoInserido.getItensPedido().add(itemInserido);
+
+            estoqueService.retirarDoEstoque(item);
         }
 
         for (CartaoCreditoPedido cartao : pedido.getCartoesCreditoPedido()) {
@@ -133,6 +137,8 @@ public class PedidoService {
                 pedido.getIdCliente(),
                 calculadora.calcularValorTotalPedido(pedido, itensPedido)
             );
+
+            estoqueService.retornarAoEstoque(pedidoDTO);
         }
 
         return pedidoDAO.atualizarStatus(pedido);
@@ -163,6 +169,8 @@ public class PedidoService {
                 cliente.getId(), 
                 calculadora.calcularItemPedido(item)
             );
+
+            estoqueService.retornarAoEstoque(itemPedidoDTO);
 
         }
 

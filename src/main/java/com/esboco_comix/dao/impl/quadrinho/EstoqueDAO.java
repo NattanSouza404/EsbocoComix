@@ -4,9 +4,12 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 
 import com.esboco_comix.model.entidades.EntradaEstoque;
+import com.esboco_comix.model.entidades.Estoque;
+import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class EstoqueDAO {
@@ -67,6 +70,71 @@ public class EstoqueDAO {
 
     }
 
+    public Estoque consultarEstoqueByIDQuadrinho(int idQuadrinho) throws Exception {
+        Connection connection = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = connection.prepareStatement(
+            """
+            SELECT * FROM estoque WHERE est_qua_id = ?;
+            """
+        );
+
+        try {
+            pst.setInt(1, idQuadrinho);
+
+            ResultSet rs = pst.executeQuery();
+
+            if (!rs.next()) {
+                throw new Exception("Estoque não encontrado!");
+            }
+
+            return mapearEntidadeEstoque(rs);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            connection.close();
+            pst.close();
+        }
+
+    }
+
+    public Estoque retornarAoEstoque(ItemPedido itemPedido) throws Exception {
+        Connection conn = ConexaoFactory.getConexao(); 
+    
+        PreparedStatement pst = conn.prepareStatement(
+            """
+            UPDATE estoque
+                SET est_quantidade_total = est_quantidade_total + ?
+            WHERE est_qua_id = ?;
+            """
+        );
+
+        try {
+            pst.setInt(1, itemPedido.getQuantidade());
+            pst.setInt(2, itemPedido.getIdQuadrinho());
+
+            if (pst.executeUpdate() == 0) {
+                throw new Exception("Atualização não foi sucedida!");
+            }
+
+            return consultarEstoqueByIDQuadrinho(itemPedido.getIdQuadrinho());
+        } catch (Exception ex){
+            throw ex;
+        } finally {
+            pst.close();
+            conn.close();
+        }
+    }
+
+    private Estoque mapearEntidadeEstoque(ResultSet rs) throws SQLException {
+        Estoque e  = new Estoque();
+
+        e.setIdQuadrinho(rs.getInt("est_qua_id"));
+        e.setQuantidadeTotal(rs.getInt("est_quantidade_total"));
+
+        return e;
+    }
+
     private EntradaEstoque mapearEntidade(ResultSet rs) throws Exception {
         EntradaEstoque e = new EntradaEstoque();
 
@@ -78,6 +146,34 @@ public class EstoqueDAO {
         e.setDataEntrada(rs.getTimestamp("ees_dt_entrada").toLocalDateTime());
 
         return e;
+    }
+
+    public Estoque retirarDoEstoque(ItemPedido item) throws Exception {
+        Connection conn = ConexaoFactory.getConexao(); 
+    
+        PreparedStatement pst = conn.prepareStatement(
+            """
+            UPDATE estoque
+                SET est_quantidade_total = est_quantidade_total - ?
+            WHERE est_qua_id = ?;
+            """
+        );
+
+        try {
+            pst.setInt(1, item.getQuantidade());
+            pst.setInt(2, item.getIdQuadrinho());
+
+            if (pst.executeUpdate() == 0) {
+                throw new Exception("Atualização não foi sucedida!");
+            }
+
+            return consultarEstoqueByIDQuadrinho(item.getIdQuadrinho());
+        } catch (Exception ex){
+            throw ex;
+        } finally {
+            pst.close();
+            conn.close();
+        }
     }
 
 }
