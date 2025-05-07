@@ -3,40 +3,17 @@ import ModalTransacoes from "./modalTransacoes.js";
 import { formatarData } from "/js/script.js";
 import ModalCupomPromocional from "./modalCupomPromocional.js";
 
-export default class TabelaClientes extends HTMLTableElement {
+export default class TabelaClientes {
     
     constructor(){
-        super();
+        this.tBody = document.querySelector('#tabela-clientes tbody');
 
         this.modalTransacoes = new ModalTransacoes();
         this.modalCupomPromocional = new ModalCupomPromocional();
-
-        this.id = "tabela-clientes";
-        
-        this.tBody = document.createElement('tbody');
-        this.append(this.tBody);
-    }
-
-    initCabecalho(){
-        let tr = document.createElement('tr');
-
-        tr.innerHTML = `
-            <th>#</th>
-            <th>Nome</th>
-            <th>Gênero</th>
-            <th>Data de Nascimento</th>
-            <th>CPF</th><th>E-mail</th>
-            <th>Ranking</th>
-            <th>Status</th>
-            <th>Operações</th>
-        `;
-
-        return tr;
     }
 
     async atualizarTabelaClientes(clientes){
         this.tBody.textContent = '';
-        this.tBody.append(this.initCabecalho());
 
         if (clientes === null || clientes === undefined){
             return;
@@ -57,38 +34,32 @@ export default class TabelaClientes extends HTMLTableElement {
                 <td>${c.email}</td>
                 <td>${c.ranking}</td>
                 <td>${(c.isAtivo === true) ? 'Ativo' : "Inativo"}</td>
-            `;
-        
-            let td = document.createElement('td');
-        
-            let btn = document.createElement('button');
-            btn.textContent = "Consultar Transações";
-            btn.type = "button";
-            btn.onclick = () => this.modalTransacoes.show(c);
-            td.append(btn);
-        
-            btn = document.createElement('button');
-            btn.textContent = "Editar";
-            btn.type = "button";
-            btn.onclick = () => this.editarCliente(c);
-            td.append(btn);
 
-            btn = document.createElement('button');
-            btn.textContent = "Adicionar Cupom";
-            btn.type = "button";
-            btn.onclick = () => this.modalCupomPromocional.show(c);
-            td.append(btn);
-        
-            btn = document.createElement('button');
-            btn.type = "button";
-            btn.textContent = "Inativar";
-            btn.onclick = () => {
+                <td>
+                    <button type="button" class="btn-transacoes">Consultar Transações</button>
+
+                    <a href="/conta?idcliente=${c.id}">
+                        <button type="button" class="btn-editar">Editar</button>
+                    </a>
+
+                    <button type="button" class="btn-adicionar-cupom">Adicionar Cupom<qbutton>
+
+                    <button type="button" class="btn-inativar">Inativar</button>
+                </td>
+            `;
+
+            tableRow.querySelector('.btn-transacoes').onclick = () => {
+                this.modalTransacoes.show(c);
+            };
+
+            tableRow.querySelector('.btn-adicionar-cupom').onclick = () => {
+                this.modalCupomPromocional.show(c);
+            };
+
+            tableRow.querySelector('.btn-inativar').onclick = () => {
                 c.isAtivo = (c.isAtivo === true) ? false : true;
                 atualizarCliente(c, "atualizarstatuscadastro");
             };
-            td.append(btn);
-        
-            tableRow.append(td);
         
             this.tBody.append(tableRow); 
 
@@ -97,10 +68,4 @@ export default class TabelaClientes extends HTMLTableElement {
         
     }
 
-    editarCliente(c){
-       localStorage.setItem('idcliente', c.id);
-       window.location.replace('/conta');
-    }
 }
-
-customElements.define('tabela-clientes', TabelaClientes, { extends: 'table'}); 
