@@ -157,7 +157,7 @@ public class PedidoService {
         StatusItemPedido statusItemPedido = item.getStatus();
         StatusItemPedido statusItemPedidoNoBanco = itemPedidoDAO.consultarByID(item.getIdPedido(), item.getIdQuadrinho()).getStatus();
 
-        if (statusItemPedidoNoBanco == StatusItemPedido.TROCA_CONCLUIDA || statusItemPedido == StatusItemPedido.DEVOLUCAO_CONCLUIDA){
+        if (statusItemPedidoNoBanco == StatusItemPedido.TROCA_CONCLUIDA || statusItemPedidoNoBanco == StatusItemPedido.DEVOLUCAO_CONCLUIDA){
             throw new Exception("Troca ou devolução do item já foi realizada");
         }
 
