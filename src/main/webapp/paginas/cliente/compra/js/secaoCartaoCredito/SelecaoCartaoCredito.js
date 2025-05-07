@@ -46,7 +46,7 @@ export class SelecaoCartaoCredito extends HTMLDivElement {
             if (c.id == id){
                 cartao = { 
                     idCartaoCredito: id,
-                    valor: parseInt(
+                    valor: parseFloat(
                         this.querySelector('input').value, 10
                     ),
                 };
