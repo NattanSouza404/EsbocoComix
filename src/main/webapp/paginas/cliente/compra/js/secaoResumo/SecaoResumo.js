@@ -1,38 +1,117 @@
 import { calcularValorTotal, formatarPreco } from "/js/script.js";
 
 export class ResumoPedido {
-    constructor() {
+    constructor(secaoSelecaoEndereco, secaoSelecaoCartao, secaoCupons) {
         this.resumo = document.getElementById('resumo');
         this.tabelaProdutosBody = document.querySelector('#tabela-produtos tbody');
+
+        document.body.querySelector('#endereco').addEventListener('change', () => {
+            this.atualizarEndereco(secaoSelecaoEndereco.getEnderecoSelecionado());
+        });
+
+        const observerCupons = new MutationObserver(() => {
+            this.atualizarCupons(secaoCupons.getCuponsPedido());
+        });
+        
+        observerCupons.observe(
+            document.getElementById('cupons'), 
+            {
+                childList: true,
+                subtree: true,
+            }
+        );
+
+        const observerCartoes = new MutationObserver(() => {
+            secaoSelecaoCartao.adicionarInputListeners(this);
+            this.atualizarCartoes(secaoSelecaoCartao.getCartoesCreditoPedido())
+        });
+        
+        observerCartoes.observe(
+            document.getElementById('cartoes'), 
+            {
+                childList: true,
+                subtree: true,
+            }
+        );
+
+        secaoSelecaoCartao.adicionarInputListeners(this);
     }
 
     preencherResumo(carrinho, endereco) {
         carrinho.itensCarrinho.forEach(item => {
-            const tr = document.createElement('tr');
-
-            tr.innerHTML = `
+            this.tabelaProdutosBody.insertAdjacentHTML('beforeend', `
+               <tr>
                 <td>${item.nome}</td>
                 <td>${item.quantidade}</td>
                 <td>${formatarPreco(item.preco)}</td>
                 <td>${formatarPreco(item.preco * item.quantidade)}</td>
-            `;
-
-            this.tabelaProdutosBody
-                .append(tr);
+               </tr>
+            `);
         });
 
-        const valorTotal = calcularValorTotal(carrinho);
-        const valorFrete = endereco.valorFrete;
+        this.valorTotal = calcularValorTotal(carrinho);
+        this.valorFrete = endereco.valorFrete;
+        this.descontoCupom = 0;
 
-        const info = document.createElement('div');
-        info.innerHTML = `
-            <p>Valor dos Produtos: ${formatarPreco(valorTotal)}</p>
-            <p>Frete: ${formatarPreco(valorFrete)}</p>
-            <p>Desconto do Cupom: R$ 0,00</p>
-            <hr>
-            <p>Total Restante: ${formatarPreco(valorTotal + valorFrete)}</p>
+        this.resumo.insertAdjacentHTML('beforeend', `
+            <div id="info-resumo">
+                <p>Valor dos Produtos: ${formatarPreco(this.valorTotal)}</p>
+                <p class="frete">Frete: ${formatarPreco(this.valorFrete)}</p>
+                <hr>
+                <p>Forma de pagamento</p>
+                <p class="valor-cartao">Valor pago em cartão: R$ 0,00</p>
+                <p class="desconto-cupom">Desconto do Cupom: R$ 0,00</p>
+                <hr>
+                <p class="total">Total: ${formatarPreco(this.valorTotal + this.valorFrete)}</p>
+                <p class="total-restante">Total Restante: R$ 0,00</p>
+            </div>
+        `);
+    }
+
+    atualizarEndereco(endereco){
+        this.valorFrete = endereco.valorFrete;
+
+        this.resumo.querySelector('.frete').textContent = `
+            Frete: ${formatarPreco(this.valorFrete)}
         `;
 
-        this.resumo.append(info);
+        this.resumo.querySelector('.total').textContent = `
+            Total: ${formatarPreco(this.valorTotal + this.valorFrete)}
+        `;
     }
+
+    atualizarCupons(cupons){
+        this.descontoCupom = 0;
+        cupons.forEach((cupom) => {
+            this.descontoCupom += cupom.valor;
+        });
+
+        this.resumo.querySelector('.desconto-cupom').textContent = `
+            Desconto do cupom: ${formatarPreco(this.descontoCupom)}
+        `;
+
+        this.atualizarTotalRestante();
+    }
+
+    atualizarCartoes(cartoes){
+        this.valorCartao = 0;
+        cartoes.forEach((cartao) => {
+            this.valorCartao += cartao.valor;
+        });
+
+        this.resumo.querySelector('.valor-cartao').textContent = `
+            Valor pago em cartão: ${formatarPreco(this.valorCartao)}
+        `;
+
+        this.atualizarTotalRestante();
+    }
+
+    atualizarTotalRestante(){
+        this.resumo.querySelector('.total-restante').textContent = `
+            Total Restante: ${formatarPreco(
+                this.valorCartao + this.descontoCupom 
+            )}
+        `;
+    }
+
 }

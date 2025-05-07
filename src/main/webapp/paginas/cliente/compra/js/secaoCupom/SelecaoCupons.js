@@ -39,12 +39,24 @@ export class SelecaoCupom extends HTMLDivElement {
 
             select.append(option);
         });
+
+        this.cupons = cupons;
     }
 
     getCupomPedido(){
-        return {
-            idCupom: this.querySelector('select').value 
-        };
+        let cupom;
+
+        this.cupons.forEach((c) => {
+            const id = this.querySelector('select').value;
+            if (c.id == id){
+                cupom = { 
+                    idCupom: id,
+                    valor: c.valor
+                }
+            }
+        });
+
+        return cupom;
     }
 
 }

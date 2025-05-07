@@ -27,19 +27,28 @@ secaoSelecaoEndereco.preencher(enderecos);
 
 const secaoSelecaoCartao = new SecaoCartaoCredito(cartoesCredito);
 
-const resumoPedido = new ResumoPedido();
-resumoPedido.preencherResumo(carrinho, secaoSelecaoEndereco.getEnderecoSelecionado());
-
 const secaoCupons = new SecaoCupom(cupons);
 
-const botaoEnviarPedido = document.getElementById('btn-enviar-pedido');
+const resumoPedido = new ResumoPedido(
+    secaoSelecaoEndereco, secaoSelecaoCartao, secaoCupons
+);
 
-botaoEnviarPedido.onclick = () => {
+resumoPedido.preencherResumo(carrinho, secaoSelecaoEndereco.getEnderecoSelecionado());
+
+document.getElementById('btn-enviar-pedido').onclick = () => {
     const idCliente = localStorage.getItem('idcliente');
     const endereco = secaoSelecaoEndereco.getEnderecoSelecionado();
 
     const idEndereco = endereco.id;
     const valorFrete = endereco.valorFrete;
+
+    const cuponsPedido = [];
+
+    secaoCupons.getCuponsPedido().forEach(cupom => {
+        cuponsPedido.push({
+            idCupom: cupom.idCupom
+        });
+    });
 
     enviarPedido(
         {
@@ -51,7 +60,7 @@ botaoEnviarPedido.onclick = () => {
                 id: idEndereco
             },
 
-            cuponsPedido: secaoCupons.getCuponsPedido(),
+            cuponsPedido: cuponsPedido,
 
             cartoesCreditoPedido: secaoSelecaoCartao.getCartoesCreditoPedido()
             

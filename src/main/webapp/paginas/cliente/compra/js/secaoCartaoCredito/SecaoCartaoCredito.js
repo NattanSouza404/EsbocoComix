@@ -36,5 +36,19 @@ export class SecaoCartaoCredito {
 
         return cartoesCreditoPedido;
     }
+
+    adicionarInputListeners(secaoResumo) {
+        this.secaoResumo = secaoResumo;
+        const inputs = this.containerCartoes.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.removeEventListener('input', this.boundInputHandler);
+            this.boundInputHandler = this.acaoMudancaInput.bind(this);
+            input.addEventListener('input', this.boundInputHandler);
+        });
+    }
+    
+    acaoMudancaInput(event) {
+        this.secaoResumo.atualizarCartoes(this.getCartoesCreditoPedido());
+    }
    
 }

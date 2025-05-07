@@ -8,7 +8,7 @@ export class SelecaoCartaoCredito extends HTMLDivElement {
 
         this.innerHTML = `
             <select class="form-select me-2"></select>
-            <input type="number" class="form-control" placeholder="Valor a pagar" min="0">
+            <input type="number" class="form-control" placeholder="Valor a pagar" min="0" value=0>
             <button class="btn btn-primary btn-sm">Remover</button>
         `;
 
@@ -34,13 +34,26 @@ export class SelecaoCartaoCredito extends HTMLDivElement {
 
             select.append(option);
         });
+
+        this.cartoesCredito = cartoesCredito;
     }
 
     getCartaoPedido() {
-        return {
-            idCartaoCredito: this.querySelector('select').value,
-            valor: this.querySelector('input').value
-        };
+        let cartao;
+
+        this.cartoesCredito.forEach((c) => {
+            const id = this.querySelector('select').value;
+            if (c.id == id){
+                cartao = { 
+                    idCartaoCredito: id,
+                    valor: parseInt(
+                        this.querySelector('input').value, 10
+                    ),
+                };
+            }
+        });
+
+        return cartao;
     }
 }
 
