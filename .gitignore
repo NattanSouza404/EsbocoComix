@@ -19,4 +19,5 @@ buildNumber.properties
 .vscode/
 tomcat.8080/
 /src/main/resources/config.properties
+/src/test/resources/config.properties
 .idea/
