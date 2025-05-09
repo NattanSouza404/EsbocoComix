@@ -1,12 +1,8 @@
-package com.esboco_comix.webapp.crud_cliente.conta;
+package com.esboco_comix.webapp.paginas.cliente.conta;
+
+import org.openqa.selenium.*;
 
 import java.time.LocalDate;
-
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public class ModalAlterarDadosPessoais {
     private WebDriver driver;
@@ -17,29 +13,30 @@ public class ModalAlterarDadosPessoais {
 
     public ModalAlterarDadosPessoais(WebDriver webDriver){
         this.driver = webDriver;
-        
-        this.form = webDriver.findElement(By.id("alterar-dados-pessoais"));
-        this.botaoAbrirModal = webDriver.findElement(By.id("btn-editar-cadastro"));
-        this.botaoEnviar = form.findElement(By.className("botao-salvar"));
     }
 
     public void abrirModal(){
+        this.botaoAbrirModal = driver.findElement(By.id("btn-editar-cadastro"));
         this.botaoAbrirModal.click();
     }
 
     public void preencherInput(String nome, String valorInput) throws InterruptedException{
+        this.form = driver.findElement(By.id("alterar-dados-pessoais"));
         this.form.findElement(By.name(nome)).clear();
         this.form.findElement(By.name(nome)).sendKeys(valorInput);
         Thread.sleep(1000);
     }
 
     public void preencherInput(String nome, LocalDate data){
+        this.form = driver.findElement(By.id("alterar-dados-pessoais"));
         this.form.findElement(By.name(nome)).clear();
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].value = '"+data.toString()+"';", this.form.findElement(By.name(nome)));
     }
 
     public void enviar() throws InterruptedException {
+        this.form = driver.findElement(By.id("alterar-dados-pessoais"));
+        this.botaoEnviar = form.findElement(By.className("botao-salvar"));
         this.botaoEnviar.click();
         Alert alert = driver.switchTo().alert();
         alert.accept();

@@ -1,21 +1,23 @@
-package com.esboco_comix.webapp.utils.web_element;
+package com.esboco_comix.webapp.base.web_element;
 
-import java.time.LocalDate;
-
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import lombok.Getter;
+import java.time.LocalDate;
 
 public class FormElement {
+
+    private WebDriver driver;
 
     @Getter
     private WebElement form;
 
-    public FormElement(WebElement webElement){
+    public FormElement(WebDriver driver, WebElement webElement){
+        this.driver = driver;
         this.form = webElement;
     }
 
@@ -25,7 +27,7 @@ public class FormElement {
         this.form.findElement(By.name(nome)).sendKeys(valorInput);
     }
 
-    public void preencherInputData(String nome, LocalDate data, WebDriver driver) throws InterruptedException{
+    public void preencherInputData(String nome, LocalDate data) throws InterruptedException{
         this.form.findElement(By.name(nome)).clear();
         Thread.sleep(200);
         

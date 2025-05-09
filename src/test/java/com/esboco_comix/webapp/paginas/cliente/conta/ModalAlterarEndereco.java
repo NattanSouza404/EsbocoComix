@@ -1,13 +1,12 @@
-package com.esboco_comix.webapp.crud_cliente.conta;
+package com.esboco_comix.webapp.paginas.cliente.conta;
 
-import java.util.List;
-
+import com.esboco_comix.webapp.base.web_element.FormElement;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.esboco_comix.webapp.utils.web_element.FormElement;
+import java.util.List;
 
 public class ModalAlterarEndereco {
 
@@ -17,16 +16,13 @@ public class ModalAlterarEndereco {
 
     private List<WebElement> forms;
     private FormElement form;
-    
-    private WebElement botaoAdicionar;
 
     public ModalAlterarEndereco(WebDriver webDriver){
         this.driver = webDriver;
-        
-        this.forms = webDriver.findElements(By.className("endereco"));
-        this.form = new FormElement(forms.get(0));
-        this.botaoAdicionar = webDriver.findElement(By.cssSelector("#footer-secao-endereco button"));
-        this.botaoAbrirModal = webDriver.findElement(By.id("btn-alterar-endereco"));
+
+        //this.forms = webDriver.findElements(By.className("endereco"));
+        //this.form = new FormElement(webDriver, forms.get(0));
+        //this.botaoAbrirModal = webDriver.findElement(By.id("btn-alterar-endereco"));
     }
 
     public void abrirModal(){
@@ -34,7 +30,7 @@ public class ModalAlterarEndereco {
     }
 
     public void adicionarEndereco() {
-        this.botaoAdicionar.click();
+        driver.findElement(By.cssSelector("#footer-secao-endereco button")).click();
     }
 
     public void preencherInput(String nome, String valorInput) throws InterruptedException{

@@ -1,15 +1,15 @@
-package com.esboco_comix.webapp.crud_cliente.cadastrar_cliente;
-
-import org.openqa.selenium.WebElement;
+package com.esboco_comix.webapp.paginas.cliente;
 
 import com.esboco_comix.model.entidades.Endereco;
-import com.esboco_comix.webapp.utils.web_element.FormElement;
+import com.esboco_comix.webapp.base.web_element.FormElement;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class FormEndereco {
     private FormElement form;
 
-    public FormEndereco(WebElement form){
-        this.form = new FormElement(form);
+    public FormEndereco(WebDriver webDriver, WebElement form){
+        this.form = new FormElement(webDriver, form);
     }
 
     public void preencher(Endereco e) throws InterruptedException {

@@ -1,13 +1,12 @@
-package com.esboco_comix.webapp.crud_cliente.conta;
+package com.esboco_comix.webapp.paginas.cliente.conta;
 
-import java.util.List;
-
+import com.esboco_comix.webapp.base.web_element.FormElement;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.esboco_comix.webapp.utils.web_element.FormElement;
+import java.util.List;
 
 public class ModalAlterarCartaoCredito {
 
@@ -23,10 +22,10 @@ public class ModalAlterarCartaoCredito {
     public ModalAlterarCartaoCredito(WebDriver webDriver){
         this.driver = webDriver;
         
-        this.forms = webDriver.findElements(By.id("alterar-cartao-credito"));
-        this.form = new FormElement(forms.get(0));
-        this.botaoAbrirModal = webDriver.findElement(By.id("btn-alterar-cartao-credito"));
-        this.botaoAdicionarCartao = webDriver.findElement(By.cssSelector("#footer-secao-cartao-credito button"));
+//        this.forms = webDriver.findElements(By.id("alterar-cartao-credito"));
+//        //this.form = new FormElement(webDriver, forms.get(0));
+//        this.botaoAbrirModal = webDriver.findElement(By.id("btn-alterar-cartao-credito"));
+//        this.botaoAdicionarCartao = webDriver.findElement(By.cssSelector("#footer-secao-cartao-credito button"));
     }
 
     public void abrirModal(){
