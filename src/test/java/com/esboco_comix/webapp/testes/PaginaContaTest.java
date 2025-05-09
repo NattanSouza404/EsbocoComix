@@ -1,23 +1,17 @@
-package com.esboco_comix.webapp.crud_cliente;
+package com.esboco_comix.webapp.testes;
+
+import com.esboco_comix.webapp.base.BaseTest;
+import com.esboco_comix.webapp.paginas.cliente.conta.*;
+import org.junit.Test;
 
 import java.time.LocalDate;
 
-import org.junit.Test;
-
-import com.esboco_comix.webapp.crud_cliente.conta.ModalAlterarCartaoCredito;
-import com.esboco_comix.webapp.crud_cliente.conta.ModalAlterarDadosPessoais;
-import com.esboco_comix.webapp.crud_cliente.conta.ModalAlterarEndereco;
-import com.esboco_comix.webapp.crud_cliente.conta.ModalAlterarSenha;
-import com.esboco_comix.webapp.crud_cliente.conta.PaginaConta;
-import com.esboco_comix.webapp.utils.web_driver.DriverFactory;
-
-public class PaginaContaTest {
+public class PaginaContaTest extends BaseTest {
     @Test
     public void editarCadastro() {
-        PaginaConta conta = new PaginaConta(DriverFactory.criaDriver());
-        
         try {
-            conta.abrir("http://localhost:8080/conta?idcliente=45");
+            PaginaConta conta = new PaginaConta(driver, wait);
+            conta.logar();
             ModalAlterarDadosPessoais modal = conta.modalAlterarDadosPessoais;
     
             modal.abrirModal();
@@ -26,18 +20,17 @@ public class PaginaContaTest {
             modal.preencherInput("dataNascimento", LocalDate.of(1998, 12, 20));
             modal.enviar();
             conta.fechar();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
     }
 
     @Test
     public void atualizarSenha() {
-        PaginaConta conta = new PaginaConta(DriverFactory.criaDriver());
-
         try {
-            conta.abrir("http://localhost:8080/conta?idcliente=45");
+            PaginaConta conta = new PaginaConta(driver, wait);
+            conta.logar();
             ModalAlterarSenha modal = conta.modalAlterarSenha;
             
             modal.abrirModal();
@@ -47,7 +40,7 @@ public class PaginaContaTest {
 
             modal.enviar();
             conta.fechar();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         
@@ -55,28 +48,27 @@ public class PaginaContaTest {
     
     @Test
     public void atualizarEndereco() {
-        PaginaConta conta = new PaginaConta(DriverFactory.criaDriver());
-        
-        
         try {
-            conta.abrir("http://localhost:8080/conta?idcliente=45");
+            PaginaConta conta = new PaginaConta(driver, wait);
+            conta.logar();
             ModalAlterarEndereco modal = conta.modalAlterarEndereco;
 
             modal.abrirModal();
             modal.preencherInput("numero", "25");
             modal.atualizar();
             conta.fechar();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Test
     public void inserirCartaoCredito() {
-        PaginaConta conta = new PaginaConta(DriverFactory.criaDriver());
+
         
         try {
-            conta.abrir("http://localhost:8080/conta?idcliente=45");
+            PaginaConta conta = new PaginaConta(driver, wait);
+            conta.logar();
 
             ModalAlterarCartaoCredito modal = conta.modalAlterarCartaoCredito;
 
@@ -90,7 +82,7 @@ public class PaginaContaTest {
             
             modal.inserir();
             conta.fechar();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -100,15 +92,15 @@ public class PaginaContaTest {
     public void deletarEndereco() {
         
         try {
-            PaginaConta conta = new PaginaConta(DriverFactory.criaDriver());
+            PaginaConta conta = new PaginaConta(driver, wait);
             ModalAlterarEndereco modal = conta.modalAlterarEndereco;
 
-            conta.abrir("http://localhost:8080/conta?idcliente=45");
+            conta.logar();
             modal.abrirModal();
 
             modal.deletarEndereco();
             conta.fechar();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -117,14 +109,14 @@ public class PaginaContaTest {
     @Test
     public void deletarCartaoCredito() {
         try {
-            PaginaConta conta = new PaginaConta(DriverFactory.criaDriver());
+            PaginaConta conta = new PaginaConta(driver, wait);
             ModalAlterarCartaoCredito modal = conta.modalAlterarCartaoCredito;
     
             modal.abrirModal();
 
             modal.deletarCartaoCredito();
             conta.fechar();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
