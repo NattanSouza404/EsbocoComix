@@ -1,11 +1,11 @@
-package com.esboco_comix.webapp.utils.teste_factories;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.esboco_comix.webapp.base.factories;
 
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.model.enuns.TipoLogradouro;
 import com.esboco_comix.model.enuns.TipoResidencial;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnderecoTesteFactory {
     public static List<Endereco> criar(){

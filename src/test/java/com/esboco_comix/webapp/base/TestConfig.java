@@ -1,4 +1,4 @@
-package com.esboco_comix.webapp.config;
+package com.esboco_comix.webapp.base;
 
 import java.io.FileInputStream;
 import java.io.IOException;

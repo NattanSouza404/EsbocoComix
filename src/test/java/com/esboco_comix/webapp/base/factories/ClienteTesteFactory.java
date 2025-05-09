@@ -1,11 +1,11 @@
-package com.esboco_comix.webapp.utils.teste_factories;
-
-import java.time.LocalDate;
+package com.esboco_comix.webapp.base.factories;
 
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Telefone;
 import com.esboco_comix.model.enuns.Genero;
 import com.esboco_comix.model.enuns.TipoTelefone;
+
+import java.time.LocalDate;
 
 public class ClienteTesteFactory {
 
@@ -24,5 +24,5 @@ public class ClienteTesteFactory {
         cliente.setTelefone(t);
 
         return cliente;
-    }   
+    }
 }

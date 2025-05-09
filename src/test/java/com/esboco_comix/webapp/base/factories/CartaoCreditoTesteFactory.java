@@ -1,4 +1,4 @@
-package com.esboco_comix.webapp.utils.teste_factories;
+package com.esboco_comix.webapp.base.factories;
 
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.enuns.BandeiraCartao;
