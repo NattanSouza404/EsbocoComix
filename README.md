@@ -37,6 +37,15 @@ database.url=jdbc:postgresql://localhost:5432/projeto_les
 database.user=postgres
 database.password=admin123
 ```
+
+Para realizar os testes, também é necessário um config.properties dentro de src/test/resources com essa estrutura. Os browsers suportados são "edge" e "firefox".
+
+```
+# config.properties
+browser=edge
+headless=false
+```
+
 Obs.: os valores presentes servem apenas como exemplo.
 
 ## ✨ Principais Inspirações
