@@ -9,12 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PaginaGerenciarVendas extends AbstractPagina {
     public PaginaGerenciarVendas(WebDriver driver, WebDriverWait wait) {
-        super(driver, wait);
-    }
-
-    @Override
-    public void abrir() {
-        driver.get("http://localhost:8080/admin/gerenciarVendas");
+        super(driver, wait, "http://localhost:8080/admin/gerenciarVendas");
     }
 
     public void mudarStatus(String status) throws InterruptedException {

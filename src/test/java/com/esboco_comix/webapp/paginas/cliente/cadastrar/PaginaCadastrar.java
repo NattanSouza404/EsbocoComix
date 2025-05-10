@@ -20,12 +20,7 @@ public class PaginaCadastrar extends AbstractPagina {
     private List<FormEndereco> formsEndereco;
 
     public PaginaCadastrar(WebDriver driver, WebDriverWait wait) throws Exception {
-        super(driver, wait);
-    }
-
-    @Override
-    public void abrir() {
-        driver.get("http://localhost:8080/cadastrar");
+        super(driver, wait, "http://localhost:8080/cadastrar");
     }
 
     public void preencherCliente(CadastrarClienteDTO pedido) throws InterruptedException {

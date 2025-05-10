@@ -11,11 +11,7 @@ import java.util.List;
 
 public class PaginaIndex extends AbstractPagina {
     public PaginaIndex(WebDriver driver, WebDriverWait wait){
-        super(driver, wait);
-    }
-
-    public void abrir(){
-        driver.get("http://localhost:8080/");
+        super(driver, wait, "http://localhost:8080/");
     }
 
     public void adicionarItemAoCarrinho(int index) throws InterruptedException{

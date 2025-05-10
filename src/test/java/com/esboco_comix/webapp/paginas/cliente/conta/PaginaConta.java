@@ -12,7 +12,7 @@ public class PaginaConta extends AbstractPagina {
     public final ModalAlterarCartaoCredito modalAlterarCartaoCredito;
 
     public PaginaConta(WebDriver driver, WebDriverWait wait){
-        super(driver, wait);
+        super(driver, wait, "http://localhost:8080/conta?idcliente=1");
 
         this.modalAlterarDadosPessoais = new ModalAlterarDadosPessoais(driver);
         this.modalAlterarSenha = new ModalAlterarSenha(driver);
@@ -20,13 +20,8 @@ public class PaginaConta extends AbstractPagina {
         this.modalAlterarCartaoCredito = new ModalAlterarCartaoCredito(driver);
     }
 
-    public void abrir(){
-        driver.get("http://localhost:8080/conta?idcliente=1");
-    }
-
     public void logar() throws InterruptedException {
         abrir();
-        Thread.sleep(1000);
     }
 
 }

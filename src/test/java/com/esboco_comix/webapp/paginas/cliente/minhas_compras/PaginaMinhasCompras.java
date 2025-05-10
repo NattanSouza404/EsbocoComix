@@ -9,12 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class PaginaMinhasCompras extends AbstractPagina {
 
     public PaginaMinhasCompras(WebDriver driver, WebDriverWait wait){
-        super(driver, wait);
-    }
-
-    @Override
-    public void abrir() {
-        driver.get("http://localhost:8080/minhasCompras");
+        super(driver, wait, "http://localhost:8080/minhasCompras");
     }
 
     public void pedirTroca() throws InterruptedException {

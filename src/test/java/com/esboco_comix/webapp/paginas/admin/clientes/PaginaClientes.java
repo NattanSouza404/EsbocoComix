@@ -9,12 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class PaginaClientes extends AbstractPagina {
 
     public PaginaClientes(WebDriver driver, WebDriverWait wait) throws Exception {
-        super(driver, wait);
-    }
-
-    @Override
-    public void abrir() {
-        driver.get("http://localhost:8080/admin/clientes");
+        super(driver, wait, "http://localhost:8080/admin/clientes");
     }
 
     public void adicionarFiltro(String name, String valor) throws InterruptedException {
