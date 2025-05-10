@@ -9,21 +9,21 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public abstract class AbstractPagina {
     protected WebDriver driver;
     protected WebDriverWait wait;
+    protected String url;
 
-    public AbstractPagina(WebDriver driver, WebDriverWait wait){
+    public AbstractPagina(WebDriver driver, WebDriverWait wait, String url){
         this.driver = driver;
         this.wait = wait;
+        this.url = url;
     }
 
-    public abstract void abrir();
-
-    public void fechar(){
-        driver.quit();
-        DriverManager.cleanup();
+    public void abrir() throws InterruptedException {
+        driver.get(url);
+        sleep();
     }
 
-    protected void sleep() throws InterruptedException {
-        Thread.sleep(2000);
+    public void sleep() throws InterruptedException {
+        Thread.sleep(1500);
     }
 
     protected WebElement scrollToElement(WebElement element) {
