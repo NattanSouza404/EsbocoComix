@@ -27,7 +27,7 @@ public class PedirTrocaDevolucao {
         paginaConta.logar();
     }
 
-    public void abrirMinhasCompras() {
+    public void abrirMinhasCompras() throws InterruptedException {
         paginaMinhasCompras.abrir();
     }
 

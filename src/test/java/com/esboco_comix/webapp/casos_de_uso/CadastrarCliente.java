@@ -15,7 +15,7 @@ public class CadastrarCliente {
         paginaCadastrar = new PaginaCadastrar(driver, wait);
     }
 
-    public void abrir(){
+    public void abrir() throws InterruptedException {
         paginaCadastrar.abrir();
     }
 

@@ -11,7 +11,7 @@ public class FiltrarClientes {
         paginaClientes = new PaginaClientes(driver, wait);
     }
 
-    public void abrirPaginaClientes() {
+    public void abrirPaginaClientes() throws InterruptedException {
         paginaClientes.abrir();
     }
     
