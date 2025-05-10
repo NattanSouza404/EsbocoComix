@@ -9,8 +9,42 @@ import org.junit.Test;
 public class PedidoTest extends BaseTest {
 
     @Test
-    public void realizaPedido(){
+    public void atualizarItemCarrinho(){
+        try {
+            FluxoVenda fluxo = new FluxoVenda(driver, wait);
+            fluxo.abrirPaginaInicial();
+            fluxo.adicionarItemAoCarrinho(0);
+            fluxo.adicionarItemAoCarrinho(1);
 
+            fluxo.abrirCarrinho();
+
+            fluxo.atualizarItemCarrinho(0, 4);
+            fluxo.atualizarItemCarrinho(1, 10);
+            fluxo.abrirCarrinho();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void removerItemCarrinho(){
+        try {
+            FluxoVenda fluxo = new FluxoVenda(driver, wait);
+            fluxo.abrirPaginaInicial();
+            fluxo.adicionarItemAoCarrinho(0);
+            fluxo.adicionarItemAoCarrinho(1);
+
+            fluxo.abrirCarrinho();
+
+            fluxo.removerItemCarrinho(0);
+            fluxo.abrirCarrinho();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void realizaPedido(){
         try {
             FluxoVenda fluxo = new FluxoVenda(driver, wait);
             fluxo.abrirPaginaInicial();
@@ -21,6 +55,9 @@ public class PedidoTest extends BaseTest {
 
             fluxo.abrirCarrinho();
             fluxo.abrirPaginaCompra();
+
+            fluxo.inserirValorCartao(0, 30.0);
+            fluxo.realizarPedido();
 
             fluxo.inserirValorCartao(0, 65.0);
             fluxo.realizarPedido();

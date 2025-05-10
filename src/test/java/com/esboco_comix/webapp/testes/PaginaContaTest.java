@@ -19,7 +19,6 @@ public class PaginaContaTest extends BaseTest {
             modal.preencherInput("nome", "Jorge dos Santos Menezes");
             modal.preencherInput("dataNascimento", LocalDate.of(1998, 12, 20));
             modal.enviar();
-            conta.fechar();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -39,7 +38,6 @@ public class PaginaContaTest extends BaseTest {
             modal.preencherInput("senhaConfirmacao", "1234abC!");
 
             modal.enviar();
-            conta.fechar();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,7 +54,6 @@ public class PaginaContaTest extends BaseTest {
             modal.abrirModal();
             modal.preencherInput("numero", "25");
             modal.atualizar();
-            conta.fechar();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,7 +78,6 @@ public class PaginaContaTest extends BaseTest {
             modal.preencherInputSelect("bandeiraCartao", "MASTERCARD");
             
             modal.inserir();
-            conta.fechar();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -99,7 +95,6 @@ public class PaginaContaTest extends BaseTest {
             modal.abrirModal();
 
             modal.deletarEndereco();
-            conta.fechar();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -115,7 +110,6 @@ public class PaginaContaTest extends BaseTest {
             modal.abrirModal();
 
             modal.deletarCartaoCredito();
-            conta.fechar();
         } catch (Exception e) {
             e.printStackTrace();
         }
