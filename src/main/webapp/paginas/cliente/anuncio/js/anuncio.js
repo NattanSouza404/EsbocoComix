@@ -5,19 +5,21 @@ import { formatarPreco } from "/js/script.js";
 const uRLSearchParams = new URLSearchParams(window.location.search);
 const quadrinho = await retornarQuadrinho(uRLSearchParams.get('id'));
 
-const img = document.createElement('img');
-img.className = 'img-fluid rounded-start';
-img.alt = 'Imagem do produto';
-img.src = quadrinho.urlImagem;
-
-document.getElementById('secao-imagem').append(img);
+document.getElementById('secao-imagem').innerHTML = `
+    <img src="${quadrinho.urlImagem}" class="img-fluid rounded-start" alt="Imagem do produto"></img>
+`;
 
 document.getElementById('header-produto').innerHTML = `
     <h1 class="card-title">${quadrinho.titulo}</h1>
     <p class="card-text fs-4 text-success">${formatarPreco(quadrinho.preco)}</p>
 `
 
-document.getElementById('estoque').textContent = `Estoque: ${quadrinho.quantidadeEstoque}`
+let estoque = quadrinho.quantidadeEstoque;
+if (quadrinho.isForaDeEstoque){
+    estoque = "Fora de Estoque";
+}
+
+document.getElementById('estoque').textContent = `Estoque: ${estoque}`;
 
 let categorias = '';
 quadrinho.categorias.forEach(categoria => {

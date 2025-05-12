@@ -1,5 +1,6 @@
 import ModalEntradaEstoque from "./modalEntradaEstoque.js";
 import { consultarTodosQuadrinhos } from "/js/api/apiQuadrinho.js";
+import { formatarPreco } from "/js/script.js";
 
 const tbody = document.getElementById("stockTable");
 
@@ -10,13 +11,19 @@ const modal = new ModalEntradaEstoque();
 quadrinhos.forEach(quadrinho => {
     const tr = document.createElement("tr");
 
+    let estoque = quadrinho.quantidadeEstoque;
+
+    if (quadrinho.isForaDeEstoque){
+        estoque = 'Fora de Estoque';
+    }
+
     tr.innerHTML = `
         <td>1</td>
         <td class="item-name">${quadrinho.titulo}</td>
-        <td class="item-quantity">${quadrinho.quantidadeEstoque}</td>
+        <td class="item-quantity">${estoque}</td>
         <td class="item-cost-value">Valor custo</td>
         <td class="item-precification">???</td>
-        <td class="item-price">${quadrinho.preco}</td>
+        <td class="item-price">${formatarPreco(quadrinho.preco)}</td>
         <td>
             <button class="btn btn-warning btn-sm">Fazer entrada no estoque</button>
         </td>
