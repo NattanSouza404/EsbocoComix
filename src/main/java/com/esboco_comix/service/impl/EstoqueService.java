@@ -41,4 +41,16 @@ public class EstoqueService {
         return estoqueDAO.retirarDoEstoque(item);
     }
 
+    public Estoque consultarEstoqueByIDQuadrinho(int idQuadrinho) throws Exception {
+        return estoqueDAO.consultarEstoqueByIDQuadrinho(idQuadrinho);
+    }
+
+    public void validarEstoque(ItemPedido item) throws Exception {
+        Estoque estoque = consultarEstoqueByIDQuadrinho(item.getIdQuadrinho());
+
+        int estoqueAtualizado = estoque.getQuantidadeTotal() - item.getQuantidade();
+        if (estoqueAtualizado < 0){
+            throw new Exception("Quantidade do item excede a quantidade no estoque!");
+        }
+    }
 }

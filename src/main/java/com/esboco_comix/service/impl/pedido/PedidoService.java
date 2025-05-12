@@ -13,11 +13,7 @@ import com.esboco_comix.dao.impl.pedido.PedidoDAO;
 import com.esboco_comix.dto.ConsultarPedidosDTO;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoDTO;
-import com.esboco_comix.model.entidades.CartaoCreditoPedido;
-import com.esboco_comix.model.entidades.Cliente;
-import com.esboco_comix.model.entidades.CupomPedido;
-import com.esboco_comix.model.entidades.ItemPedido;
-import com.esboco_comix.model.entidades.Pedido;
+import com.esboco_comix.model.entidades.*;
 import com.esboco_comix.model.enuns.StatusItemPedido;
 import com.esboco_comix.model.enuns.StatusPedido;
 import com.esboco_comix.service.impl.CarrinhoService;
@@ -62,6 +58,10 @@ public class PedidoService {
         pedido.setStatus(StatusPedido.EM_PROCESSAMENTO);
         pedido.setItensPedido(carrinho.esvaziar());
         pedido.setValorTotal(calculadora.calcularValorTotalPedido(pedido, pedido.getItensPedido()));
+
+        for (ItemPedido item: pedido.getItensPedido()){
+            estoqueService.validarEstoque(item);
+        }
 
         Pedido pedidoInserido = pedidoDAO.inserir(pedido);
 
