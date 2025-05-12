@@ -42,7 +42,13 @@ public class QuadrinhoDAO {
             while (rs.next()){
                 QuadrinhoDTO dto = new QuadrinhoDTO();
                 dto.setQuadrinho(mapearEntidade(rs));
-                dto.setQuantidadeEstoque(rs.getInt("est_quantidade_total"));
+
+                int quantidadeEstoque = rs.getInt("est_quantidade_total");
+                boolean isForaDeEstoque = quantidadeEstoque == 0;
+
+                dto.setQuantidadeEstoque(quantidadeEstoque);
+                dto.setForaDeEstoque(isForaDeEstoque);
+
                 quadrinhos.add(dto);
             }
 
@@ -87,7 +93,12 @@ public class QuadrinhoDAO {
 
             QuadrinhoDTO dto = new QuadrinhoDTO();
             dto.setQuadrinho(mapearEntidade(rs));
-            dto.setQuantidadeEstoque(rs.getInt("est_quantidade_total"));
+
+            int quantidadeEstoque = rs.getInt("est_quantidade_total");
+            boolean isForaDeEstoque = quantidadeEstoque == 0;
+
+            dto.setQuantidadeEstoque(quantidadeEstoque);
+            dto.setForaDeEstoque(isForaDeEstoque);
 
             dto.getQuadrinho().setCategorias(
                 categoriaDAO.consultarByIDQuadrinho(dto.getQuadrinho().getId())
