@@ -18,7 +18,10 @@ pedidos.pedidos.forEach(pedido => {
         <td>${contador}</td>
         <td>Pedido ${pedido.id}</td>
         <td>${formatarDateTime(pedido.data)}</td>
+        <td>${pedido.enderecoEntrega.cep}</td>
+        <td>${pedido.enderecoEntrega.cidade+", "+pedido.enderecoEntrega.estado+" - "+pedido.enderecoEntrega.pais}</td>
         <td>${formatarPreco(pedido.valorTotal)}</td>
+        <td>${formatarPreco(pedido.valorFrete)}</td>
         <td>${pedido.nomeCliente}</td>
         <td class="order-status">${pedido.status}</td>
         <td>
@@ -35,8 +38,9 @@ pedidos.pedidos.forEach(pedido => {
                 <option value="TROCA_CONCLUIDA">Troca concluída</option>
                 <option value="TROCA_RECUSADA">Troca recusada</option>
                 <option value="DEVOLUCAO_SOLICITADA">Devolução solicitada</option>
-                <option value="DEVOLUCAO_RECUSADA">Devolução recusada</option>
+                <option value="DEVOLUCAO_ACEITA">Devolução aceita</option>
                 <option value="DEVOLUCAO_CONCLUIDA">Devolução concluída</option>
+                <option value="DEVOLUCAO_RECUSADA">Devolução recusada</option>
             </select>
             
         </td>
@@ -44,11 +48,50 @@ pedidos.pedidos.forEach(pedido => {
 
     const select = tr.querySelector('select');
     select.value = pedido.status;
-    select.querySelector(`[value="${pedido.status}"`).disabled = true;
 
     tr.querySelector('button').onclick = () => {
         confirmarAtualizarStatusPedido(pedido, select.value);
     }
+
+    select.querySelectorAll('option').forEach(option => {
+        option.disabled = true; 
+    });
+
+    if (pedido.status === 'EM_PROCESSAMENTO'){
+        select.querySelector('[value="REPROVADO"').disabled = false;
+        select.querySelector('[value="APROVADO"').disabled = false;
+        select.querySelector('[value="CANCELADO"').disabled = false;
+        select.querySelector('[value="EM_TRANSPORTE"').disabled = false;
+        select.querySelector('[value="ENTREGUE"').disabled = false;
+    }
+
+    if (pedido.status.includes('TROCA')){
+        select.querySelectorAll('option').forEach(option => {
+            option.disabled = true; 
+        });
+
+        select.querySelector(`[value="TROCA_ACEITA"`).disabled = false;
+        select.querySelector(`[value="TROCA_CONCLUIDA"`).disabled = false;
+        select.querySelector(`[value="TROCA_RECUSADA"`).disabled = false;
+    }
+
+    if (pedido.status.includes('DEVOLUCAO')){
+        select.querySelectorAll('option').forEach(option => {
+            option.disabled = true; 
+        });
+
+        select.querySelector(`[value="DEVOLUCAO_ACEITA"`).disabled = false;
+        select.querySelector(`[value="DEVOLUCAO_CONCLUIDA"`).disabled = false;
+        select.querySelector(`[value="DEVOLUCAO_RECUSADA"`).disabled = false;
+    }
+
+    if (pedido.status === "ENTREGUE" || pedido.status === "TROCA_CONCLUIDA" || pedido.status === "DEVOLUCAO_CONCLUIDA"){
+        select.querySelectorAll('option').forEach(option => {
+            option.disabled = true; 
+        });
+    }
+
+    select.querySelector(`[value="${pedido.status}"`).disabled = true;
 
     contador++;
 
@@ -80,8 +123,9 @@ if (Array.isArray(pedidos.itensPedido) && pedidos.itensPedido != 0){
                     <option value="TROCA_CONCLUIDA">Troca concluída</option>
                     <option value="TROCA_RECUSADA">Troca recusada</option>
                     <option value="DEVOLUCAO_SOLICITADA">Devolução solicitada</option>
-                    <option value="DEVOLUCAO_RECUSADA">Devolução recusada</option>
+                    <option value="DEVOLUCAO_ACEITA">Devolução aceita</option>
                     <option value="DEVOLUCAO_CONCLUIDA">Devolução concluída</option>
+                    <option value="DEVOLUCAO_RECUSADA">Devolução recusada</option>
                 </select>
             </td>
         `;
@@ -105,7 +149,7 @@ if (Array.isArray(pedidos.itensPedido) && pedidos.itensPedido != 0){
 }
 
 function confirmarAtualizarStatusPedido(pedido, status){
-    const confirmacaoUsuario = confirm("Deseja mesmo atualizar o status desse pedido?");
+    const confirmacaoUsuario = confirm(`Deseja mesmo atualizar o status desse pedido para ${status}?`);
 
     if (confirmacaoUsuario){
         pedido.status = status;
@@ -123,7 +167,7 @@ function confirmarAtualizarStatusPedido(pedido, status){
 }
 
 function confirmarAtualizarStatusItemPedido(pedidoTroca, status){
-    const confirmacaoUsuario = confirm("Deseja mesmo atualizar o status desse item?");
+    const confirmacaoUsuario = confirm(`Deseja mesmo atualizar o status desse item para ${status}?`);
 
     if (confirmacaoUsuario){
         pedidoTroca.status = status;
