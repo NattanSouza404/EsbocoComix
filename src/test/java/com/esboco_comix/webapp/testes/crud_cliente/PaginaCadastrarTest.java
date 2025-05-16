@@ -1,4 +1,4 @@
-package com.esboco_comix.webapp.testes;
+package com.esboco_comix.webapp.testes.crud_cliente;
 
 import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.webapp.base.BaseTest;

@@ -12,10 +12,10 @@ public class PaginaMinhasCompras extends AbstractPagina {
         super(driver, wait, "http://localhost:8080/minhasCompras");
     }
 
-    public void pedirTroca() throws InterruptedException {
+    public void pedirTroca(int index) throws InterruptedException {
         wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.className("botao-troca"))
-        ).click();
+                ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("botao-troca"))
+        ).get(index).click();
         sleep();
 
         wait.until(ExpectedConditions.alertIsPresent()).accept();
@@ -25,10 +25,36 @@ public class PaginaMinhasCompras extends AbstractPagina {
         sleep();
     }
 
-    public void pedirDevolucao() throws InterruptedException {
+    public void pedirDevolucao(int index) throws InterruptedException {
         wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.className("botao-devolucao"))
-        ).click();
+                ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("botao-devolucao"))
+        ).get(index).click();
+        sleep();
+
+        wait.until(ExpectedConditions.alertIsPresent()).accept();
+        sleep();
+
+        wait.until(ExpectedConditions.alertIsPresent()).dismiss();
+        sleep();
+    }
+
+    public void pedirTrocaItem(int index) throws InterruptedException {
+        wait.until(
+                ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("botao-troca-item"))
+        ).get(index).click();
+        sleep();
+
+        wait.until(ExpectedConditions.alertIsPresent()).accept();
+        sleep();
+
+        wait.until(ExpectedConditions.alertIsPresent()).dismiss();
+        sleep();
+    }
+
+    public void pedirDevolucaoItem(int index) throws InterruptedException {
+        wait.until(
+                ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("botao-devolucao-item"))
+        ).get(index).click();
         sleep();
 
         wait.until(ExpectedConditions.alertIsPresent()).accept();

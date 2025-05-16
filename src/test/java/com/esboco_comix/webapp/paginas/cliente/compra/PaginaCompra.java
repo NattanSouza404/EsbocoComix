@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PaginaCompra extends AbstractPagina {
@@ -43,6 +44,17 @@ public class PaginaCompra extends AbstractPagina {
         sleep();
 
         wait.until(ExpectedConditions.alertIsPresent()).dismiss();
+        sleep();
+    }
+
+    public void selecionarCartao(int indexSelecao, int indexCartao) throws InterruptedException {
+        WebElement inputValor = wait.until(
+                ExpectedConditions.presenceOfAllElementsLocatedBy(
+                        By.cssSelector("#cartoes select")
+                )
+        ).get(indexSelecao);
+
+        new Select(scrollToElement(inputValor)).selectByIndex(indexCartao);
         sleep();
     }
 }

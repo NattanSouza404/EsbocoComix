@@ -30,4 +30,23 @@ public class PaginaGerenciarVendas extends AbstractPagina {
         wait.until(ExpectedConditions.alertIsPresent()).dismiss();
         sleep();
     }
+
+    public void mudarStatusItem(String status) throws InterruptedException {
+        WebElement tr = wait.until(ExpectedConditions.presenceOfElementLocated(
+                By.cssSelector("#tabela-pedido-troca tr"))
+        );
+
+        WebElement select = tr.findElement(By.tagName("select"));
+        select.sendKeys(status);
+        sleep();
+
+        tr.findElement(By.tagName("button")).click();
+        sleep();
+
+        wait.until(ExpectedConditions.alertIsPresent()).accept();
+        sleep();
+
+        wait.until(ExpectedConditions.alertIsPresent()).dismiss();
+        sleep();
+    }
 }

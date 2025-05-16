@@ -1,9 +1,8 @@
-package com.esboco_comix.webapp.testes;
+package com.esboco_comix.webapp.testes.pedido;
 
 import com.esboco_comix.webapp.base.BaseTest;
 import com.esboco_comix.webapp.casos_de_uso.FluxoVenda;
 import com.esboco_comix.webapp.casos_de_uso.MudarStatusPedido;
-import com.esboco_comix.webapp.casos_de_uso.PedirTrocaDevolucao;
 import org.junit.Test;
 
 public class PedidoTest extends BaseTest {
@@ -44,9 +43,11 @@ public class PedidoTest extends BaseTest {
     }
 
     @Test
-    public void realizaPedido(){
+    public void realizarPedido(){
         try {
             FluxoVenda fluxo = new FluxoVenda(driver, wait);
+            MudarStatusPedido fluxoAdmin = new MudarStatusPedido(driver, wait);
+
             fluxo.abrirPaginaInicial();
             fluxo.adicionarItemAoCarrinho(0);
             fluxo.adicionarItemAoCarrinho(1);
@@ -59,69 +60,44 @@ public class PedidoTest extends BaseTest {
             fluxo.inserirValorCartao(0, 30.0);
             fluxo.realizarPedido();
 
-            fluxo.inserirValorCartao(0, 65.0);
+            fluxo.adicionarOutroCartao();
+            fluxo.selecionarCartao(1, 1);
+
+            fluxo.inserirValorCartao(0, 62.0);
+            fluxo.inserirValorCartao(1, 6.0);
             fluxo.realizarPedido();
+
+            fluxo.inserirValorCartao(0, 34.0);
+            fluxo.inserirValorCartao(1, 34.0);
+
+            fluxo.realizarPedido();
+
+            fluxoAdmin.abrirGerenciarVendas();
+            fluxoAdmin.mudarStatus("Entregue");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void mudarStatus(){
-
+    public void realizarPedidoSimples(){
         try {
-            MudarStatusPedido fluxo = new MudarStatusPedido(driver, wait);
-            fluxo.abrirGerenciarVendas();
-            fluxo.mudarStatus("Entregue");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+            FluxoVenda fluxo = new FluxoVenda(driver, wait);
+            MudarStatusPedido fluxoAdmin = new MudarStatusPedido(driver, wait);
 
-    @Test
-    public void pedirTroca(){
-        try {
-            PedirTrocaDevolucao fluxo = new PedirTrocaDevolucao(driver, wait);
+            fluxo.abrirPaginaInicial();
+            fluxo.adicionarItemAoCarrinho(0);
 
             fluxo.logar();
-            fluxo.abrirMinhasCompras();
 
-            fluxo.pedirTroca();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+            fluxo.abrirCarrinho();
+            fluxo.abrirPaginaCompra();
 
-    @Test
-    public void aceitarTroca(){
-        try {
-            MudarStatusPedido fluxo = new MudarStatusPedido(driver, wait);
-            fluxo.abrirGerenciarVendas();
-            fluxo.mudarStatus("Troca Concluída");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+            fluxo.inserirValorCartao(0, 38.0);
+            fluxo.realizarPedido();
 
-    @Test
-    public void pedirDevolucao(){
-        try {
-            PedirTrocaDevolucao fluxo = new PedirTrocaDevolucao(driver, wait);
-
-            fluxo.logar();
-            fluxo.abrirMinhasCompras();
-            fluxo.pedirDevolucao();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void aceitarDevolucao(){
-        try {
-            MudarStatusPedido fluxo = new MudarStatusPedido(driver, wait);
-            fluxo.abrirGerenciarVendas();
-            fluxo.mudarStatus("Devolução concluída");
+            fluxoAdmin.abrirGerenciarVendas();
+            fluxoAdmin.mudarStatus("Entregue");
         } catch (Exception e) {
             e.printStackTrace();
         }

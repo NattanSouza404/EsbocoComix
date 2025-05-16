@@ -19,4 +19,8 @@ public class MudarStatusPedido {
     public void abrirGerenciarVendas() throws InterruptedException {
         paginaGerenciarVendas.abrir();
     }
+
+    public void mudarStatusItem(String status) throws InterruptedException {
+        paginaGerenciarVendas.mudarStatusItem(status);
+    }
 }

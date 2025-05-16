@@ -15,12 +15,12 @@ public class PedirTrocaDevolucao {
         paginaMinhasCompras = new PaginaMinhasCompras(driver, wait);
     }
 
-    public void pedirTroca() throws InterruptedException {
-        paginaMinhasCompras.pedirTroca();
+    public void pedirTroca(int index) throws InterruptedException {
+        paginaMinhasCompras.pedirTroca(index);
     }
 
-    public void pedirDevolucao() throws InterruptedException {
-        paginaMinhasCompras.pedirDevolucao();
+    public void pedirDevolucao(int index) throws InterruptedException {
+        paginaMinhasCompras.pedirDevolucao(index);
     }
 
     public void logar() throws InterruptedException {
@@ -31,4 +31,15 @@ public class PedirTrocaDevolucao {
         paginaMinhasCompras.abrir();
     }
 
+    public void pedirTrocaItem(int index) throws InterruptedException {
+        paginaMinhasCompras.pedirTrocaItem(index);
+    }
+
+    public void pedirDevolucaoItem(int index) throws InterruptedException {
+        paginaMinhasCompras.pedirDevolucaoItem(index);
+    }
+
+    public void abrirSecaoCupons() throws InterruptedException {
+        paginaConta.abrirSecaoCupons();
+    }
 }

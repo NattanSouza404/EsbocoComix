@@ -60,4 +60,8 @@ public class FluxoVenda {
     public void removerItemCarrinho(int index) throws InterruptedException {
         paginaCarrinho.removerItemCarrinho(index);
     }
+
+    public void selecionarCartao(int indexSelecao, int indexCartao) throws InterruptedException {
+        paginaCompra.selecionarCartao(indexSelecao, indexCartao);
+    }
 }

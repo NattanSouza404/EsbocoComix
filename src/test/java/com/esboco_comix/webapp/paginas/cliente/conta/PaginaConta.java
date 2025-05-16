@@ -1,7 +1,9 @@
 package com.esboco_comix.webapp.paginas.cliente.conta;
 
 import com.esboco_comix.webapp.base.AbstractPagina;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PaginaConta extends AbstractPagina {
@@ -24,4 +26,10 @@ public class PaginaConta extends AbstractPagina {
         abrir();
     }
 
+    public void abrirSecaoCupons() throws InterruptedException {
+        scrollToElement(
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.id("trocar-para-cupom")))
+        ).click();
+        sleep();
+    }
 }

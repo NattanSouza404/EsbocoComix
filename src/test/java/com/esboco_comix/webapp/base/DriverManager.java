@@ -89,7 +89,7 @@ public class DriverManager {
 
         try {
             Files.walk(dir)
-                .sorted((a, b) -> b.compareTo(a))  // Delete files before the directory itself
+                .sorted((a, b) -> b.compareTo(a))
                 .forEach(path -> {
                     try {
                         Files.delete(path);
