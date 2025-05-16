@@ -5,6 +5,8 @@ import { retornarCartoesCredito } from "/js/api/apiCartaoCredito.js";
 import { SecaoDadosPessoais } from "./secaoDadosPessoais/SecaoDadosPessoais.js";
 import { SecaoEndereco } from "./secaoEndereco/SecaoEndereco.js";
 import { SecaoCartaoCredito } from "./secaoCartaoCredito/SecaoCartaoCredito.js";
+import { retornarCupons } from "/js/api/apiCupom.js";
+import { SecaoCupom } from "./secaoCupons/secaoCupons.js";
 
 let idCliente = localStorage.getItem('idcliente');
 
@@ -17,14 +19,16 @@ if (idCliente === null || idCliente === undefined){
 const cliente = await retornarCliente(idCliente);
 const enderecos = await retornarEnderecos(idCliente);
 const cartoesCredito = await retornarCartoesCredito(idCliente);
+const cupons = await retornarCupons(idCliente);
 
 const secaoDadosPessoais = new SecaoDadosPessoais(cliente);
 const secaoCartaoCredito = new SecaoCartaoCredito(cartoesCredito);
 const secaoEndereco = new SecaoEndereco(enderecos);
+const secaoCupom = new SecaoCupom(cupons);
 
 const container = document.getElementById('secoes-conta');
 const secoes = [
-    secaoDadosPessoais, secaoCartaoCredito, secaoEndereco
+    secaoDadosPessoais, secaoCartaoCredito, secaoEndereco, secaoCupom
 ];
 
 secoes.forEach(secao => {
