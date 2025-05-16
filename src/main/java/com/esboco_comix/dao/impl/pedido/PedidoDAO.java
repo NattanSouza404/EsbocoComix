@@ -62,8 +62,9 @@ public class PedidoDAO {
 
         PreparedStatement pst = conn.prepareStatement(
             """
-            SELECT pedidos.*, cli_nome FROM pedidos
+            SELECT pedidos.*, cli_nome, enderecos.* FROM pedidos
                 JOIN clientes ON ped_cli_id = cli_id
+                JOIN enderecos ON ped_end_id = end_id
             ORDER BY ped_data DESC;
             """,
             ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -108,9 +109,10 @@ public class PedidoDAO {
 
         PreparedStatement pst = conn.prepareStatement(
             """
-            SELECT pedidos.*, cli_nome FROM pedidos
+            SELECT pedidos.*, cli_nome, enderecos.* FROM pedidos
                 JOIN clientes ON ped_cli_id = cli_id
-            WHERE ped_cli_id = ? 
+                JOIN enderecos ON ped_end_id = end_id
+            WHERE ped_cli_id = ?
             ORDER BY ped_data DESC;
             """,
             ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -155,7 +157,7 @@ public class PedidoDAO {
         Connection connection = ConexaoFactory.getConexao();
 
         PreparedStatement pst = connection.prepareStatement(
-            "SELECT * FROM pedidos WHERE ped_id = ?"
+            "SELECT pedidos.*, enderecos.* FROM pedidos JOIN enderecos ON ped_end_id = end_id WHERE ped_id = ?;"
         );
 
         try {
@@ -209,6 +211,11 @@ public class PedidoDAO {
         
         Endereco endereco = new Endereco();
         endereco.setId(rs.getInt("ped_end_id"));
+        endereco.setFraseCurta(rs.getString("end_frase_curta"));
+        endereco.setCidade(rs.getString("end_cidade"));
+        endereco.setEstado(rs.getString("end_estado"));
+        endereco.setPais(rs.getString("end_pais"));
+        endereco.setCep(rs.getString("end_cep"));
         pedido.setEnderecoEntrega(endereco);
 
         pedido.setValorFrete(rs.getDouble("ped_valor_frete"));

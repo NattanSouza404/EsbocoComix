@@ -23,7 +23,7 @@ public class QuadrinhoDAO {
         PreparedStatement pst = conn.prepareStatement(
             """
             SELECT quadrinhos.*, est_quantidade_total FROM quadrinhos
-	            LEFT JOIN estoque ON est_qua_id = qua_id;
+	            LEFT JOIN estoque ON est_qua_id = qua_id ORDER BY qua_id DESC;
             """,
             ResultSet.TYPE_SCROLL_INSENSITIVE,
             ResultSet.CONCUR_READ_ONLY
