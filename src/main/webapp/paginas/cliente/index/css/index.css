@@ -1,5 +1,27 @@
 @import url(/css/style.css);
 
+.carousel-item {
+    height: 60vh;
+    position: relative;
+  }
+
+.carousel-item img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.texto-contorno {
+    color: white;
+    text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
+    font-weight: 900;
+}
+
 #navegacao-lateral {
     max-width: 20%;
     width: 70%;

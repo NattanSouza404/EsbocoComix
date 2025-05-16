@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inicial</title>
-  <link rel="stylesheet" href="/paginas/cliente/index/css/index.css">
+  <link rel="stylesheet" href="../../../paginas/cliente/index/css/index.css">
 </head>
 
 <body>
@@ -13,10 +13,40 @@
   <nav id="main-nav"></nav>
 
   <!-- Hero Section -->
-  <header id="main-header" class="text-white text-center py-5">
-    <div class="container">
-      <h1>Bem vindo à Esboço Comix</h1>
-      <p>Encontre seus quadrinhos preferidos pelos melhores preços!</p>
+  <header class="text-white text-center">
+     <div class="container-fluid g-5 py-3">
+      
+      <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="../../../img/banner/banner-desconto.jpg" class="d-block w-100" alt="Imagem 1">
+                <div class="carousel-caption d-none d-md-block">
+                  <strong><h1 class="text-center mb-4 texto-contorno">Bem vindo à Esboço Comix</h1></strong>
+                  <strong><h3 class="texto-contorno">Encontre seus quadrinhos preferidos pelos melhores preços!</h3></strong>
+                </div>
+              </div>
+            <div class="carousel-item">
+                <img src="../../../img/banner/banner-o-menino-maluquinho.jpg" class="d-block w-100" alt="Imagem 2">
+                <div class="carousel-caption d-none d-md-block">
+                  <strong><h1 class="texto-contorno">Confira o Menino Maluquinho!</h1></strong>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="../../../img/banner/banner-tintin.jpg" class="d-block w-100" alt="Imagem 3">
+                <div class="carousel-caption d-none d-md-block">
+                  <strong><h1 class="texto-contorno">Confira As Aventuras de Tintin!</h1></strong>
+                </div>
+              </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Próximo</span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -28,20 +58,19 @@
           <div class="container mt-4">
             <form>
               <div class="d-flex align-items-center mb-3">
-                <label for="input3" class="form-label me-2">Autor:</label>
-                <input type="tel" id="input3" class="form-control" placeholder="Digite o autor">
+                <label class="form-label me-2">
+                  Autor:
+                  <input type="tel" id="autor" class="form-control" placeholder="Digite o autor">
+                </label>
               </div>
 
               <div class="d-flex align-items-center mb-3">
-                <label for="input3" class="form-label me-2">Categoria:</label>
-                <input type="tel" id="input3" class="form-control" placeholder="Digite a categoria">
+                <label class="form-label me-2">
+                  Categoria:
+                  <input type="tel" id="categoria" class="form-control" placeholder="Digite a categoria">
+                </label>
               </div>
 
-              <div class="d-flex align-items-center mb-3">
-                <label for="input3" class="form-label me-2">Telefone:</label>
-                <input type="tel" id="input3" class="form-control" placeholder="Digite o telefone">
-              </div>
-      
               <!-- Button -->
               <div class="text-center mt-3">
                   <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
