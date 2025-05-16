@@ -1,3 +1,4 @@
+import { formatarData } from "/js/script.js"
 export class CartaoDadosPessoais extends HTMLElement {
     constructor() {
         super();
@@ -6,7 +7,7 @@ export class CartaoDadosPessoais extends HTMLElement {
     async atualizar(cliente) {
         this.innerHTML = `
             <p>Nome: ${cliente.nome}</p>
-            <p>Data Nascimento: ${cliente.dataNascimento}</p>
+            <p>Data Nascimento: ${formatarData(cliente.dataNascimento)}</p>
             <p>CPF: ${cliente.cpf}</p>
             <p>E-mail: ${cliente.email}</p>
             <p>Gênero: ${cliente.genero}</p>

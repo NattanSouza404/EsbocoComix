@@ -18,7 +18,9 @@ pedidos.forEach(pedido => {
                         <p class="mb-1"><strong>Frete:</strong> ${formatarPreco(pedido.valorFrete)}</p>
                     </div>
                     <div class="col-sm-6">
-                        <p class="mb-1"><strong>Endereço:</strong> ${pedido.enderecoEntrega.id}</p>
+                        <p class="mb-1"><strong>Endereço:<br/>
+                            </strong> ${pedido.enderecoEntrega.fraseCurta +", CEP: "+ pedido.enderecoEntrega.cep +"<br/>"+ pedido.enderecoEntrega.cidade +", "+ pedido.enderecoEntrega.estado +" - "+ pedido.enderecoEntrega.pais}
+                        </p>
                         <p class="mb-1"><strong>Status:</strong> ${pedido.status}</p>
                     </div>
                 </div>
@@ -44,31 +46,34 @@ pedidos.forEach(pedido => {
     const containerItens = divPedido.querySelector('.container-itens');
 
     pedido.itensPedidoDTO.forEach(item => {
-        containerItens.innerHTML = `
-            <div class="p-3 mb-2 bg-light rounded border">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h6>Produto: ${item.nomeQuadrinho}</h6>
-                        <p>Quantidade: ${item.quantidade} unidades</p>
-                        ${item.status !== null && item.status !== undefined ? 
-                            `<p>${item.status}</p>` : ''
-                        }
-                    </div>
-                    <div>
-                        <button class="btn btn-secondary btn-sm botao-troca">Pedir Troca</button>
-                        <button class="btn btn-secondary btn-sm botao-devolucao">Pedir Devolução</button>
-                    </div>
+        const divItem = document.createElement('div');
+        divItem.className = "p-3 mb-2 bg-light rounded border";
+
+        divItem.innerHTML = `
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6>Produto: ${item.nomeQuadrinho}</h6>
+                    <p>Quantidade: ${item.quantidade} unidades</p>
+                    ${item.status !== null && item.status !== undefined ? 
+                        `<p>${item.status}</p>` : ''
+                    }
+                </div>
+                <div>
+                    <button class="btn btn-secondary btn-sm botao-troca-item">Pedir Troca</button>
+                    <button class="btn btn-secondary btn-sm botao-devolucao-item">Pedir Devolução</button>
                 </div>
             </div>
         `;
 
-        containerItens.querySelector('.botao-troca').onclick = () => {
+        divItem.querySelector('.botao-troca-item').onclick = () => {
             confirmarTrocaItem(item);
         };
 
-        containerItens.querySelector('.botao-devolucao').onclick = () => {
+        divItem.querySelector('.botao-devolucao-item').onclick = () => {
             confirmarDevolucaoItem(item);
         };
+
+        containerItens.append(divItem);
 
     });
 

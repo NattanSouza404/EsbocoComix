@@ -1,6 +1,6 @@
 import { retornarQuadrinho } from "/js/api/apiQuadrinho.js";
 import { adicionarItemAoCarrinho } from "/js/api/apiCarrinho.js";
-import { formatarPreco } from "/js/script.js";
+import { formatarData, formatarPreco } from "/js/script.js";
 
 const uRLSearchParams = new URLSearchParams(window.location.search);
 const quadrinho = await retornarQuadrinho(uRLSearchParams.get('id'));
@@ -30,7 +30,7 @@ const corpoTabela = document.createElement('tbody');
 corpoTabela.innerHTML = `
     <tbody>
         <tr>
-            <td>Ano: ${quadrinho.ano}</td>
+            <td>Ano: ${formatarData(quadrinho.ano)}</td>
         </tr>
         <tr>
             <td>Autor: ${quadrinho.autor}</td>

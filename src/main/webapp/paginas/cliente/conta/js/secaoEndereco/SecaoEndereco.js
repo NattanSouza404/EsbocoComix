@@ -29,7 +29,7 @@ export class SecaoEndereco extends HTMLElement {
 
     atualizar(enderecos) {
 
-        if (enderecos){
+        if (enderecos && Array.isArray(enderecos)){
             this.containerEnderecos.innerHTML = "";
 
             let contador = 1;

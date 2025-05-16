@@ -8,6 +8,7 @@ const quadrinhos = await consultarTodosQuadrinhos();
 
 const modal = new ModalEntradaEstoque();
 
+let contador = 1;
 quadrinhos.forEach(quadrinho => {
     const tr = document.createElement("tr");
 
@@ -18,7 +19,7 @@ quadrinhos.forEach(quadrinho => {
     }
 
     tr.innerHTML = `
-        <td>1</td>
+        <td>${contador++}</td>
         <td class="item-name">${quadrinho.titulo}</td>
         <td class="item-quantity">${estoque}</td>
         <td class="item-cost-value">Valor custo</td>

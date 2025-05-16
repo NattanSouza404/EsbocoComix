@@ -27,16 +27,15 @@ export default class ModalTransacoes extends Modal {
             this.mostrarTabela();
             
             pedidos.forEach(pedido => {
-                const tr = document.createElement('tr');
-
-                tr.innerHTML = `
-                    <td>${formatarDateTime(pedido.data)}</td>
-                    <td>${formatarPreco(pedido.valorTotal)}</td>
-                    <td>${formatarPreco(pedido.valorFrete)}</td>
-                    <td>${pedido.status}</td>
-                `;
-
-                this.tbody.append(tr);
+                this.tbody.insertAdjacentHTML('beforeend', `
+                    <tr>
+                        <td>${formatarDateTime(pedido.data)}</td>
+                        <td>${formatarPreco(pedido.valorTotal)}</td>
+                        <td>${formatarPreco(pedido.valorFrete)}</td>
+                        <td>${pedido.status}</td>
+                    </tr>
+                    
+                `);
             });
 
             super.show();

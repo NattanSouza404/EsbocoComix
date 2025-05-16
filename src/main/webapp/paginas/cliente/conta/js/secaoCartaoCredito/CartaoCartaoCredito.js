@@ -8,8 +8,9 @@ export class CartaoCartaoCredito extends HTMLElement {
 
         this.modalAlterarCartaoCredito = modalAlterarCartaoCredito;
 
+        let preferencial = cartaoCredito.isPreferencial === true ? "(Preferencial)" : "";
         this.insertAdjacentHTML('beforeend', `
-            <h3>1º Cartão</h3>
+            <h3>Cartão ${preferencial}</h3>
         `);
 
         this.titulo = this.querySelector('h3');
@@ -25,7 +26,6 @@ export class CartaoCartaoCredito extends HTMLElement {
             <p>Código de Segurança: ${cartaoCredito.codigoSeguranca}</p>
             <p>Nome impresso: ${cartaoCredito.nomeImpresso}</p>
             <p>Bandeira do Cartão: ${cartaoCredito.bandeiraCartao}</p>
-            <p>Preferencial: ${cartaoCredito.isPreferencial}</p>
 
             <button class="btn-atualizar">Atualizar</button>
             <button class="btn-deletar">Remover</button> 

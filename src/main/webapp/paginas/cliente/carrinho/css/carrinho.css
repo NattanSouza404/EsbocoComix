@@ -1,8 +1,17 @@
-@import url(/css/style.css);
+@import url(../../../../css/style.css);
 
 .celula-produto {
     justify-items: center;
     padding: 8px;
+}
+
+#main-container h1 img {
+    height: 40px;
+}
+
+.celula-produto {
+    display: flex;
+    flex-direction: column;
 }
 
 .celula-produto img {

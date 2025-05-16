@@ -29,14 +29,14 @@ export class SecaoCartaoCredito extends HTMLElement {
     }
 
     atualizar(cartoes) {
-        if (Array.isArray(cartoes)) {
+        if (cartoes && Array.isArray(cartoes)) {
             this.containerCartoes.innerHTML = "";
 
             let contador = 1;
             cartoes.forEach(
-                (e) => {
-                    const cartao = new CartaoCartaoCredito(e, this.modalAlterarCartaoCredito);
-                    cartao.titulo.textContent = contador + "º Cartão";
+                (c) => {
+                    const cartao = new CartaoCartaoCredito(c, this.modalAlterarCartaoCredito);
+                    cartao.titulo.textContent = `${contador}º ${cartao.titulo.textContent}`;
                     this.containerCartoes.append(cartao);
                     contador++;
                 }

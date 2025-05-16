@@ -1,5 +1,5 @@
-import { calcularValorTotal, formatarPreco } from "/js/script.js";
-import { atualizarItemCarrinho, deletarItemCarrinho } from "/js/api/apiCarrinho.js";
+import { calcularValorTotal, formatarPreco } from "../../../../js/script.js";
+import { atualizarItemCarrinho, deletarItemCarrinho } from "../../../../js/api/apiCarrinho.js";
 import { retornarCarrinho } from "/js/api/apiCarrinho.js";
 
 const carrinho = await retornarCarrinho();
@@ -13,6 +13,7 @@ if (carrinho.itensCarrinho.length === 0){
 if (carrinho.itensCarrinho.length !== 0){
     carrinho.itensCarrinho.forEach(item => {
         const linha = document.createElement('tr');
+        linha.className = "item-carrinho";
     
         linha.innerHTML = `
             <td class="celula-produto">
@@ -24,15 +25,13 @@ if (carrinho.itensCarrinho.length !== 0){
                 <input name="quantidade" value=${item.quantidade}>
             </td>
             <td class="product-total">${formatarPreco(item.quantidade * item.preco)}</td>
+            <td>
+                <button class="btn-atualizar btn btn-warning btn-sm">Atualizar Quantidade</button>
+                <button class="btn-deletar btn btn-danger btn-sm">Remover</button>
+            </td>
         `;
     
-        const td = document.createElement('td');
-    
-        let button = document.createElement('button');
-        button.textContent = 'Atualizar Quantidade';
-        button.className = "btn btn-warning btn-sm";
-    
-        button.onclick = () => {
+        linha.querySelector('.btn-atualizar').onclick = () => {
             item.quantidade = linha.querySelector('input').value;
 
             const confirmacaoUsuario = confirm("Deseja mesmo atualizar quantidade desse item?"); 
@@ -42,14 +41,8 @@ if (carrinho.itensCarrinho.length !== 0){
             }
             
         };
-    
-        td.append(button);
-    
-        button = document.createElement('button');
-        button.textContent = 'Remover';
-        button.className = "btn btn-danger btn-sm";
-    
-        button.onclick = () => {
+
+        linha.querySelector('.btn-deletar').onclick = () => {
             const confirmacaoUsuario = confirm("Deseja mesmo deletar esse item?");
 
             if (confirmacaoUsuario){
@@ -57,10 +50,6 @@ if (carrinho.itensCarrinho.length !== 0){
             }
  
         };
-    
-        td.append(button);
-    
-        linha.append(td);
     
         document.getElementById("tabela-produtos-carrinho")
             .append(linha);

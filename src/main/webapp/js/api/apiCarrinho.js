@@ -22,7 +22,7 @@ export async function adicionarItemAoCarrinho(item){
         const result = await fetch(URL, option);
 
         if (result.status === 201) {
-            alert('Cadastrado com sucesso');
+            alert('Item adicionado com sucesso!');
             return;
         }
 
@@ -47,7 +47,7 @@ export async function atualizarItemCarrinho(item){
         const result = await fetch(URL, option);
 
         if (result.status === 200) {
-            alert('Atualizado com sucesso!');
+            alert('Item atualizado com sucesso!');
             return;
         }
 
