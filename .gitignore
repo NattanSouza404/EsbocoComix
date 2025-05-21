@@ -21,3 +21,7 @@ tomcat.8080/
 /src/main/resources/config.properties
 /src/test/resources/config.properties
 .idea/
+
+# Ambiente virtual do python
+venv/
+.venv/

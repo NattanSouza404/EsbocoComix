@@ -25,17 +25,31 @@ Dentre as funcionalidades do sistema, podemos citar:
 - Python
 - Gemini AI
 
-## ⚙️ Configurações
+## ⚙️ Instruções de Uso e Configurações
+Para iniciar o subsistema de recomendação por IA, deve-se navegar para a pasta src/main/chatbot e iniciar o servidor Python FastAPI:
+
+```
+cd src/main/chatbot
+uvicorn main:app --reload
+```
+
 Para usar esse programa, é necessário ter um arquivo chamado config.properties, dentro da pasta src/main/resources. Esse arquivo deve ter essa estrutura: 
 
 ```
 [DEFAULT]
 api.key=INSIRA_SUA_CHAVE_GEMINI
 
-database.driver=org.postgresql.Driver
-database.url=jdbc:postgresql://localhost:5432/projeto_les
 database.user=postgres
 database.password=admin123
+
+# Especí­fico ao Java
+database.driver=org.postgresql.Driver
+database.url=jdbc:postgresql://localhost:5432/esboco_comix
+
+# Especí­fico ao Python
+database.host=localhost
+database.port=5432
+database.database=esboco_comix
 ```
 
 Para realizar os testes, também é necessário um config.properties dentro de src/test/resources com essa estrutura. Os browsers suportados são "edge" e "firefox".
