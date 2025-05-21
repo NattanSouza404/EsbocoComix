@@ -3,12 +3,17 @@ import { ChatIA } from "./chatIA.js";
 export class ContainerNav extends HTMLDivElement {
     constructor(){
         super();
+
+        this.chatIA = new ChatIA();
+
         this.className = "container";
         this.innerHTML = `
+        
             <a id="logo-nav" class="navbar-brand" href="/index">
                 <img src="/img/logo.png">
                 <h5 class="fw-bold">Livraria de<br/>Quadrinhos</h5>
             </a>
+
             <div id="navbar-nav" class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-link">
@@ -35,8 +40,8 @@ export class ContainerNav extends HTMLDivElement {
                          </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" onclick="chatIA.trocarDisplayChat()">
-                        <img src="/img/bate-papo-com-ia.png"> Assistente Virtual
+                        <a id="abrir-chat-ia" class="nav-link">
+                            <img src="/img/bate-papo-com-ia.png"> Assistente Virtual
                         </a>
                     </li>
                     <li class="nav-item">
@@ -58,6 +63,10 @@ export class ContainerNav extends HTMLDivElement {
             </div>
         `;
 
+        this.querySelector('#abrir-chat-ia').onclick = () => {
+            this.chatIA.show();
+        }
+
         const notificationCount = this.querySelector('#notificationCount');
         const notificationsDropdown = this.querySelector('#notificationsDropdown');
 
@@ -70,7 +79,3 @@ export class ContainerNav extends HTMLDivElement {
 }
 
 customElements.define("main-nav", ContainerNav, { extends: 'div' });
-
-const chatIA = new ChatIA();
-document.body.append(chatIA);
-window.chatIA = chatIA;
