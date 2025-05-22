@@ -8,13 +8,13 @@ import { SecaoCartaoCredito } from "./secaoCartaoCredito/SecaoCartaoCredito.js";
 import { retornarCupons } from "/js/api/apiCupom.js";
 import { SecaoCupom } from "./secaoCupons/secaoCupons.js";
 
-let idCliente = localStorage.getItem('idcliente');
-
-if (idCliente === null || idCliente === undefined){
-    const urlParams = new URLSearchParams(window.location.search);
-    localStorage.setItem('idcliente', urlParams.get('idcliente'));
-    idCliente = localStorage.getItem("idcliente");
+const urlParams = new URLSearchParams(window.location.search);
+const idClienteURL = urlParams.get('idcliente'); 
+if (idClienteURL !== null && idClienteURL !== undefined){
+    localStorage.setItem('idcliente', idClienteURL);
 }
+
+let idCliente = localStorage.getItem('idcliente');
 
 const cliente = await retornarCliente(idCliente);
 const enderecos = await retornarEnderecos(idCliente);

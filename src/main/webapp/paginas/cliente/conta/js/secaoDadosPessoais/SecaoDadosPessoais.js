@@ -17,11 +17,11 @@ export class SecaoDadosPessoais extends HTMLElement {
 
         this.insertAdjacentHTML('beforeend', `
             <div>
-                <button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
+                <button id="btn-editar-cadastro" type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
                     data-bs-target="#modal-alterar-dados-pessoais">
                     Editar Cadastro
                 </button>
-                <button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
+                <button id="btn-alterar-senha" type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
                     data-bs-target="#modal-alterar-senha">
                     Alterar Senha
                 </button>

@@ -9,9 +9,9 @@ export class SecaoFormsEndereco extends HTMLElement {
 
             <div id="container-enderecos"></div>
 
-            <button type="button" class="btn-adicionar-endereco">+ Novo Endereço</button>
-
             <div class="footer-secao-endereco">
+                <button type="button" class="btn-adicionar-endereco">+ Novo Endereço</button>
+
                 <p class="aviso">
                     Observações: Deve haver ao menos 1 endereço de
                     residência, um de entrega e um de cobrança

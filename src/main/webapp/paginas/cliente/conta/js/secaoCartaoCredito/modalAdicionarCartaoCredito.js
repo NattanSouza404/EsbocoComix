@@ -12,7 +12,7 @@ export class ModalAdicionarCartaoCredito extends Modal {
 
         this.conteudoModal = conteudoModal;
 
-        this.conteudoModal.querySelector('.btn-salvar').onclick = () => {
+        this.conteudoModal.querySelector('.botao-salvar').onclick = () => {
             this.enviarFormulario();
         };
     }
@@ -34,7 +34,7 @@ function ConteudoModal() {
     form.id = 'adicionar-cartao-credito';
 
     form.insertAdjacentHTML('beforeend', `
-        <button type="button" class="btn-salvar">Salvar</button>
+        <button type="button" class="botao-salvar">Salvar</button>
     `);
 
     return form;

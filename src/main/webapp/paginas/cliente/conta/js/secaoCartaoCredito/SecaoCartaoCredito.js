@@ -16,7 +16,7 @@ export class SecaoCartaoCredito extends HTMLElement {
             <div class="container-cartoes"></div>
 
             <div>
-                <button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
+                <button id="btn-adicionar-cartao" type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
                 data-bs-target="#modal-adicionar-cartao-credito">
                     Adicionar Cartão de crédito
                 </button>

@@ -12,7 +12,7 @@ export class ModalAlterarEndereco extends Modal {
 
         this.conteudoModal = conteudoModal;
 
-        this.conteudoModal.querySelector('.btn-atualizar').onclick = () => {
+        this.conteudoModal.querySelector('.botao-salvar').onclick = () => {
             this.enviarAtualizacao();
         };
     }
@@ -35,7 +35,7 @@ function ConteudoModal() {
     form.id = 'alterar-endereco';
 
     form.insertAdjacentHTML('beforeend', `
-        <button type="button" class="btn-atualizar">Atualizar</button>
+        <button type="button" class="botao-salvar">Atualizar</button>
     `);
 
     return form;

@@ -8,10 +8,6 @@ export class ModalAlterarSenha extends Modal {
 
         super('modal-alterar-senha', "Alterar Senha", conteudoModal);
 
-        conteudoModal.insertAdjacentHTML('beforeend', `
-            <button class="botao-salvar" type="button">Salvar</button>
-        `);
-
         conteudoModal.querySelector('.botao-salvar').onclick = () => {
             this.enviarFormulario(this.cliente)
         }
@@ -67,6 +63,8 @@ function ConteudoModalAlterarSenha() {
                 <input name="senhaConfirmacao" type="password" autocomplete="new-password"></input>
             </label>
         </div>
+
+        <button class="botao-salvar" type="button">Salvar</button>
     `;
 
     return form;

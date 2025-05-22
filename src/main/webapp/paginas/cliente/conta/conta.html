@@ -16,15 +16,15 @@
 
     <div id="container-conta" class="py-5">
         <div id="nav-lateral" class="d-flex flex-column align-items-start " style="height: 100vh; width: 250px;">
-            <button type="button" class="btn btn-primary mb-2" onclick="trocarSecao('secao-dados-pessoais')">
+            <button id="trocar-para-dados-pessoais" type="button" class="btn btn-primary mb-2" onclick="trocarSecao('secao-dados-pessoais')">
                 <img src="/img/imagem-do-usuario-com-fundo-preto.png">
                 Dados Pessoais
             </button>
-            <button type="button" class="btn btn-success mb-2" onclick="trocarSecao('secao-endereco')">
+            <button id="trocar-para-endereco" type="button" class="btn btn-success mb-2" onclick="trocarSecao('secao-endereco')">
                 <img src="/img/house-fill.svg">
                 Endereços
             </button>
-            <button type="button" class="btn btn-secondary mb-2" onclick="trocarSecao('secao-cartao-credito')">
+            <button id="trocar-para-cartao" type="button" class="btn btn-secondary mb-2" onclick="trocarSecao('secao-cartao-credito')">
                 <img src="/img/credit-card.svg">
                 Cartões de Crédito
             </button>
@@ -35,7 +35,9 @@
             </button>
         </div>
 
-        <div id="secoes-conta"></div>
+        <div id="secoes-conta">
+
+        </div>
     </div>
 
     <footer id="main-footer"></footer>

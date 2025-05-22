@@ -17,7 +17,7 @@ export class SecaoEndereco extends HTMLElement {
 
         this.insertAdjacentHTML('beforeend', `
             <div>
-                <button type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
+                <button id="btn-adicionar-endereco" type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
                 data-bs-target="#modal-adicionar-endereco">
                     Adicionar Endereço
                 </button>
