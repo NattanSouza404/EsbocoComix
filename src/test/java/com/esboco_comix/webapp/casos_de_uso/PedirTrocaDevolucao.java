@@ -1,6 +1,7 @@
 package com.esboco_comix.webapp.casos_de_uso;
 
 import com.esboco_comix.webapp.paginas.cliente.conta.PaginaConta;
+import com.esboco_comix.webapp.paginas.cliente.conta.SecoesConta;
 import com.esboco_comix.webapp.paginas.cliente.minhas_compras.PaginaMinhasCompras;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -40,6 +41,6 @@ public class PedirTrocaDevolucao {
     }
 
     public void abrirSecaoCupons() throws InterruptedException {
-        paginaConta.abrirSecaoCupons();
+        paginaConta.trocarSecao(SecoesConta.CUPOM);
     }
 }

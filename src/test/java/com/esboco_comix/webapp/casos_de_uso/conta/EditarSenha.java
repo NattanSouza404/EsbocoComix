@@ -6,8 +6,6 @@ import com.esboco_comix.webapp.paginas.cliente.conta.SecoesConta;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.LocalDate;
-
 public class EditarSenha {
     private PaginaConta paginaConta;
 
