@@ -2,28 +2,13 @@ import { CartaoCartaoCredito } from "./CartaoCartaoCredito.js";
 import { ModalAdicionarCartaoCredito } from "./modalAdicionarCartaoCredito.js";
 import { ModalAlterarCartaoCredito } from "./modalAlterarCartaoCredito.js";
 
-export class SecaoCartaoCredito extends HTMLElement {
+export class SecaoCartaoCredito {
     constructor(cartoes) {
-        super();
-
-        this.id = 'secao-cartao-credito';
-        this.style.display = 'none';
-
         this.modalAlterarCartaoCredito = new ModalAlterarCartaoCredito();
         this.modalAdicionarCartaoCredito = new ModalAdicionarCartaoCredito();
 
-        this.insertAdjacentHTML('beforeend', `
-            <div class="container-cartoes"></div>
-
-            <div>
-                <button id="btn-adicionar-cartao" type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
-                data-bs-target="#modal-adicionar-cartao-credito">
-                    Adicionar Cartão de crédito
-                </button>
-            </div>             
-        `);
-
-        this.containerCartoes = this.querySelector('.container-cartoes');
+        this.elementoHTML = document.getElementById('secao-cartao-credito');
+        this.containerCartoes = this.elementoHTML.querySelector('.container-cartoes');
 
         this.atualizar(cartoes);
     }
@@ -47,5 +32,3 @@ export class SecaoCartaoCredito extends HTMLElement {
     }
 
 }
-
-customElements.define('secao-cartao-credito', SecaoCartaoCredito, { extends: 'section' });

@@ -28,7 +28,10 @@ const secaoCupom = new SecaoCupom(cupons);
 
 const container = document.getElementById('secoes-conta');
 const secoes = [
-    secaoDadosPessoais, secaoCartaoCredito, secaoEndereco, secaoCupom
+    secaoDadosPessoais.elementoHTML,
+    secaoCartaoCredito.elementoHTML,
+    secaoEndereco.elementoHTML,
+    secaoCupom.elementoHTML
 ];
 
 secoes.forEach(secao => {

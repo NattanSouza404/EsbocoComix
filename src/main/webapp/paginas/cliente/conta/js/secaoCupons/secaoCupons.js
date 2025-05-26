@@ -1,14 +1,10 @@
 import { CartaoCupom } from "./CartaoCupom.js";
 
-export class SecaoCupom extends HTMLElement {
+export class SecaoCupom {
     constructor(cupons) {
-        super();
 
-        this.id = 'secao-cupons';
-        this.style.display = 'none';
-
-        this.containerCupons = document.createElement('div');
-        this.append(this.containerCupons);
+        this.elementoHTML = document.getElementById('secao-cupons');
+        this.containerCupons = this.elementoHTML.querySelector('.container');
 
         this.atualizar(cupons);
     }
@@ -36,7 +32,4 @@ export class SecaoCupom extends HTMLElement {
         }
 
     }
-
 }
-
-customElements.define('secao-cupom', SecaoCupom, { extends: 'section' });

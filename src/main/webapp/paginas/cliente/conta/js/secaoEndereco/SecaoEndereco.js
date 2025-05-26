@@ -2,27 +2,13 @@ import { CartaoEndereco } from "./CartaoEndereco.js";
 import { ModalAdicionarEndereco } from "./modalAdicionarEndereco.js";
 import { ModalAlterarEndereco } from "./modalAlterarEndereco.js";
 
-export class SecaoEndereco extends HTMLElement {
+export class SecaoEndereco {
     constructor(enderecos) {
-        super();
-
-        this.id = 'secao-endereco';
-        this.style.display = 'none';
-
         this.modalAdicionarEndereco = new ModalAdicionarEndereco();
         this.modalAlterarEndereco = new ModalAlterarEndereco();
 
-        this.containerEnderecos = document.createElement('div');
-        this.append(this.containerEnderecos);
-
-        this.insertAdjacentHTML('beforeend', `
-            <div>
-                <button id="btn-adicionar-endereco" type="button" class="btn btn-primary btn-sm btn-primary btn-lg" data-bs-toggle="modal"
-                data-bs-target="#modal-adicionar-endereco">
-                    Adicionar Endereço
-                </button>
-            </div>
-        `);
+        this.elementoHTML = document.getElementById('secao-endereco');
+        this.containerEnderecos = this.elementoHTML.querySelector('.container');
 
         this.atualizar(enderecos);
     }
@@ -47,5 +33,3 @@ export class SecaoEndereco extends HTMLElement {
     }
 
 }
-
-customElements.define('secao-endereco', SecaoEndereco, { extends: 'section' });
