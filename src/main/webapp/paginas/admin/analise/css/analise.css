@@ -4,4 +4,15 @@
     width: 80%;
     max-width: 80%;
     justify-self: center;
+
+    width: 400px;
+    height: 200px;
+}
+
+.filtro-analise {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+    align-content: center;
 }

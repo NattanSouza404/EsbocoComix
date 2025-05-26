@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/paginas/admin/analise/css/analise.css">
+    <link rel="stylesheet" href="../../../paginas/admin/analise/css/analise.css">
 </head>
 
 <body>
@@ -13,13 +13,9 @@
 
     <div class="container d-flex flex-column align-items-center">  
         <h2 class="text-center py-5">Análise por categoria</h2>
-        <div class="centered">
-            
-            <label>
-                <button>Adicionar categoria</button>
-                <input>
-            </label>
-            
+        
+        <div class="filtro-analise centered">
+
             <label>
                 Data início
                 <input type="date">
@@ -33,10 +29,10 @@
             
         </div>
 
-        <canvas id="graficoLinhaCategorias" class="graficoLinha" width="400" height="200"></canvas>
+        <canvas id="graficoLinhaCategorias" class="graficoLinha"></canvas>
 
         <h2 class="text-center py-5">Análise por produto</h2>
-        <div class="centered">
+        <div class="filtro-analise centered">
             
             <label>
                 <button>Adicionar produto</button>
@@ -55,12 +51,12 @@
             
         </div>
 
-        <canvas id="graficoLinhaProdutos" class="graficoLinha" width="400" height="200"></canvas>
+        <canvas id="graficoLinhaProdutos" class="graficoLinha"></canvas>
     </div>
 
-    <script type="module" src="/js/loadAdminPage.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script type="module" src="/paginas/admin/analise/js/analise.js"></script>
+    <script type="module" src="../../../js/loadAdminPage.js"></script>
+    <script src="../../../js/chart.umd.js"></script>
+    <script type="module" src="../../../paginas/admin/analise/js/analise.js"></script>
 </body>
 
 </html>
