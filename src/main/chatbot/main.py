@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.mensagem import Mensagem
 from app.chatbot import gerarResposta
+from app.chatbot import modelo
 
 app = FastAPI()
 
@@ -14,8 +15,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+sessoes = {}
+
 @app.post("/get-message")
 async def message(mensagem: Mensagem):
-    response = gerarResposta(mensagem=mensagem)
+    idcliente = mensagem.idcliente
 
-    return { "pergunta" : mensagem.mensagem, "resposta" : response.text, "status": 201 }
+    if idcliente not in sessoes:
+        sessoes[idcliente] = modelo.start_chat()
+
+    chat = sessoes[idcliente]
+
+    response = gerarResposta(chatbot=chat, mensagem=mensagem)
+
+    return { "pergunta" : mensagem.mensagem, "resposta" : response.text }

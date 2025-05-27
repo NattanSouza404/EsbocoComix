@@ -8,3 +8,13 @@ def retornarTodosQuadrinhos():
     cur.close()
     conn.close()
     return quadrinhos
+
+def consultarByID(idcliente):
+    conn = get_conexao()
+    cur = conn.cursor()
+    cur.execute(f"SELECT cli_nome, cli_genero, cli_dt_nascimento FROM clientes where cli_id = {idcliente}")
+    cliente = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    return cliente
