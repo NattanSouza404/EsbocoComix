@@ -1,26 +1,36 @@
+import { formatarData } from "../../../../js/script.js";
+
 export default class FormatadorAnalise {
     constructor(){
 
     }
 
     formatar(dados){
-        const labels = dados[0].vendas.map(v => {
-            const data = v.data;
-            return `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`;
+        const datasSet = new Set();
+
+        dados.forEach(d => {
+            d.dados.forEach(venda => {
+                datasSet.add(formatarData(venda.data));
+            });
         });
-    
-        const datasets = dados.map(d => {
-            const corBase = this.gerarCorAleatoria();
-            
+
+        const labels = Array.from(datasSet).sort();
+
+        const datasets = dados.map(dados => {
+            const cor = this.gerarCorAleatoria();
+
             return {
-                label: d.label,
-                data: d.vendas.map(v => v.quantidade),
-                borderColor: this.corParaRGB(corBase),
-                backgroundColor: this.corParaRGB(this.clarear(corBase, 0.2)),
+                label: dados.titulo,
+                data: labels.map(labelData => {
+                    const venda = dados.dados.find(v => formatarData(v.data) === labelData);
+                    return venda ? venda.quantidade : 0;
+                }),
+                borderColor: this.corParaRGB(cor),
+                backgroundColor: this.clarear(this.corParaRGB(cor), 100),
                 tension: 0.4
             };
         });
-    
+
         return {
             labels: labels,
             datasets: datasets

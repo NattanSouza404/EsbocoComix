@@ -10,17 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.esboco_comix.controller.impl.*;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
-
-import com.esboco_comix.controller.impl.CarrinhoController;
-import com.esboco_comix.controller.impl.CartaoCreditoController;
-import com.esboco_comix.controller.impl.ClienteController;
-import com.esboco_comix.controller.impl.CupomController;
-import com.esboco_comix.controller.impl.EnderecoController;
-import com.esboco_comix.controller.impl.EstoqueController;
-import com.esboco_comix.controller.impl.PedidoController;
-import com.esboco_comix.controller.impl.QuadrinhoController;
 
 import lombok.Getter;
 
@@ -88,6 +80,9 @@ public class Servidor {
 
 		Tomcat.addServlet(context, "apiestoque", new EstoqueController());
 		context.addServletMapping("/estoqueapi", "apiestoque");
+
+		Tomcat.addServlet(context, "apianalise", new AnaliseController());
+		context.addServletMapping("/apianalise", "apianalise");
 	}
 
 	@Getter
