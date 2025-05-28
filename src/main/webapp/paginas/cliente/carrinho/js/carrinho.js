@@ -1,6 +1,5 @@
 import { calcularValorTotal, formatarPreco } from "../../../../js/script.js";
-import { atualizarItemCarrinho, deletarItemCarrinho } from "../../../../js/api/apiCarrinho.js";
-import { retornarCarrinho } from "/js/api/apiCarrinho.js";
+import { atualizarItemCarrinho, deletarItemCarrinho, retornarCarrinho } from "../../../../js/api/apiCarrinho.js";
 
 const carrinho = await retornarCarrinho();
 
@@ -37,7 +36,9 @@ if (carrinho.itensCarrinho.length !== 0){
             const confirmacaoUsuario = confirm("Deseja mesmo atualizar quantidade desse item?"); 
 
             if (confirmacaoUsuario){
-                atualizarItemCarrinho(item);
+                atualizarItemCarrinho(item).then(
+                    () => window.location.reload()
+                )
             }
             
         };
@@ -46,7 +47,9 @@ if (carrinho.itensCarrinho.length !== 0){
             const confirmacaoUsuario = confirm("Deseja mesmo deletar esse item?");
 
             if (confirmacaoUsuario){
-                deletarItemCarrinho(item);
+                deletarItemCarrinho(item).then(
+                    () => window.location.reload()
+                )
             }
  
         };
