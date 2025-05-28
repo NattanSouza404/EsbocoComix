@@ -3,7 +3,11 @@ package com.esboco_comix.service.impl;
 import java.util.List;
 
 import com.esboco_comix.dao.impl.quadrinho.QuadrinhoDAO;
+import com.esboco_comix.dto.FiltrarQuadrinhoDTO;
 import com.esboco_comix.dto.QuadrinhoDTO;
+import com.esboco_comix.model.entidades.Quadrinho;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class QuadrinhoService {
 
@@ -15,6 +19,22 @@ public class QuadrinhoService {
 
     public List<QuadrinhoDTO> consultarTodos() throws Exception {
         return quadrinhoDAO.consultarTodos();
+    }
+
+    public List<Quadrinho> filtrarTodos(HttpServletRequest req) throws Exception {
+        FiltrarQuadrinhoDTO filtro = new FiltrarQuadrinhoDTO();
+
+        String titulo = req.getParameter("titulo");
+        if (!titulo.isBlank()){
+            filtro.setTitulo(titulo);
+        }
+
+        String autor = req.getParameter("autor");
+        if (!autor.isBlank()){
+            filtro.setAutor(autor);
+        }
+
+        return quadrinhoDAO.filtrarTodos(filtro);
     }
     
 }

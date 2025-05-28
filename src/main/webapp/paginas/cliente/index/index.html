@@ -56,24 +56,24 @@
 
         <div class="col-md-3">
           <div class="container mt-4">
-            <form>
+            <form id="busca-quadrinhos">
+              <div class="d-flex align-items-center mb-3">
+                <label class="form-label me-2">
+                  Titulo:
+                  <input type="tel" name="titulo" class="form-control" placeholder="Digite o titulo">
+                </label>
+              </div>
+              
               <div class="d-flex align-items-center mb-3">
                 <label class="form-label me-2">
                   Autor:
-                  <input type="tel" id="autor" class="form-control" placeholder="Digite o autor">
-                </label>
-              </div>
-
-              <div class="d-flex align-items-center mb-3">
-                <label class="form-label me-2">
-                  Categoria:
-                  <input type="tel" id="categoria" class="form-control" placeholder="Digite a categoria">
+                  <input type="tel" name="autor" class="form-control" placeholder="Digite o autor">
                 </label>
               </div>
 
               <!-- Button -->
               <div class="text-center mt-3">
-                  <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
+                  <button id="btn-buscar-quadrinho" type="button" class="btn btn-primary btn-lg">Buscar</button>
               </div>
             </form>
           </div>

@@ -18,3 +18,19 @@ export async function retornarQuadrinho(id) {
         console.error('Erro buscando dados:', error);
     }
 }
+
+export async function filtrarTodosQuadrinhos(filtro) {
+    try {
+        let url = "/quadrinho";
+        if (filtro !== undefined){
+            url += "?opcao=consultarporfiltro";
+            url += "&titulo="+filtro.titulo;
+            url += "&autor="+filtro.autor;
+        }
+
+        const response = await fetch(url);
+        return await response.json();        
+    } catch (error) {
+        console.error('Erro buscando dados:', error);
+    }
+}

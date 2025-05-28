@@ -8,25 +8,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.esboco_comix.dto.FiltrarQuadrinhoDTO;
 import com.esboco_comix.dto.QuadrinhoDTO;
 import com.esboco_comix.model.entidades.Categoria;
 import com.esboco_comix.model.entidades.Quadrinho;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class QuadrinhoDAO {
-    
+
     private CategoriaDAO categoriaDAO = new CategoriaDAO();
 
     public List<QuadrinhoDTO> consultarTodos() throws Exception {
         Connection conn = ConexaoFactory.getConexao();
 
         PreparedStatement pst = conn.prepareStatement(
-            """
-            SELECT quadrinhos.*, est_quantidade_total FROM quadrinhos
-	            LEFT JOIN estoque ON est_qua_id = qua_id ORDER BY qua_id DESC;
-            """,
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
+                """
+                        SELECT quadrinhos.*, est_quantidade_total FROM quadrinhos
+                         LEFT JOIN estoque ON est_qua_id = qua_id ORDER BY qua_id DESC;
+                        """,
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
         );
 
         try {
@@ -39,7 +40,7 @@ public class QuadrinhoDAO {
 
             List<QuadrinhoDTO> quadrinhos = new ArrayList<>();
 
-            while (rs.next()){
+            while (rs.next()) {
                 QuadrinhoDTO dto = new QuadrinhoDTO();
                 dto.setQuadrinho(mapearEntidade(rs));
 
@@ -57,8 +58,65 @@ public class QuadrinhoDAO {
             for (QuadrinhoDTO dto : quadrinhos) {
                 Quadrinho q = dto.getQuadrinho();
                 q.setCategorias(
-                    categorias.get(q.getId())
+                        categorias.get(q.getId())
                 );
+            }
+
+            return quadrinhos;
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            pst.close();
+            conn.close();
+        }
+    }
+
+    public List<Quadrinho> filtrarTodos(FiltrarQuadrinhoDTO filtro) throws Exception {
+        Connection conn = ConexaoFactory.getConexao();
+
+        StringBuilder query = new StringBuilder("SELECT * FROM quadrinhos WHERE 1=1");
+
+        List<Object> params = new ArrayList<>();
+
+        if (filtro.getTitulo() != null) {
+            query.append(" AND qua_titulo ILIKE ?");
+            params.add("%" + filtro.getTitulo() + "%");
+        }
+
+        if (filtro.getAutor() != null) {
+            query.append(" AND qua_autor ILIKE ?");
+            params.add("%" + filtro.getAutor() + "%");
+        }
+
+        PreparedStatement pst = conn.prepareStatement(
+                query.toString(),
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+        );
+
+        try {
+
+            for (int i = 0; i < params.size(); i++) {
+
+                if (params.get(i) instanceof Enum){
+                    pst.setObject(i + 1, ((Enum<?>) params.get(i)).name());
+                    continue;
+                }
+
+                pst.setObject(i + 1, params.get(i));
+            }
+
+            ResultSet rs = pst.executeQuery();
+
+            if (!rs.next()) {
+                throw new Exception("Nenhum registro encontrado de quadrinho.");
+            }
+            rs.beforeFirst();
+
+            List<Quadrinho> quadrinhos = new ArrayList<>();
+
+            while (rs.next()){
+                quadrinhos.add(mapearEntidade(rs));
             }
 
             return quadrinhos;
@@ -70,14 +128,14 @@ public class QuadrinhoDAO {
             conn.close();
         }
     }
-    
+
     public QuadrinhoDTO consultarByID(int id) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
         PreparedStatement pst = connection.prepareStatement(
             """
             SELECT quadrinhos.*, est_quantidade_total FROM quadrinhos
-	            LEFT JOIN estoque ON est_qua_id = qua_id
+                LEFT JOIN estoque ON est_qua_id = qua_id
             WHERE qua_id = ?;
             """
         );
@@ -86,8 +144,8 @@ public class QuadrinhoDAO {
             pst.setInt(1, id);
 
             ResultSet rs = pst.executeQuery();
-    
-            if (!rs.next()){
+
+            if (!rs.next()) {
                 throw new Exception("Quadrinho não encontrado!");
             }
 
@@ -101,11 +159,11 @@ public class QuadrinhoDAO {
             dto.setForaDeEstoque(isForaDeEstoque);
 
             dto.getQuadrinho().setCategorias(
-                categoriaDAO.consultarByIDQuadrinho(dto.getQuadrinho().getId())
+                    categoriaDAO.consultarByIDQuadrinho(dto.getQuadrinho().getId())
             );
 
             return dto;
-        } catch (Exception e){
+        } catch (Exception e) {
             throw e;
         } finally {
             connection.close();
@@ -114,7 +172,7 @@ public class QuadrinhoDAO {
     }
 
     private Quadrinho mapearEntidade(ResultSet rs) throws SQLException {
-        Quadrinho q = new Quadrinho();  
+        Quadrinho q = new Quadrinho();
         q.setId(rs.getInt("qua_id"));
 
         q.setAno(rs.getDate("qua_ano").toLocalDate());
@@ -139,5 +197,5 @@ public class QuadrinhoDAO {
 
         return q;
     }
-    
+
 }
