@@ -6,13 +6,16 @@ export async function retornarRespostaIA(mensagem){
             method: 'POST',
             headers:{'Content-Type': 'application/json'},
             body: JSON.stringify(
-                { mensagem: mensagem }
+                { 
+                    idcliente: localStorage.getItem('idcliente'),
+                    mensagem: mensagem,
+                }
             )
         }
 
         const result = await fetch(url, option);
 
-        if (result.status !== 201) {
+        if (result.status !== 200) {
             alert("Erro no assistente virtual: "+result.erro);
         }
 
