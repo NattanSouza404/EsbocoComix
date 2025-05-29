@@ -1,9 +1,28 @@
 package com.esboco_comix;
 
+import com.esboco_comix.config.ServidorConfig;
+import org.apache.catalina.Context;
+import org.apache.catalina.startup.Tomcat;
+
+import java.io.File;
+
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		Servidor.iniciar();
+		Tomcat tomcat = new Tomcat();
+		tomcat.setPort(8080);
+
+		tomcat.getConnector();
+
+		Context context = tomcat.addWebapp(
+			"",
+			new File("src/main/webapp").getAbsolutePath()
+		);
+
+		ServidorConfig.configurarRotas(context);
+
+		tomcat.start();
+		tomcat.getServer().await();
 	}
 
 	/* PRA ESSA ENTREGA */
