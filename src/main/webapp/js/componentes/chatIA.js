@@ -39,12 +39,16 @@ export class ChatIA extends Modal {
         let imgPath = tipoMensagem === 'texto-ia' ?
             '/img/bate-papo-com-ia.png' : '/img/imagem-do-usuario-com-fundo-preto.png';
 
-        this.modalElement.querySelector('#historico-conversa').insertAdjacentHTML("beforeend", `
-            <div class="${tipoMensagem}">
-                <img src="${imgPath}"></img>
-                <p>${mensagem}</p>
-            </div>
-        `);
+        const div = document.createElement('div');
+        div.className = tipoMensagem;
+        div.innerHTML = `
+            <img src="${imgPath}"></img>
+            <p></p>
+        `;
+
+        div.querySelector('p').textContent = mensagem;
+
+        this.modalElement.querySelector('#historico-conversa').append(div);
     }
 
     async enviarMsgChatIA(){
