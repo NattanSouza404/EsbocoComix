@@ -1,6 +1,8 @@
+const PATH = "/api/cartaocredito";
+
 export async function retornarCartoesCredito(idCliente) {
     try {
-        const response = await fetch("/cartaocredito?idcliente="+idCliente);
+        const response = await fetch(`${PATH}?idcliente=${idCliente}`);
         return await response.json();
     } catch (error) {
         console.error('Erro buscando dados:', error);
@@ -16,7 +18,7 @@ export async function inserirCartaoCredito(cartao){
             return;
         }
 
-        const url = "/cartaocredito";
+        const url = PATH;
 
         const option = {
             method: 'POST',
@@ -51,7 +53,7 @@ export async function atualizarCartaoCredito(cartaoCredito){
 
         cartaoCredito.idCliente = localStorage.getItem('idcliente');
 
-        let url = "/cartaocredito";
+        let url = PATH;
 
         const option = {
             method: 'PUT',
@@ -71,7 +73,6 @@ export async function atualizarCartaoCredito(cartaoCredito){
 
     } catch (error){
         console.error('Erro ao atualizar:', error);
-        document.getElementById("resultados").textContent = "Erro ao atualizar.";
     }
     
 }
@@ -84,7 +85,7 @@ export async function deletarCartaoCredito(cartaoCredito){
             return;
         }
 
-        const url = '/cartaocredito';
+        const url = PATH;
 
         const option = {
             method: 'DELETE',

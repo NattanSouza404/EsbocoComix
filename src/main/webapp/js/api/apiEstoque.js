@@ -1,3 +1,5 @@
+const PATH = "/api/estoque";
+
 export async function inserirEntradaEstoque(entradaEstoque) {
     try {
         const confirmacaoUsuario = confirm("Deseja mesmo realizar essa compra?");
@@ -6,7 +8,7 @@ export async function inserirEntradaEstoque(entradaEstoque) {
             return;
         }
 
-        const url = "/estoqueapi";
+        const url = PATH;
 
         const option = {
             method: 'POST',

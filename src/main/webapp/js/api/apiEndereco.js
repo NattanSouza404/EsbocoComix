@@ -1,10 +1,11 @@
+const PATH = "/api/endereco";
+
 export async function retornarEnderecos(idCliente){
     try {
-        const response = await fetch("/endereco?idcliente="+idCliente);
+        const response = await fetch(`${PATH}?idcliente=${idCliente}`);
         return await response.json();
     } catch (error) {
         console.error('Erro buscando dados:', error);
-        document.getElementById("resultados").textContent = "Erro carregando dados.";
     }
 }
 
@@ -16,7 +17,7 @@ export async function inserirEndereco(endereco){
             return;
         }
 
-        const url = "/endereco";
+        const url = PATH;
 
         const option = {
             method: 'POST',
@@ -51,7 +52,7 @@ export async function atualizarEndereco(endereco){
 
         endereco.idCliente = localStorage.getItem('idcliente');
 
-        let url = "/endereco";
+        let url = PATH;
 
         const option = {
             method: 'PUT',
@@ -71,7 +72,6 @@ export async function atualizarEndereco(endereco){
 
     } catch (error){
         console.error('Erro ao atualizar:', error);
-        document.getElementById("resultados").textContent = "Erro ao atualizar.";
     }
     
 }

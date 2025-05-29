@@ -1,10 +1,10 @@
 import { alertarErro } from "./alertErro.js";
 
-const URL = '/carrinhoapi';
+const PATH = '/api/carrinho';
 
 export async function retornarCarrinho() {
     try {
-        const response = await fetch(URL);
+        const response = await fetch(PATH);
         return await response.json();
     } catch (error) {
         alertarErro('Erro buscando dados:', error);
@@ -19,7 +19,7 @@ export async function adicionarItemAoCarrinho(item){
             body: JSON.stringify(item)
         }
 
-        const result = await fetch(URL, option);
+        const result = await fetch(PATH, option);
 
         if (result.status === 201) {
             alert('Item adicionado com sucesso!');
@@ -44,7 +44,7 @@ export async function atualizarItemCarrinho(item){
             body: JSON.stringify(item)
         }
 
-        const result = await fetch(URL, option);
+        const result = await fetch(PATH, option);
 
         if (result.status === 200) {
             alert('Item atualizado com sucesso!');
@@ -66,7 +66,7 @@ export async function  deletarItemCarrinho(item){
             body: JSON.stringify(item)
         }
 
-        const response = await fetch(URL, option);
+        const response = await fetch(PATH, option);
 
         if (response.status === 204) {
             alert('Deletado com sucesso');

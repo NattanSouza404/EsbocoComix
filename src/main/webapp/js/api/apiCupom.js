@@ -1,6 +1,8 @@
+const PATH = "/api/cupom";
+
 export async function retornarCupons(idCliente){
     try {
-        const response = await fetch("/cupom?idcliente="+idCliente);
+        const response = await fetch(`${PATH}?idcliente=${idCliente}`);
         return await response.json();
     } catch (error) {
         console.error('Erro buscando dados:', error);
@@ -15,7 +17,7 @@ export async function inserirCupom(cupom){
             return;
         }
 
-        const url = "/cupom";
+        const url = PATH;
 
         const option = {
             method: 'POST',

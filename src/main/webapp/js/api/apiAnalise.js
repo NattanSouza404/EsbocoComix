@@ -1,6 +1,8 @@
+const PATH = "/api/analise";
+
 export async function retornarAnalise(){
     try {
-        const response = await fetch("/apianalise");
+        const response = await fetch(PATH);
         return await response.json();
 
     } catch (error) {

@@ -1,7 +1,9 @@
+const PATH = "/api/pedido";
+
 export async function retornarPedidos(idCliente){
     try {
 
-        let url = '/pedido';
+        let url = PATH;
         if (idCliente !== null && idCliente !== undefined){
             url += '?idcliente='+idCliente;
         }
@@ -20,7 +22,7 @@ export async function enviarPedido(pedido) {
             return;
         }
 
-        const url = "/pedido";
+        const url = PATH;
 
         const option = {
             method: 'POST',
@@ -46,7 +48,7 @@ export async function enviarPedido(pedido) {
 
 export async function atualizarStatusPedido(pedido){
     try {
-        let url = "/pedido?opcao=atualizarstatuspedido";
+        let url = `${PATH}?opcao=atualizarstatuspedido`;
 
         const option = {
             method: 'PUT',
@@ -71,7 +73,7 @@ export async function atualizarStatusPedido(pedido){
 
 export async function atualizarStatusItemPedido(item){
     try {
-        let url = "/pedido?opcao=atualizarstatusitem";
+        let url = `${PATH}?opcao=atualizarstatusitem`;
 
         const option = {
             method: 'PUT',

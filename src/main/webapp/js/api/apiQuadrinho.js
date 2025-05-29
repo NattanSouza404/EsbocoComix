@@ -1,6 +1,8 @@
+const PATH = "/api/quadrinho";
+
 export async function consultarTodosQuadrinhos(){
     try {
-        let url = "/quadrinho";
+        let url = PATH;
 
         const response = await fetch(url);
         return await response.json();        
@@ -11,7 +13,9 @@ export async function consultarTodosQuadrinhos(){
 
 export async function retornarQuadrinho(id) {
     try {
-        const response = await fetch("/quadrinho?id="+id);
+        const url = `${PATH}?id=${id}`;
+
+        const response = await fetch(url);
         return await response.json();
 
     } catch (error) {
@@ -21,7 +25,7 @@ export async function retornarQuadrinho(id) {
 
 export async function filtrarTodosQuadrinhos(filtro) {
     try {
-        let url = "/quadrinho";
+        let url = PATH;
         if (filtro !== undefined){
             url += "?opcao=consultarporfiltro";
             url += "&titulo="+filtro.titulo;
