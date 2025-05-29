@@ -1,27 +1,25 @@
 package com.esboco_comix.controller.impl;
 
-import java.io.IOException;
-import java.util.Optional;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.dto.AlterarSenhaDTO;
 import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.service.impl.ClienteService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.Optional;
 
 public class ClienteController extends AbstractController {
-    private static ClienteService clienteService = new ClienteService();
+    private final ClienteService clienteService = new ClienteService();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
          
         try {
             String opcao = Optional.ofNullable(req.getParameter("opcao")).orElse("default");
-            Object objetoResposta = null;
+            Object objetoResposta;
 
             switch (opcao) {
                 case "consultarporfiltro":
@@ -54,7 +52,7 @@ public class ClienteController extends AbstractController {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             CadastrarClienteDTO pedidoCadastrarCliente = jsonToObject(req, CadastrarClienteDTO.class);
 
@@ -69,18 +67,13 @@ public class ClienteController extends AbstractController {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         try {
             String opcao = Optional.ofNullable(req.getParameter("opcao")).orElse("default");
-            Object objetoResposta = null;
+            Object objetoResposta;
 
             switch (opcao) {
-                default:
-                    Cliente clienteToUpdate = jsonToObject(req, Cliente.class);
-                    objetoResposta = clienteService.atualizar(clienteToUpdate);
-                    break;
-
                 case "atualizarsenha":
                     AlterarSenhaDTO pedido = jsonToObject(req, AlterarSenhaDTO.class);
                     objetoResposta = clienteService.atualizarSenha(pedido);
@@ -89,6 +82,11 @@ public class ClienteController extends AbstractController {
                 case "atualizarstatuscadastro":
                     Cliente clienteToUpdateStatus = jsonToObject(req, Cliente.class);
                     objetoResposta = clienteService.atualizarStatusCadastro(clienteToUpdateStatus);
+                    break;
+
+                default:
+                    Cliente clienteToUpdate = jsonToObject(req, Cliente.class);
+                    objetoResposta = clienteService.atualizar(clienteToUpdate);
                     break;
             }
 
@@ -103,7 +101,7 @@ public class ClienteController extends AbstractController {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             Cliente clienteToDelete = jsonToObject(req, Cliente.class);
             clienteService.deletar(clienteToDelete);

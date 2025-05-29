@@ -1,21 +1,19 @@
 package com.esboco_comix.controller.impl;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.service.impl.EnderecoService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 public class EnderecoController extends AbstractController {
 
-    private static EnderecoService enderecoService = new EnderecoService();
+    private final EnderecoService enderecoService = new EnderecoService();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         
         try {
 
@@ -29,7 +27,6 @@ public class EnderecoController extends AbstractController {
                     enderecoService.consultarByIDCliente(id),
                     HttpServletResponse.SC_OK
                 );
-                return;
             }
 
         } catch (Exception e) {
@@ -38,7 +35,7 @@ public class EnderecoController extends AbstractController {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             Endereco enderecoToAdd = jsonToObject(req, Endereco.class);
             retornarRespostaJson(
@@ -52,7 +49,7 @@ public class EnderecoController extends AbstractController {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         
         try {
             Endereco enderecoToUpdate = jsonToObject(req, Endereco.class);
@@ -67,7 +64,7 @@ public class EnderecoController extends AbstractController {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             Endereco endereco = jsonToObject(req, Endereco.class);
             enderecoService.deletar(endereco);

@@ -1,21 +1,19 @@
 package com.esboco_comix.controller.impl;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.service.impl.CartaoCreditoService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 public class CartaoCreditoController extends AbstractController {
 
-    private CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
+    private final CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
 
             String parametroIdCliente = req.getParameter("idcliente");
@@ -28,7 +26,7 @@ public class CartaoCreditoController extends AbstractController {
                     cartaoCreditoService.consultarByIDCliente(id),
                     HttpServletResponse.SC_OK
                 );
-                return;
+
             }
 
         } catch (Exception e) {
@@ -38,7 +36,7 @@ public class CartaoCreditoController extends AbstractController {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             CartaoCredito cartaoCreditoToAdd = jsonToObject(req, CartaoCredito.class);
             retornarRespostaJson(
@@ -52,7 +50,7 @@ public class CartaoCreditoController extends AbstractController {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         
         try {
             CartaoCredito cartaoCredito = jsonToObject(req, CartaoCredito.class);
@@ -67,7 +65,7 @@ public class CartaoCreditoController extends AbstractController {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             CartaoCredito cartaoCredito = jsonToObject(req, CartaoCredito.class);
             cartaoCreditoService.deletar(cartaoCredito);
