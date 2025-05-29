@@ -1,7 +1,9 @@
 package com.esboco_comix.service.impl.pedido;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -10,7 +12,6 @@ import com.esboco_comix.dao.impl.pedido.CartaoCreditoPedidoDAO;
 import com.esboco_comix.dao.impl.pedido.CupomPedidoDAO;
 import com.esboco_comix.dao.impl.pedido.ItemPedidoDAO;
 import com.esboco_comix.dao.impl.pedido.PedidoDAO;
-import com.esboco_comix.dto.ConsultarPedidosDTO;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoDTO;
 import com.esboco_comix.model.entidades.*;
@@ -92,11 +93,13 @@ public class PedidoService {
         return pedidoInserido;
     }
 
-    public ConsultarPedidosDTO consultarTodos() throws Exception {
-        return new ConsultarPedidosDTO(
-            pedidoDAO.consultarTodos(),
-            itemPedidoDAO.consultarPedidosTroca()
-        );
+    public Map<String, Object> consultarTodos() throws Exception {
+        Map<String, Object> consulta = new HashMap<>();
+
+        consulta.put("pedidos", pedidoDAO.consultarTodos());
+        consulta.put("itensPedido", itemPedidoDAO.consultarPedidosTroca());
+
+        return consulta;
     }
 
     public List<PedidoDTO> consultarPorIDCliente(int idCliente) throws Exception {
