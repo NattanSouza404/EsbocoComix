@@ -3,7 +3,7 @@ package com.esboco_comix.service.impl.pedido;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 import com.esboco_comix.controller.session.Carrinho;
 import com.esboco_comix.dao.impl.pedido.CartaoCreditoPedidoDAO;
@@ -22,28 +22,29 @@ import com.esboco_comix.service.impl.ClienteService;
 import com.esboco_comix.service.impl.CupomService;
 import com.esboco_comix.service.impl.EstoqueService;
 import com.esboco_comix.service.impl.QuadrinhoService;
+import com.esboco_comix.service.validador.impl.FormaPagamentoValidador;
 
 public class PedidoService {
 
-    private CarrinhoService carrinhoService = new CarrinhoService();
-    private ClienteService clienteService = new ClienteService();
-    private CupomService cupomService = new CupomService();
-    private QuadrinhoService quadrinhoService = new QuadrinhoService();
-    private CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
-    private EstoqueService estoqueService = new EstoqueService();
+    private final CarrinhoService carrinhoService = new CarrinhoService();
+    private final ClienteService clienteService = new ClienteService();
+    private final CupomService cupomService = new CupomService();
+    private final QuadrinhoService quadrinhoService = new QuadrinhoService();
+    private final CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
+    private final EstoqueService estoqueService = new EstoqueService();
     
-    private PedidoDAO pedidoDAO = new PedidoDAO();
-    private ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
-    private CartaoCreditoPedidoDAO cartaoCreditoPedidoDAO = new CartaoCreditoPedidoDAO();
-    private CupomPedidoDAO cupomPedidoDAO = new CupomPedidoDAO();
+    private final PedidoDAO pedidoDAO = new PedidoDAO();
+    private final ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
+    private final CartaoCreditoPedidoDAO cartaoCreditoPedidoDAO = new CartaoCreditoPedidoDAO();
+    private final CupomPedidoDAO cupomPedidoDAO = new CupomPedidoDAO();
 
-    private CalculadoraPedido calculadora = new CalculadoraPedido(
+    private final CalculadoraPedido calculadora = new CalculadoraPedido(
         this.cupomService,
         this.quadrinhoService,
         this.cartaoCreditoService
     );
 
-    private PedidoValidator validator = new PedidoValidator(calculadora);
+    private final FormaPagamentoValidador validador = new FormaPagamentoValidador(calculadora);
 
     public Pedido inserir(Pedido pedido, HttpSession session) throws Exception {
 
@@ -53,7 +54,9 @@ public class PedidoService {
             throw new Exception("Nenhum item presente no carrinho!");
         }
 
-        validator.validarFormaPagamento(pedido, carrinho);
+        pedido.setItensPedido(carrinho.getItensPedido());
+
+        validador.validar(pedido);
 
         pedido.setStatus(StatusPedido.EM_PROCESSAMENTO);
         pedido.setItensPedido(carrinho.esvaziar());

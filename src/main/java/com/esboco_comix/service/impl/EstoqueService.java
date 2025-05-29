@@ -12,7 +12,7 @@ import com.esboco_comix.model.entidades.ItemPedido;
 
 public class EstoqueService {
 
-    private EstoqueDAO estoqueDAO = new EstoqueDAO();
+    private final EstoqueDAO estoqueDAO = new EstoqueDAO();
 
     public EntradaEstoque inserir(EntradaEstoque entradaEstoque) throws Exception {
         if (!(entradaEstoque.getQuantidade() > 0)){

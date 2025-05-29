@@ -7,11 +7,11 @@ import com.esboco_comix.dto.FiltrarQuadrinhoDTO;
 import com.esboco_comix.dto.QuadrinhoDTO;
 import com.esboco_comix.model.entidades.Quadrinho;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class QuadrinhoService {
 
-    private QuadrinhoDAO quadrinhoDAO = new QuadrinhoDAO();
+    private final QuadrinhoDAO quadrinhoDAO = new QuadrinhoDAO();
 
     public QuadrinhoDTO consultarByID(int id) throws Exception {
         return quadrinhoDAO.consultarByID(id);
