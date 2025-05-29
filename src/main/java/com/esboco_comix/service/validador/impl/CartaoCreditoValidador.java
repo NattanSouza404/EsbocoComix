@@ -1,11 +1,12 @@
-package com.esboco_comix.service.validador;
-
-import static com.esboco_comix.service.validador.ValidadorUtil.*;
+package com.esboco_comix.service.validador.impl;
 
 import com.esboco_comix.model.entidades.CartaoCredito;
+import com.esboco_comix.service.validador.AbstractValidador;
+import com.esboco_comix.service.validador.IValidador;
 
-public class CartaoCreditoValidador {
-    public void validar(CartaoCredito c) throws Exception{
+public class CartaoCreditoValidador extends AbstractValidador implements IValidador<CartaoCredito> {
+    @Override
+    public void validar(CartaoCredito c) throws Exception {
         validarAtributoObrigatorio(c.getNomeImpresso(), "Nome impresso do cartão");
         validarAtributoObrigatorio(c.getBandeiraCartao(), "Bandeira do cartão");
         validarAtributoObrigatorio(c.getNumero(), "Número do cartão");
