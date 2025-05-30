@@ -1,5 +1,6 @@
 package com.esboco_comix.config;
 
+import java.io.File;
 import java.util.Map;
 
 import com.esboco_comix.controller.impl.*;
@@ -10,11 +11,22 @@ import org.apache.catalina.startup.Tomcat;
 
 public class ServidorConfig {
 
-	public static void configurarRotas(Context context) {
+	public static void configurar(Tomcat tomcat) {
+		tomcat.setPort(8080);
+		tomcat.getConnector();
 
+		Context context = tomcat.addWebapp(
+			"",
+			new File("src/main/webapp").getAbsolutePath()
+		);
+
+		configurarRotas(context);
+    }
+
+	public static void configurarRotas(Context context) {
 		context.addWelcomeFile("paginas/cliente/index/index.html");
 		context.addErrorPage(new PaginaErro404());
-
+		
 		Map<String, HttpServlet> servlets = Map.ofEntries(
 				Map.entry("login", new ForwardingServlet("/paginas/login/login.html")),
 

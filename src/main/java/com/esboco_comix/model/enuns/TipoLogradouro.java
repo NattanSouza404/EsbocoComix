@@ -1,8 +1,5 @@
 package com.esboco_comix.model.enuns;
 
-import lombok.Getter;
-
-@Getter
 public enum TipoLogradouro {
     RUA,
     AVENIDA,
@@ -15,5 +12,5 @@ public enum TipoLogradouro {
     VIADUTO,
     LARGO,
     BECO,
-    TUNEL;
+    TUNEL
 }
