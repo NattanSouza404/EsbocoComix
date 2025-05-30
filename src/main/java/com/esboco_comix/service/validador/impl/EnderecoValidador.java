@@ -1,10 +1,11 @@
-package com.esboco_comix.service.validador;
-
-import static com.esboco_comix.service.validador.ValidadorUtil.*;
+package com.esboco_comix.service.validador.impl;
 
 import com.esboco_comix.model.entidades.Endereco;
+import com.esboco_comix.service.validador.AbstractValidador;
+import com.esboco_comix.service.validador.IValidador;
 
-public class EnderecoValidador {
+public class EnderecoValidador extends AbstractValidador implements IValidador<Endereco> {
+    @Override
     public void validar(Endereco endereco) throws Exception{
         validarAtributoObrigatorio(endereco.getFraseCurta(), "Frase curta");
         validarAtributoObrigatorio(endereco.getNumero(), "Número do endereço");

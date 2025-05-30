@@ -1,22 +1,25 @@
-package com.esboco_comix.service.impl.pedido;
+package com.esboco_comix.service.validador.impl;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import com.esboco_comix.controller.session.Carrinho;
 import com.esboco_comix.model.entidades.CartaoCreditoPedido;
 import com.esboco_comix.model.entidades.CupomPedido;
 import com.esboco_comix.model.entidades.Pedido;
+import com.esboco_comix.service.impl.pedido.CalculadoraPedido;
+import com.esboco_comix.service.validador.AbstractValidador;
+import com.esboco_comix.service.validador.IValidador;
 
-public class PedidoValidator {
+public class FormaPagamentoValidador extends AbstractValidador implements IValidador<Pedido> {
 
-    private CalculadoraPedido calculadora;
+    private final CalculadoraPedido calculadora;
 
-    public PedidoValidator(CalculadoraPedido calculadoraPedido){
+    public FormaPagamentoValidador(CalculadoraPedido calculadoraPedido){
         this.calculadora = calculadoraPedido;
     }
-    
-    public void validarFormaPagamento(Pedido pedido, Carrinho carrinho) throws Exception {
+
+    @Override
+    public void validar(Pedido pedido) throws Exception {
         if (pedido.getCartoesCreditoPedido().isEmpty() && pedido.getCuponsPedido().isEmpty()) {
             throw new Exception("Nenhuma forma de pagamento foi provida!");
         }
@@ -26,10 +29,8 @@ public class PedidoValidator {
             if (!idsCartao.add(cartao.getIdCartaoCredito())){
                 throw new Exception("Não é possível usar o mesmo cartão duas vezes no mesmo pedido!");
             }
-        }
 
-        for (CartaoCreditoPedido cc : pedido.getCartoesCreditoPedido()) {
-            if (cc.getValor() < 10){
+            if (pedido.getCuponsPedido().isEmpty() && cartao.getValor() < 10){
                 throw new Exception("Valor do cartão de crédito deve ser no mínimo R$ 10,00");
             }
         }
@@ -41,7 +42,7 @@ public class PedidoValidator {
             }
         }
 
-        double valorTotalPedido = calculadora.calcularValorTotalPedido(pedido, carrinho.getItensPedido());
+        double valorTotalPedido = calculadora.calcularValorTotalPedido(pedido, pedido.getItensPedido());
         double valorTotalPago = calculadora.calcularValorFormaPagamento(pedido);
 
         if (valorTotalPago != valorTotalPedido){

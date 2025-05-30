@@ -1,17 +1,18 @@
+const PATH = "/api/cliente";
+
 export async function retornarCliente(id) {
     try {
-        const response = await fetch("/cliente?id="+id);
+        const response = await fetch(`${PATH}?id=${id}`);
         return await response.json();
 
     } catch (error) {
         console.error('Erro buscando dados:', error);
-        document.getElementById("resultados").textContent = "Erro carregando dados.";
     }
 }
 
 export async function retornarAllClientes(filtro) {
     try {
-        let url = "/cliente";
+        let url = PATH;
         if (filtro !== undefined){
 
             url += "?opcao=consultarporfiltro";
@@ -28,7 +29,6 @@ export async function retornarAllClientes(filtro) {
         return await response.json();        
     } catch (error) {
         console.error('Erro buscando dados:', error);
-        document.getElementById("resultados").textContent = "Erro carregando dados.";
     }
 }
 
@@ -41,7 +41,7 @@ export async function inserirCliente(pedidoCadastrarCliente){
             return;
         }
 
-        const url = "/cliente";
+        const url = PATH;
 
         const option = {
             method: 'POST',
@@ -62,7 +62,6 @@ export async function inserirCliente(pedidoCadastrarCliente){
     }
     catch (error){
         console.error('Erro ao cadastrar:', error);
-        document.getElementById("resultados").textContent = "Erro ao cadastrar.";
     }
 }
 
@@ -77,7 +76,7 @@ export async function atualizarCliente(cliente, opcao){
 
         cliente.id = localStorage.getItem('idcliente');
 
-        let url = "/cliente";
+        let url = PATH;
         if (opcao != null){
             url += "?opcao="+opcao;
         }
@@ -100,7 +99,6 @@ export async function atualizarCliente(cliente, opcao){
 
     } catch (error){
         console.error('Erro ao atualizar:', error);
-        document.getElementById("resultados").textContent = "Erro ao atualizar.";
     }
     
 }
@@ -114,7 +112,7 @@ export async function atualizarSenha(cliente){
             return;
         }
 
-        let url = "/cliente?opcao=atualizarsenha";
+        let url = `${PATH}?opcao=atualizarsenha`;
 
         const option = {
             method: 'PUT',
@@ -134,7 +132,6 @@ export async function atualizarSenha(cliente){
 
     } catch (error){
         console.error('Erro ao atualizar:', error);
-        document.getElementById("resultados").textContent = "Erro ao atualizar.";
     }
     
 }
@@ -148,7 +145,7 @@ export async function deletar(id){
             return;
         }
 
-        const url = '/cliente'+id;
+        const url = `${PATH}?id=${id}`;
 
         const response = await fetch(url, {
             method: 'DELETE'

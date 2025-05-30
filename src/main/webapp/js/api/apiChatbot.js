@@ -1,6 +1,8 @@
+const PATH = "http://localhost:8000/";
+
 export async function retornarRespostaIA(mensagem){
     try {
-        const url = "http://localhost:8000/get-message";
+        const url = `${PATH}get-message`;
 
         const option = {
             method: 'POST',

@@ -1,6 +1,6 @@
 package com.esboco_comix.service.impl;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 import com.esboco_comix.controller.session.Carrinho;
 import com.esboco_comix.dto.ItemCarrinhoDTO;

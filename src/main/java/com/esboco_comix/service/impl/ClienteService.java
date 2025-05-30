@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.esboco_comix.dao.impl.cliente.ClienteDAO;
 import com.esboco_comix.dto.AlterarSenhaDTO;
@@ -14,19 +14,21 @@ import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.model.enuns.Genero;
-import com.esboco_comix.service.validador.CartaoCreditoValidador;
-import com.esboco_comix.service.validador.ClienteValidador;
-import com.esboco_comix.service.validador.EnderecoValidador;
+import com.esboco_comix.service.validador.impl.CartaoCreditoValidador;
+import com.esboco_comix.service.validador.impl.ClienteValidador;
+import com.esboco_comix.service.validador.impl.EnderecoValidador;
+import com.esboco_comix.service.validador.impl.SenhaValidador;
 import com.esboco_comix.utils.CriptografadorSenha;
 
 public class ClienteService {
-    private ClienteDAO clienteDAO = new ClienteDAO();
-    private EnderecoService enderecoService = new EnderecoService();
-    private CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
+    private final ClienteDAO clienteDAO = new ClienteDAO();
+    private final EnderecoService enderecoService = new EnderecoService();
+    private final CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
+    private final SenhaValidador senhaValidador = new SenhaValidador();
 
-    private ClienteValidador clienteValidador = new ClienteValidador();
-    private EnderecoValidador enderecoValidador = new EnderecoValidador();
-    private CartaoCreditoValidador cartaoCreditoValidador = new CartaoCreditoValidador();
+    private final ClienteValidador clienteValidador = new ClienteValidador();
+    private final EnderecoValidador enderecoValidador = new EnderecoValidador();
+    private final CartaoCreditoValidador cartaoCreditoValidador = new CartaoCreditoValidador();
 
     public CadastrarClienteDTO inserir(CadastrarClienteDTO pedido) throws Exception {
         clienteValidador.validarCadastro(pedido);
@@ -84,11 +86,12 @@ public class ClienteService {
         Cliente c = pedido.getCliente();
         Cliente clienteInserido = clienteDAO.consultarHashSaltPorID(c.getId());
 
-        clienteValidador.validarSenhas(pedido.getSenhaNova(), pedido.getSenhaConfirmacao());
+        senhaValidador.validar(pedido);
 
         String hashGuardado = clienteInserido.getHashSenha();
         String saltGuardado = clienteInserido.getSaltSenha();
-        clienteValidador.validarSenhaAntiga(pedido.getSenhaNova(), hashGuardado, saltGuardado);
+
+        senhaValidador.validarSenhaAntiga(pedido.getSenhaNova(), hashGuardado, saltGuardado);
 
         inserirNovoHash(c, pedido.getSenhaNova());
         return clienteDAO.atualizarSenha(c);

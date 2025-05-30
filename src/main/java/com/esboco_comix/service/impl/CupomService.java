@@ -4,10 +4,12 @@ import java.util.List;
 
 import com.esboco_comix.dao.impl.cupom.CupomDAO;
 import com.esboco_comix.model.entidades.Cupom;
+import com.esboco_comix.service.validador.impl.CupomValidador;
 
 public class CupomService {
 
-    private CupomDAO cupomDAO = new CupomDAO();
+    private final CupomDAO cupomDAO = new CupomDAO();
+    private final CupomValidador cupomValidador = new CupomValidador();
 
     public Cupom consultarByID(int id) throws Exception{
         return cupomDAO.consultarByID(id);
@@ -18,18 +20,7 @@ public class CupomService {
     }
 
     public Cupom inserir(Cupom cupom) throws Exception {
-        if (cupom.getValor() < 0){
-            throw new Exception("Cupom não pode ter valor negativo!");
-        }
-
-        if (cupom.isPromocional() && cupom.isTroca()){
-            throw new Exception("Cupom não pode ser promocional e de troca!");
-        }
-
-        if (!cupom.isPromocional() && !cupom.isTroca()){
-            throw new Exception("Cupom deve ser de troca ou promocional!");
-        }
-
+        cupomValidador.validar(cupom);
         return cupomDAO.inserir(cupom);
     }
 
@@ -44,6 +35,8 @@ public class CupomService {
         cupom.setTroca(true);
         cupom.setPromocional(false);
         cupom.setValor(valor);
+
+        cupomValidador.validar(cupom);
 
         return inserir(cupom);
     }

@@ -1,28 +1,26 @@
 package com.esboco_comix.controller.impl;
 
-import java.io.IOException;
-import java.util.Optional;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoDTO;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.service.impl.pedido.PedidoService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.Optional;
 
 public class PedidoController extends AbstractController {
 
-    private PedidoService pedidoService = new PedidoService();
+    private final PedidoService pedidoService = new PedidoService();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         try {
             String parametroId = req.getParameter("idcliente");
-            Object objetoResposta = null;
+            Object objetoResposta;
 
             if (parametroId != null){
                 int id = Integer.parseInt(parametroId);
@@ -43,7 +41,7 @@ public class PedidoController extends AbstractController {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             Pedido pedido = jsonToObject(req, Pedido.class);
             
@@ -61,7 +59,7 @@ public class PedidoController extends AbstractController {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         
         try {
 
