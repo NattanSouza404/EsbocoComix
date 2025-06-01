@@ -4,6 +4,30 @@ INSERT INTO bandeiras_cartao_credito (bcc_nome) VALUES ('AMERICAN_EXPRESS');
 INSERT INTO bandeiras_cartao_credito (bcc_nome) VALUES ('HIPERCARD');
 INSERT INTO bandeiras_cartao_credito (bcc_nome) VALUES ('ELO');
 
+INSERT INTO grupos_precificacao (gpr_nome, gpr_porcentagem) VALUES
+  ('Colecionador', 60.00),
+  ('Premium',     50.00),
+  ('Padrão',      30.00),
+  ('Promoção',    15.00);
+
+INSERT INTO categorias (cat_nome) VALUES
+   ('Fantasia Épica'),
+   ('Aventura'),
+   ('Quadrinho Nacional Adulto'),
+   ('Ação'),
+   ('Infantojuvenil'),
+   ('Adaptação de Jogo'),
+   ('Humor'),
+   ('Quadrinho Independente'),
+   ('Infantil'),
+   ('Clássico Brasileiro'),
+   ('Aventura Policial'),
+   ('Protagonismo Feminino'),
+   ('Mistério'),
+   ('Clássico Europeu'),
+   ('Adaptação Literária'),
+   ('Fábula Filosófica');
+
 INSERT INTO quadrinhos(
 	qua_preco, qua_autor, qua_ano, qua_titulo, qua_editora, qua_edicao, qua_isbn, qua_numero_paginas, qua_sinopse, qua_altura_cm, qua_largura_cm, qua_profundidade, qua_peso_gramas, qua_codigo_barras, qua_is_ativo, qua_gpr_id, qua_url_imagem)
 	VALUES (30, 'Franco de Rosa, Mozart Couto', '2000-01-01', 'Conancraft', 'Tabula Editora', 1, '1112223334445', 20,
@@ -19,6 +43,11 @@ INSERT INTO quadrinhos(
 
 	10, 10, 2, 200, '1111111111111', true, 1, '/img/quadrinhos/conancraft.jpg');
 
+INSERT INTO categorias_quadrinho (cqu_qua_id, cqu_cat_id) VALUES
+  (1, 1),
+  (1, 2),
+  (1, 3);
+
 INSERT INTO quadrinhos(
 	qua_preco, qua_autor, qua_ano, qua_titulo, qua_editora, qua_edicao, qua_isbn, qua_numero_paginas, qua_sinopse, qua_altura_cm, qua_largura_cm, qua_profundidade, qua_peso_gramas, qua_codigo_barras, qua_is_ativo, qua_gpr_id, qua_url_imagem)
 	VALUES (30, 'Ian Flynn', '2000-01-01', 'Sonic The Hedgehog', 'Geektopia', 1, '1112223334445', 20,
@@ -26,6 +55,11 @@ INSERT INTO quadrinhos(
 	'Dr. Eggman, o gênio do mal, foi vencido – mas o trabalho de Sonic ainda não acabou! No rastro de sua última e épica batalha, bots estão à solta e atacando pelas vilas mundo afora. Para derrotá-los, Sonic vai precisar de ajuda dos amigos Tails, Knuckles e Amy, assim como de novos e incríveis aliados. Correndo velozmente das telas dos games para as páginas dos quadrinhos, o ouriço azul tão querido por todos nós embala essa nova série trazida com exclusividade pela Geektopia, com tradução do grande Érico Assis. Um quadrinho com a excelência de sempre, feito com carinho para todas as gerações de leitores',
 	
 	10, 10, 2, 200, '1111111111111', true, 1, '/img/quadrinhos/sonic.jpg');
+
+INSERT INTO categorias_quadrinho (cqu_qua_id, cqu_cat_id) VALUES
+  (2, 4),
+  (2, 5),
+  (2, 6);
 
 INSERT INTO quadrinhos(
 	qua_preco, qua_autor, qua_ano, qua_titulo, qua_editora, qua_edicao, qua_isbn, qua_numero_paginas, qua_sinopse, qua_altura_cm, qua_largura_cm, qua_profundidade, qua_peso_gramas, qua_codigo_barras, qua_is_ativo, qua_gpr_id, qua_url_imagem)
@@ -37,6 +71,11 @@ INSERT INTO quadrinhos(
 	
 	10, 10, 2, 200, '1111111111111', true, 1, '/img/quadrinhos/homemchiclete.jpg');
 
+INSERT INTO categorias_quadrinho (cqu_qua_id, cqu_cat_id) VALUES
+  (3, 7),
+  (3, 2),
+  (3, 8);
+
 INSERT INTO quadrinhos(
 	qua_preco, qua_autor, qua_ano, qua_titulo, qua_editora, qua_edicao, qua_isbn, qua_numero_paginas, qua_sinopse, qua_altura_cm, qua_largura_cm, qua_profundidade, qua_peso_gramas, qua_codigo_barras, qua_is_ativo, qua_gpr_id, qua_url_imagem)
 	VALUES (30, 'Ziraldo', '2000-01-01', 'O Menino Maluquinho', 'Melhoramentos', 1, '1112223334445', 20,
@@ -44,6 +83,11 @@ INSERT INTO quadrinhos(
 	'Aquele era um menino muito sabido, esperto, inteligente! Tinha macaquinhos no sótão, embora não soubesse o que isso queria dizer... Brincava, agitava a casa, animava a todos com sua energia e vivacidade. Seria ele um anjinho, um saci? Alegria da casa, na escola, liderava a garotada na hora do intervalo. Adorava fazer versinhos, compor canções, inventar novos jogos e brincadeiras. Era um amigão. “Que Menino Maluquinho”, diziam sorrindo as pessoas que o conheciam. Não era nada disso, não! Só mais tarde descobriram que ele tinha sido um garoto muito amado e muito feliz.',
 	
 	10, 10, 2, 200, '1111111111111', true, 1, '/img/quadrinhos/meninomaluquinho.jpg');
+
+INSERT INTO categorias_quadrinho (cqu_qua_id, cqu_cat_id) VALUES
+  (4, 9),
+  (4, 10),
+  (4, 7);
 
 INSERT INTO quadrinhos(
 	qua_preco, qua_autor, qua_ano, qua_titulo, qua_editora, qua_edicao, qua_isbn, qua_numero_paginas, qua_sinopse, qua_altura_cm, qua_largura_cm, qua_profundidade, qua_peso_gramas, qua_codigo_barras, qua_is_ativo, qua_gpr_id, qua_url_imagem)
@@ -53,6 +97,11 @@ INSERT INTO quadrinhos(
 	
 	10, 10, 2, 200, '1111111111111', true, 1, '/img/quadrinhos/homemcao.jpg');
 
+INSERT INTO categorias_quadrinho (cqu_qua_id, cqu_cat_id) VALUES
+  (5, 9),
+  (5, 7),
+  (5, 11);
+
 INSERT INTO quadrinhos(
 	qua_preco, qua_autor, qua_ano, qua_titulo, qua_editora, qua_edicao, qua_isbn, qua_numero_paginas, qua_sinopse, qua_altura_cm, qua_largura_cm, qua_profundidade, qua_peso_gramas, qua_codigo_barras, qua_is_ativo, qua_gpr_id, qua_url_imagem)
 	VALUES (30, 'Ziraldo', '2000-01-01', 'Aventuras da Julieta', 'Globinho', 1, '1112223334445', 20,
@@ -60,6 +109,11 @@ INSERT INTO quadrinhos(
 	'O livro reúne histórias de Julieta, personagem da turma do Menino Maluquinho criada por Ziraldo. A coletânea traz algumas das aventuras mais incríveis dessa menina pra lá de maluquinha. Ela é a líder da turma, que está sempre bolando novas brincadeiras e inventando modas muito bem inventadas: lutar judô, explorar lugares desconhecidos e torcer com muita animação. Aventurese com a menina da camiseta de raio e seus amigos.',
 	
 	10, 10, 2, 200, '1111111111111', true, 1, '/img/quadrinhos/aventurasdajulieta.jpg');
+
+INSERT INTO categorias_quadrinho (cqu_qua_id, cqu_cat_id) VALUES
+  (6, 9),
+  (6, 2),
+  (6, 12);
 
 INSERT INTO quadrinhos(
 	qua_preco, qua_autor, qua_ano, qua_titulo, qua_editora, qua_edicao, qua_isbn, qua_numero_paginas, qua_sinopse, qua_altura_cm, qua_largura_cm, qua_profundidade, qua_peso_gramas, qua_codigo_barras, qua_is_ativo, qua_gpr_id, qua_url_imagem)
@@ -69,6 +123,11 @@ INSERT INTO quadrinhos(
 	
 	10, 10, 2, 200, '1111111111111', true, 1, '/img/quadrinhos/tintin.jpg');
 
+INSERT INTO categorias_quadrinho (cqu_qua_id, cqu_cat_id) VALUES
+  (7, 2),
+  (7, 13),
+  (7, 14);
+
 INSERT INTO quadrinhos(
 	qua_preco, qua_autor, qua_ano, qua_titulo, qua_editora, qua_edicao, qua_isbn, qua_numero_paginas, qua_sinopse, qua_altura_cm, qua_largura_cm, qua_profundidade, qua_peso_gramas, qua_codigo_barras, qua_is_ativo, qua_gpr_id, qua_url_imagem)
 	VALUES (30, 'Mauricio de Sousa', '2000-01-01', 'Turma da Mônica - o Pequeno Príncipe', 'Girassol', 1, '1112223334445', 20,
@@ -77,13 +136,42 @@ INSERT INTO quadrinhos(
 	
 	10, 10, 2, 200, '1111111111111', true, 1, '/img/quadrinhos/turmadamonica.jpg');
 
+INSERT INTO categorias_quadrinho (cqu_qua_id, cqu_cat_id) VALUES
+  (8, 9),
+  (8, 15),
+  (8, 16);
+
+UPDATE quadrinhos
+  SET qua_gpr_id = 1
+  WHERE qua_titulo = 'Conancraft';
+
+UPDATE quadrinhos
+  SET qua_gpr_id = 3
+  WHERE qua_titulo = 'Sonic The Hedgehog';
+
+UPDATE quadrinhos
+  SET qua_gpr_id = 4
+  WHERE qua_titulo = 'As Aventuras do Homem Chiclete';
+
+UPDATE quadrinhos
+  SET qua_gpr_id = 3
+  WHERE qua_titulo = 'O Menino Maluquinho';
+
+UPDATE quadrinhos
+  SET qua_gpr_id = 4
+  WHERE qua_titulo = 'O Homem-Cão';
+
+UPDATE quadrinhos
+  SET qua_gpr_id = 3
+  WHERE qua_titulo = 'Aventuras da Julieta';
+
+UPDATE quadrinhos
+  SET qua_gpr_id = 2
+  WHERE qua_titulo = 'O tesouro de Rackham, O Terrível';
+
+UPDATE quadrinhos
+  SET qua_gpr_id = 2
+  WHERE qua_titulo = 'Turma da Mônica - o Pequeno Príncipe';
+
 -- A ajustar ainda
-INSERT INTO clientes VALUES ('JoÃ£o Vitor Sexto', 'MASCULINO', '1994-02-16', '1234567000 ', 'joao.sexto@email.com', 'eVWH2zBPZvnRSb/Waf7NjNZd5Aaf3hxUTD4Hj84d/m8=', 'kjNOl8a24urlsaVizzRAlQ==', 0, 'FIXO', '11', '922222222', true);
-INSERT INTO clientes VALUES ('Joana Dark', 'FEMININO', '2003-07-16', '1234567000 ', 'joana.dark@email.com', 'YN8xDKJobrYOtwAM2diri21rK/PobyrQaHm+kRn6+Ls=', '9uuancX3nMzK5DFKIWHm2w==', 0, 'FIXO', '22', '111111111', true);
-INSERT INTO clientes VALUES ('Melady', 'FEMININO', '2004-10-12', '11111111111', 'melady@email.com', 'an6sjSdfcrgfhSWTfk0NsNmMO00kskCejrGSgRUDb4U=', 'Migi0xes3JyrBueVo4CrUg==', 0, 'FIXO', '22', '922222222', true);
 INSERT INTO clientes VALUES ('Jorge dos Santos Menezes', 'MASCULINO', '1998-12-20', '11122233344', 'jorge@email.com', '696YDOwfrZKwB8Zc053W7AIU7IPVPEEpTBDaz2edWk8=', 'YIGCwc/BvOPLriML2n0zng==', 0, 'FIXO', '11', '99999999 ', true);
-
-INSERT INTO grupos_precificacao VALUES('a')
-
-insert INTO categorias_quadrinho(cqu_cat_id , cqu_qua_id ) VALUES (1, 2);
-insert INTO categorias(cat_nome) VALUES ('Alçai')
