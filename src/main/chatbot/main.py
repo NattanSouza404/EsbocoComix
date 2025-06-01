@@ -26,6 +26,6 @@ async def message(mensagem: Mensagem):
 
     chat = sessoes[idcliente]
 
-    response = gerarResposta(chatbot=chat, mensagem=mensagem)
+    response = gerarResposta(chatbot=chat, mensagem=mensagem, idcliente=idcliente)
 
     return { "pergunta" : mensagem.mensagem, "resposta" : response.text }
