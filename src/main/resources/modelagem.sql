@@ -140,7 +140,9 @@ LOGGING;
 ALTER TABLE estoque ADD CONSTRAINT pk_est PRIMARY KEY ( est_qua_id );
 
 CREATE TABLE grupos_precificacao (
-    gpr_id NUMBER(3) NOT NULL
+    gpr_id NUMBER(3) NOT NULL,
+    gpr_porcentagem NUMBER(2) NOT NULL,
+    gpr_nome VARCHAR2(20) NOT NULL
 )
 LOGGING;
 

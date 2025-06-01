@@ -55,7 +55,9 @@ CREATE TABLE cartoes_credito (
 );
 
 CREATE TABLE grupos_precificacao (
-    gpr_id NUMERIC(3) PRIMARY KEY
+    gpr_id NUMERIC(3) PRIMARY KEY,
+    gpr_porcentagem NUMERIC(2) NOT NULL,
+    gpr_nome VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE quadrinhos (
@@ -100,7 +102,7 @@ CREATE TABLE entrada_estoque (
     ees_qua_id      NUMERIC(6) NOT NULL,
     ees_quantidade  NUMERIC(5) NOT NULL,
     ees_valor_custo NUMERIC(6, 2) NOT NULL,
-    ees_dt_entrada  TIMESTAMP NOT NULL,
+    ees_dt_entrada  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     ees_fornecedor  VARCHAR(100) NOT NULL
 );
 

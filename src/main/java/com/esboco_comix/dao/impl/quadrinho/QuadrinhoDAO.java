@@ -11,6 +11,7 @@ import java.util.Map;
 import com.esboco_comix.dto.FiltrarQuadrinhoDTO;
 import com.esboco_comix.dto.QuadrinhoDTO;
 import com.esboco_comix.model.entidades.Categoria;
+import com.esboco_comix.model.entidades.GrupoPrecificacao;
 import com.esboco_comix.model.entidades.Quadrinho;
 import com.esboco_comix.utils.ConexaoFactory;
 
@@ -23,8 +24,10 @@ public class QuadrinhoDAO {
 
         PreparedStatement pst = conn.prepareStatement(
                 """
-                        SELECT quadrinhos.*, est_quantidade_total FROM quadrinhos
-                         LEFT JOIN estoque ON est_qua_id = qua_id ORDER BY qua_id DESC;
+                        SELECT quadrinhos.*, est_quantidade_total, grupos_precificacao.* FROM quadrinhos
+                         LEFT JOIN estoque ON est_qua_id = qua_id
+                         JOIN grupos_precificacao ON qua_gpr_id = gpr_id
+                         ORDER BY qua_id DESC;
                         """,
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
@@ -74,7 +77,11 @@ public class QuadrinhoDAO {
     public List<Quadrinho> filtrarTodos(FiltrarQuadrinhoDTO filtro) throws Exception {
         Connection conn = ConexaoFactory.getConexao();
 
-        StringBuilder query = new StringBuilder("SELECT * FROM quadrinhos WHERE 1=1");
+        StringBuilder query = new StringBuilder("""
+            SELECT * FROM quadrinhos
+                JOIN grupos_precificacao ON qua_gpr_id = gpr_id
+            WHERE 1=1
+          """);
 
         List<Object> params = new ArrayList<>();
 
@@ -87,6 +94,8 @@ public class QuadrinhoDAO {
             query.append(" AND qua_autor ILIKE ?");
             params.add("%" + filtro.getAutor() + "%");
         }
+
+        query.append(" ORDER BY qua_id DESC;");
 
         PreparedStatement pst = conn.prepareStatement(
                 query.toString(),
@@ -134,8 +143,9 @@ public class QuadrinhoDAO {
 
         PreparedStatement pst = connection.prepareStatement(
             """
-            SELECT quadrinhos.*, est_quantidade_total FROM quadrinhos
+            SELECT quadrinhos.*, est_quantidade_total, grupos_precificacao.* FROM quadrinhos
                 LEFT JOIN estoque ON est_qua_id = qua_id
+                JOIN grupos_precificacao ON qua_gpr_id = gpr_id
             WHERE qua_id = ?;
             """
         );
@@ -194,6 +204,13 @@ public class QuadrinhoDAO {
         q.setCodigoBarras(rs.getString("qua_codigo_barras"));
 
         q.setUrlImagem(rs.getString("qua_url_imagem"));
+
+        GrupoPrecificacao grupo = new GrupoPrecificacao();
+        grupo.setId(rs.getInt("qua_gpr_id"));
+        grupo.setNome(rs.getString("gpr_nome"));
+        grupo.setPorcentagem(rs.getInt("gpr_porcentagem"));
+
+        q.setGrupoPrecificacao(grupo);
 
         return q;
     }
