@@ -7,19 +7,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoDTO;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
+import com.esboco_comix.model.enuns.StatusItemPedido;
 import com.esboco_comix.model.enuns.StatusPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class PedidoDAO {
-
-    private ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
 
     public Pedido inserir(Pedido e) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
@@ -61,10 +59,20 @@ public class PedidoDAO {
         Connection conn = ConexaoFactory.getConexao();
 
         PreparedStatement pst = conn.prepareStatement(
-            """
-            SELECT pedidos.*, cli_nome, enderecos.* FROM pedidos
+        """
+            SELECT
+                pedidos.*,
+                itens_pedido.*,
+                qua_titulo,
+                qua_preco,
+                cli_nome,
+                enderecos.*
+            FROM
+                pedidos
                 JOIN clientes ON ped_cli_id = cli_id
                 JOIN enderecos ON ped_end_id = end_id
+                JOIN itens_pedido ON ite_ped_id = ped_id
+                JOIN quadrinhos ON ite_qua_id = qua_id
             ORDER BY ped_data DESC;
             """,
             ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -79,22 +87,7 @@ public class PedidoDAO {
             }
             rs.beforeFirst();
 
-            List<PedidoDTO> pedidos = new ArrayList<>();
-
-            while (rs.next()){       
-                pedidos.add(new PedidoDTO(
-                    mapearEntidade(rs),
-                    rs.getString("cli_nome"),
-                    null
-                ));
-            }
-
-            inserirItensPedido(
-                pedidos,
-                itemPedidoDAO.consultarTodos()
-            );
-
-            return pedidos;
+            return mapearPedidosDTO(rs);
         }
         catch (Exception e){
             throw e;
@@ -108,11 +101,21 @@ public class PedidoDAO {
         Connection conn = ConexaoFactory.getConexao();
 
         PreparedStatement pst = conn.prepareStatement(
-            """
-            SELECT pedidos.*, cli_nome, enderecos.* FROM pedidos
+        """
+            SELECT
+                pedidos.*,
+                itens_pedido.*,
+                qua_titulo,
+                qua_preco,
+                cli_nome,
+                enderecos.*
+            FROM
+                pedidos
                 JOIN clientes ON ped_cli_id = cli_id
                 JOIN enderecos ON ped_end_id = end_id
-            WHERE ped_cli_id = ?
+                JOIN itens_pedido ON ite_ped_id = ped_id
+                JOIN quadrinhos ON ite_qua_id = qua_id
+            WHERE cli_id = ?
             ORDER BY ped_data DESC;
             """,
             ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -129,21 +132,7 @@ public class PedidoDAO {
             }
             rs.beforeFirst();
 
-            List<PedidoDTO> pedidos = new ArrayList<>();
-
-            while (rs.next()){
-                pedidos.add(new PedidoDTO(
-                    mapearEntidade(rs),
-                    rs.getString("cli_nome"),
-                    null
-                ));
-            }
-
-            inserirItensPedido(
-                pedidos, itemPedidoDAO.consultarByIDCliente(idCliente) 
-            );
-
-            return pedidos;
+            return mapearPedidosDTO(rs);
         }
         catch (Exception e){
             throw e;
@@ -202,6 +191,31 @@ public class PedidoDAO {
         } 
     }
 
+    private List<PedidoDTO> mapearPedidosDTO(ResultSet rs) throws Exception {
+        List<PedidoDTO> pedidos = new ArrayList<>();
+
+        while (rs.next()){
+            PedidoDTO dto = null;
+
+            int id = rs.getInt("ped_id");
+            for (PedidoDTO p: pedidos){
+                if (p.getPedido().getId() == id){
+                    dto = p;
+                    break;
+                }
+            }
+
+            if (dto == null){
+                dto = mapearPedidoDTO(rs);
+                pedidos.add(dto);
+            }
+
+            dto.getItensPedidoDTO().add(mapearItemPedidoDTO(rs));
+        }
+
+        return pedidos;
+    }
+
     private Pedido mapearEntidade(ResultSet rs) throws SQLException {
         Pedido pedido = new Pedido();
         pedido.setId(rs.getInt("ped_id"));
@@ -224,20 +238,34 @@ public class PedidoDAO {
         return pedido;
     }
 
-    private void inserirItensPedido(List<PedidoDTO> pedidos, Map<Integer, List<ItemPedidoDTO>> itensMap) throws Exception {
-        for (PedidoDTO p : pedidos) {
-            List<ItemPedidoDTO> itens = itensMap.get(p.getPedido().getId());
+    private PedidoDTO mapearPedidoDTO(ResultSet rs) throws Exception {
+        PedidoDTO dto = new PedidoDTO();
+        dto.setPedido(mapearEntidade(rs));
+        dto.setItensPedidoDTO(new ArrayList<>());
+        dto.setNomeCliente(rs.getString("cli_nome"));
+        return dto;
+    }
 
-            List<ItemPedido> itensPedidos = new ArrayList<>();
-            for (ItemPedidoDTO i : itens) {
-                itensPedidos.add(
-                    i.getItemPedido()
-                );
-            }
+    private ItemPedidoDTO mapearItemPedidoDTO(ResultSet rs) throws SQLException{
+        ItemPedidoDTO dto = new ItemPedidoDTO();
 
-            p.getPedido().setItensPedido(itensPedidos);
-            p.setItensPedidoDTO(itens);
+        ItemPedido item = new ItemPedido();
+        item.setIdPedido(rs.getInt("ped_id"));
+        item.setQuantidade(rs.getInt("ite_quantidade"));
+
+        String status = rs.getString("ite_status");
+        if (status != null){
+            item.setStatus(StatusItemPedido.valueOf(status));
         }
+
+        item.setIdQuadrinho(rs.getInt("ite_qua_id"));
+
+        dto.setItemPedido(item);
+
+        dto.setNomeCliente(rs.getString("cli_nome"));
+        dto.setNomeQuadrinho(rs.getString("qua_titulo"));
+
+        return dto;
     }
     
 }

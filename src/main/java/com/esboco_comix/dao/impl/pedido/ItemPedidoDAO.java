@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.model.entidades.ItemPedido;
@@ -153,70 +151,6 @@ public class ItemPedidoDAO {
         }
     }
 
-    public Map<Integer, List<ItemPedidoDTO>> consultarTodos() throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
-
-        PreparedStatement pst = connection.prepareStatement(
-            """
-            SELECT itens_pedido.*, qua_titulo, qua_preco, cli_nome FROM itens_pedido
-                JOIN quadrinhos ON ite_qua_id = qua_id
-                JOIN pedidos ON ite_ped_id = ped_id
-                JOIN clientes ON ped_cli_id = cli_id
-            """,
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
-            ResultSet rs = pst.executeQuery();
-    
-            if (!rs.next()) {
-                throw new Exception("Nenhum pedido de troca encontrado.");
-            }
-            rs.beforeFirst();
-
-            return toMap(rs); 
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
-        }
-    }
-
-    public Map<Integer, List<ItemPedidoDTO>> consultarByIDCliente(int idCliente) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
-
-        PreparedStatement pst = connection.prepareStatement(
-            """
-            SELECT itens_pedido.*, qua_titulo, qua_preco, cli_nome FROM itens_pedido
-                JOIN quadrinhos ON ite_qua_id = qua_id
-                JOIN pedidos ON ite_ped_id = ped_id
-                JOIN clientes ON ped_cli_id = cli_id
-            WHERE cli_id = ?;
-            """,
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
-            pst.setInt(1, idCliente);
-            ResultSet rs = pst.executeQuery();
-    
-            if (!rs.next()) {
-                throw new Exception("Nenhum pedido de troca encontrado.");
-            }
-            rs.beforeFirst();
-
-            return toMap(rs);    
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
-        }
-    }
-
     public ItemPedido atualizarStatus(ItemPedido item) throws Exception {
         Connection conn = ConexaoFactory.getConexao(); 
     
@@ -255,43 +189,6 @@ public class ItemPedidoDAO {
         }
 
         return item;
-    }
-
-    private Map<Integer, List<ItemPedidoDTO>> toMap(ResultSet rs) throws Exception {
-        Map<Integer, List<ItemPedidoDTO>> itens = new HashMap<>();
-        
-        while(rs.next()){
-
-            int idPedido = rs.getInt("ite_ped_id");
-            
-            if (itens.get(idPedido) == null){
-                List<ItemPedidoDTO> lista = new ArrayList<>();
-
-                lista.add(
-                    new ItemPedidoDTO(
-                        mapearEntidade(rs),
-                        rs.getString("qua_titulo"),
-                        rs.getString("cli_nome")
-                    )
-                );
-
-                itens.put(
-                    idPedido, 
-                    lista
-                );
-                continue;
-            }
-
-            itens.get(idPedido).add(
-                new ItemPedidoDTO(
-                    mapearEntidade(rs),
-                    rs.getString("qua_titulo"),
-                    rs.getString("cli_nome")
-                )
-            );
-        }
-
-        return itens;
     }
 
 }

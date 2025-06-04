@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.esboco_comix.dto.FiltrarQuadrinhoDTO;
 import com.esboco_comix.dto.QuadrinhoDTO;
@@ -17,16 +16,22 @@ import com.esboco_comix.utils.ConexaoFactory;
 
 public class QuadrinhoDAO {
 
-    private CategoriaDAO categoriaDAO = new CategoriaDAO();
-
     public List<QuadrinhoDTO> consultarTodos() throws Exception {
         Connection conn = ConexaoFactory.getConexao();
 
         PreparedStatement pst = conn.prepareStatement(
                 """
-                        SELECT quadrinhos.*, est_quantidade_total, grupos_precificacao.* FROM quadrinhos
-                         LEFT JOIN estoque ON est_qua_id = qua_id
-                         JOIN grupos_precificacao ON qua_gpr_id = gpr_id
+                        SELECT
+                            quadrinhos.*,
+                            est_quantidade_total,
+                            grupos_precificacao.*,
+                            categorias.*
+                         FROM
+                            quadrinhos
+                            JOIN categorias_quadrinho ON qua_id = cqu_qua_id
+                            JOIN categorias ON cat_id = cqu_cat_id
+                            LEFT JOIN estoque ON est_qua_id = qua_id
+                            JOIN grupos_precificacao ON qua_gpr_id = gpr_id
                          ORDER BY qua_id DESC;
                         """,
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -44,25 +49,23 @@ public class QuadrinhoDAO {
             List<QuadrinhoDTO> quadrinhos = new ArrayList<>();
 
             while (rs.next()) {
-                QuadrinhoDTO dto = new QuadrinhoDTO();
-                dto.setQuadrinho(mapearEntidade(rs));
+                int id = rs.getInt("qua_id");
 
-                int quantidadeEstoque = rs.getInt("est_quantidade_total");
-                boolean isForaDeEstoque = quantidadeEstoque == 0;
+                QuadrinhoDTO dto = null;
+                for (QuadrinhoDTO q: quadrinhos){
+                    if (q.getQuadrinho().getId() == id){
+                        dto = q;
+                        break;
+                    }
+                }
 
-                dto.setQuantidadeEstoque(quantidadeEstoque);
-                dto.setForaDeEstoque(isForaDeEstoque);
+                if (dto == null){
+                    dto = mapearDTO(rs);
+                    quadrinhos.add(dto);
+                }
 
-                quadrinhos.add(dto);
-            }
-
-            Map<Integer, List<Categoria>> categorias = categoriaDAO.consultarTodos();
-
-            for (QuadrinhoDTO dto : quadrinhos) {
-                Quadrinho q = dto.getQuadrinho();
-                q.setCategorias(
-                        categorias.get(q.getId())
-                );
+                List<Categoria> categorias = dto.getQuadrinho().getCategorias();
+                categorias.add(mapearCategoria(rs));
             }
 
             return quadrinhos;
@@ -74,12 +77,15 @@ public class QuadrinhoDAO {
         }
     }
 
-    public List<Quadrinho> filtrarTodos(FiltrarQuadrinhoDTO filtro) throws Exception {
+    public List<QuadrinhoDTO> filtrarTodos(FiltrarQuadrinhoDTO filtro) throws Exception {
         Connection conn = ConexaoFactory.getConexao();
 
         StringBuilder query = new StringBuilder("""
             SELECT * FROM quadrinhos
                 JOIN grupos_precificacao ON qua_gpr_id = gpr_id
+                JOIN categorias_quadrinho ON qua_id = cqu_qua_id
+                JOIN categorias ON cat_id = cqu_cat_id
+                LEFT JOIN estoque ON est_qua_id = qua_id
             WHERE 1=1
           """);
 
@@ -122,10 +128,26 @@ public class QuadrinhoDAO {
             }
             rs.beforeFirst();
 
-            List<Quadrinho> quadrinhos = new ArrayList<>();
+            List<QuadrinhoDTO> quadrinhos = new ArrayList<>();
 
             while (rs.next()){
-                quadrinhos.add(mapearEntidade(rs));
+                QuadrinhoDTO dto = null;
+
+                int id = rs.getInt("qua_id");
+                for (QuadrinhoDTO q: quadrinhos){
+                    if (q.getQuadrinho().getId() == id){
+                        dto = q;
+                        break;
+                    }
+                }
+
+                if (dto == null){
+                    dto = mapearDTO(rs);
+                    quadrinhos.add(dto);
+                }
+
+                List<Categoria> categorias = dto.getQuadrinho().getCategorias();
+                categorias.add(mapearCategoria(rs));
             }
 
             return quadrinhos;
@@ -143,7 +165,9 @@ public class QuadrinhoDAO {
 
         PreparedStatement pst = connection.prepareStatement(
             """
-            SELECT quadrinhos.*, est_quantidade_total, grupos_precificacao.* FROM quadrinhos
+            SELECT quadrinhos.*, est_quantidade_total, grupos_precificacao.*, categorias.* FROM quadrinhos
+                JOIN categorias_quadrinho ON qua_id = cqu_qua_id
+                JOIN categorias ON cat_id = cqu_cat_id
                 LEFT JOIN estoque ON est_qua_id = qua_id
                 JOIN grupos_precificacao ON qua_gpr_id = gpr_id
             WHERE qua_id = ?;
@@ -159,18 +183,15 @@ public class QuadrinhoDAO {
                 throw new Exception("Quadrinho não encontrado!");
             }
 
-            QuadrinhoDTO dto = new QuadrinhoDTO();
-            dto.setQuadrinho(mapearEntidade(rs));
+            QuadrinhoDTO dto = null;
 
-            int quantidadeEstoque = rs.getInt("est_quantidade_total");
-            boolean isForaDeEstoque = quantidadeEstoque == 0;
+            while (rs.next()) {
+                if (dto == null){
+                    dto = mapearDTO(rs);
+                }
 
-            dto.setQuantidadeEstoque(quantidadeEstoque);
-            dto.setForaDeEstoque(isForaDeEstoque);
-
-            dto.getQuadrinho().setCategorias(
-                    categoriaDAO.consultarByIDQuadrinho(dto.getQuadrinho().getId())
-            );
+                dto.getQuadrinho().getCategorias().add(mapearCategoria(rs));
+            }
 
             return dto;
         } catch (Exception e) {
@@ -212,7 +233,31 @@ public class QuadrinhoDAO {
 
         q.setGrupoPrecificacao(grupo);
 
+        q.setCategorias(new ArrayList<>());
+
         return q;
+    }
+
+    private QuadrinhoDTO mapearDTO(ResultSet rs) throws SQLException {
+        QuadrinhoDTO dto = new QuadrinhoDTO();
+
+        dto.setQuadrinho(mapearEntidade(rs));
+
+        int quantidadeEstoque = rs.getInt("est_quantidade_total");
+        boolean isForaDeEstoque = quantidadeEstoque == 0;
+
+        dto.setQuantidadeEstoque(quantidadeEstoque);
+        dto.setForaDeEstoque(isForaDeEstoque);
+
+        return dto;
+    }
+
+    private Categoria mapearCategoria(ResultSet rs) throws Exception {
+        Categoria categoria = new Categoria();
+        categoria.setId(rs.getInt("cat_id"));
+        categoria.setNome(rs.getString("cat_nome"));
+
+        return categoria;
     }
 
 }
