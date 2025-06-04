@@ -10,7 +10,7 @@ def consultarClienteByID(idcliente):
 
     return cliente
 
-def mapearCategoriasQuadrinhos():
+def consultarQuadrinhos():
     conn = get_conexao()
     cur = conn.cursor()
     sql = """
@@ -57,7 +57,15 @@ def consultarPedidosByIDCliente(idcliente):
     cur = conn.cursor()
 
     sql = f"""
-    SELECT ped_id, ped_data, ped_status, ped_valor_total, ite_quantidade, qua_id, qua_titulo FROM pedidos
+    SELECT
+        ped_id,
+        ped_data,
+        ped_status,
+        ite_quantidade,
+        ite_status,
+        qua_id,
+        qua_titulo
+    FROM pedidos
         JOIN itens_pedido ON ped_id = ite_ped_id
         JOIN quadrinhos ON qua_id = ite_qua_id
         JOIN clientes ON cli_id = ped_cli_id
@@ -65,11 +73,32 @@ def consultarPedidosByIDCliente(idcliente):
     """
 
     cur.execute(sql)
+
     resultados = cur.fetchall()
+
+    mapa = {}
+    for ped_id, ped_data, ped_status, ite_quantidade, ite_status, qua_id, qua_titulo in resultados:
+        if ped_id not in mapa:
+            mapa[ped_id] = {
+                "idPedido": ped_id,
+                "dataPedido": ped_data,
+                "status": ped_status,
+                "itensPedido": []
+            }
+
+        if ped_id is not None:
+            mapa[ped_id]["itensPedido"].append(
+                {
+                    "idQuadrinho": qua_id,
+                    "quantidade": ite_quantidade,
+                    "titulo": qua_titulo,
+                    "status": ite_status
+                }
+            )
 
     close(cur, conn)
 
-    return resultados
+    return mapa
 
 def close(cur, conn):
     cur.close()
