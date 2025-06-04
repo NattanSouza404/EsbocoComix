@@ -14,7 +14,7 @@ export default class FormatadorAnalise {
             });
         });
 
-        const labels = Array.from(datasSet).sort();
+        const labels = Array.from(datasSet);
 
         const datasets = dados.map(dados => {
             const cor = this.gerarCorAleatoria();
