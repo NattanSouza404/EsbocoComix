@@ -254,3 +254,30 @@ CREATE TRIGGER tg_set_cup_id
 BEFORE INSERT ON cupons
 FOR EACH ROW
 EXECUTE FUNCTION set_cup_id();
+
+
+
+
+
+-- Pedidos pós-venda
+
+CREATE SEQUENCE ppv_sq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE FUNCTION set_ppv_id() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    NEW.ppv_id := nextval('ppv_sq');
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tg_set_pvv_id
+BEFORE INSERT ON pedidos_pos_venda
+FOR EACH ROW
+EXECUTE FUNCTION set_ppv_id();
