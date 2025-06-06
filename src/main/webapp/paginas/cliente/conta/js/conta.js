@@ -7,11 +7,14 @@ import { SecaoEndereco } from "./secaoEndereco/SecaoEndereco.js";
 import { SecaoCartaoCredito } from "./secaoCartaoCredito/SecaoCartaoCredito.js";
 import { retornarCupons } from "/js/api/apiCupom.js";
 import { SecaoCupom } from "./secaoCupons/secaoCupons.js";
+import { removerHistorico } from "../../../../js/localStorage.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const idClienteURL = urlParams.get('idcliente'); 
 if (idClienteURL !== null && idClienteURL !== undefined){
     localStorage.setItem('idcliente', idClienteURL);
+    removerHistorico();
+    window.location.href = "/conta";
 }
 
 let idCliente = localStorage.getItem('idcliente');

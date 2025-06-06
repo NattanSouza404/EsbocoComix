@@ -1,7 +1,6 @@
 package com.esboco_comix.controller.impl;
 
 import com.esboco_comix.controller.utils.AbstractController;
-import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoDTO;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.service.impl.pedido.PedidoService;
@@ -70,11 +69,6 @@ public class PedidoController extends AbstractController {
                 case "atualizarstatuspedido":
                     PedidoDTO pedido = jsonToObject(req, PedidoDTO.class);
                     objetoResposta = pedidoService.atualizarStatus(pedido);
-                    break;
-                
-                case "atualizarstatusitem":
-                    ItemPedidoDTO itemPedido = jsonToObject(req, ItemPedidoDTO.class);
-                    objetoResposta = pedidoService.atualizarStatus(itemPedido);
                     break;
             }
 

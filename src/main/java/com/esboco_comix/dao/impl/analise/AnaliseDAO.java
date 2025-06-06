@@ -17,7 +17,8 @@ public class AnaliseDAO {
             """
                 SELECT qua_titulo, ite_quantidade, ped_data FROM itens_pedido
                     JOIN quadrinhos ON ite_qua_id = qua_id
-                    JOIN pedidos ON ite_ped_id = ped_id;
+                    JOIN pedidos ON ite_ped_id = ped_id
+                ORDER BY ped_data;
                 """,
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
@@ -81,6 +82,7 @@ public class AnaliseDAO {
                         JOIN quadrinhos ON qua_id = cqu_qua_id
                         JOIN itens_pedido ON ite_qua_id = qua_id
                         JOIN pedidos ON ite_ped_id = ped_id
+                    ORDER BY ped_data;
                     """,
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY

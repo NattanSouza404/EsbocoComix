@@ -1,27 +1,29 @@
-const PATH = "/api/pedido";
+const PATH = "/api/pedido_pos_venda";
 
-export async function retornarPedidos(idCliente){
+export async function retornarPedidosPosVenda(){
     try {
-
         let url = PATH;
-        if (idCliente !== null && idCliente !== undefined){
-            url += '?idcliente='+idCliente;
-        }
         const response = await fetch(url);
+
         return await response.json();
     } catch (error) {
         console.error('Erro buscando dados:', error);
     }
 }
 
-export async function enviarPedido(pedido) {
+export async function retornarPedidosPosVendaByCliente(idCliente){
     try {
-        const confirmacaoUsuario = confirm("Deseja mesmo realizar essa compra?");
+        let url = `${PATH}?idcliente=${idCliente}`;
+        const response = await fetch(url);
 
-        if (!confirmacaoUsuario){
-            return;
-        }
+        return await response.json();
+    } catch (error) {
+        console.error('Erro buscando dados:', error);
+    }
+}
 
+export async function inserirPedidoPosVenda(pedido) {
+    try {
         const url = PATH;
 
         const option = {
@@ -46,9 +48,9 @@ export async function enviarPedido(pedido) {
     }
 }
 
-export async function atualizarStatusPedido(pedido){
+export async function atualizarStatusPedidoPosVenda(pedido){
     try {
-        let url = `${PATH}?opcao=atualizarstatuspedido`;
+        let url = PATH;
 
         const option = {
             method: 'PUT',

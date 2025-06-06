@@ -8,20 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.model.entidades.CartaoCredito;
+import com.esboco_comix.model.enuns.BandeiraCartao;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class CartaoCreditoDAO {
-
-    private BandeiraCartaoDAO bandeiraCartaoDAO = new BandeiraCartaoDAO();
 
     public CartaoCredito inserir(CartaoCredito c) throws Exception {
         Connection connection = ConexaoFactory.getConexao();
 
         PreparedStatement pst = connection.prepareStatement(
-            "INSERT INTO cartoes_credito("+
-                "cre_numero, cre_nome_impresso, cre_codigo_seguranca, "+
-                "cre_is_preferencial, cre_bcc_id, cre_cli_id) "+
-                "VALUES (?, ?, ?, ?, ?, ?);",
+            """
+                INSERT INTO cartoes_credito(
+                cre_numero, cre_nome_impresso, cre_codigo_seguranca,
+                cre_is_preferencial, cre_bcc_id, cre_cli_id)
+                VALUES (
+                    ?, ?, ?,
+                    ?, (SELECT bcc_id FROM bandeiras_cartao_credito WHERE bcc_nome = ?), ?
+                );
+                """,
                 Statement.RETURN_GENERATED_KEYS
         );
 
@@ -30,7 +34,7 @@ public class CartaoCreditoDAO {
             pst.setString(2, c.getNomeImpresso());
             pst.setString(3, c.getCodigoSeguranca());
             pst.setBoolean(4, c.isPreferencial());
-            pst.setInt(5, bandeiraCartaoDAO.consultarIDByNome(c.getBandeiraCartao().name()));
+            pst.setString(5, c.getBandeiraCartao().name());
             pst.setInt(6, c.getIdCliente());
 
             if (pst.executeUpdate() == 0){
@@ -55,7 +59,15 @@ public class CartaoCreditoDAO {
         Connection connection = ConexaoFactory.getConexao();
 
         PreparedStatement pst = connection.prepareStatement(
-            "SELECT * FROM cartoes_credito WHERE cre_id = ?;"
+            """
+                SELECT
+                    *
+                FROM
+                    cartoes_credito
+                JOIN
+                    bandeiras_cartao_credito ON bcc_id = cre_bcc_id
+                WHERE cre_id = ?;
+                """
         );
 
         try {
@@ -79,10 +91,16 @@ public class CartaoCreditoDAO {
         Connection conn = ConexaoFactory.getConexao(); 
     
         PreparedStatement pst = conn.prepareStatement(
-            "UPDATE cartoes_credito SET "+
-                "cre_numero = ?, cre_nome_impresso = ?, cre_codigo_seguranca = ?, "+
-                "cre_is_preferencial = ?, cre_bcc_id = ?, cre_cli_id = ? "+
-                "WHERE cre_id = ?;"
+            """
+                UPDATE cartoes_credito SET
+                    cre_numero = ?,
+                    cre_nome_impresso = ?,
+                    cre_codigo_seguranca = ?,
+                    cre_is_preferencial = ?,
+                    cre_bcc_id = (SELECT bcc_id FROM bandeiras_cartao_credito WHERE bcc_nome = ?),
+                    cre_cli_id = ?
+                WHERE cre_id = ?;
+                """
         );
     
         try {
@@ -90,7 +108,7 @@ public class CartaoCreditoDAO {
             pst.setString(2, c.getNomeImpresso());
             pst.setString(3, c.getCodigoSeguranca());
             pst.setBoolean(4, c.isPreferencial());
-            pst.setInt(5, bandeiraCartaoDAO.consultarIDByNome(c.getBandeiraCartao().name()));
+            pst.setString(5, c.getBandeiraCartao().name());
             pst.setInt(6, c.getIdCliente());
 
             pst.setInt(7, c.getId());
@@ -134,7 +152,15 @@ public class CartaoCreditoDAO {
         Connection connection = ConexaoFactory.getConexao();
 
         PreparedStatement pst = connection.prepareStatement(
-            "SELECT * FROM cartoes_credito WHERE cre_cli_id = ?",
+            """
+                SELECT
+                    *
+                FROM
+                    cartoes_credito
+                    JOIN
+                    bandeiras_cartao_credito ON bcc_id = cre_bcc_id
+                WHERE cre_cli_id = ?
+                """,
             ResultSet.TYPE_SCROLL_INSENSITIVE,
             ResultSet.CONCUR_READ_ONLY
         );
@@ -170,7 +196,7 @@ public class CartaoCreditoDAO {
         c.setNomeImpresso(rs.getString("cre_nome_impresso"));
         c.setCodigoSeguranca(rs.getString("cre_codigo_seguranca"));
         c.setPreferencial(rs.getBoolean("cre_is_preferencial"));
-        c.setBandeiraCartao(bandeiraCartaoDAO.consultarByID(rs.getInt("cre_bcc_id")));
+        c.setBandeiraCartao(BandeiraCartao.valueOf(rs.getString("bcc_nome")));
         c.setIdCliente(rs.getInt("cre_cli_id"));
         return c;
     }

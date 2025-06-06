@@ -55,7 +55,9 @@ CREATE TABLE cartoes_credito (
 );
 
 CREATE TABLE grupos_precificacao (
-    gpr_id NUMERIC(3) PRIMARY KEY
+    gpr_id NUMERIC(3) PRIMARY KEY,
+    gpr_porcentagem NUMERIC(2) NOT NULL,
+    gpr_nome VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE quadrinhos (
@@ -100,7 +102,7 @@ CREATE TABLE entrada_estoque (
     ees_qua_id      NUMERIC(6) NOT NULL,
     ees_quantidade  NUMERIC(5) NOT NULL,
     ees_valor_custo NUMERIC(6, 2) NOT NULL,
-    ees_dt_entrada  TIMESTAMP NOT NULL,
+    ees_dt_entrada  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     ees_fornecedor  VARCHAR(100) NOT NULL
 );
 
@@ -108,7 +110,6 @@ CREATE TABLE itens_pedido (
     ite_ped_id  NUMERIC(9),
     ite_qua_id NUMERIC(6),
     ite_quantidade NUMERIC(2) NOT NULL,
-    ite_status VARCHAR(20),
 	PRIMARY KEY(ite_ped_id, ite_qua_id)
 );
 
@@ -142,6 +143,15 @@ CREATE TABLE cupons_pedido (
     cpe_cup_id NUMERIC(9),
     cpe_ped_id NUMERIC(9),
     PRIMARY KEY(cpe_cup_id, cpe_ped_id)
+);
+
+CREATE TABLE pedidos_pos_venda (
+    ppv_id NUMERIC(9) PRIMARY KEY,
+    ppv_ped_id NUMERIC(9) NOT NULL,
+    ppv_qua_id NUMERIC(6) NOT NULL,
+    ppv_quantidade NUMERIC(2) NOT NULL,
+    ppv_status VARCHAR(20) NOT NULL,
+    ppv_tipo VARCHAR(10) NOT NULL
 );
 
 ALTER TABLE enderecos
@@ -191,3 +201,9 @@ ALTER TABLE estoque
 
 ALTER TABLE entrada_estoque
     ADD CONSTRAINT fk_ees_qua FOREIGN KEY ( ees_qua_id ) REFERENCES quadrinhos ( qua_id );
+
+ALTER TABLE pedidos_pos_venda
+    ADD CONSTRAINT fk_ppv_ped FOREIGN KEY ( ppv_ped_id ) REFERENCES pedidos ( ped_id );
+
+ALTER TABLE pedidos_pos_venda
+    ADD CONSTRAINT fk_ppv_qua FOREIGN KEY ( ppv_qua_id ) REFERENCES quadrinhos ( qua_id );

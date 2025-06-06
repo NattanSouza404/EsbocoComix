@@ -52,7 +52,8 @@ public class ServidorConfig {
 				Map.entry("api/carrinho", new CarrinhoController()),
 				Map.entry("api/cupom", new CupomController()),
 				Map.entry("api/estoque", new EstoqueController()),
-				Map.entry("api/analise", new AnaliseController())
+				Map.entry("api/analise", new AnaliseController()),
+				Map.entry("api/pedido_pos_venda", new PedidoPosVendaController())
 		);
 
 		for (Map.Entry<String, HttpServlet> entry: servlets.entrySet()){
