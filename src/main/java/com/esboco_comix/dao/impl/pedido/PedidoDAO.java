@@ -13,7 +13,6 @@ import com.esboco_comix.dto.PedidoDTO;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
-import com.esboco_comix.model.enuns.StatusItemPedido;
 import com.esboco_comix.model.enuns.StatusPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
@@ -83,7 +82,7 @@ public class PedidoDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Nenhum registro encontrado de pedido.");
+                return new ArrayList<>();
             }
             rs.beforeFirst();
 
@@ -128,7 +127,7 @@ public class PedidoDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Nenhum registro encontrado de pedido.");
+                return new ArrayList<>();
             }
             rs.beforeFirst();
 
@@ -252,11 +251,6 @@ public class PedidoDAO {
         ItemPedido item = new ItemPedido();
         item.setIdPedido(rs.getInt("ped_id"));
         item.setQuantidade(rs.getInt("ite_quantidade"));
-
-        String status = rs.getString("ite_status");
-        if (status != null){
-            item.setStatus(StatusItemPedido.valueOf(status));
-        }
 
         item.setIdQuadrinho(rs.getInt("ite_qua_id"));
 

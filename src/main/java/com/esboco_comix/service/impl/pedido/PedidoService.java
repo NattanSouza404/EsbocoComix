@@ -5,21 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.esboco_comix.dao.impl.pedido.*;
 import jakarta.servlet.http.HttpSession;
 
 import com.esboco_comix.controller.session.Carrinho;
-import com.esboco_comix.dao.impl.pedido.CartaoCreditoPedidoDAO;
-import com.esboco_comix.dao.impl.pedido.CupomPedidoDAO;
-import com.esboco_comix.dao.impl.pedido.ItemPedidoDAO;
-import com.esboco_comix.dao.impl.pedido.PedidoDAO;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoDTO;
+import com.esboco_comix.dto.PedidoPosVendaDTO;
 import com.esboco_comix.model.entidades.*;
-import com.esboco_comix.model.enuns.StatusItemPedido;
 import com.esboco_comix.model.enuns.StatusPedido;
 import com.esboco_comix.service.impl.CarrinhoService;
 import com.esboco_comix.service.impl.CartaoCreditoService;
-import com.esboco_comix.service.impl.ClienteService;
 import com.esboco_comix.service.impl.CupomService;
 import com.esboco_comix.service.impl.EstoqueService;
 import com.esboco_comix.service.impl.QuadrinhoService;
@@ -28,7 +24,6 @@ import com.esboco_comix.service.validador.impl.FormaPagamentoValidador;
 public class PedidoService {
 
     private final CarrinhoService carrinhoService = new CarrinhoService();
-    private final ClienteService clienteService = new ClienteService();
     private final CupomService cupomService = new CupomService();
     private final QuadrinhoService quadrinhoService = new QuadrinhoService();
     private final CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
@@ -39,6 +34,8 @@ public class PedidoService {
     private final CartaoCreditoPedidoDAO cartaoCreditoPedidoDAO = new CartaoCreditoPedidoDAO();
     private final CupomPedidoDAO cupomPedidoDAO = new CupomPedidoDAO();
 
+    private final PedidoPosVendaDAO pedidoPosVendaDAO = new PedidoPosVendaDAO();
+    
     private final CalculadoraPedido calculadora = new CalculadoraPedido(
         this.cupomService,
         this.quadrinhoService,
@@ -106,6 +103,10 @@ public class PedidoService {
         return pedidoDAO.consultarByIDCliente(idCliente);
     }
 
+    public Pedido consultarByID(int id) throws Exception {
+		return pedidoDAO.consultarByID(id);
+	}
+
     public Pedido atualizarStatus(PedidoDTO pedidoDTO) throws Exception {
         Pedido pedido = pedidoDTO.getPedido();
         Pedido pedidoNoBanco = pedidoDAO.consultarByID(pedido.getId());
@@ -113,14 +114,12 @@ public class PedidoService {
         StatusPedido status = pedido.getStatus();
         StatusPedido statusNoBanco = pedidoNoBanco.getStatus();
 
-        List<ItemPedidoDTO> itens = itemPedidoDAO.consultarByIDPedido(pedido.getId());
+        List<PedidoPosVendaDTO> pedidosPosVenda = pedidoPosVendaDAO.consultarByIdPedido(pedido.getId());
 
-        for (ItemPedidoDTO item : itens) {
-            if (item.getItemPedido().getStatus() != null){
-                throw new Exception("Esse pedido já possui item com pedido de troca/devolução!");
-            }
+        if (!pedidosPosVenda.isEmpty()){
+            throw new Exception("Esse pedido já possui item com pedido de troca/devolução!");
         }
-        
+
         if (statusNoBanco == StatusPedido.TROCA_CONCLUIDA || statusNoBanco == StatusPedido.DEVOLUCAO_CONCLUIDA){
             throw new Exception("Não é possível alterar pedido com troca ou devolução já concluída!");
         }
@@ -148,39 +147,6 @@ public class PedidoService {
         }
 
         return pedidoDAO.atualizarStatus(pedido);
-    }
-
-    public ItemPedido atualizarStatus(ItemPedidoDTO itemPedidoDTO) throws Exception {
-        ItemPedido item = itemPedidoDTO.getItemPedido();
-        
-        Pedido pedidoNoBanco = pedidoDAO.consultarByID(item.getIdPedido());
-        StatusPedido statusPedidoBanco = pedidoNoBanco.getStatus();
-
-        if (statusPedidoBanco != StatusPedido.ENTREGUE){
-            throw new Exception("Pedido não entregue ou pedido de troca/devolução dos itens já foi realizado!");   
-        }
-
-        StatusItemPedido statusItemPedido = item.getStatus();
-        StatusItemPedido statusItemPedidoNoBanco = itemPedidoDAO.consultarByID(item.getIdPedido(), item.getIdQuadrinho()).getStatus();
-
-        if (statusItemPedidoNoBanco == StatusItemPedido.TROCA_CONCLUIDA || statusItemPedidoNoBanco == StatusItemPedido.DEVOLUCAO_CONCLUIDA){
-            throw new Exception("Troca ou devolução do item já foi realizada");
-        }
-
-        if (statusItemPedido == StatusItemPedido.TROCA_CONCLUIDA || statusItemPedido == StatusItemPedido.DEVOLUCAO_CONCLUIDA){
-
-            Cliente cliente = clienteService.consultarByIDPedido(item.getIdPedido());  
-            
-            cupomService.gerarCupomTroca(
-                cliente.getId(), 
-                calculadora.calcularItemPedido(item)
-            );
-
-            estoqueService.retornarAoEstoque(itemPedidoDTO);
-
-        }
-
-        return itemPedidoDAO.atualizarStatus(item);
     }
 
 }

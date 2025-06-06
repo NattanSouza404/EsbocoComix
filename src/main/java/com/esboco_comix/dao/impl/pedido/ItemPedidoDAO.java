@@ -10,7 +10,6 @@ import java.util.List;
 
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.model.entidades.ItemPedido;
-import com.esboco_comix.model.enuns.StatusItemPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class ItemPedidoDAO {
@@ -151,43 +150,11 @@ public class ItemPedidoDAO {
         }
     }
 
-    public ItemPedido atualizarStatus(ItemPedido item) throws Exception {
-        Connection conn = ConexaoFactory.getConexao(); 
-    
-        PreparedStatement pst = conn.prepareStatement(
-            "UPDATE itens_pedido set "+
-                "ite_status = ? WHERE ite_ped_id = ? AND ite_qua_id = ?;"
-        );
-    
-        try {
-            pst.setString(1, item.getStatus().name());
-            pst.setInt(2, item.getIdPedido());
-            pst.setInt(3, item.getIdQuadrinho());
-
-            if (pst.executeUpdate() == 0) {
-                throw new Exception("Atualização não foi sucedida!");
-            }
-
-            return consultarByID(item.getIdPedido(), item.getIdQuadrinho());
-        } catch (Exception e){
-            throw e;
-        } finally {
-            pst.close();
-            conn.close();
-        } 
-    }
-
     private ItemPedido mapearEntidade(ResultSet rs) throws SQLException {
         ItemPedido item = new ItemPedido();  
         item.setIdPedido(rs.getInt("ite_ped_id"));
         item.setIdQuadrinho(rs.getInt("ite_qua_id"));
         item.setQuantidade(rs.getInt("ite_quantidade"));
-
-        String status = rs.getString("ite_status");
-        if (status != null){
-            item.setStatus(StatusItemPedido.valueOf(status));
-        }
-
         return item;
     }
 
