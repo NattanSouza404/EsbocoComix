@@ -1,0 +1,3 @@
+# test config
+browser=firefox
+headless=false
