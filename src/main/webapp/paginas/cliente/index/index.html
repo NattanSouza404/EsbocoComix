@@ -60,20 +60,85 @@
               <div class="d-flex align-items-center mb-3">
                 <label class="form-label me-2">
                   Titulo:
-                  <input type="tel" name="titulo" class="form-control" placeholder="Digite o titulo">
+                  <input type="text" name="titulo" class="form-control" placeholder="O Homem-Cão">
+                </label>
+              </div>
+
+              <div class="d-flex align-items-center mb-3">
+                <label class="form-label me-2">
+                  Grupo de precificação:
+                  <select name="grupoPrecificacao" class="form-control">
+                    <option></option>
+                    <option>Colecionador</option>
+                    <option>Premium</option>
+                    <option>Padrão</option>
+                    <option>Promoção</option>
+                  </select>
                 </label>
               </div>
               
               <div class="d-flex align-items-center mb-3">
                 <label class="form-label me-2">
                   Autor:
-                  <input type="tel" name="autor" class="form-control" placeholder="Digite o autor">
+                  <input type="text" name="autor" class="form-control" placeholder="Dav Pikey">
+                </label>
+              </div>
+
+              <div class="d-flex align-items-center mb-3">
+                <label class="form-label me-2">
+                  Ano:
+                  <input type="number" name="ano" class="form-control" placeholder="2000">
+                </label>
+              </div>
+
+              <div class="d-flex align-items-center mb-3">
+                <label class="form-label me-2">
+                  Edição:
+                  <input type="number" name="edicao" class="form-control" placeholder="1">
+                </label>
+              </div>
+
+              <div class="d-flex align-items-center mb-3">
+                <label class="form-label me-2">
+                  Editora:
+                  <input type="text" name="editora" class="form-control" placeholder="Companhia das Letras">
+                </label>
+              </div>
+
+              <div class="d-flex align-items-center mb-3">
+                <label class="form-label me-2">
+                  <p id="input-maximo-paginas">Máximo de Páginas = 300</p>
+                  <input type="range" name="numeroPaginas" class="form-control" placeholder="20" min="0" max="300" value="300">
+                </label>
+              </div>
+
+              <div class="d-flex align-items-center mb-3">
+                <label class="form-label me-2">
+                  Dimensões:
+                  <input type="number" name="altura" class="form-control" placeholder="Altura">
+                  <input type="number" name="largura" class="form-control" placeholder="Largura">
+                  <input type="number" name="profundidade" class="form-control" placeholder="Profundidade">
+                  <input type="number" name="peso" class="form-control" placeholder="Peso">
+                </label>
+              </div>
+
+              <div class="d-flex align-items-center mb-3">
+                <label class="form-label me-2">
+                  Código de Barras:
+                  <input type="text" name="codigoBarras" class="form-control" placeholder="1111111111111">
+                </label>
+              </div>
+
+              <div class="d-flex align-items-center mb-3">
+                <label class="form-label me-2">
+                  ISBN:
+                  <input type="text" name="isbn" class="form-control" placeholder="1112223334445">
                 </label>
               </div>
 
               <!-- Button -->
               <div class="text-center mt-3">
-                  <button id="btn-buscar-quadrinho" type="button" class="btn btn-primary btn-lg">Buscar</button>
+                <button id="btn-buscar-quadrinho" type="button" class="btn btn-primary btn-lg">Buscar</button>
               </div>
             </form>
           </div>

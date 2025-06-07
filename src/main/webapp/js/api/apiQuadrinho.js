@@ -30,6 +30,17 @@ export async function filtrarTodosQuadrinhos(filtro) {
             url += "?opcao=consultarporfiltro";
             url += "&titulo="+filtro.titulo;
             url += "&autor="+filtro.autor;
+            url += "&ano="+filtro.ano;
+            url += "&numeroPaginas="+filtro.numeroPaginas;
+            url += "&codigoBarras="+filtro.codigoBarras;
+            url += "&edicao="+filtro.edicao;
+            url += "&editora="+filtro.editora;
+            url += "&isbn="+filtro.isbn;
+            url += "&altura="+filtro.altura;
+            url += "&largura="+filtro.largura;
+            url += "&profundidade="+filtro.profundidade;
+            url += "&peso="+filtro.peso;
+            url += "&grupoPrecificacao="+filtro.grupoPrecificacao;
         }
 
         const response = await fetch(url);

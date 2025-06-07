@@ -101,6 +101,51 @@ public class QuadrinhoDAO {
             params.add("%" + filtro.getAutor() + "%");
         }
 
+        if (filtro.getEdicao() != null) {
+            query.append(" AND qua_edicao = ?");
+            params.add(filtro.getEdicao());
+        }
+
+        if (filtro.getEditora() != null) {
+            query.append(" AND qua_editora ILIKE ?");
+            params.add("%" + filtro.getEditora() + "%");
+        }
+
+        if (filtro.getNumeroPaginas() != null) {
+            query.append(" AND qua_numero_paginas < ?");
+            params.add(filtro.getNumeroPaginas());
+        }
+
+        if (filtro.getAltura() != null) {
+            query.append(" AND qua_altura = ?");
+            params.add(filtro.getAltura());
+        }
+
+        if (filtro.getLargura() != null) {
+            query.append(" AND qua_largura = ?");
+            params.add(filtro.getLargura());
+        }
+
+        if (filtro.getProfundidade() != null) {
+            query.append(" AND qua_profundidade = ?");
+            params.add(filtro.getProfundidade());
+        }
+
+        if (filtro.getPeso() != null) {
+            query.append(" AND qua_peso = ?");
+            params.add(filtro.getPeso());
+        }
+
+        if (filtro.getCodigoBarras() != null) {
+            query.append(" AND qua_codigo_barras ILIKE ?");
+            params.add("%" + filtro.getCodigoBarras() + "%");
+        }
+
+        if (filtro.getIsbn() != null) {
+            query.append(" AND qua_isbn ILIKE ?");
+            params.add("%" + filtro.getIsbn() + "%");
+        }
+
         query.append(" ORDER BY qua_id DESC;");
 
         PreparedStatement pst = conn.prepareStatement(
