@@ -1,11 +1,13 @@
 package com.esboco_comix.service.impl;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 import com.esboco_comix.dao.impl.quadrinho.QuadrinhoDAO;
 import com.esboco_comix.dto.FiltrarQuadrinhoDTO;
 import com.esboco_comix.dto.QuadrinhoDTO;
+import com.esboco_comix.model.entidades.Categoria;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -19,6 +21,10 @@ public class QuadrinhoService {
 
     public List<QuadrinhoDTO> consultarTodos() throws Exception {
         return quadrinhoDAO.consultarTodos();
+    }
+
+    public List<Categoria> consultarTodasCategorias() throws Exception {
+        return quadrinhoDAO.consultarTodasCategorias();
     }
 
     public List<QuadrinhoDTO> filtrarTodos(HttpServletRequest req) throws Exception {
@@ -87,6 +93,12 @@ public class QuadrinhoService {
         String grupoPrecificacao = req.getParameter("grupoPrecificacao");
         if (!grupoPrecificacao.isBlank()){
             filtro.setGrupoPrecificacao(grupoPrecificacao);
+        }
+
+        String categorias = req.getParameter("categorias");
+        if (!categorias.isBlank()){
+            String[] listaCategorias = categorias.split(",");
+            filtro.setCategorias(Arrays.asList(listaCategorias));
         }
 
         return quadrinhoDAO.filtrarTodos(filtro);

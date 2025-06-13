@@ -77,6 +77,40 @@ public class QuadrinhoDAO {
         }
     }
 
+    public List<Categoria> consultarTodasCategorias() throws Exception {
+        Connection conn = ConexaoFactory.getConexao();
+
+        PreparedStatement pst = conn.prepareStatement(
+            """
+            SELECT * FROM categorias ORDER BY cat_nome;
+            """,
+            ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_READ_ONLY
+        );
+
+        try {
+            ResultSet rs = pst.executeQuery();
+
+            if (!rs.next()) {
+                throw new Exception("Nenhuma categoria encontrada.");
+            }
+            rs.beforeFirst();
+
+            List<Categoria> categorias = new ArrayList<>();
+
+            while (rs.next()) {
+                categorias.add(mapearCategoria(rs));
+            }
+
+            return categorias;
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            pst.close();
+            conn.close();
+        }
+    }
+
     public List<QuadrinhoDTO> filtrarTodos(FiltrarQuadrinhoDTO filtro) throws Exception {
         Connection conn = ConexaoFactory.getConexao();
 
@@ -117,12 +151,12 @@ public class QuadrinhoDAO {
         }
 
         if (filtro.getAltura() != null) {
-            query.append(" AND qua_altura = ?");
+            query.append(" AND qua_altura_cm = ?");
             params.add(filtro.getAltura());
         }
 
         if (filtro.getLargura() != null) {
-            query.append(" AND qua_largura = ?");
+            query.append(" AND qua_largura_cm = ?");
             params.add(filtro.getLargura());
         }
 
@@ -132,7 +166,7 @@ public class QuadrinhoDAO {
         }
 
         if (filtro.getPeso() != null) {
-            query.append(" AND qua_peso = ?");
+            query.append(" AND qua_peso_gramas = ?");
             params.add(filtro.getPeso());
         }
 
@@ -144,6 +178,32 @@ public class QuadrinhoDAO {
         if (filtro.getIsbn() != null) {
             query.append(" AND qua_isbn ILIKE ?");
             params.add("%" + filtro.getIsbn() + "%");
+        }
+
+        if (filtro.getGrupoPrecificacao() != null) {
+            query.append(" AND gpr_nome ILIKE ?");
+            params.add("%" + filtro.getGrupoPrecificacao() + "%");
+        }
+
+        if (filtro.getCategorias() != null && !filtro.getCategorias().isEmpty()){
+            query.append(" AND cat_nome IN (");
+
+            List<String> categorias = filtro.getCategorias();
+
+            for (int i = 0; i < categorias.size(); i++) {
+                
+                params.add(categorias.get(i));
+
+                if (i == categorias.size() - 1){
+                    query.append("?");
+                    continue;
+                }
+
+                query.append("?,");
+
+            }
+
+            query.append(")");
         }
 
         query.append(" ORDER BY qua_id DESC;");

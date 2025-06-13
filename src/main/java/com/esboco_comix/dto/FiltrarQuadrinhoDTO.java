@@ -3,8 +3,6 @@ package com.esboco_comix.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.esboco_comix.model.entidades.Categoria;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,5 +24,5 @@ public class FiltrarQuadrinhoDTO {
     private String isbn;
     private String grupoPrecificacao;
 
-    private List<Categoria> categorias;
+    private List<String> categorias;
 }
