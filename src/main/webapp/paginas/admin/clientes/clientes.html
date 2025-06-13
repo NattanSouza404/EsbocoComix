@@ -12,65 +12,84 @@
 
   <nav id="main-nav"></nav>
 
-  <div id="header-clientes">
-    <div id="opcoes-cliente">
-      <h3>Gerenciar clientes</h3>
-      <a href="/cadastrar">
-        <button class="botao-prototipo">+ Novo cliente</button>
-      </a>
-    </div>
-
-    <form id="filtro-clientes">
-      <div id="campos-filtro-clientes">
-
-        <label>Nome</label>
-        <input placeholder="Nome" name="nome"></input>
-
-        <label>Gênero</label>
-        <select name="genero">
-          <option></option>
-          <option value="MASCULINO">Masculino</option>
-          <option value="FEMININO">Feminino</option>
-          <option value="OUTRO">Outro</option>
-        </select>
-
-        <label>Data nascimento</label>
-        <input type="date" name="dataNascimento">
-
-        <label>CPF</label>
-        <input placeholder="111.111.111-11" name="cpf">
-
-        <label>E-mail</label>
-        <input type="email" placeholder="email@email.com" name="email">
-
-        <label>Ranking</label>
-        <input type="number" placeholder="4" name="ranking">
-
-        <label>Status cadastro</label>
-        <select name="isAtivo">
-          <option value="">Todos</option>
-          <option value=true>Ativo</option>
-          <option value=false>Inativo</option>
-        </select>
+  <main style="display: grid;">
+    <div id="header-clientes">
+      <div id="opcoes-cliente">
+        <h3>Gerenciar clientes</h3>
+        <a href="/cadastrar">
+          <button class="botao-prototipo">+ Novo cliente</button>
+        </a>
       </div>
-
-      <button type="button" onclick="atualizarTabelaClientes()">Pesquisar</button>
-    </form>
-  </div>
-
-  <table id="tabela-clientes">
-    <thead>
-      <th>#</th>
-      <th>Nome</th>
-      <th>Gênero</th>
-      <th>Data de Nascimento</th>
-      <th>CPF</th><th>E-mail</th>
-      <th>Ranking</th>
-      <th>Status</th>
-      <th>Operações</th>
-    </thead>
-    <tbody></tbody>
-  </table>
+  
+      <form id="filtro-clientes">
+        <div id="campos-filtro-clientes">
+  
+          <label>
+            Nome
+            <input placeholder="Nome" name="nome"></input>
+          </label>
+  
+          <label>
+            Gênero
+            <select name="genero">
+              <option></option>
+              <option value="MASCULINO">Masculino</option>
+              <option value="FEMININO">Feminino</option>
+              <option value="OUTRO">Outro</option>
+            </select>
+          </label>
+          
+          <label>
+            Data nascimento
+            <input type="date" name="dataNascimento">
+          </label>
+          
+          <label>
+            CPF
+            <input placeholder="111.111.111-11" name="cpf">
+          </label>
+          
+          <label>
+            E-mail
+            <input type="email" placeholder="email@email.com" name="email">
+          </label>
+          
+  
+          <label>
+            Ranking
+            <input type="number" placeholder="4" name="ranking">
+          </label>
+          
+  
+          <label>
+            Status cadastro
+            <select name="isAtivo">
+              <option value="">Todos</option>
+              <option value=true>Ativo</option>
+              <option value=false>Inativo</option>
+            </select>
+          </label>
+          
+        </div>
+  
+        <button type="button" onclick="atualizarTabelaClientes()">Pesquisar</button>
+      </form>
+    </div>
+  
+    <table id="tabela-clientes">
+      <thead>
+        <th>#</th>
+        <th>Nome</th>
+        <th>Gênero</th>
+        <th>Data de Nascimento</th>
+        <th>CPF</th><th>E-mail</th>
+        <th>Ranking</th>
+        <th>Status</th>
+        <th>Operações</th>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
 
   <script type="module" src="/js/loadAdminPage.js"></script>
   <script type="module" src="/js/script.js"></script>
