@@ -12,13 +12,23 @@ export class ChatIA extends Modal {
         this.conteudoModal = conteudoModal;
 
         this.modalElement.querySelector('.modal-footer').innerHTML = `
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="/img/three-dots.svg">
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a id="btn-limpar-chat" class="dropdown-item" >
+                            Limpar chat
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        
             <textarea class="caixa-mensagem-usuario"></textarea>
+
             <button class="btn-enviar">
                 <img src="/img/enviado.png">
-            </button>
-
-            <button class="btn-limpar-chat">
-                Limpar chat
             </button>
         `;
 
@@ -36,7 +46,7 @@ export class ChatIA extends Modal {
             this.enviarMsgChatIA();
         };
 
-        this.modalElement.querySelector('.btn-limpar-chat').onclick = () => {
+        this.modalElement.querySelector('#btn-limpar-chat').onclick = () => {
             this.limparChat();
         };
 
@@ -58,28 +68,17 @@ export class ChatIA extends Modal {
 
         const p = div.querySelector('p');
 
-        const linkRegex = /(\/anuncio\?id=\d+)/g;
+        const linkMarkdownRegex = /\[([^\]]+)\]\((\/anuncio\?id=\d+)\)/g;
 
-        const parts = mensagem.split(linkRegex);
-
-        parts.forEach(part => {
-            if (linkRegex.test(part)) {
-                const link = document.createElement('a');
-                link.href = part;
-                link.textContent = "Anúncio";
-                link.target = '_blank';
-                p.appendChild(link);
-                return;
-            }
-
-            const span = document.createElement('span');
-            span.textContent = part;
-            p.appendChild(span);
+        let mensagemFormatada = mensagem.replace(linkMarkdownRegex, (match, texto, url) => {
+            return `<a href="${url}" target="_blank">${texto}</a>`;
         });
 
-        this.modalElement.querySelector('#historico-conversa').append(div);
+        mensagemFormatada = mensagemFormatada.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
-        return p.textContent;
+        p.innerHTML = mensagemFormatada;
+
+        this.modalElement.querySelector('#historico-conversa').append(div);
     }
 
     limparChat(){
@@ -97,19 +96,25 @@ export class ChatIA extends Modal {
         }
     
         this.adicionarMensagem(mensagem, 'texto-usuario');
+        this.scrollar();
 
         const mensagemIA = await retornarRespostaIA(mensagem);
 
-        const mensagemFormatada = 
-            mensagemIA !== undefined && mensagem !== null && mensagem !== '' ?
-            this.adicionarMensagem(mensagemIA.resposta, 'texto-ia') : this.adicionarMensagem("[Assistente virtual fora de serviço]", 'texto-ia');
+        let resposta = "";
+        if (mensagemIA !== undefined && mensagem !== null && mensagem !== ''){
+            resposta = mensagemIA.resposta;
+        } else {
+            resposta = "[Assistente virtual fora de serviço]";
+        }
+
+        this.adicionarMensagem(resposta, 'texto-ia');
 
         textarea.value = '';
 
         this.scrollar();
 
         adicionarMensagemHistorico(mensagem, 'texto-usuario');
-        adicionarMensagemHistorico(mensagemFormatada, 'texto-ia');
+        adicionarMensagemHistorico(mensagemIA.resposta, 'texto-ia');
     }
 
     scrollar(){
