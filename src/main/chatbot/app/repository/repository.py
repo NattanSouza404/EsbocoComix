@@ -1,4 +1,4 @@
-from app.database_config import get_conexao
+from app.config.database_config import get_conexao
 
 def consultarClienteByID(idcliente):
     conn = get_conexao()
@@ -19,14 +19,18 @@ def consultarQuadrinhos():
             qua_titulo,
             qua_autor,
             qua_sinopse,
+            qua_preco,
+            qua_ano,
             cat_id,
             cat_nome,
             gpr_nome,
-            gpr_porcentagem
-        FROM quadrinhos q
-        LEFT JOIN categorias_quadrinho cq ON q.qua_id = cq.cqu_qua_id
-        LEFT JOIN categorias c             ON cq.cqu_cat_id = c.cat_id
-        JOIN grupos_precificacao ON q.qua_gpr_id = gpr_id
+            est_quantidade_total
+        FROM
+            quadrinhos q
+            LEFT JOIN categorias_quadrinho cq ON q.qua_id = cq.cqu_qua_id
+            LEFT JOIN categorias c ON cq.cqu_cat_id = c.cat_id
+            JOIN grupos_precificacao ON q.qua_gpr_id = gpr_id
+            LEFT JOIN estoque ON qua_id = est_qua_id
         ORDER BY q.qua_id;
     """
     cur.execute(sql)
@@ -34,14 +38,16 @@ def consultarQuadrinhos():
     resultados = cur.fetchall()
 
     mapa = {}
-    for qua_id, qua_titulo, qua_autor, qua_sinopse, cat_id, cat_nome, gpr_nome, gpr_porcentagem in resultados:
+    for qua_id, qua_titulo, qua_autor, qua_sinopse, qua_preco, qua_ano, cat_id, cat_nome, gpr_nome, est_quantidade_total in resultados:
         if qua_id not in mapa:
             mapa[qua_id] = {
                 "titulo": qua_titulo,
                 "autor": qua_autor,
                 "sinopse": qua_sinopse,
                 "grupoPrecificao": gpr_nome,
-                "grupoPrecificaoMargemLucro": gpr_porcentagem,
+                "ano":  qua_ano,
+                "preco": qua_preco,
+                "quantidadeEstoque": est_quantidade_total,
                 "categorias": []
             }
 

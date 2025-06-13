@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.mensagem import Mensagem
-from app.chatbot import iniciarChat, gerarResposta
+from app.model.mensagem import Mensagem
+from app.chatbot.chatbot import iniciarChat, gerarResposta
 
 app = FastAPI()
 
