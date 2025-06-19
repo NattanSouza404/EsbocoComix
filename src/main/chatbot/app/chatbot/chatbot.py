@@ -1,7 +1,7 @@
 import google.generativeai as genai
-from app.config import api_key
-from app.repository import consultarQuadrinhos, consultarClienteByID, consultarPedidosByIDCliente
-from app.mensagem import Mensagem
+from app.config.config import api_key
+from app.repository.repository import consultarQuadrinhos, consultarClienteByID, consultarPedidosByIDCliente
+from app.model.mensagem import Mensagem
 
 genai.configure(api_key=api_key)
 
@@ -14,7 +14,7 @@ def iniciarChat():
                 """
                 Você é um assistente de e-commerce de quadrinhos.
                 Você pode redirecionar o usuário para os anúncios dos quadrinhos, 
-                mandando-os para um link como "[nomeQuadrinho]: /anuncio?id=id" onde você substitui o id para o id do quadrinho e nomeQuadrinho para o titulo do quadrinho.
+                mandando-os para um link como "[nomeQuadrinho](/anuncio?id=id)" onde você substitui o id para o id do quadrinho e nomeQuadrinho para o titulo do quadrinho.
                 Se o usuário pedir para um link do quadrinho, é só fazer como já te falei.
                 Você não possui nenhum acesso ao carrinho do usuário.
                 Você possui acesso aos pedidos já realizados pelo usuário. Inclusive, esses pedidos podem ser usados como base para recomendar quadrinhos ao usuário.

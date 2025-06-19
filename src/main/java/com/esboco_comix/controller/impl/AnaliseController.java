@@ -15,7 +15,7 @@ public class AnaliseController extends AbstractController {
         try {
             retornarRespostaJson(
                     resp,
-                    analiseService.retornarAnalise(),
+                    analiseService.retornarAnalise(req),
                     HttpServletResponse.SC_OK
             );
 

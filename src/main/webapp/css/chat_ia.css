@@ -78,16 +78,25 @@
     justify-content: space-around;
 }
 
+/* Esconde a setinha padrão do Bootstrap */
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+#btn-limpar-chat {
+    color: red;
+}
+
 #modal-chat-ia .modal-footer img {
     height: 15px;
 }
 
 #modal-chat-ia .modal-footer textarea {
-    width: 70%;
+    width: 65%;
     resize: none;
 }
 
-#modal-chat-ia .modal-footer button {
-    width: 20%;
+.btn-enviar {
+    width: 10%;
     height: 32px;
 }

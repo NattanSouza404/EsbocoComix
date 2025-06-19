@@ -24,6 +24,10 @@ public class QuadrinhoController extends AbstractController {
                     objetoResposta = quadrinhoService.filtrarTodos(req);
                     break;
 
+                case "consultarcategorias":
+                    objetoResposta = quadrinhoService.consultarTodasCategorias();
+                    break;
+
                 default:
                     String parametroId = req.getParameter("id");
 

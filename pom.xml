@@ -9,7 +9,7 @@
 	<url>http://maven.apache.org</url>
 
     <properties>
-    	<tomcat.version>11.0.6</tomcat.version>
+    	<tomcat.version>[11.0.8,)</tomcat.version>
 		<mainClass>com.esboco_comix.Main</mainClass>
     </properties>
 	
@@ -40,7 +40,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.7.4</version>
+            <version>[42.7.7,)</version>
         </dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
