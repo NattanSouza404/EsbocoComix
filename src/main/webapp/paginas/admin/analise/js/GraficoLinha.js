@@ -7,26 +7,36 @@ export default class GraficoLinha {
             data: dados,
             options: {
                 responsive: true,
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
                 plugins: {
                     legend: {
                         display: true,
-                        position: 'top'
+                        position: 'left',
+                        maxWidth: 300  // Add scroll when exceeds width
                     },
                     title: {
                         display: true,
-                        text: title
+                        text: title,
+                        font: {
+                            size: 20
+                        }
                     }
                 },
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        suggestedMax: 10,
                     }
                 }
             }
         });
     }
 
-    atualizar(){
+    atualizar(dados){
+        this.chart.data = dados;
         this.chart.update();
     }   
 

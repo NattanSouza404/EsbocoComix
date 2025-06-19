@@ -1,11 +1,18 @@
 const PATH = "/api/analise";
 
-export async function retornarAnalise(){
-    try {
-        const response = await fetch(PATH);
-        return await response.json();
+export async function retornarAnalise(filtro) {
+    let url = PATH;
 
-    } catch (error) {
-        console.error('Erro buscando dados:', error);
+    if (filtro){
+        url += `?dataInicio=${filtro.dataInicio}`;
+        url += `&dataFinal=${filtro.dataFinal}`;
     }
+
+    const response = await fetch(url);
+
+    if (response.status === 500){
+        throw Error('Nenhum dado encontrado!');
+    }
+
+    return await response.json();
 }

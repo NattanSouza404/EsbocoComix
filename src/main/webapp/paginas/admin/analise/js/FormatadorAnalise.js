@@ -6,35 +6,53 @@ export default class FormatadorAnalise {
     }
 
     formatar(dados){
-        const datasSet = new Set();
-
-        dados.forEach(d => {
-            d.dados.forEach(venda => {
-                datasSet.add(formatarData(venda.data));
-            });
-        });
-
-        const labels = Array.from(datasSet);
+        const labels = this.formatarLabels(dados);
 
         const datasets = dados.map(dados => {
             const cor = this.gerarCorAleatoria();
 
+            const borderColor = this.corParaRGB(cor);
+
+            const color = this.clarear(cor, 0.5);
+
+            const bgColor = this.corParaRGB(color);
+
             return {
                 label: dados.titulo,
                 data: labels.map(labelData => {
-                    const venda = dados.dados.find(v => formatarData(v.data) === labelData);
+                    const venda = dados.dados.find(v => formatarDataISO(v.data) === labelData);
                     return venda ? venda.quantidade : 0;
                 }),
-                borderColor: this.corParaRGB(cor),
-                backgroundColor: this.clarear(this.corParaRGB(cor), 100),
+                borderColor: borderColor,
+                backgroundColor: bgColor,
                 tension: 0.4
             };
         });
 
+        const labels2 = labels.map(label => {
+            return formatarDataBR(label);
+        });
+
         return {
-            labels: labels,
+            labels: labels2,
             datasets: datasets
         }
+    }
+
+    formatarLabels(dados){
+        const datasSet = new Set();
+
+        dados.forEach(d => {
+            d.dados.forEach(venda => {
+                datasSet.add(formatarDataISO(venda.data));
+            });
+        });
+
+        let labels = Array.from(datasSet);
+
+        labels.sort((a, b) => a.localeCompare(b));
+
+        return this.gerarDateRange(labels[0], labels[labels.length - 1]);
     }
 
     gerarCorAleatoria() {
@@ -50,9 +68,9 @@ export default class FormatadorAnalise {
     
     clarear(cor, percentual) {
         return {
-            r: Math.min(cor.r + cor.r * percentual, 255),
-            g: Math.min(cor.g + cor.g * percentual, 255),
-            b: Math.min(cor.b + cor.b * percentual, 255)
+            r: Math.min(Math.round(cor.r + (255 - cor.r) * percentual), 255),
+            g: Math.min(Math.round(cor.g + (255 - cor.g) * percentual), 255),
+            b: Math.min(Math.round(cor.b + (255 - cor.b) * percentual), 255)
         };
     }
     
@@ -62,6 +80,44 @@ export default class FormatadorAnalise {
             g: Math.max(cor.g - cor.g * percentual, 0),
             b: Math.max(cor.b - cor.b * percentual, 0)
         };
-    } 
+    }
 
+    gerarDateRange(dataInicial, dataFinal) {
+        let dataAtual = new Date(dataInicial);
+
+        const fim = new Date(dataFinal);
+        fim.setDate(fim.getDate() + 1);
+
+        const datas = [];
+        while (dataAtual < fim) {
+            const d = new Date(dataAtual);
+            const dataFormatoISO = d.toISOString().split('T')[0];
+            
+            datas.push(dataFormatoISO);
+
+            dataAtual.setDate(dataAtual.getDate() + 1);
+        }
+
+        return datas;
+    }
+
+}
+
+function formatarDataBR(label) {
+    const [year, month, day] = label.split('-');
+    const data = new Date(year, month - 1, day);
+    
+    return data.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+}
+
+function formatarDataISO(array){
+    const ano = array[0];
+    const mes = ('0' + array[1]).slice(-2);
+    const dia = ('0' + array[2]).slice(-2);
+
+    return `${ano}-${mes}-${dia}`;
 }

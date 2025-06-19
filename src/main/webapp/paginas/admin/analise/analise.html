@@ -12,52 +12,38 @@
 
     <nav id="main-nav"></nav>
 
-    <div class="container d-flex flex-column align-items-center">  
-        <h2 class="text-center py-5">Análise por categoria</h2>
+    <div id="main-container" class="container d-flex flex-row py-5">  
         
-        <div class="filtro-analise centered">
+        <div class="filtro-analise centered d-flex">
 
-            <label>
-                <button>Adicionar categoria</button>
-                <input>
-            </label>
+            <form class="form-filtros">
+                <label>
+                    Data início
+                    <input name="dataInicio" type="date">
+                </label>
+        
+                <label>
+                    Data final
+                    <input name="dataFinal" type="date">
+                </label>
+            </form>
 
-            <label>
-                Data início
-                <input type="date">
-            </label>
-            
-    
-            <label>
-                Data final
-                <input type="date">
-            </label>
-            
+            <div class="botao">
+                <button id="btn-pesquisar">
+                    <img src="/img/search.svg">
+                    Filtrar por data
+                </button>
+            </div>
+
         </div>
 
-        <canvas id="graficoLinhaCategorias" class="graficoLinha"></canvas>
+        <div id="container-graficos">
+            <canvas id="graficoLinhaProdutos" class="grafico-linha"></canvas>
 
-        <h2 class="text-center py-5">Análise por produto</h2>
-        <div class="filtro-analise centered">
-            
-            <label>
-                <button>Adicionar produto</button>
-                <input>
-            </label>
-            
-            <label>
-                Data início
-                <input type="date">
-            </label>
-            
-            <label>
-                Data final
-                <input type="date">
-            </label>
-            
+            <hr/>
+
+            <canvas id="graficoLinhaCategorias" class="grafico-linha"></canvas>
         </div>
-
-        <canvas id="graficoLinhaProdutos" class="graficoLinha"></canvas>
     </div>
 
     <script type="module" src="../../../js/loadAdminPage.js"></script>
