@@ -18,7 +18,7 @@ public class EstoqueDAO {
 
         Connection conn = ConexaoFactory.getConexao();
 
-        String call = "CALL inserir_entrada_estoque(?, ?, ?, ?, ?)";
+        String call = "CALL inserir_entrada_estoque(?, ?, ?, ?, ?, ?)";
 
         int id = 0;
         
@@ -27,7 +27,8 @@ public class EstoqueDAO {
             cs.setInt(2, entradaEstoque.getQuantidade());
             cs.setDouble(3, entradaEstoque.getValorCusto());
             cs.setString(4, entradaEstoque.getFornecedor());
-            cs.setNull(5, Types.NUMERIC);
+            cs.setObject(5, entradaEstoque.getDataEntrada());
+            cs.setNull(6, Types.NUMERIC);
 
             if (cs.execute()) {
                 try (ResultSet rs = cs.getResultSet()) {

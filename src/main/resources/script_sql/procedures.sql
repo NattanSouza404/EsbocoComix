@@ -3,6 +3,7 @@ CREATE OR REPLACE PROCEDURE inserir_entrada_estoque(
     ees_quantidade  INTEGER,
     ees_valor_custo DOUBLE PRECISION,
     ees_fornecedor  VARCHAR,
+    ees_dt_entrada  TIMESTAMP,
 	OUT new_ees_id NUMERIC(6)  
 )
 LANGUAGE plpgsql
@@ -27,7 +28,7 @@ BEGIN
         ees_qua_id,
         ees_quantidade,
         ees_valor_custo,
-        CURRENT_TIMESTAMP,
+        ees_dt_entrada,
         ees_fornecedor
     )
 	RETURNING ees_id INTO new_ees_id;
