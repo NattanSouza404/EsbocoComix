@@ -1,9 +1,7 @@
 package com.esboco_comix.service.impl.pedido;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.esboco_comix.dao.impl.pedido.*;
 import jakarta.servlet.http.HttpSession;
@@ -90,13 +88,8 @@ public class PedidoService {
         return pedidoInserido;
     }
 
-    public Map<String, Object> consultarTodos() throws Exception {
-        Map<String, Object> consulta = new HashMap<>();
-
-        consulta.put("pedidos", pedidoDAO.consultarTodos());
-        consulta.put("itensPedido", itemPedidoDAO.consultarPedidosTroca());
-
-        return consulta;
+    public List<PedidoDTO> consultarTodos() throws Exception {
+        return pedidoDAO.consultarTodos();
     }
 
     public List<PedidoDTO> consultarPorIDCliente(int idCliente) throws Exception {
