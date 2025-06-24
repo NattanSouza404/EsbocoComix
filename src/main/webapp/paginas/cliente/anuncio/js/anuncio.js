@@ -1,85 +1,100 @@
-import { retornarQuadrinho } from "/js/api/apiQuadrinho.js";
+import { retornarQuadrinho } from "../../../../js/api/apiQuadrinho.js";
 import { adicionarItemAoCarrinho } from "/js/api/apiCarrinho.js";
 import { formatarData, formatarPreco } from "/js/script.js";
 
 const uRLSearchParams = new URLSearchParams(window.location.search);
-const quadrinho = await retornarQuadrinho(uRLSearchParams.get('id'));
 
-document.getElementById('secao-imagem').innerHTML = `
-    <img src="${quadrinho.urlImagem}" class="img-fluid rounded-start" alt="Imagem do produto"></img>
-`;
+let quadrinho;
+try {
+    quadrinho = await retornarQuadrinho(uRLSearchParams.get('id'));
 
-document.getElementById('header-produto').innerHTML = `
-    <h1 class="card-title">${quadrinho.titulo}</h1>
-    <p class="card-text fs-4 text-success">${formatarPreco(quadrinho.preco)}</p>
-`
+    carregarPagina(quadrinho);
 
-let estoque = quadrinho.quantidadeEstoque;
-if (quadrinho.isForaDeEstoque){
-    estoque = "Fora de Estoque";
+} catch (error){
+    document.getElementById('container-anuncio').innerHTML = `
+        <h3 class="text-center">Produto não encontrado!</h3>
+    `
 }
 
-document.getElementById('estoque').textContent = `Estoque: ${estoque}`;
+function carregarPagina(){
+    document.querySelector('title').textContent = quadrinho.titulo;
 
-let categorias = '';
-quadrinho.categorias.forEach(categoria => {
-    categorias += categoria.nome+", ";
-});
+    document.getElementById('secao-imagem').innerHTML = `
+        <img src="${quadrinho.urlImagem}" class="img-fluid rounded-start" alt="Imagem do produto"></img>
+    `;
 
-const corpoTabela = document.createElement('tbody');
-corpoTabela.innerHTML = `
-    <tbody>
-        <tr>
-            <td>Ano: ${formatarData(quadrinho.ano)}</td>
-        </tr>
-        <tr>
-            <td>Autor: ${quadrinho.autor}</td>
-        </tr>
-        <tr>
-            <td>Título: ${quadrinho.titulo}</td>
-        </tr>
-        <tr>
-            <td>Editora: ${quadrinho.editora}</td>
-        </tr>
-        <tr>
-            <td>Edição: ${quadrinho.edicao}</td>
-        </tr>
-        <tr>
-            <td>ISBN: ${quadrinho.isbn}</td>
-        </tr>
-        <tr>
-            <td>Número de Páginas: ${quadrinho.numeroPaginas}</td>
-        </tr>
-        <tr>
-            <td>Sinopse: ${quadrinho.sinopse}</td>
-        </tr>
-        <tr>
-            <td>Dimensões: ${quadrinho.altura}cm X ${quadrinho.largura}cm X ${quadrinho.profundidade}cm</td>
-        </tr>
-        <tr>
-            <td>Peso: ${quadrinho.peso}g</td>
-        </tr>
-        <tr>
-            <td>Código de Barras: ${quadrinho.codigoBarras}</td>
-        </tr>
-        <tr>
-            <td>Categorias: ${categorias}</td>
-        </tr>
-    </tbody>
-`
+    document.getElementById('header-produto').innerHTML = `
+        <h1 class="card-title">${quadrinho.titulo}</h1>
+        <p class="card-text fs-4 text-success">${formatarPreco(quadrinho.preco)}</p>
+    `
 
-document.getElementById('tabela-info').append(corpoTabela);
+    let estoque = quadrinho.quantidadeEstoque;
+    if (quadrinho.isForaDeEstoque){
+        estoque = "Fora de Estoque";
+    }
 
-window.adicionarItem = () => {
+    document.getElementById('estoque').textContent = `Estoque: ${estoque}`;
 
-    adicionarItemAoCarrinho(
-        {
-            idQuadrinho: quadrinho.id,
-            preco: quadrinho.preco,
-            quantidade: document.getElementsByName('quantidade')[0].value,
-            nome: quadrinho.titulo,
-            urlImagem: quadrinho.urlImagem
-        } 
-    )
+    let categorias = '';
+    quadrinho.categorias.forEach(categoria => {
+        categorias += categoria.nome+", ";
+    });
 
-};
+    const corpoTabela = document.createElement('tbody');
+    corpoTabela.innerHTML = `
+        <tbody>
+            <tr>
+                <td>Ano: ${formatarData(quadrinho.ano)}</td>
+            </tr>
+            <tr>
+                <td>Autor: ${quadrinho.autor}</td>
+            </tr>
+            <tr>
+                <td>Título: ${quadrinho.titulo}</td>
+            </tr>
+            <tr>
+                <td>Editora: ${quadrinho.editora}</td>
+            </tr>
+            <tr>
+                <td>Edição: ${quadrinho.edicao}</td>
+            </tr>
+            <tr>
+                <td>ISBN: ${quadrinho.isbn}</td>
+            </tr>
+            <tr>
+                <td>Número de Páginas: ${quadrinho.numeroPaginas}</td>
+            </tr>
+            <tr>
+                <td>Sinopse: ${quadrinho.sinopse}</td>
+            </tr>
+            <tr>
+                <td>Dimensões: ${quadrinho.altura}cm X ${quadrinho.largura}cm X ${quadrinho.profundidade}cm</td>
+            </tr>
+            <tr>
+                <td>Peso: ${quadrinho.peso}g</td>
+            </tr>
+            <tr>
+                <td>Código de Barras: ${quadrinho.codigoBarras}</td>
+            </tr>
+            <tr>
+                <td>Categorias: ${categorias}</td>
+            </tr>
+        </tbody>
+    `
+
+    document.getElementById('tabela-info').append(corpoTabela);
+
+    window.adicionarItem = () => {
+
+        adicionarItemAoCarrinho(
+            {
+                idQuadrinho: quadrinho.id,
+                preco: quadrinho.preco,
+                quantidade: document.getElementsByName('quantidade')[0].value,
+                nome: quadrinho.titulo,
+                urlImagem: quadrinho.urlImagem
+            } 
+        )
+
+    };
+}
