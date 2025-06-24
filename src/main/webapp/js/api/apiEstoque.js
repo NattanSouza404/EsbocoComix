@@ -2,12 +2,6 @@ const PATH = "/api/estoque";
 
 export async function inserirEntradaEstoque(entradaEstoque) {
     try {
-        const confirmacaoUsuario = confirm("Deseja mesmo realizar essa compra?");
-
-        if (!confirmacaoUsuario){
-            return;
-        }
-
         const url = PATH;
 
         const option = {
