@@ -1,6 +1,7 @@
 package com.esboco_comix.webapp.testes.pedido;
 
 import com.esboco_comix.webapp.base.BaseTest;
+import com.esboco_comix.webapp.casos_de_uso.AcessarTelaAnuncio;
 import com.esboco_comix.webapp.casos_de_uso.FluxoVenda;
 import com.esboco_comix.webapp.casos_de_uso.MudarStatusPedido;
 import org.junit.Test;
@@ -99,6 +100,20 @@ public class PedidoTest extends BaseTest {
             fluxoAdmin.abrirGerenciarVendas();
             fluxoAdmin.mudarStatus("Entregue");
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void adicionarItemAoCarrinhoAnuncio(){
+        try {
+            AcessarTelaAnuncio fluxo = new AcessarTelaAnuncio(driver, wait);
+
+            fluxo.abrirPaginaAnuncio(4);
+            fluxo.adicionarItemAoCarrinho(2);
+
+            fluxo.abrirPaginaCarrinho();
+        } catch (InterruptedException e){
             e.printStackTrace();
         }
     }

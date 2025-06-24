@@ -30,6 +30,10 @@ public abstract class AbstractPagina {
         Thread.sleep(1500);
     }
 
+    protected void sleep(long millis) throws InterruptedException {
+        Thread.sleep(millis);
+    }
+
     protected WebElement scrollToElement(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
