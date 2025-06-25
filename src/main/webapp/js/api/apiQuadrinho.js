@@ -23,15 +23,15 @@ export async function consultarTodasCategorias(){
 }
 
 export async function retornarQuadrinho(id) {
-    try {
-        const url = `${PATH}?id=${id}`;
+    const url = `${PATH}?id=${id}`;
 
-        const response = await fetch(url);
-        return await response.json();
+    const response = await fetch(url);
 
-    } catch (error) {
-        console.error('Erro buscando dados:', error);
+    if (response.status !== 200){
+        throw Error((await response.json()).erro);
     }
+
+    return await response.json();
 }
 
 export async function filtrarTodosQuadrinhos(filtro) {

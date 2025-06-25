@@ -11,5 +11,5 @@ const pedidosPosVenda = await retornarPedidosPosVenda();
 document.getElementById("loading").style.display = 'none';
 document.getElementById("main-container").style.display = 'block';
 
-const secaoPedidos = new SecaoPedidos(pedidos.pedidos);
+const secaoPedidos = new SecaoPedidos(pedidos);
 const secaoPedidosPosVenda = new SecaoPedidosPosVenda(pedidosPosVenda);

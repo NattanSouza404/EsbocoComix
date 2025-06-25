@@ -1,0 +1,19 @@
+@import url(../../../../css/style.css);     
+
+.sessao-data {
+    display: inline-flex;
+
+    gap: 16px;
+}
+
+.modal-body {
+    display: flex;
+}
+
+#form-adicionar-cupom-promocional {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-items: center;
+}

@@ -1,7 +1,7 @@
 import google.generativeai as genai
 from app.config.config import api_key
-from app.repository.repository import consultarQuadrinhos, consultarClienteByID, consultarPedidosByIDCliente
 from app.model.mensagem import Mensagem
+from app.api_call.api_call import consultarQuadrinhos, consultarClienteByID, consultarPedidosByIDCliente
 
 genai.configure(api_key=api_key)
 

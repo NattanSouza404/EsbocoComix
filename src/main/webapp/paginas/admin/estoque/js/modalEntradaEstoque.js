@@ -1,4 +1,4 @@
-import { inserirEntradaEstoque } from "/js/api/apiEstoque.js";
+import { inserirEntradaEstoque } from "../../../../js/api/apiEstoque.js";
 import { Modal } from "/js/componentes/modal.js";
 
 export default class ModalEntradaEstoque extends Modal {
@@ -12,6 +12,17 @@ export default class ModalEntradaEstoque extends Modal {
         this.conteudoModal.querySelector('button').onclick = () => {
             this.enviarFormulario()
         }
+
+        const inputDataPadrao = this.conteudoModal.querySelector('[name = "dataPadrao"]');
+        const inputDataEntrada = this.conteudoModal.querySelector('[name = "dataEntrada"]')
+
+        inputDataPadrao.addEventListener('change', () => {
+            if (inputDataPadrao.checked){
+                inputDataEntrada.disabled = true;
+            } else {
+                inputDataEntrada.disabled = false;
+            }
+        });
     }
 
     show(quadrinho){
@@ -27,10 +38,25 @@ export default class ModalEntradaEstoque extends Modal {
             idQuadrinho: this.quadrinho.id,
             quantidade: formData.get('quantidade'),
             valorCusto: formData.get('valorCusto'),
-            fornecedor: formData.get('fornecedor')
+            fornecedor: formData.get('fornecedor'),
+            dataEntrada: formData.get('dataEntrada')
         }
 
-        inserirEntradaEstoque(entradaEstoque);
+        const inputDataPadrao = this.conteudoModal.querySelector('[name = "dataPadrao"]');
+
+        if (!inputDataPadrao.disabled && entradaEstoque.dataEntrada === ""){
+            alert('Insira a data corretamente: Dia, mês, ano, hora e minuto.');
+            return;
+        }
+
+        if (inputDataPadrao.disabled){
+            entradaEstoque.dataEntrada = "";
+        }
+
+        if (confirm("Deseja mesmo realizar essa entrada no estoque?")){
+            inserirEntradaEstoque(entradaEstoque);
+        }
+
     }
 
 }
@@ -42,7 +68,7 @@ function ConteudoModal(){
     conteudoModal.style.gap = '10px';
 
     conteudoModal.innerHTML = `
-        <p id="titulo-quadrinho"></p>
+        <h4 id="titulo-quadrinho"></h2>
 
         <label>
             Quantidade
@@ -58,6 +84,18 @@ function ConteudoModal(){
             Fornecedor
             <input type="text" name="fornecedor"></input>
         </label>
+
+        <div class="sessao-data">
+           <label>
+                Usar data padrão (Agora)
+                <input type="checkbox" name="dataPadrao" checked="true">
+            </label>
+
+            <label>
+                Data da entrada
+                <input type="datetime-local" name="dataEntrada" disabled>
+            </label>
+        </div>
 
         <div>
             <button type="button" class="btn btn-primary">Realizar entrada</button>

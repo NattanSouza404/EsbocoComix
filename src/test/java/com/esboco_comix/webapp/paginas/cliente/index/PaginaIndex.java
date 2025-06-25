@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 
 public class PaginaIndex extends AbstractPagina {
+
     public PaginaIndex(WebDriver driver, WebDriverWait wait){
         super(driver, wait, "http://localhost:8080/");
     }
@@ -29,6 +30,25 @@ public class PaginaIndex extends AbstractPagina {
 
         wait.until(ExpectedConditions.alertIsPresent()).dismiss();
         sleep();
+    }
+
+    public void abrirChatIA() throws InterruptedException {
+        scrollToElement(
+            driver.findElement(By.id("abrir-chat-ia"))
+        ).click();
+        sleep();
+    }
+
+    public void enviarMensagemChatIA(String mensagem) throws InterruptedException {
+        scrollToElement(
+            driver.findElement(By.className("caixa-mensagem-usuario"))
+        ).sendKeys(mensagem);
+        sleep();
+
+        scrollToElement(
+            driver.findElement(By.cssSelector(".modal-footer .btn-enviar"))
+        ).click();
+        sleep(4000);
     }
 
 }
