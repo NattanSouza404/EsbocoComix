@@ -23,29 +23,21 @@ export async function retornarPedidosPosVendaByCliente(idCliente){
 }
 
 export async function inserirPedidoPosVenda(pedido) {
-    try {
-        const url = PATH;
+    const url = PATH;
 
-        const option = {
-            method: 'POST',
-            headers:{'Content-Type': 'application/json'},
-            body: JSON.stringify(pedido)
-        }
-
-        const result = await fetch(url, option);
-
-        if (result.status === 201) {
-            alert('Pedido realizado');
-        }
-        else {
-            const resposta = await result.json();
-            alert("Erro ao realizar pedido: "+resposta.erro);
-        }
-        
+    const option = {
+        method: 'POST',
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify(pedido)
     }
-    catch (error){
-        console.error('Erro ao realizar pedido:', error);
+
+    const result = await fetch(url, option);
+
+    if (result.status !== 201) {
+        throw new Error((await result.json()).erro);
     }
+
+    alert('Pedido realizado');
 }
 
 export async function atualizarStatusPedidoPosVenda(pedido){
