@@ -94,51 +94,10 @@ public class ItemPedidoDAO {
                     new ItemPedidoDTO(
                         mapearEntidade(rs),
                         null,
+                        null,
                         null
                     )
                 );
-            }
-
-            return itens;    
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
-        }
-    }
-
-    public List<ItemPedidoDTO> consultarPedidosTroca() throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
-
-        PreparedStatement pst = connection.prepareStatement(
-            """
-            SELECT itens_pedido.*, qua_titulo, qua_preco, cli_nome FROM itens_pedido
-                JOIN quadrinhos ON ite_qua_id = qua_id
-                JOIN pedidos ON ite_ped_id = ped_id
-                JOIN clientes ON ped_cli_id = cli_id
-            WHERE ite_status IS NOT NULL;
-            """,
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
-
-            ResultSet rs = pst.executeQuery();
-    
-            if (!rs.next()) {
-                return new ArrayList<>();
-            }
-            rs.beforeFirst();
-    
-            List<ItemPedidoDTO> itens = new ArrayList<>();
-            while(rs.next()){
-                    itens.add(new ItemPedidoDTO(
-                    mapearEntidade(rs),
-                    rs.getString("qua_titulo"),
-                    rs.getString("cli_nome")
-                ));
             }
 
             return itens;    

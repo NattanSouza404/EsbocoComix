@@ -18,4 +18,5 @@ public class ItemPedidoDTO {
     
     private String nomeQuadrinho;
     private String nomeCliente;
+    private String urlImagem;
 }

@@ -64,6 +64,7 @@ public class PedidoDAO {
                 itens_pedido.*,
                 qua_titulo,
                 qua_preco,
+                qua_url_imagem,
                 cli_nome,
                 enderecos.*
             FROM
@@ -106,6 +107,7 @@ public class PedidoDAO {
                 itens_pedido.*,
                 qua_titulo,
                 qua_preco,
+                qua_url_imagem,
                 cli_nome,
                 enderecos.*
             FROM
@@ -258,6 +260,7 @@ public class PedidoDAO {
 
         dto.setNomeCliente(rs.getString("cli_nome"));
         dto.setNomeQuadrinho(rs.getString("qua_titulo"));
+        dto.setUrlImagem(rs.getString("qua_url_imagem"));
 
         return dto;
     }
