@@ -251,7 +251,6 @@ public class PedidoPosVendaDAO {
         dto.setPedidoPosVenda(mapearEntidade(rs));
         dto.setNomeCliente(rs.getString("cli_nome"));
         dto.setNomeQuadrinho(rs.getString("qua_titulo"));
-        dto.setData(rs.getTimestamp("ped_data").toLocalDateTime());
 
         return dto;
     }
@@ -265,6 +264,7 @@ public class PedidoPosVendaDAO {
         pedidoPosVenda.setStatus(StatusItemPedido.valueOf(rs.getString("ppv_status")));
         pedidoPosVenda.setIdPedido(rs.getInt("ppv_ped_id"));
         pedidoPosVenda.setIdQuadrinho(rs.getInt("ppv_qua_id"));
+        pedidoPosVenda.setData(rs.getTimestamp("ppv_data").toLocalDateTime());
 
         return pedidoPosVenda;
     }

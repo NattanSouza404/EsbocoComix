@@ -151,7 +151,8 @@ CREATE TABLE pedidos_pos_venda (
     ppv_qua_id NUMERIC(6) NOT NULL,
     ppv_quantidade NUMERIC(2) NOT NULL,
     ppv_status VARCHAR(20) NOT NULL,
-    ppv_tipo VARCHAR(10) NOT NULL
+    ppv_tipo VARCHAR(10) NOT NULL,
+    ppv_data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 ALTER TABLE enderecos
