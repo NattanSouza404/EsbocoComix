@@ -1,11 +1,17 @@
-import { formatarData } from "../../../../js/script.js";
-
 export default class FormatadorAnalise {
     constructor(){
 
     }
 
-    formatar(dados){
+    formatarQuantidade(dados){
+        return this.formatar(dados, "quantidade");
+    }
+
+    formatarValor(dados){
+        return this.formatar(dados, "valor");
+    }
+
+    formatar(dados, tipo){
         const labels = this.formatarLabels(dados);
 
         const datasets = dados.map(dados => {
@@ -21,7 +27,16 @@ export default class FormatadorAnalise {
                 label: dados.titulo,
                 data: labels.map(labelData => {
                     const venda = dados.dados.find(v => formatarDataISO(v.data) === labelData);
-                    return venda ? venda.quantidade : 0;
+
+                    if (tipo === "quantidade"){
+                        return venda ? venda.quantidade : 0;
+                    }
+
+                    if (tipo === "valor"){
+                        return venda ? venda.valorTotal : 0;
+                    }
+
+                    return 0;
                 }),
                 borderColor: borderColor,
                 backgroundColor: bgColor,
