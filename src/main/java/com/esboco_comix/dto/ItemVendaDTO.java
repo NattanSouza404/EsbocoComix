@@ -18,6 +18,7 @@ public class ItemVendaDTO {
     @Setter
     public static class DadosItem {
         private int quantidade;
+        private double valorTotal;
         private LocalDateTime data;
     }
 }
