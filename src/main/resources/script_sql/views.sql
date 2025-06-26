@@ -25,8 +25,8 @@ CREATE VIEW vw_analise_produtos AS
 	SELECT
 		qua_titulo AS titulo_quadrinho,
 		SUM(ite_quantidade) AS quantidade,
-		ite_preco AS valor_unitario,
-		SUM(ite_preco * ite_quantidade) AS valor_total,
+		ite_valor_unitario AS valor_unitario,
+		SUM(ite_valor_unitario * ite_quantidade) AS valor_total,
 		DATE(ped_data) AS data
 	FROM itens_pedido
 		JOIN quadrinhos ON ite_qua_id = qua_id
@@ -40,8 +40,8 @@ CREATE VIEW vw_analise_categorias AS
 	SELECT
 		cat_nome AS categoria,
 		SUM(ite_quantidade) AS quantidade,
-		ite_preco AS valor_unitario,
-		SUM(ite_preco * ite_quantidade) AS valor_total,
+		ite_valor_unitario AS valor_unitario,
+		SUM(ite_valor_unitario * ite_quantidade) AS valor_total,
 		DATE(ped_data) AS data
 	FROM categorias
 	    JOIN categorias_quadrinho ON cat_id = cqu_cat_id

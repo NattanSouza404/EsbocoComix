@@ -9,4 +9,5 @@ public class ItemPedido {
     private int idPedido;
     private int idQuadrinho;
     private int quantidade;
+    private double preco;
 }
