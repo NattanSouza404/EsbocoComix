@@ -1,3 +1,5 @@
+import { formatarPreco } from "../../../../../js/script.js";
+
 export class ContainerItens extends HTMLDivElement {
     constructor(itensPedido){
         super();
@@ -20,6 +22,8 @@ export class ContainerItens extends HTMLDivElement {
                         ${item.status !== null && item.status !== undefined ? 
                             `<p>${item.status}</p>` : ''
                         }
+                        <p>${formatarPreco(item.preco)}</p>
+                        <p>Total: ${formatarPreco(item.preco * item.quantidade)}
                     </div>
                     <div>
                         <button class="btn btn-secondary btn-sm botao-troca-item">Pedir Troca</button>
