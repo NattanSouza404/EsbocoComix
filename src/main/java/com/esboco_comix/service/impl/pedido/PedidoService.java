@@ -60,6 +60,8 @@ public class PedidoService {
 
         for (ItemPedido item: pedido.getItensPedido()){
             estoqueService.validarEstoque(item);
+
+            item.setPreco(quadrinhoService.consultarByID(item.getIdQuadrinho()).getPreco());
         }
 
         Pedido pedidoInserido = pedidoDAO.inserir(pedido);

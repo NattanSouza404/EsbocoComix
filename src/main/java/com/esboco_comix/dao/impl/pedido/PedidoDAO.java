@@ -255,6 +255,7 @@ public class PedidoDAO {
         item.setQuantidade(rs.getInt("ite_quantidade"));
 
         item.setIdQuadrinho(rs.getInt("ite_qua_id"));
+        item.setPreco(rs.getDouble("ite_valor_unitario"));
 
         dto.setItemPedido(item);
 

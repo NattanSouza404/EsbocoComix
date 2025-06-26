@@ -83,7 +83,7 @@ public class CalculadoraPedido {
                 throw new Exception("Quadrinho do pedido não encontrado!");
             }
 
-            valor += quadrinho.getPreco() * itemPedido.getQuantidade();
+            valor += dto.getPreco() * itemPedido.getQuantidade();
         }
 
         valor += pedido.getValorFrete();
@@ -94,6 +94,6 @@ public class CalculadoraPedido {
 
     public double calcularItemPedido(ItemPedido itemPedido) throws Exception {
         QuadrinhoDTO quadrinho = quadrinhoService.consultarByID(itemPedido.getIdQuadrinho());
-        return quadrinho.getQuadrinho().getPreco() * itemPedido.getQuantidade();
+        return quadrinho.getPreco() * itemPedido.getQuantidade();
     }
 }

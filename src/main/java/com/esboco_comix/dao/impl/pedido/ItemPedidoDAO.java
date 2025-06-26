@@ -15,41 +15,37 @@ import com.esboco_comix.utils.ConexaoFactory;
 public class ItemPedidoDAO {
 
     public ItemPedido inserir(ItemPedido e) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            "INSERT INTO itens_pedido("+
-                "ite_ped_id, ite_qua_id, ite_quantidade)"+
-                "VALUES (?, ?, ?);",
-                Statement.RETURN_GENERATED_KEYS
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                "INSERT INTO itens_pedido("+
+                    "ite_ped_id, ite_qua_id, ite_quantidade, ite_valor_unitario)"+
+                    "VALUES (?, ?, ?, ?);",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+        ){
             pst.setInt(1, e.getIdPedido());
             pst.setInt(2, e.getIdQuadrinho());
             pst.setInt(3, e.getQuantidade());
+            pst.setDouble(4, e.getPreco());
 
             if (pst.executeUpdate() == 0){
                 throw new Exception("Inserção de item de pedido não executada!");
             }
 
             return consultarByID(e.getIdPedido(), e.getIdQuadrinho());
-        } catch (Exception ex){
-            throw ex;
-        } finally {
-            connection.close();
-            pst.close();
         }
     }
 
     public ItemPedido consultarByID(int idPedido, int idQuadrinho) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            "SELECT * FROM itens_pedido WHERE ite_ped_id = ? AND ite_qua_id = ?;"
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                "SELECT * FROM itens_pedido WHERE ite_ped_id = ? AND ite_qua_id = ?;"
+            );
+        ){
             pst.setInt(1, idPedido);
             pst.setInt(2, idQuadrinho);
 
@@ -60,25 +56,19 @@ public class ItemPedidoDAO {
             }
             
             return mapearEntidade(rs);
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
-
     }
 
     public List<ItemPedidoDTO> consultarByIDPedido(int idPedido) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try(
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            "SELECT * FROM itens_pedido WHERE ite_ped_id = ?",
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                "SELECT * FROM itens_pedido WHERE ite_ped_id = ?",
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+            );
+        ) {
             pst.setInt(1, idPedido);
 
             ResultSet rs = pst.executeQuery();
@@ -101,11 +91,6 @@ public class ItemPedidoDAO {
             }
 
             return itens;    
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
     }
 
@@ -114,6 +99,7 @@ public class ItemPedidoDAO {
         item.setIdPedido(rs.getInt("ite_ped_id"));
         item.setIdQuadrinho(rs.getInt("ite_qua_id"));
         item.setQuantidade(rs.getInt("ite_quantidade"));
+        item.setPreco(rs.getDouble("ite_valor_unitario"));
         return item;
     }
 
