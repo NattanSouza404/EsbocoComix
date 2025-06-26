@@ -19,16 +19,16 @@ import com.esboco_comix.utils.ConexaoFactory;
 public class PedidoDAO {
 
     public Pedido inserir(Pedido e) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            "INSERT INTO pedidos("+
-                "ped_cli_id, ped_status, ped_end_id, ped_valor_total, ped_valor_frete)"+
-                "VALUES (?, ?, ?, ?, ?);",
-                Statement.RETURN_GENERATED_KEYS
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                "INSERT INTO pedidos("+
+                    "ped_cli_id, ped_status, ped_end_id, ped_valor_total, ped_valor_frete)"+
+                    "VALUES (?, ?, ?, ?, ?);",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+        ) {
             pst.setInt(1, e.getIdCliente());
             pst.setString(2, e.getStatus().name());
             pst.setInt(3, e.getEnderecoEntrega().getId());
@@ -46,40 +46,35 @@ public class PedidoDAO {
             }
 
             return pedidoInserido;
-        } catch (Exception ex){
-            throw ex;
-        } finally {
-            connection.close();
-            pst.close();
         }
     }
 
     public List<PedidoDTO> consultarTodos() throws Exception {
-        Connection conn = ConexaoFactory.getConexao();
+        try (
+            Connection conn = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = conn.prepareStatement(
-        """
-            SELECT
-                pedidos.*,
-                itens_pedido.*,
-                qua_titulo,
-                qua_preco,
-                qua_url_imagem,
-                cli_nome,
-                enderecos.*
-            FROM
-                pedidos
-                JOIN clientes ON ped_cli_id = cli_id
-                JOIN enderecos ON ped_end_id = end_id
-                JOIN itens_pedido ON ite_ped_id = ped_id
-                JOIN quadrinhos ON ite_qua_id = qua_id
-            ORDER BY ped_data DESC;
-            """,
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
+            PreparedStatement pst = conn.prepareStatement(
+            """
+                SELECT
+                    pedidos.*,
+                    itens_pedido.*,
+                    qua_titulo,
+                    qua_preco,
+                    qua_url_imagem,
+                    cli_nome,
+                    enderecos.*
+                FROM
+                    pedidos
+                    JOIN clientes ON ped_cli_id = cli_id
+                    JOIN enderecos ON ped_end_id = end_id
+                    JOIN itens_pedido ON ite_ped_id = ped_id
+                    JOIN quadrinhos ON ite_qua_id = qua_id
+                ORDER BY ped_data DESC;
+                """,
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+            );
+        ) {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
@@ -89,41 +84,35 @@ public class PedidoDAO {
 
             return mapearPedidosDTO(rs);
         }
-        catch (Exception e){
-            throw e;
-        } finally {
-            pst.close();
-            conn.close();
-        }
     }
 
     public List<PedidoDTO> consultarByIDCliente(int idCliente) throws Exception {
-        Connection conn = ConexaoFactory.getConexao();
+        try (
+            Connection conn = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = conn.prepareStatement(
-        """
-            SELECT
-                pedidos.*,
-                itens_pedido.*,
-                qua_titulo,
-                qua_preco,
-                qua_url_imagem,
-                cli_nome,
-                enderecos.*
-            FROM
-                pedidos
-                JOIN clientes ON ped_cli_id = cli_id
-                JOIN enderecos ON ped_end_id = end_id
-                JOIN itens_pedido ON ite_ped_id = ped_id
-                JOIN quadrinhos ON ite_qua_id = qua_id
-            WHERE cli_id = ?
-            ORDER BY ped_data DESC;
-            """,
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
+            PreparedStatement pst = conn.prepareStatement(
+            """
+                SELECT
+                    pedidos.*,
+                    itens_pedido.*,
+                    qua_titulo,
+                    qua_preco,
+                    qua_url_imagem,
+                    cli_nome,
+                    enderecos.*
+                FROM
+                    pedidos
+                    JOIN clientes ON ped_cli_id = cli_id
+                    JOIN enderecos ON ped_end_id = end_id
+                    JOIN itens_pedido ON ite_ped_id = ped_id
+                    JOIN quadrinhos ON ite_qua_id = qua_id
+                WHERE cli_id = ?
+                ORDER BY ped_data DESC;
+                """,
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+            );
+        ) {
             pst.setInt(1, idCliente);
 
             ResultSet rs = pst.executeQuery();
@@ -135,22 +124,16 @@ public class PedidoDAO {
 
             return mapearPedidosDTO(rs);
         }
-        catch (Exception e){
-            throw e;
-        } finally {
-            pst.close();
-            conn.close();
-        }
     }
 
     public Pedido consultarByID(int id) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            "SELECT pedidos.*, enderecos.* FROM pedidos JOIN enderecos ON ped_end_id = end_id WHERE ped_id = ?;"
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                "SELECT pedidos.*, enderecos.* FROM pedidos JOIN enderecos ON ped_end_id = end_id WHERE ped_id = ?;"
+            );
+        ) {
             pst.setInt(1, id);
 
             ResultSet rs = pst.executeQuery();
@@ -159,23 +142,18 @@ public class PedidoDAO {
                 throw new Exception("Pedido não encontrado.");
             }
             return mapearEntidade(rs);    
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
     }
 
     public Pedido atualizarStatus(Pedido p) throws Exception {
-        Connection conn = ConexaoFactory.getConexao(); 
+        try (
+            Connection conn = ConexaoFactory.getConexao(); 
     
-        PreparedStatement pst = conn.prepareStatement(
-            "UPDATE pedidos set "+
-                "ped_status = ? WHERE ped_id = ?;"
-        );
-    
-        try {
+            PreparedStatement pst = conn.prepareStatement(
+                "UPDATE pedidos set "+
+                    "ped_status = ? WHERE ped_id = ?;"
+            );
+        ) {
             pst.setString(1, p.getStatus().name());
             pst.setInt(2, p.getId());
 
@@ -184,12 +162,7 @@ public class PedidoDAO {
             }
 
             return consultarByID(p.getId());
-        } catch (Exception e){
-            throw e;
-        } finally {
-            pst.close();
-            conn.close();
-        } 
+        }
     }
 
     private List<PedidoDTO> mapearPedidosDTO(ResultSet rs) throws Exception {

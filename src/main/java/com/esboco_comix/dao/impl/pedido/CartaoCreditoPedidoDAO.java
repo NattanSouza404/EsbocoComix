@@ -12,16 +12,16 @@ import com.esboco_comix.utils.ConexaoFactory;
 public class CartaoCreditoPedidoDAO {
 
     public CartaoCreditoPedido inserir(CartaoCreditoPedido e) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            "INSERT INTO cartoes_credito_pedido ("+
-                "ccp_cre_id, ccp_ped_id, cpp_valor)"+
-                "VALUES (?, ?, ?);",
-                Statement.RETURN_GENERATED_KEYS
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                "INSERT INTO cartoes_credito_pedido ("+
+                    "ccp_cre_id, ccp_ped_id, cpp_valor)"+
+                    "VALUES (?, ?, ?);",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+        ){
             pst.setInt(1, e.getIdCartaoCredito());
             pst.setInt(2, e.getIdPedido());
             pst.setDouble(3, e.getValor());
@@ -37,46 +37,17 @@ public class CartaoCreditoPedidoDAO {
             }
 
             return cartaoCreditoPedidoInserido;
-        } catch (Exception ex){
-            throw ex;
-        } finally {
-            connection.close();
-            pst.close();
-        }
-    }
-
-    public CartaoCreditoPedido consultarByIDPedido(int id) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
-
-        PreparedStatement pst = connection.prepareStatement(
-            "SELECT * FROM cartoes_credito_pedido WHERE cre_id = ?;"
-        );
-
-        try {
-            pst.setInt(1, id);
-
-            ResultSet rs = pst.executeQuery();
-    
-            if (!rs.next()) {
-                throw new Exception("Cartão de crédito no pedido não encontrado.");
-            }
-            return mapearEntidade(rs);  
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
     }
 
     public CartaoCreditoPedido consultarByID(int idCartaoCredito, int idPedido) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            "SELECT * FROM cartoes_credito_pedido WHERE ccp_cre_id = ? AND ccp_ped_id = ?;"
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                "SELECT * FROM cartoes_credito_pedido WHERE ccp_cre_id = ? AND ccp_ped_id = ?;"
+            );
+        ) {
             pst.setInt(1, idCartaoCredito);
             pst.setInt(2, idPedido);
 
@@ -87,13 +58,7 @@ public class CartaoCreditoPedidoDAO {
             }
             
             return mapearEntidade(rs);
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
-
     }
 
     private CartaoCreditoPedido mapearEntidade(ResultSet rs) throws SQLException {

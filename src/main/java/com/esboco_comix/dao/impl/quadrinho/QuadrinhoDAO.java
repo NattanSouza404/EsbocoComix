@@ -17,17 +17,17 @@ import com.esboco_comix.utils.ConexaoFactory;
 public class QuadrinhoDAO {
 
     public List<QuadrinhoDTO> consultarTodos() throws Exception {
-        Connection conn = ConexaoFactory.getConexao();
+        try (
+            Connection conn = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = conn.prepareStatement(
-                """
-                SELECT * FROM vw_quadrinhos;
-                """,
-                ResultSet.TYPE_SCROLL_INSENSITIVE,
-                ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
+            PreparedStatement pst = conn.prepareStatement(
+                    """
+                    SELECT * FROM vw_quadrinhos;
+                    """,
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY
+            );
+        ) {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
@@ -58,11 +58,6 @@ public class QuadrinhoDAO {
             }
 
             return quadrinhos;
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            pst.close();
-            conn.close();
         }
     }
 
@@ -95,8 +90,6 @@ public class QuadrinhoDAO {
     }
 
     public List<QuadrinhoDTO> filtrarTodos(FiltrarQuadrinhoDTO filtro) throws Exception {
-        Connection conn = ConexaoFactory.getConexao();
-
         StringBuilder query = new StringBuilder(
             "SELECT * FROM vw_quadrinhos WHERE 1=1"
         );
@@ -186,13 +179,15 @@ public class QuadrinhoDAO {
 
         query.append(" ORDER BY qua_id DESC;");
 
-        PreparedStatement pst = conn.prepareStatement(
+        try (
+            Connection conn = ConexaoFactory.getConexao();
+
+            PreparedStatement pst = conn.prepareStatement(
                 query.toString(),
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
+            );
+        ) {
 
             for (int i = 0; i < params.size(); i++) {
 
@@ -235,24 +230,18 @@ public class QuadrinhoDAO {
 
             return quadrinhos;
         }
-        catch (Exception e){
-            throw e;
-        } finally {
-            pst.close();
-            conn.close();
-        }
     }
 
     public QuadrinhoDTO consultarByID(int id) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            """
-            SELECT * FROM vw_quadrinhos WHERE qua_id = ?;
-            """
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                """
+                SELECT * FROM vw_quadrinhos WHERE qua_id = ?;
+                """
+            );
+        ) {
             pst.setInt(1, id);
 
             ResultSet rs = pst.executeQuery();
@@ -272,11 +261,6 @@ public class QuadrinhoDAO {
             }
 
             return dto;
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
     }
 

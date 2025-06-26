@@ -11,16 +11,16 @@ import com.esboco_comix.utils.ConexaoFactory;
 
 public class CupomPedidoDAO {
     public CupomPedido inserir(CupomPedido e) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            "INSERT INTO cupons_pedido("+
-                "cpe_cup_id, cpe_ped_id)"+
-                "VALUES (?, ?);",
-                Statement.RETURN_GENERATED_KEYS
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                "INSERT INTO cupons_pedido("+
+                    "cpe_cup_id, cpe_ped_id)"+
+                    "VALUES (?, ?);",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+        ) {
             pst.setInt(1, e.getIdCupom());
             pst.setInt(2, e.getIdPedido());
 
@@ -35,22 +35,17 @@ public class CupomPedidoDAO {
             }
 
             return cupomPedidoInserido;
-        } catch (Exception ex){
-            throw ex;
-        } finally {
-            connection.close();
-            pst.close();
         }
     }
 
     public CupomPedido consultarByID(int idCupom, int idPedido) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            "SELECT * FROM cupons_pedido WHERE cpe_cup_id = ? AND cpe_ped_id = ?;"
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                "SELECT * FROM cupons_pedido WHERE cpe_cup_id = ? AND cpe_ped_id = ?;"
+            );
+        ) {
             pst.setInt(1, idCupom);
             pst.setInt(2, idPedido);
 
@@ -61,13 +56,7 @@ public class CupomPedidoDAO {
             }
             
             return mapearEntidade(rs);
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
-
     }
 
     private CupomPedido mapearEntidade(ResultSet rs) throws SQLException {
