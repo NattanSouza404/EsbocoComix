@@ -1,13 +1,15 @@
 @import url(/css/style.css);
 @import url(/css/crud_cliente.css);
 
+main {
+    display: grid;
+}
+
 #header-clientes, #tabela-clientes {
     justify-self: center;
 
     width: 90%;
     max-width: 90%;
-
-    margin-top: 1%;
 }
 
 #opcoes-cliente, #filtro-clientes, #tabela-clientes {

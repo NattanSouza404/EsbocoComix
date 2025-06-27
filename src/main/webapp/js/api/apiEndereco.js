@@ -84,7 +84,7 @@ export async function deletarEndereco(endereco){
             return;
         }
 
-        const url = '/endereco';
+        const url = PATH;
 
         const option = {
             method: 'DELETE',
@@ -98,11 +98,11 @@ export async function deletarEndereco(endereco){
             alert('Deletado com sucesso');
         }
         else {
-            const resposta = await result.json();
+            const resposta = await response.json();
             alert("Erro ao deletar: "+resposta.erro);
         }
 
     } catch (error){
-        console.error('Erro ao deletar:', error);
+        alert(error);
     }
 }

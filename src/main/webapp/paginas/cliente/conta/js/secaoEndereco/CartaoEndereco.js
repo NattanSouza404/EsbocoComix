@@ -1,4 +1,4 @@
-import { deletarEndereco } from "/js/api/apiEndereco.js";
+import { deletarEndereco } from "../../../../../js/api/apiEndereco.js";
 
 export class CartaoEndereco extends HTMLElement {
     constructor(endereco, modalAlterarEndereco){

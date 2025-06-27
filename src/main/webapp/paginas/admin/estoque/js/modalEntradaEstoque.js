@@ -9,8 +9,8 @@ export default class ModalEntradaEstoque extends Modal {
 
         this.conteudoModal = conteudoModal;
 
-        this.conteudoModal.querySelector('button').onclick = () => {
-            this.enviarFormulario()
+        this.conteudoModal.querySelector('#btn-enviar-entrada-estoque').onclick = () => {
+            this.enviarFormulario();
         }
 
         const inputDataPadrao = this.conteudoModal.querySelector('[name = "dataPadrao"]');
@@ -63,7 +63,7 @@ export default class ModalEntradaEstoque extends Modal {
 
 function ConteudoModal(){
     const conteudoModal = document.createElement('form');
-    conteudoModal.id = "form-adicionar-cupom-promocional";
+    conteudoModal.id = "form-entrada-estoque";
     conteudoModal.className = 'container';
     conteudoModal.style.gap = '10px';
 
@@ -98,7 +98,7 @@ function ConteudoModal(){
         </div>
 
         <div>
-            <button type="button" class="btn btn-primary">Realizar entrada</button>
+            <button id="btn-enviar-entrada-estoque" type="button" class="btn btn-primary">Realizar entrada</button>
         </div>
     `;
 

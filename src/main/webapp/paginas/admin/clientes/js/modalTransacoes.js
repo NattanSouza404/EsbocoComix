@@ -21,7 +21,7 @@ export default class ModalTransacoes extends Modal {
         super.mudarTitulo(`Transações de ${this.cliente.nome}`);
         const pedidos = await retornarPedidos(this.cliente.id);
 
-        if (Array.isArray(pedidos)){
+        if (Array.isArray(pedidos) && pedidos.length > 0){
             this.tbody.innerHTML = '';
 
             this.mostrarTabela();
