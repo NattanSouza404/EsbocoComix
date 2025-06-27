@@ -2,6 +2,7 @@ package com.esboco_comix.service.impl;
 
 import com.esboco_comix.dao.impl.pedido.ItemPedidoDAO;
 import com.esboco_comix.dao.impl.pedido.PedidoPosVendaDAO;
+import com.esboco_comix.dto.AtualizarPedidoPosVendaDTO;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoPosVendaDTO;
 import com.esboco_comix.model.entidades.Cliente;
@@ -27,6 +28,13 @@ public class PedidoPosVendaService {
 
     public PedidoPosVendaDTO inserir(PedidoPosVenda pedido) throws Exception{
         ItemPedido item = itemPedidoDAO.consultarByID(pedido.getIdPedido(), pedido.getIdQuadrinho());
+        
+        Pedido pedidoNoBanco = pedidoService.consultarByID(pedido.getIdPedido());
+        StatusPedido statusPedidoBanco = pedidoNoBanco.getStatus();
+        
+        if (statusPedidoBanco != StatusPedido.ENTREGUE){
+            throw new Exception("Pedido não entregue ou pedido de troca/devolução dos itens já foi realizado!");
+        }
 
         if (pedido.getQuantidade() < 1){
             throw new Exception("Quantidade da troca/devolução precisa ser maior que zero!");
@@ -59,10 +67,10 @@ public class PedidoPosVendaService {
         return pedidoPosVendaDAO.consultarTodos();
     }
 
-    public PedidoPosVendaDTO atualizarStatus(PedidoPosVendaDTO pedido) throws Exception {
-        PedidoPosVenda pedidoPosVenda = pedido.getPedidoPosVenda();
+    public PedidoPosVendaDTO atualizarStatus(AtualizarPedidoPosVendaDTO atualizarPedido) throws Exception {
+        PedidoPosVenda pedidoPosVenda = atualizarPedido.getPedidoPosVenda();
         
-        Pedido pedidoNoBanco = pedidoService.consultarByID(pedido.getPedidoPosVenda().getIdPedido());
+        Pedido pedidoNoBanco = pedidoService.consultarByID(atualizarPedido.getPedidoPosVenda().getIdPedido());
         StatusPedido statusPedidoBanco = pedidoNoBanco.getStatus();
         
         if (statusPedidoBanco != StatusPedido.ENTREGUE){
@@ -93,11 +101,13 @@ public class PedidoPosVendaService {
 
             ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO();
             itemPedidoDTO.setItemPedido(item);
-            estoqueService.retornarAoEstoque(itemPedidoDTO);
 
+            if (atualizarPedido.isRetornarAoEstoque()){
+                estoqueService.retornarAoEstoque(itemPedidoDTO);
+            }
         }
 
-        return pedidoPosVendaDAO.atualizarStatus(pedido.getPedidoPosVenda());
+        return pedidoPosVendaDAO.atualizarStatus(atualizarPedido.getPedidoPosVenda());
     }
 
     public List<PedidoPosVendaDTO> consultarPorIDCliente(int id) throws Exception {

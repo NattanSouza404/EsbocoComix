@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.dao.impl.pedido.*;
+import com.esboco_comix.dto.AtualizarPedidoDTO;
 import jakarta.servlet.http.HttpSession;
 
 import com.esboco_comix.controller.session.Carrinho;
@@ -102,8 +103,8 @@ public class PedidoService {
 		return pedidoDAO.consultarByID(id);
 	}
 
-    public Pedido atualizarStatus(PedidoDTO pedidoDTO) throws Exception {
-        Pedido pedido = pedidoDTO.getPedido();
+    public Pedido atualizarStatus(AtualizarPedidoDTO atualizarPedidoDTO) throws Exception {
+        Pedido pedido = atualizarPedidoDTO.getPedido().getPedido();
         Pedido pedidoNoBanco = pedidoDAO.consultarByID(pedido.getId());
 
         StatusPedido status = pedido.getStatus();
@@ -138,7 +139,10 @@ public class PedidoService {
                 calculadora.calcularValorTotalPedido(pedido, itensPedido)
             );
 
-            estoqueService.retornarAoEstoque(pedidoDTO);
+            if (atualizarPedidoDTO.isRetornarAoEstoque()) {
+                estoqueService.retornarAoEstoque(atualizarPedidoDTO.getPedido());
+            }
+
         }
 
         return pedidoDAO.atualizarStatus(pedido);
