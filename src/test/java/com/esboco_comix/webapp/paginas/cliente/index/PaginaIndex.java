@@ -51,4 +51,35 @@ public class PaginaIndex extends AbstractPagina {
         sleep(4000);
     }
 
+    public void toggleFiltroCategoria(String categoria) throws InterruptedException{
+        scrollToElement(
+            driver.findElement(By.id(categoria))
+        ).click();
+        sleep();
+    }
+
+    public void pesquisar() throws InterruptedException {
+        scrollToElement(
+            driver.findElement(By.id("btn-buscar-quadrinho"))
+        ).click();
+        
+        scrollToElement(
+            driver.findElement(By.name("grupoPrecificacao"))
+        );
+
+        sleep();
+    }
+
+    public void adicionarFiltro(String nome, String valor) throws InterruptedException {
+        WebElement form = driver.findElement(By.id("busca-quadrinhos"));
+        
+        WebElement filtro = scrollToElement(
+            form.findElement(By.name(nome))
+        );
+        filtro.clear();
+        filtro.sendKeys(valor);
+
+        sleep();
+    }
+
 }

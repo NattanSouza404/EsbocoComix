@@ -38,7 +38,7 @@ public class PaginaMinhasCompras extends AbstractPagina {
         sleep();
     }
 
-    public void pedirTrocaItem(int index) throws InterruptedException {
+    public void pedirTrocaItem(int index, int quantidade) throws InterruptedException {
         wait.until(
                 ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("botao-troca-item"))
         ).get(index).click();
@@ -47,11 +47,14 @@ public class PaginaMinhasCompras extends AbstractPagina {
         wait.until(ExpectedConditions.alertIsPresent()).accept();
         sleep();
 
+        wait.until(ExpectedConditions.alertIsPresent()).sendKeys(String.valueOf(quantidade));
+        sleep();
+
         wait.until(ExpectedConditions.alertIsPresent()).dismiss();
         sleep();
     }
 
-    public void pedirDevolucaoItem(int index) throws InterruptedException {
+    public void pedirDevolucaoItem(int index, int quantidade) throws InterruptedException {
         wait.until(
                 ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("botao-devolucao-item"))
         ).get(index).click();
@@ -60,7 +63,18 @@ public class PaginaMinhasCompras extends AbstractPagina {
         wait.until(ExpectedConditions.alertIsPresent()).accept();
         sleep();
 
+        wait.until(ExpectedConditions.alertIsPresent()).sendKeys(String.valueOf(quantidade));
+        sleep();
+
         wait.until(ExpectedConditions.alertIsPresent()).dismiss();
+        sleep();
+    }
+
+    public void visualizarPedidosPosVenda(int index) throws InterruptedException {
+        scrollToElement(
+            driver.findElements(By.className("botao-consultar-pedidos-pos-venda"))
+            .get(index)
+        ).click();
         sleep();
     }
 }
