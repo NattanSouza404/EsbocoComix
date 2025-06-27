@@ -63,7 +63,7 @@ public class ClienteDAO {
             Connection conn = ConexaoFactory.getConexao();
 
             PreparedStatement pst = conn.prepareStatement(
-                "SELECT * FROM clientes;",
+                "SELECT * FROM clientes ORDER BY cli_id;",
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
             );
@@ -90,7 +90,7 @@ public class ClienteDAO {
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                "SELECT * FROM clientes WHERE cli_id = ?"
+                "SELECT * FROM clientes WHERE cli_id = ?;"
             );
         ) {
             pst.setInt(1, id);
@@ -192,6 +192,8 @@ public class ClienteDAO {
             query.append(" AND cli_ranking = ?");
             params.add(filtro.getRanking());
         }
+
+        query.append(" ORDER BY cli_id;");
         
         try (
             Connection conn = ConexaoFactory.getConexao();
