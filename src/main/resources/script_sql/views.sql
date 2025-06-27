@@ -4,7 +4,7 @@ CREATE VIEW vw_quadrinhos AS
 	    est_quantidade_total,
 	    grupos_precificacao.*,
 	    categorias.*,
-	    MIN(ees_valor_custo) * (1 + (gpr_porcentagem)/100) as preco
+	    MAX(ees_valor_custo) * (1 + (gpr_porcentagem)/100) as preco
 	FROM
 	    quadrinhos
 	    JOIN categorias_quadrinho ON qua_id = cqu_qua_id
