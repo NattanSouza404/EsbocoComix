@@ -15,14 +15,12 @@ import com.esboco_comix.utils.ConexaoFactory;
 public class EstoqueDAO {
 
     public EntradaEstoque inserir(EntradaEstoque entradaEstoque) throws Exception {
-
-        Connection conn = ConexaoFactory.getConexao();
-
-        String call = "CALL inserir_entrada_estoque(?, ?, ?, ?, ?, ?)";
-
-        int id = 0;
-        
-        try (CallableStatement cs = conn.prepareCall(call)) {
+        try (
+            Connection conn = ConexaoFactory.getConexao();
+            CallableStatement cs = conn.prepareCall(
+                "CALL inserir_entrada_estoque(?, ?, ?, ?, ?, ?)"
+            );
+        ){
             cs.setInt(1, entradaEstoque.getIdQuadrinho());
             cs.setInt(2, entradaEstoque.getQuantidade());
             cs.setDouble(3, entradaEstoque.getValorCusto());
@@ -30,6 +28,7 @@ public class EstoqueDAO {
             cs.setObject(5, entradaEstoque.getDataEntrada());
             cs.setNull(6, Types.NUMERIC);
 
+            int id = 0;
             if (cs.execute()) {
                 try (ResultSet rs = cs.getResultSet()) {
                     if (rs.next()) {
@@ -44,15 +43,15 @@ public class EstoqueDAO {
     }
 
     public EntradaEstoque consultarByID(int id) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            """
-            SELECT * FROM entrada_estoque WHERE ees_id = ?;
-            """
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                """
+                SELECT * FROM entrada_estoque WHERE ees_id = ?;
+                """
+            );
+        ) {
             pst.setInt(1, id);
 
             ResultSet rs = pst.executeQuery();
@@ -62,25 +61,20 @@ public class EstoqueDAO {
             }
 
             return mapearEntidade(rs);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
 
     }
 
     public Estoque consultarEstoqueByIDQuadrinho(int idQuadrinho) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            """
-            SELECT * FROM estoque WHERE est_qua_id = ?;
-            """
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                """
+                SELECT * FROM estoque WHERE est_qua_id = ?;
+                """
+            );
+        ) {
             pst.setInt(1, idQuadrinho);
 
             ResultSet rs = pst.executeQuery();
@@ -90,27 +84,21 @@ public class EstoqueDAO {
             }
 
             return mapearEntidadeEstoque(rs);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
-
     }
 
     public Estoque retornarAoEstoque(ItemPedido itemPedido) throws Exception {
-        Connection conn = ConexaoFactory.getConexao(); 
+        try (
+            Connection conn = ConexaoFactory.getConexao(); 
     
-        PreparedStatement pst = conn.prepareStatement(
-            """
-            UPDATE estoque
-                SET est_quantidade_total = est_quantidade_total + ?
-            WHERE est_qua_id = ?;
-            """
-        );
-
-        try {
+            PreparedStatement pst = conn.prepareStatement(
+                """
+                UPDATE estoque
+                    SET est_quantidade_total = est_quantidade_total + ?
+                WHERE est_qua_id = ?;
+                """
+            );
+        ) {
             pst.setInt(1, itemPedido.getQuantidade());
             pst.setInt(2, itemPedido.getIdQuadrinho());
 
@@ -119,11 +107,6 @@ public class EstoqueDAO {
             }
 
             return consultarEstoqueByIDQuadrinho(itemPedido.getIdQuadrinho());
-        } catch (Exception ex){
-            throw ex;
-        } finally {
-            pst.close();
-            conn.close();
         }
     }
 
@@ -150,17 +133,17 @@ public class EstoqueDAO {
     }
 
     public Estoque retirarDoEstoque(ItemPedido item) throws Exception {
-        Connection conn = ConexaoFactory.getConexao(); 
+        try (
+            Connection conn = ConexaoFactory.getConexao(); 
     
-        PreparedStatement pst = conn.prepareStatement(
-            """
-            UPDATE estoque
-                SET est_quantidade_total = est_quantidade_total - ?
-            WHERE est_qua_id = ?;
-            """
-        );
-
-        try {
+            PreparedStatement pst = conn.prepareStatement(
+                """
+                UPDATE estoque
+                    SET est_quantidade_total = est_quantidade_total - ?
+                WHERE est_qua_id = ?;
+                """
+            );
+        ) {
             pst.setInt(1, item.getQuantidade());
             pst.setInt(2, item.getIdQuadrinho());
 
@@ -169,11 +152,6 @@ public class EstoqueDAO {
             }
 
             return consultarEstoqueByIDQuadrinho(item.getIdQuadrinho());
-        } catch (Exception ex){
-            throw ex;
-        } finally {
-            pst.close();
-            conn.close();
         }
     }
 

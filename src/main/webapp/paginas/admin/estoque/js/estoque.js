@@ -14,7 +14,7 @@ quadrinhos.forEach(quadrinho => {
 
     let estoque = quadrinho.quantidadeEstoque;
 
-    if (quadrinho.isForaDeEstoque){
+    if (quadrinho.quantidadeEstoque < 1){
         estoque = 'Fora de Estoque';
     }
 
@@ -24,6 +24,7 @@ quadrinhos.forEach(quadrinho => {
         <td class="item-quantity">${estoque}</td>
         <td class="item-cost-value">Valor custo</td>
         <td class="item-precification">${quadrinho.grupoPrecificacao.nome}</td>
+        <td class="item-precification">${quadrinho.grupoPrecificacao.porcentagem}%</td>
         <td class="item-price">${formatarPreco(quadrinho.preco)}</td>
         <td>
             <button class="btn btn-warning btn-sm">Fazer entrada no estoque</button>

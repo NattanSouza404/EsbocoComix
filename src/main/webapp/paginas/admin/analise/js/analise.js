@@ -7,16 +7,28 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const analise = await retornarAnalise();
 
-    const graficoCategorias = new GraficoLinha(
-        document.getElementById('graficoLinhaCategorias'),
-        formatador.formatar(analise.categorias),
+    const graficoQuantCategorias = new GraficoLinha(
+        document.getElementById('grafico-linha-quant-categorias'),
+        formatador.formatarQuantidade(analise.categorias),
         "Quantidade de Categorias"
     );
 
-    const graficoProdutos = new GraficoLinha(
-        document.getElementById('graficoLinhaProdutos'),
-        formatador.formatar(analise.produtos),
+    const graficoQuantProdutos = new GraficoLinha(
+        document.getElementById('grafico-linha-quant-produtos'),
+        formatador.formatarQuantidade(analise.produtos),
         "Quantidade de Produtos"
+    );
+
+    const graficoValorProdutos = new GraficoLinha(
+        document.getElementById('grafico-linha-valor-produtos'),
+        formatador.formatarValor(analise.produtos),
+        "Valor dos Produtos"
+    );
+
+    const graficoValorCategorias = new GraficoLinha(
+        document.getElementById('grafico-linha-valor-categorias'),
+        formatador.formatarValor(analise.categorias),
+        "Valor das Categorias"
     );
 
     document.getElementById('btn-pesquisar').onclick = async () => {
@@ -28,8 +40,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         try {
             const dadosAnalise = await retornarAnalise(filtro);
 
-            graficoProdutos.atualizar(formatador.formatar(dadosAnalise.produtos));
-            graficoCategorias.atualizar(formatador.formatar(dadosAnalise.categorias));
+            graficoQuantProdutos.atualizar(formatador.formatarQuantidade(dadosAnalise.produtos));
+            graficoQuantCategorias.atualizar(formatador.formatarQuantidade(dadosAnalise.categorias));
+            graficoValorProdutos.atualizar(formatador.formatarValor(dadosAnalise.produtos));
+            graficoValorCategorias.atualizar(formatador.formatarValor(dadosAnalise.categorias));
 
         } catch (error){
             alert(error)

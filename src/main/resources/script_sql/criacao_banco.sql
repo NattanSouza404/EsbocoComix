@@ -62,7 +62,6 @@ CREATE TABLE grupos_precificacao (
 
 CREATE TABLE quadrinhos (
     qua_id             NUMERIC(6) PRIMARY KEY,
-    qua_preco          NUMERIC(6,2) NOT NULL,
     qua_autor          VARCHAR(100) NOT NULL,
     qua_ano            DATE NOT NULL,
     qua_titulo         VARCHAR(100) NOT NULL,
@@ -110,6 +109,7 @@ CREATE TABLE itens_pedido (
     ite_ped_id  NUMERIC(9),
     ite_qua_id NUMERIC(6),
     ite_quantidade NUMERIC(2) NOT NULL,
+    ite_valor_unitario NUMERIC(6, 2) NOT NULL,
 	PRIMARY KEY(ite_ped_id, ite_qua_id)
 );
 
@@ -151,7 +151,8 @@ CREATE TABLE pedidos_pos_venda (
     ppv_qua_id NUMERIC(6) NOT NULL,
     ppv_quantidade NUMERIC(2) NOT NULL,
     ppv_status VARCHAR(20) NOT NULL,
-    ppv_tipo VARCHAR(10) NOT NULL
+    ppv_tipo VARCHAR(10) NOT NULL,
+    ppv_data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 ALTER TABLE enderecos

@@ -14,13 +14,13 @@ import com.esboco_comix.utils.ConexaoFactory;
 public class CupomDAO {
 
     public Cupom consultarByID(int id) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            "SELECT * FROM cupons WHERE cup_id = ?;"
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                "SELECT * FROM cupons WHERE cup_id = ?;"
+            );
+        ) {
             pst.setInt(1, id);
 
             ResultSet rs = pst.executeQuery();
@@ -30,25 +30,20 @@ public class CupomDAO {
             }
             
             return mapearEntidade(rs);
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
 
     }
 
     public List<Cupom> consultarByIDCliente(int idCliente) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            "SELECT * FROM cupons WHERE cup_cli_id = ? AND cup_is_ativo;",
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                "SELECT * FROM cupons WHERE cup_cli_id = ? AND cup_is_ativo;",
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+            );
+        ) {
             pst.setInt(1, idCliente);
 
             ResultSet rs = pst.executeQuery();
@@ -64,26 +59,20 @@ public class CupomDAO {
             }
 
             return cupons;
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
-
     }
 
     public Cupom inserir(Cupom c) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            "INSERT INTO cupons("+
-                "cup_cli_id, cup_is_ativo, cup_is_promocional, cup_is_troca, cup_valor) "+
-                "VALUES (?, ?, ?, ?, ?) ",
-                Statement.RETURN_GENERATED_KEYS
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                "INSERT INTO cupons("+
+                    "cup_cli_id, cup_is_ativo, cup_is_promocional, cup_is_troca, cup_valor) "+
+                    "VALUES (?, ?, ?, ?, ?) ",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+        ) {
             pst.setInt(1, c.getIdCliente());
             pst.setBoolean(2, true);
             pst.setBoolean(3, c.isPromocional());
@@ -100,22 +89,17 @@ public class CupomDAO {
             }
 
             return cupomInserido;
-        } catch (Exception ex){
-            throw ex;
-        } finally {
-            connection.close();
-            pst.close();
         }
     }
 
     public Cupom inativar(int id) throws Exception {
-        Connection conn = ConexaoFactory.getConexao(); 
+        try (
+            Connection conn = ConexaoFactory.getConexao(); 
     
-        PreparedStatement pst = conn.prepareStatement(
-            "UPDATE cupons SET cup_is_ativo = false WHERE cup_id = ?;"
-        );
-
-        try {
+            PreparedStatement pst = conn.prepareStatement(
+                "UPDATE cupons SET cup_is_ativo = false WHERE cup_id = ?;"
+            );
+        ){
             pst.setInt(1, id);
 
             if (pst.executeUpdate() == 0) {
@@ -123,13 +107,7 @@ public class CupomDAO {
             }
 
             return consultarByID(id);
-        } catch (Exception ex){
-            throw ex;
-        } finally {
-            pst.close();
-            conn.close();
         }
-
     }
 
     private Cupom mapearEntidade(ResultSet rs) throws SQLException {

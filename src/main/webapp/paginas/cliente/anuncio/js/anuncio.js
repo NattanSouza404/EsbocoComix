@@ -50,9 +50,6 @@ function carregarPagina(){
                 <td>Autor: ${quadrinho.autor}</td>
             </tr>
             <tr>
-                <td>Título: ${quadrinho.titulo}</td>
-            </tr>
-            <tr>
                 <td>Editora: ${quadrinho.editora}</td>
             </tr>
             <tr>
@@ -78,6 +75,9 @@ function carregarPagina(){
             </tr>
             <tr>
                 <td>Categorias: ${categorias}</td>
+            </tr>
+            <tr>
+                <td>Grupo de precificação: ${quadrinho.grupoPrecificacao.nome}
             </tr>
         </tbody>
     `

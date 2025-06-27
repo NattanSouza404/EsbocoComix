@@ -17,28 +17,17 @@ import com.esboco_comix.utils.ConexaoFactory;
 public class QuadrinhoDAO {
 
     public List<QuadrinhoDTO> consultarTodos() throws Exception {
-        Connection conn = ConexaoFactory.getConexao();
+        try (
+            Connection conn = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = conn.prepareStatement(
-                """
-                        SELECT
-                            quadrinhos.*,
-                            est_quantidade_total,
-                            grupos_precificacao.*,
-                            categorias.*
-                         FROM
-                            quadrinhos
-                            JOIN categorias_quadrinho ON qua_id = cqu_qua_id
-                            JOIN categorias ON cat_id = cqu_cat_id
-                            LEFT JOIN estoque ON est_qua_id = qua_id
-                            JOIN grupos_precificacao ON qua_gpr_id = gpr_id
-                         ORDER BY qua_id DESC;
-                        """,
-                ResultSet.TYPE_SCROLL_INSENSITIVE,
-                ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
+            PreparedStatement pst = conn.prepareStatement(
+                    """
+                    SELECT * FROM vw_quadrinhos;
+                    """,
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY
+            );
+        ) {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
@@ -69,26 +58,20 @@ public class QuadrinhoDAO {
             }
 
             return quadrinhos;
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            pst.close();
-            conn.close();
         }
     }
 
     public List<Categoria> consultarTodasCategorias() throws Exception {
-        Connection conn = ConexaoFactory.getConexao();
-
-        PreparedStatement pst = conn.prepareStatement(
-            """
-            SELECT * FROM categorias ORDER BY cat_nome;
-            """,
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
+        try (
+            Connection conn = ConexaoFactory.getConexao();
+            PreparedStatement pst = conn.prepareStatement(
+                """
+                SELECT * FROM categorias ORDER BY cat_nome;
+                """,
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+            );
+        ){
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
@@ -103,25 +86,13 @@ public class QuadrinhoDAO {
             }
 
             return categorias;
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            pst.close();
-            conn.close();
         }
     }
 
     public List<QuadrinhoDTO> filtrarTodos(FiltrarQuadrinhoDTO filtro) throws Exception {
-        Connection conn = ConexaoFactory.getConexao();
-
-        StringBuilder query = new StringBuilder("""
-            SELECT * FROM quadrinhos
-                JOIN grupos_precificacao ON qua_gpr_id = gpr_id
-                JOIN categorias_quadrinho ON qua_id = cqu_qua_id
-                JOIN categorias ON cat_id = cqu_cat_id
-                LEFT JOIN estoque ON est_qua_id = qua_id
-            WHERE 1=1
-          """);
+        StringBuilder query = new StringBuilder(
+            "SELECT * FROM vw_quadrinhos WHERE 1=1"
+        );
 
         List<Object> params = new ArrayList<>();
 
@@ -208,13 +179,15 @@ public class QuadrinhoDAO {
 
         query.append(" ORDER BY qua_id DESC;");
 
-        PreparedStatement pst = conn.prepareStatement(
+        try (
+            Connection conn = ConexaoFactory.getConexao();
+
+            PreparedStatement pst = conn.prepareStatement(
                 query.toString(),
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
+            );
+        ) {
 
             for (int i = 0; i < params.size(); i++) {
 
@@ -257,29 +230,18 @@ public class QuadrinhoDAO {
 
             return quadrinhos;
         }
-        catch (Exception e){
-            throw e;
-        } finally {
-            pst.close();
-            conn.close();
-        }
     }
 
     public QuadrinhoDTO consultarByID(int id) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            """
-            SELECT quadrinhos.*, est_quantidade_total, grupos_precificacao.*, categorias.* FROM quadrinhos
-                JOIN categorias_quadrinho ON qua_id = cqu_qua_id
-                JOIN categorias ON cat_id = cqu_cat_id
-                LEFT JOIN estoque ON est_qua_id = qua_id
-                JOIN grupos_precificacao ON qua_gpr_id = gpr_id
-            WHERE qua_id = ?;
-            """
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                """
+                SELECT * FROM vw_quadrinhos WHERE qua_id = ?;
+                """
+            );
+        ) {
             pst.setInt(1, id);
 
             ResultSet rs = pst.executeQuery();
@@ -299,11 +261,6 @@ public class QuadrinhoDAO {
             }
 
             return dto;
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
     }
 
@@ -318,7 +275,6 @@ public class QuadrinhoDAO {
         q.setIsbn(rs.getString("qua_isbn"));
         q.setNumeroPaginas(rs.getInt("qua_numero_paginas"));
         q.setSinopse(rs.getString("qua_sinopse"));
-        q.setPreco(rs.getDouble("qua_preco"));
         q.setAutor(rs.getString("qua_autor"));
 
         q.setAltura(rs.getInt("qua_altura_cm"));
@@ -347,12 +303,8 @@ public class QuadrinhoDAO {
         QuadrinhoDTO dto = new QuadrinhoDTO();
 
         dto.setQuadrinho(mapearEntidade(rs));
-
-        int quantidadeEstoque = rs.getInt("est_quantidade_total");
-        boolean isForaDeEstoque = quantidadeEstoque == 0;
-
-        dto.setQuantidadeEstoque(quantidadeEstoque);
-        dto.setForaDeEstoque(isForaDeEstoque);
+        dto.setQuantidadeEstoque(rs.getInt("est_quantidade_total"));
+        dto.setPreco(rs.getDouble("preco"));
 
         return dto;
     }

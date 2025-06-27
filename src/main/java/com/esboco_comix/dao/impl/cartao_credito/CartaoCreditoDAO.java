@@ -14,10 +14,11 @@ import com.esboco_comix.utils.ConexaoFactory;
 public class CartaoCreditoDAO {
 
     public CartaoCredito inserir(CartaoCredito c) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            """
+            PreparedStatement pst = connection.prepareStatement(
+                """
                 INSERT INTO cartoes_credito(
                 cre_numero, cre_nome_impresso, cre_codigo_seguranca,
                 cre_is_preferencial, cre_bcc_id, cre_cli_id)
@@ -27,9 +28,8 @@ public class CartaoCreditoDAO {
                 );
                 """,
                 Statement.RETURN_GENERATED_KEYS
-        );
-
-        try {
+            );
+        ) {
             pst.setString(1, c.getNumero());
             pst.setString(2, c.getNomeImpresso());
             pst.setString(3, c.getCodigoSeguranca());
@@ -47,19 +47,15 @@ public class CartaoCreditoDAO {
             }
 
             return cartaoCreditoInserido;
-        } catch (Exception ex){
-            throw ex;
-        } finally {
-            connection.close();
-            pst.close();
         }
     }
 
     public CartaoCredito consultarByID(int id) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            """
+            PreparedStatement pst = connection.prepareStatement(
+                """
                 SELECT
                     *
                 FROM
@@ -68,9 +64,8 @@ public class CartaoCreditoDAO {
                     bandeiras_cartao_credito ON bcc_id = cre_bcc_id
                 WHERE cre_id = ?;
                 """
-        );
-
-        try {
+            );
+        ){
             pst.setInt(1, id);
 
             ResultSet rs = pst.executeQuery();
@@ -79,31 +74,26 @@ public class CartaoCreditoDAO {
                 throw new Exception("Cartão de crédito não encontrado.");
             }
             return mapearEntidade(rs);  
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
     }
 
     public CartaoCredito atualizar(CartaoCredito c) throws Exception {
-        Connection conn = ConexaoFactory.getConexao(); 
+        try (
+            Connection conn = ConexaoFactory.getConexao(); 
     
-        PreparedStatement pst = conn.prepareStatement(
-            """
-                UPDATE cartoes_credito SET
-                    cre_numero = ?,
-                    cre_nome_impresso = ?,
-                    cre_codigo_seguranca = ?,
-                    cre_is_preferencial = ?,
-                    cre_bcc_id = (SELECT bcc_id FROM bandeiras_cartao_credito WHERE bcc_nome = ?),
-                    cre_cli_id = ?
-                WHERE cre_id = ?;
+            PreparedStatement pst = conn.prepareStatement(
                 """
-        );
-    
-        try {
+                    UPDATE cartoes_credito SET
+                        cre_numero = ?,
+                        cre_nome_impresso = ?,
+                        cre_codigo_seguranca = ?,
+                        cre_is_preferencial = ?,
+                        cre_bcc_id = (SELECT bcc_id FROM bandeiras_cartao_credito WHERE bcc_nome = ?),
+                        cre_cli_id = ?
+                    WHERE cre_id = ?;
+                    """
+            );
+        ){
             pst.setString(1, c.getNumero());
             pst.setString(2, c.getNomeImpresso());
             pst.setString(3, c.getCodigoSeguranca());
@@ -118,54 +108,44 @@ public class CartaoCreditoDAO {
             }
 
             return consultarByID(c.getId());
-        } catch (Exception ex){
-            throw ex;
-        } finally {
-            pst.close();
-            conn.close();
         }
     }
 
     public void deletar(CartaoCredito c) throws Exception {
-        Connection conn = ConexaoFactory.getConexao();
+        try(
+            Connection conn = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = conn.prepareStatement(
-            "DELETE FROM cartoes_credito WHERE cre_id = ?"
-        );
-
-        try {
+            PreparedStatement pst = conn.prepareStatement(
+                "DELETE FROM cartoes_credito WHERE cre_id = ?"
+            );
+        ){
             pst.setInt(1, c.getId());
 
             if (pst.executeUpdate() == 0) {
                 throw new Exception("Deleção não realizada. Cartão de crédito de id " + c.getId() + " não encontrado.");
             }
 
-        } catch (Exception ex){
-            throw ex;
-        } finally {
-            pst.close();
-            conn.close();
         }
     }
 
     public List<CartaoCredito> consultarByIDCliente(int idCliente) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            """
-                SELECT
-                    *
-                FROM
-                    cartoes_credito
-                    JOIN
-                    bandeiras_cartao_credito ON bcc_id = cre_bcc_id
-                WHERE cre_cli_id = ?
-                """,
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                """
+                    SELECT
+                        *
+                    FROM
+                        cartoes_credito
+                        JOIN
+                        bandeiras_cartao_credito ON bcc_id = cre_bcc_id
+                    WHERE cre_cli_id = ?
+                    """,
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+            );
+        ){
             pst.setInt(1, idCliente);
 
             ResultSet rs = pst.executeQuery();
@@ -181,11 +161,6 @@ public class CartaoCreditoDAO {
             }
 
             return cartoesCredito;    
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
     }
 

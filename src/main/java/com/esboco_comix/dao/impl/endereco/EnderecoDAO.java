@@ -16,18 +16,18 @@ import com.esboco_comix.utils.ConexaoFactory;
 public class EnderecoDAO {
 
     public Endereco inserir(Endereco e) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            "INSERT INTO enderecos("+
-                "end_frase_curta, end_logradouro, end_tipo_logradouro, end_tipo_residencial, "+
-                "end_numero, end_bairro, end_cep, end_cidade, end_estado, end_pais, "+
-                "end_is_residencial, end_is_entrega, end_is_cobranca, end_observacoes, end_cli_id) "+
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
-                Statement.RETURN_GENERATED_KEYS
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                "INSERT INTO enderecos("+
+                    "end_frase_curta, end_logradouro, end_tipo_logradouro, end_tipo_residencial, "+
+                    "end_numero, end_bairro, end_cep, end_cidade, end_estado, end_pais, "+
+                    "end_is_residencial, end_is_entrega, end_is_cobranca, end_observacoes, end_cli_id) "+
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+        ) {
             pst.setString(1, e.getFraseCurta());
             pst.setString(2, e.getLogradouro());
             pst.setString(3, e.getTipoLogradouro().name());
@@ -54,23 +54,17 @@ public class EnderecoDAO {
             }
 
             return enderecoInserido;
-        } catch (Exception ex){
-            throw ex;
-        } finally {
-            connection.close();
-            pst.close();
         }
-
     }
 
     public Endereco consultarByID(int id) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            "SELECT * FROM enderecos WHERE end_id = ?"
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                "SELECT * FROM enderecos WHERE end_id = ?"
+            );
+        ){
             pst.setInt(1, id);
 
             ResultSet rs = pst.executeQuery();
@@ -79,28 +73,23 @@ public class EnderecoDAO {
                 throw new Exception("Endereço não encontrado.");
             }
             return mapearEntidade(rs);    
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
     }
 
     public Endereco atualizar(Endereco e) throws Exception {
-        Connection conn = ConexaoFactory.getConexao(); 
+        try (
+            Connection conn = ConexaoFactory.getConexao(); 
     
-        PreparedStatement pst = conn.prepareStatement(
-            "UPDATE enderecos "+
-                "SET end_frase_curta = ?, end_logradouro = ?, "+
-                "end_tipo_logradouro = ?, end_tipo_residencial = ?, end_numero = ?, "+
-                "end_bairro = ?, end_cep = ?, end_cidade = ?, end_estado = ?, end_pais = ?, "+
-                "end_is_residencial = ?, end_is_entrega = ?, end_is_cobranca = ?, "+
-                "end_observacoes = ?, end_cli_id = ? "+
-                "WHERE end_id = ?;"
-        );
-    
-        try {
+            PreparedStatement pst = conn.prepareStatement(
+                "UPDATE enderecos "+
+                    "SET end_frase_curta = ?, end_logradouro = ?, "+
+                    "end_tipo_logradouro = ?, end_tipo_residencial = ?, end_numero = ?, "+
+                    "end_bairro = ?, end_cep = ?, end_cidade = ?, end_estado = ?, end_pais = ?, "+
+                    "end_is_residencial = ?, end_is_entrega = ?, end_is_cobranca = ?, "+
+                    "end_observacoes = ?, end_cli_id = ? "+
+                    "WHERE end_id = ?;"
+            );
+        ){
             pst.setString(1, e.getFraseCurta());
             pst.setString(2, e.getLogradouro());
             pst.setString(3, e.getTipoLogradouro().name());
@@ -123,46 +112,36 @@ public class EnderecoDAO {
             }
 
             return consultarByID(e.getId());
-        } catch (Exception ex){
-            throw ex;
-        } finally {
-            pst.close();
-            conn.close();
-        } 
+        }
     }
 
     public void deletar(Endereco e) throws Exception {
-        Connection conn = ConexaoFactory.getConexao();
+        try (
+            Connection conn = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = conn.prepareStatement(
-            "DELETE FROM enderecos WHERE end_id = ?"
-        );
-
-        try {
+            PreparedStatement pst = conn.prepareStatement(
+                "DELETE FROM enderecos WHERE end_id = ?"
+            );
+        ) {
             pst.setInt(1, e.getId());
 
             if (pst.executeUpdate() == 0) {
                 throw new Exception("Deleção não realizada. Endereço de id " + e.getId() + " não encontrado.");
             }
 
-        } catch (Exception ex){
-            throw ex;
-        } finally {
-            pst.close();
-            conn.close();
         }
     }
 
     public List<Endereco> consultarByIDCliente(int idCliente) throws Exception {
-        Connection connection = ConexaoFactory.getConexao();
+        try (
+            Connection connection = ConexaoFactory.getConexao();
 
-        PreparedStatement pst = connection.prepareStatement(
-            "SELECT * FROM enderecos WHERE end_cli_id = ?",
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
+            PreparedStatement pst = connection.prepareStatement(
+                "SELECT * FROM enderecos WHERE end_cli_id = ?",
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+            );    
+        ){
             pst.setInt(1, idCliente);
 
             ResultSet rs = pst.executeQuery();
@@ -178,11 +157,6 @@ public class EnderecoDAO {
             }
 
             return enderecos;    
-        } catch (Exception e){
-            throw e;
-        } finally {
-            connection.close();
-            pst.close();
         }
     }
 

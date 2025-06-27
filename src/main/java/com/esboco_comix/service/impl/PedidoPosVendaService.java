@@ -1,5 +1,6 @@
 package com.esboco_comix.service.impl;
 
+import com.esboco_comix.dao.impl.pedido.ItemPedidoDAO;
 import com.esboco_comix.dao.impl.pedido.PedidoPosVendaDAO;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoPosVendaDTO;
@@ -22,7 +23,35 @@ public class PedidoPosVendaService {
     private final EstoqueService estoqueService = new EstoqueService();
     private final PedidoService pedidoService = new PedidoService();
 
+    private final ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
+
     public PedidoPosVendaDTO inserir(PedidoPosVenda pedido) throws Exception{
+        ItemPedido item = itemPedidoDAO.consultarByID(pedido.getIdPedido(), pedido.getIdQuadrinho());
+
+        if (pedido.getQuantidade() < 1){
+            throw new Exception("Quantidade da troca/devolução precisa ser maior que zero!");
+        }
+
+        if (pedido.getQuantidade() > item.getQuantidade()){
+            throw new Exception("Quantidade de troca/devolução maior do que o limite!");
+        }
+
+        List<PedidoPosVendaDTO> pedidosPosVenda = pedidoPosVendaDAO.consultarByIdPedido(pedido.getIdPedido());
+
+        int quantidadeTotalJaTrocadaOuDevoluida = 0;
+
+        for (PedidoPosVendaDTO p : pedidosPosVenda){
+            if (p.getPedidoPosVenda().getIdQuadrinho() == pedido.getIdQuadrinho()){
+                quantidadeTotalJaTrocadaOuDevoluida += p.getPedidoPosVenda().getQuantidade();
+            }
+        }
+
+        int limite = quantidadeTotalJaTrocadaOuDevoluida + pedido.getQuantidade();
+
+        if (item.getQuantidade() < limite ){
+            throw new Exception("Não é possível realizar mais trocas ou devoluções desse item!");
+        }
+
         return pedidoPosVendaDAO.inserir(pedido);
     }
 
@@ -69,10 +98,6 @@ public class PedidoPosVendaService {
         }
 
         return pedidoPosVendaDAO.atualizarStatus(pedido.getPedidoPosVenda());
-    }
-
-    public List<PedidoPosVendaDTO> consultarByIdPedido(int id) throws Exception{
-        return pedidoPosVendaDAO.consultarByIdPedido(id);
     }
 
     public List<PedidoPosVendaDTO> consultarPorIDCliente(int id) throws Exception {

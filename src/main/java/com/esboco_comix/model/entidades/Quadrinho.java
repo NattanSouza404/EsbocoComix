@@ -14,7 +14,6 @@ public class Quadrinho {
 
     private LocalDate ano;
     private String titulo;
-    private Double preco;
     private String autor;
     private String editora;
     private Integer edicao;
@@ -35,6 +34,4 @@ public class Quadrinho {
     private List<Categoria> categorias;
 
     private GrupoPrecificacao grupoPrecificacao;
-    
-    // TODO deletar o atributo preço
 }

@@ -13,38 +13,32 @@ import java.util.List;
 
 public class AnaliseDAO {
     public List<ItemVendaDTO> consultarProdutos(FiltroAnaliseDTO filtro) throws Exception {
-        Connection conn = ConexaoFactory.getConexao();
-
-        StringBuilder query = new StringBuilder( 
+        StringBuilder query = new StringBuilder(
             """
-            SELECT qua_titulo, ite_quantidade, ped_data FROM itens_pedido
-                JOIN quadrinhos ON ite_qua_id = qua_id
-                JOIN pedidos ON ite_ped_id = ped_id
-            WHERE 1 = 1
-            """);
+            SELECT * FROM vw_analise_produtos WHERE 1 = 1
+            """
+        );
 
         List<LocalDateTime> params = new ArrayList<>();
 
         if (filtro.getDataInicio() != null){
-            query.append(" AND ped_data >= ?");
+            query.append(" AND data >= ?");
             params.add(filtro.getDataInicio());
         }
 
         if (filtro.getDataFinal() != null){
-            query.append(" AND ped_data <= ?");
+            query.append(" AND data <= ?");
             params.add(filtro.getDataFinal());
         }
 
-        query.append(" ORDER BY ped_data;");
-
-        PreparedStatement pst = conn.prepareStatement(
-            query.toString(),
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
-        );
-        
-        try {
-
+        try (
+            Connection conn = ConexaoFactory.getConexao();
+            PreparedStatement pst = conn.prepareStatement(
+                    query.toString(),
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY
+            );
+        ){
             for (int i = 0; i < params.size(); i++) {
                 pst.setTimestamp(i + 1, java.sql.Timestamp.valueOf(params.get(i)));
             }
@@ -61,12 +55,13 @@ public class AnaliseDAO {
             while (rs.next()){
 
                 ItemVendaDTO.DadosItem dados = new ItemVendaDTO.DadosItem();
-                dados.setQuantidade(rs.getInt("ite_quantidade"));
-                dados.setData(rs.getTimestamp("ped_data").toLocalDateTime());
+                dados.setQuantidade(rs.getInt("quantidade"));
+                dados.setData(rs.getTimestamp("data").toLocalDateTime());
+                dados.setValorTotal(rs.getDouble("valor_total"));
 
                 boolean valorRepetido = false;
                 for (ItemVendaDTO i: itensVendidos){
-                    if (i.getTitulo().equals(rs.getString("qua_titulo"))){
+                    if (i.getTitulo().equals(rs.getString("titulo_quadrinho"))){
                         valorRepetido = true;
 
                         i.getDados().add(dados);
@@ -79,7 +74,7 @@ public class AnaliseDAO {
                 }
 
                 ItemVendaDTO itemVendaDTO = new ItemVendaDTO();
-                itemVendaDTO.setTitulo(rs.getString("qua_titulo"));
+                itemVendaDTO.setTitulo(rs.getString("titulo_quadrinho"));
 
                 itemVendaDTO.getDados().add(dados);
 
@@ -87,49 +82,36 @@ public class AnaliseDAO {
             }
 
             return itensVendidos;
-        }
-        catch (Exception e){
-            throw e;
-        } finally {
-            pst.close();
-            conn.close();
         }
     }
 
     public List<ItemVendaDTO> consultarCategorias(FiltroAnaliseDTO filtro) throws Exception{
-        Connection conn = ConexaoFactory.getConexao();
-
         StringBuilder query = new StringBuilder( 
             """
-            SELECT cat_nome, ite_quantidade, ped_data FROM categorias
-                JOIN categorias_quadrinho ON cat_id = cqu_cat_id\s
-                JOIN quadrinhos ON qua_id = cqu_qua_id
-                JOIN itens_pedido ON ite_qua_id = qua_id
-                JOIN pedidos ON ite_ped_id = ped_id
-            WHERE 1 = 1
-            """);
+            SELECT * FROM vw_analise_categorias WHERE 1 = 1
+            """
+        );
 
         List<LocalDateTime> params = new ArrayList<>();
 
         if (filtro.getDataInicio() != null){
-            query.append(" AND ped_data >= ?");
+            query.append(" AND data >= ?");
             params.add(filtro.getDataInicio());
         }
 
         if (filtro.getDataFinal() != null){
-            query.append(" AND ped_data <= ?");
+            query.append(" AND data <= ?");
             params.add(filtro.getDataFinal());
         }
 
-        query.append(" ORDER BY ped_data;");
-
-        PreparedStatement pst = conn.prepareStatement(
-            query.toString(),
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY
-        );
-
-        try {
+        try (
+            Connection conn = ConexaoFactory.getConexao();
+            PreparedStatement pst = conn.prepareStatement(
+                    query.toString(),
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY
+            );
+        ) {
             for (int i = 0; i < params.size(); i++) {
                 pst.setTimestamp(i + 1, java.sql.Timestamp.valueOf(params.get(i)));
             }
@@ -146,12 +128,13 @@ public class AnaliseDAO {
             while (rs.next()){
 
                 ItemVendaDTO.DadosItem dados = new ItemVendaDTO.DadosItem();
-                dados.setQuantidade(rs.getInt("ite_quantidade"));
-                dados.setData(rs.getTimestamp("ped_data").toLocalDateTime());
+                dados.setQuantidade(rs.getInt("quantidade"));
+                dados.setData(rs.getTimestamp("data").toLocalDateTime());
+                dados.setValorTotal(rs.getDouble("valor_total"));
 
                 boolean valorRepetido = false;
                 for (ItemVendaDTO i: itensVendidos){
-                    if (i.getTitulo().equals(rs.getString("cat_nome"))){
+                    if (i.getTitulo().equals(rs.getString("categoria"))){
                         valorRepetido = true;
 
                         i.getDados().add(dados);
@@ -164,7 +147,7 @@ public class AnaliseDAO {
                 }
 
                 ItemVendaDTO itemVendaDTO = new ItemVendaDTO();
-                itemVendaDTO.setTitulo(rs.getString("cat_nome"));
+                itemVendaDTO.setTitulo(rs.getString("categoria"));
 
                 itemVendaDTO.getDados().add(dados);
 
@@ -172,12 +155,6 @@ public class AnaliseDAO {
             }
 
             return itensVendidos;
-        }
-        catch (Exception e){
-            throw e;
-        } finally {
-            pst.close();
-            conn.close();
         }
     }
 }
