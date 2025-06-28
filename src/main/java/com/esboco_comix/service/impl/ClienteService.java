@@ -101,13 +101,6 @@ public class ClienteService {
         return clienteDAO.atualizarStatusCadastro(c);
     }
 
-    public void deletar(Cliente c) throws Exception {
-        clienteDAO.deletar(c);
-        for (Endereco e : c.getEnderecos()) {
-            enderecoService.deletar(e);
-        }
-    }
-
     private void inserirNovoHash(Cliente c, String senhaNova) throws Exception {
         String saltSenha = CriptografadorSenha.generateSalt();
         c.setHashSenha(CriptografadorSenha.hashSenha(senhaNova, saltSenha));

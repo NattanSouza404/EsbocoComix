@@ -100,15 +100,4 @@ public class ClienteController extends AbstractController {
         }
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        try {
-            Cliente clienteToDelete = jsonToObject(req, Cliente.class);
-            clienteService.deletar(clienteToDelete);
-            resp.setStatus(HttpServletResponse.SC_OK);
-        } catch (Exception e) {
-            estourarErro(resp, e);
-        }
-    }
-
 }

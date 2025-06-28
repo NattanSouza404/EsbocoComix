@@ -136,31 +136,24 @@ export async function atualizarSenha(cliente){
     
 }
 
-export async function deletar(id){
-    
-    try {
-        const confirmacaoUsuario = confirm("Deseja mesmo deletar o cadastro desse cliente?");
+export async function inativarCliente(cliente){
+    const confirmacaoUsuario = confirm("Deseja mesmo ativar/inativar cliente?"); 
 
-        if (!confirmacaoUsuario){
-            return;
-        }
-
-        const url = `${PATH}?id=${id}`;
-
-        const response = await fetch(url, {
-            method: 'DELETE'
-        });
-
-        if (response.status === 204) {
-            alert('Deletado com sucesso');
-        }
-        else {
-            const resposta = await result.json();
-            alert("Erro ao deletar: "+resposta.erro);
-        }
-
-    } catch (error){
-        console.error('Erro ao deletar:', error);
+    if (!confirmacaoUsuario){
+        return;
     }
-    
+
+    let url = `${PATH}?opcao=atualizarstatuscadastro`;
+
+    const option = {
+        method: 'PUT',
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify(cliente)
+    }
+
+    const result = await fetch(url, option);
+
+    if (result.status !== 200) {
+        throw new Error(await result.json().erro);
+    }
 }

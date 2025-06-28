@@ -134,22 +134,6 @@ public class ClienteDAO {
         }
     }
 
-    public void deletar(Cliente c) throws Exception {
-        try (
-            Connection conn = ConexaoFactory.getConexao();
-
-            PreparedStatement pst = conn.prepareStatement(
-                "DELETE FROM clientes WHERE cli_id = ?"
-            );
-        ) {
-            pst.setInt(1, c.getId());
-
-            if (pst.executeUpdate() == 0) {
-                throw new Exception("Deleção não realizada. Cliente de id " + c.getId() + " não encontrado.");
-            }
-        }
-    }
-
     /***
      * Operador ILIKE somente suportado pelo PostgreSQL
      */
@@ -288,7 +272,7 @@ public class ClienteDAO {
                     "cli_is_ativo = ? WHERE cli_id = ?"
             );
         ) {
-            pst.setBoolean(1, c.getIsAtivo());
+            pst.setBoolean(1, !c.getIsAtivo());
             
             pst.setInt(2, c.getId());
         
