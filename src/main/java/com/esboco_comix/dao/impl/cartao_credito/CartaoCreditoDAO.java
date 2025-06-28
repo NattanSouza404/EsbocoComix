@@ -111,12 +111,12 @@ public class CartaoCreditoDAO {
         }
     }
 
-    public void deletar(CartaoCredito c) throws Exception {
+    public void inativar(CartaoCredito c) throws Exception {
         try(
             Connection conn = ConexaoFactory.getConexao();
 
             PreparedStatement pst = conn.prepareStatement(
-                "DELETE FROM cartoes_credito WHERE cre_id = ?"
+                "UPDATE cartoes_credito SET cre_is_ativo = false WHERE cre_id = ?;"
             );
         ){
             pst.setInt(1, c.getId());
@@ -140,7 +140,7 @@ public class CartaoCreditoDAO {
                         cartoes_credito
                         JOIN
                         bandeiras_cartao_credito ON bcc_id = cre_bcc_id
-                    WHERE cre_cli_id = ?
+                    WHERE cre_cli_id = ? AND cre_is_ativo = true
                     """,
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
@@ -173,6 +173,7 @@ public class CartaoCreditoDAO {
         c.setPreferencial(rs.getBoolean("cre_is_preferencial"));
         c.setBandeiraCartao(BandeiraCartao.valueOf(rs.getString("bcc_nome")));
         c.setIdCliente(rs.getInt("cre_cli_id"));
+        c.setIsAtivo(rs.getBoolean("cre_is_ativo"));
         return c;
     }
 

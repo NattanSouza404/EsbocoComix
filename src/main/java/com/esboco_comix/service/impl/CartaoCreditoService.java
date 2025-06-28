@@ -25,7 +25,7 @@ public class CartaoCreditoService {
     }
 
     public void deletar(CartaoCredito c) throws Exception {
-        cartaoCreditoDAO.deletar(c);
+        cartaoCreditoDAO.inativar(c);
     }
 
 }
