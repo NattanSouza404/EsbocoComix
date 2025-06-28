@@ -19,6 +19,9 @@ public class CartaoCredito {
 
     private BandeiraCartao bandeiraCartao;
 
+    @JsonProperty("isAtivo")
+    private Boolean isAtivo;
+
     private int idCliente;
     private int idBandeiraCartao;
 }
