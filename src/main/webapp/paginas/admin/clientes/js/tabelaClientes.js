@@ -57,20 +57,31 @@ export default class TabelaClientes {
             };
 
             tableRow.querySelector('.btn-inativar').onclick = async () => {
-                try {
-                    await inativarCliente(c);
-                    alert('Atualizado com sucesso!')
-                } catch (error){
-                    alert(`Erro ao atualizar: ${error}`);
-                }
-                
-                window.location.reload();
+                this.confirmarInativarCliente(c);
             };
         
             this.tBody.append(tableRow); 
 
             contador++;
         });
+        
+    }
+
+    async confirmarInativarCliente(cliente){
+        const confirmacaoUsuario = confirm("Deseja mesmo ativar/inativar cliente?"); 
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+
+        try {
+            await inativarCliente(cliente);
+            alert('Atualizado com sucesso!');
+
+            window.location.reload();
+        } catch (error){
+            alert(`Erro ao atualizar: ${error}`);
+        }
         
     }
 
