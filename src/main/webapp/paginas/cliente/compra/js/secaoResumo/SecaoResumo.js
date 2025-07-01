@@ -21,6 +21,12 @@ export class ResumoPedido {
             }
         );
 
+        document.getElementById('cupons').addEventListener('change', (e) => {
+            if (e.target.tagName === 'SELECT') {
+                this.atualizarCupons(secaoCupons.getCuponsPedido());
+            }
+        });
+
         const observerCartoes = new MutationObserver(() => {
             secaoSelecaoCartao.adicionarInputListeners(this);
             this.atualizarCartoes(secaoSelecaoCartao.getCartoesCreditoPedido())
@@ -31,10 +37,15 @@ export class ResumoPedido {
             {
                 childList: true,
                 subtree: true,
+                attributes: true
             }
         );
 
         secaoSelecaoCartao.adicionarInputListeners(this);
+
+        this.valorCartao = 0;
+        this.descontoCupom = 0;
+        this.valorFrete = 0;
     }
 
     preencherResumo(carrinho, endereco) {
@@ -96,7 +107,7 @@ export class ResumoPedido {
     atualizarCartoes(cartoes){
         this.valorCartao = 0;
         cartoes.forEach((cartao) => {
-            this.valorCartao += cartao.valor;
+            this.valorCartao += cartao.valor ? cartao.valor : 0;
         });
 
         this.resumo.querySelector('.valor-cartao').textContent = `
