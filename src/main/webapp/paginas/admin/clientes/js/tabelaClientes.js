@@ -1,4 +1,4 @@
-import { atualizarCliente } from "/js/api/apiCliente.js";
+import { inativarCliente } from "../../../../js/api/apiCliente.js";
 import ModalTransacoes from "./modalTransacoes.js";
 import { formatarData } from "/js/script.js";
 import ModalCupomPromocional from "./modalCupomPromocional.js";
@@ -44,7 +44,7 @@ export default class TabelaClientes {
 
                     <button type="button" class="btn-adicionar-cupom">Adicionar Cupom<qbutton>
 
-                    <button type="button" class="btn-inativar">Inativar</button>
+                    <button type="button" class="btn-inativar">${c.isAtivo === true ? 'Inativar' : 'Ativar'}</button>
                 </td>
             `;
 
@@ -56,9 +56,15 @@ export default class TabelaClientes {
                 this.modalCupomPromocional.show(c);
             };
 
-            tableRow.querySelector('.btn-inativar').onclick = () => {
-                c.isAtivo = (c.isAtivo === true) ? false : true;
-                atualizarCliente(c, "atualizarstatuscadastro");
+            tableRow.querySelector('.btn-inativar').onclick = async () => {
+                try {
+                    await inativarCliente(c);
+                    alert('Atualizado com sucesso!')
+                } catch (error){
+                    alert(`Erro ao atualizar: ${error}`);
+                }
+                
+                window.location.reload();
             };
         
             this.tBody.append(tableRow); 

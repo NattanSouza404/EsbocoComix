@@ -58,18 +58,19 @@ export class SecaoPedidosPosVenda {
     confirmarAtualizarStatusPedidoPosVenda(pedidoTroca, status){
         const confirmacaoUsuario = confirm(`Deseja mesmo atualizar o status desse item para ${status}?`);
 
-        if (confirmacaoUsuario){
-            pedidoTroca.status = status;
-
-            /*
-            if (pedidoTroca.status === 'TROCA_CONCLUIDA' || pedidoTroca.status === 'DEVOLUCAO_CONCLUIDA'){
-                if (confirm('Deseja retornar os itens para o estoque?')){
-                    retornarItemAoEstoque(pedidoTroca);
-                }
-            }
-            */
-
-            atualizarStatusPedidoPosVenda(pedidoTroca);
+        if (!confirmacaoUsuario){
+            return;
         }
+
+        pedidoTroca.status = status;
+        pedidoTroca.retornarAoEstoque = false;
+
+        if (pedidoTroca.status === 'TROCA_CONCLUIDA' || pedidoTroca.status === 'DEVOLUCAO_CONCLUIDA'){
+            if (confirm('Deseja retornar os itens para o estoque?')){
+                pedidoTroca.retornarAoEstoque = true;
+            }
+        }
+
+        atualizarStatusPedidoPosVenda(pedidoTroca);
     }
 }

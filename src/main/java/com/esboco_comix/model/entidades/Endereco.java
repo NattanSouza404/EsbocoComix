@@ -33,5 +33,8 @@ public class Endereco {
 
     private String observacoes;
 
+    @JsonProperty("isAtivo")
+    private Boolean isAtivo;
+
     private int idCliente;
 }

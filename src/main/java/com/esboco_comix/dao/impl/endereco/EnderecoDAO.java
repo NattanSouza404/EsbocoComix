@@ -115,18 +115,18 @@ public class EnderecoDAO {
         }
     }
 
-    public void deletar(Endereco e) throws Exception {
+    public void inativar(Endereco e) throws Exception {
         try (
             Connection conn = ConexaoFactory.getConexao();
 
             PreparedStatement pst = conn.prepareStatement(
-                "DELETE FROM enderecos WHERE end_id = ?"
+                "UPDATE enderecos SET end_is_ativo = false WHERE end_id = ?;"
             );
         ) {
             pst.setInt(1, e.getId());
 
             if (pst.executeUpdate() == 0) {
-                throw new Exception("Deleção não realizada. Endereço de id " + e.getId() + " não encontrado.");
+                throw new Exception("Inativação não realizada. Endereço de id " + e.getId() + " não encontrado.");
             }
 
         }
@@ -137,7 +137,7 @@ public class EnderecoDAO {
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                "SELECT * FROM enderecos WHERE end_cli_id = ?",
+                "SELECT * FROM enderecos WHERE end_cli_id = ? AND end_is_ativo = true;",
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
             );    
@@ -178,6 +178,8 @@ public class EnderecoDAO {
         e.setIsCobranca(rs.getBoolean("end_is_cobranca"));
         e.setObservacoes(rs.getString("end_observacoes"));
         e.setIdCliente(rs.getInt("end_cli_id"));
+
+        e.setIsAtivo(rs.getBoolean("end_is_ativo"));
 
         return e;
     }

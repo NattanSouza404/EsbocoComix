@@ -67,7 +67,7 @@ async function confirmarDevolucaoPedido(pedido){
 
     if (confirmacaoUsuario){
         pedido.status = 'DEVOLUCAO_SOLICITADA';
-        await atualizarStatusPedidoPosVenda(pedido);
+        await atualizarStatusPedido(pedido);
     }
 }
 

@@ -8,22 +8,22 @@ export class AdminContainerNav extends HTMLDivElement {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a href="/admin/clientes" class="nav-link active" aria-current="page">Clientes</a>
+                        <a id="link-clientes" href="/admin/clientes" class="nav-link" aria-current="page">Clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/admin/estoque" class="nav-link">Controle de Estoque</a>
+                        <a id="link-estoque" href="/admin/estoque" class="nav-link">Controle de Estoque</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/admin/analise" class="nav-link">Relatórios de Análise</a>
+                        <a id="link-analise" href="/admin/analise" class="nav-link">Relatórios de Análise</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/admin/gerenciarVendas" class="nav-link">Gerenciar Vendas</a>
+                        <a id="link-gerenciar-vendas" href="/admin/gerenciarVendas" class="nav-link">Gerenciar Vendas</a>
                     </li>
                 </ul>
                 <a href="/login" class="btn btn-danger">Sair</a>
             </div>
         </div>
-        `
+        `;
     }
 
 }

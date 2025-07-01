@@ -62,6 +62,7 @@ public class PedidoPosVendaDAO {
                         JOIN quadrinhos ON qua_id = ppv_qua_id
                         JOIN pedidos ON ped_id = ppv_ped_id
                         JOIN clientes ON ped_cli_id = cli_id
+                    ORDER BY ppv_id DESC;
                     """,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY
@@ -157,7 +158,8 @@ public class PedidoPosVendaDAO {
                         JOIN pedidos ON ped_id = ppv_ped_id
                         JOIN clientes ON ped_cli_id = cli_id
                     WHERE
-                        ppv_ped_id = ?;
+                        ppv_ped_id = ?
+                    ORDER BY ppv_id DESC;
                     """,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY

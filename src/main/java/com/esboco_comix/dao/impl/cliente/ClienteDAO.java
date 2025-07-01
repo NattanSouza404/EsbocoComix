@@ -63,7 +63,7 @@ public class ClienteDAO {
             Connection conn = ConexaoFactory.getConexao();
 
             PreparedStatement pst = conn.prepareStatement(
-                "SELECT * FROM clientes;",
+                "SELECT * FROM clientes ORDER BY cli_id;",
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
             );
@@ -90,7 +90,7 @@ public class ClienteDAO {
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                "SELECT * FROM clientes WHERE cli_id = ?"
+                "SELECT * FROM clientes WHERE cli_id = ?;"
             );
         ) {
             pst.setInt(1, id);
@@ -131,22 +131,6 @@ public class ClienteDAO {
             }
 
             return consultarByID(c.getId());
-        }
-    }
-
-    public void deletar(Cliente c) throws Exception {
-        try (
-            Connection conn = ConexaoFactory.getConexao();
-
-            PreparedStatement pst = conn.prepareStatement(
-                "DELETE FROM clientes WHERE cli_id = ?"
-            );
-        ) {
-            pst.setInt(1, c.getId());
-
-            if (pst.executeUpdate() == 0) {
-                throw new Exception("Deleção não realizada. Cliente de id " + c.getId() + " não encontrado.");
-            }
         }
     }
 
@@ -192,6 +176,8 @@ public class ClienteDAO {
             query.append(" AND cli_ranking = ?");
             params.add(filtro.getRanking());
         }
+
+        query.append(" ORDER BY cli_id;");
         
         try (
             Connection conn = ConexaoFactory.getConexao();
@@ -286,7 +272,7 @@ public class ClienteDAO {
                     "cli_is_ativo = ? WHERE cli_id = ?"
             );
         ) {
-            pst.setBoolean(1, c.getIsAtivo());
+            pst.setBoolean(1, !c.getIsAtivo());
             
             pst.setInt(2, c.getId());
         

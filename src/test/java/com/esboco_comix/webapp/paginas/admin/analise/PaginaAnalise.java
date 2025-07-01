@@ -15,6 +15,18 @@ public class PaginaAnalise extends AbstractPagina {
         super(driver, wait, "http://localhost:8080/admin/analise");
     }
 
+    public void scrollarGraficos() throws InterruptedException {
+        driver.findElements(By.className("grafico-linha"))
+            .forEach(grafico ->  {
+                scrollToElement(grafico);
+                try {
+                    sleep(800);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+    }
+
     public void colocarDataInicio(LocalDate data) throws InterruptedException {
         WebElement form = scrollToElement(
             driver.findElement(By.className("form-filtros"))

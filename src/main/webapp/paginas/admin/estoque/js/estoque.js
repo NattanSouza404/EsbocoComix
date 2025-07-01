@@ -22,12 +22,10 @@ quadrinhos.forEach(quadrinho => {
         <td>${contador++}</td>
         <td class="item-name">${quadrinho.titulo}</td>
         <td class="item-quantity">${estoque}</td>
-        <td class="item-cost-value">Valor custo</td>
-        <td class="item-precification">${quadrinho.grupoPrecificacao.nome}</td>
-        <td class="item-precification">${quadrinho.grupoPrecificacao.porcentagem}%</td>
         <td class="item-price">${formatarPreco(quadrinho.preco)}</td>
+        <td class="item-precification">${quadrinho.grupoPrecificacao.nome} ${quadrinho.grupoPrecificacao.porcentagem}%</td>
         <td>
-            <button class="btn btn-warning btn-sm">Fazer entrada no estoque</button>
+            <button class="btn btn-warning btn-sm btn-entrada-estoque">Fazer entrada no estoque</button>
         </td>
     `;
 

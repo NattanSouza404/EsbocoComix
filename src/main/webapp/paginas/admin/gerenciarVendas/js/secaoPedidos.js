@@ -99,18 +99,19 @@ export class SecaoPedidos {
     confirmarAtualizarStatusPedido(pedido, status){
         const confirmacaoUsuario = confirm(`Deseja mesmo atualizar o status desse pedido para ${status}?`);
 
-        if (confirmacaoUsuario){
-            pedido.status = status;
-
-            /*
-            if (pedido.status === 'TROCA_CONCLUIDA' || pedido.status === 'DEVOLUCAO_CONCLUIDA'){
-                if (confirm('Deseja retornar os itens para o estoque?')){
-                    retornarPedidoAoEstoque(pedido);
-                }
-            }
-            */
-
-            atualizarStatusPedido(pedido);
+        if (!confirmacaoUsuario){
+            return;
         }
+
+        pedido.status = status;
+        pedido.retornarAoEstoque = false;
+
+        if (pedido.status === 'TROCA_CONCLUIDA' || pedido.status === 'DEVOLUCAO_CONCLUIDA'){
+            if (confirm('Deseja retornar os itens para o estoque?')){
+                pedido.retornarAoEstoque = true;
+            }
+        }
+
+        atualizarStatusPedido(pedido);
     }
 }

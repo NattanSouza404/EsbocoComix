@@ -21,8 +21,8 @@ public class EnderecoService {
         return enderecoDAO.atualizar(e);
     }
 
-    public void deletar(Endereco e) throws Exception {
-        enderecoDAO.deletar(e);
+    public void inativar(Endereco e) throws Exception {
+        enderecoDAO.inativar(e);
     }
 
 }

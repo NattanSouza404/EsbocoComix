@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public abstract class AbstractPagina {
     protected WebDriver driver;
@@ -54,6 +55,17 @@ public abstract class AbstractPagina {
     protected void preencherInput(WebElement form, String nome, LocalDate data) {
         scrollToElement(
             form.findElement(By.name(nome))
+        ).clear();
+
+        ((JavascriptExecutor) driver).executeScript(
+            "arguments[0].value = '"+data.toString()+"';",
+            scrollToElement(form.findElement(By.name(nome)))
+        );
+    }
+
+    protected void preencherInput(WebElement form, String nome, LocalDateTime data) {
+        scrollToElement(
+                form.findElement(By.name(nome))
         ).clear();
 
         ((JavascriptExecutor) driver).executeScript(

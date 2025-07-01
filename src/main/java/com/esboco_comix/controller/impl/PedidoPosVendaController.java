@@ -1,7 +1,7 @@
 package com.esboco_comix.controller.impl;
 
 import com.esboco_comix.controller.utils.AbstractController;
-import com.esboco_comix.dto.PedidoPosVendaDTO;
+import com.esboco_comix.dto.AtualizarPedidoPosVendaDTO;
 import com.esboco_comix.model.entidades.PedidoPosVenda;
 import com.esboco_comix.service.impl.PedidoPosVendaService;
 import jakarta.servlet.ServletException;
@@ -55,7 +55,7 @@ public class PedidoPosVendaController extends AbstractController {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
-            PedidoPosVendaDTO pedido = jsonToObject(req, PedidoPosVendaDTO.class);
+            AtualizarPedidoPosVendaDTO pedido = jsonToObject(req, AtualizarPedidoPosVendaDTO.class);
 
             retornarRespostaJson(
                 resp,

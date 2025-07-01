@@ -67,7 +67,7 @@ public class EnderecoController extends AbstractController {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             Endereco endereco = jsonToObject(req, Endereco.class);
-            enderecoService.deletar(endereco);
+            enderecoService.inativar(endereco);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         } catch (Exception e) {
             estourarErro(resp, e);

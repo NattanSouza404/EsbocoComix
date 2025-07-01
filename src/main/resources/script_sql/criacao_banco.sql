@@ -36,6 +36,7 @@ CREATE TABLE enderecos (
     end_is_entrega       BOOLEAN NOT NULL,
     end_is_cobranca      BOOLEAN NOT NULL,
     end_observacoes      VARCHAR(50),
+    end_is_ativo         BOOLEAN NOT NULL DEFAULT true,
     end_cli_id           NUMERIC(6) NOT NULL
 );
 
@@ -50,6 +51,7 @@ CREATE TABLE cartoes_credito (
     cre_nome_impresso    VARCHAR(100) NOT NULL,
     cre_codigo_seguranca CHAR(3) NOT NULL,
     cre_is_preferencial  BOOLEAN NOT NULL,
+    cre_is_ativo         BOOLEAN NOT NULL DEFAULT true,
     cre_bcc_id           NUMERIC(2) NOT NULL,
     cre_cli_id           NUMERIC(6) NOT NULL
 );
@@ -181,6 +183,9 @@ ALTER TABLE itens_pedido
 
 ALTER TABLE pedidos
     ADD CONSTRAINT fk_ped_cli FOREIGN KEY ( ped_cli_id ) REFERENCES clientes ( cli_id );
+
+ALTER TABLE pedidos
+    ADD CONSTRAINT fk_ped_end FOREIGN KEY ( ped_end_id ) REFERENCES enderecos ( end_id );
 
 ALTER TABLE cartoes_credito_pedido
     ADD CONSTRAINT fk_ccp_cre FOREIGN KEY ( ccp_cre_id ) REFERENCES cartoes_credito ( cre_id );
