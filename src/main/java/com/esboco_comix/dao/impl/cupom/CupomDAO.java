@@ -39,7 +39,7 @@ public class CupomDAO {
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                "SELECT * FROM cupons WHERE cup_cli_id = ? AND cup_is_ativo;",
+                "SELECT * FROM cupons WHERE cup_cli_id = ? AND cup_is_ativo ORDER BY cup_id;",
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
             );

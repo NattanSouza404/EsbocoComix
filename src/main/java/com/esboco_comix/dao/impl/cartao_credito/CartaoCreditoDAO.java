@@ -141,6 +141,7 @@ public class CartaoCreditoDAO {
                         JOIN
                         bandeiras_cartao_credito ON bcc_id = cre_bcc_id
                     WHERE cre_cli_id = ? AND cre_is_ativo = true
+                    ORDER BY cre_id
                     """,
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
