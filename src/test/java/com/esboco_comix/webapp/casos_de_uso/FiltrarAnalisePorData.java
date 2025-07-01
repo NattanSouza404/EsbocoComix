@@ -14,19 +14,18 @@ public class FiltrarAnalisePorData {
         paginaAnalise = new PaginaAnalise(driver, wait);
     }
 
-    public void abrirPaginaAnalise() throws InterruptedException{
+    public void mostrarPaginaAnalise() throws InterruptedException{
         paginaAnalise.abrir();
+        paginaAnalise.scrollarGraficos();
     }
 
-    public void colocarDataInicio(LocalDate data) throws InterruptedException {
-        paginaAnalise.colocarDataInicio(data);
-    }
+    public void filtrarPorData(LocalDate dataInicial, LocalDate dataFinal) throws InterruptedException {
+        paginaAnalise.abrir();
 
-    public void colocarDataFinal(LocalDate data) throws InterruptedException {
-        paginaAnalise.colocarDataFinal(data);
-    }
+        paginaAnalise.colocarDataInicio(dataInicial);
+        paginaAnalise.colocarDataFinal(dataFinal);
 
-    public void filtrarPorData() throws InterruptedException {
         paginaAnalise.filtrarPorData();
+        paginaAnalise.scrollarGraficos();
     }
 }
