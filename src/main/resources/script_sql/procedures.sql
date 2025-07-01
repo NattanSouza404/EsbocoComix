@@ -28,7 +28,7 @@ BEGIN
         ees_qua_id,
         ees_quantidade,
         ees_valor_custo,
-        ees_dt_entrada,
+        COALESCE(ees_dt_entrada, CURRENT_TIMESTAMP),
         ees_fornecedor
     )
 	RETURNING ees_id INTO new_ees_id;
