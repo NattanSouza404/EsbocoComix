@@ -82,4 +82,10 @@ public class PaginaIndex extends AbstractPagina {
         sleep();
     }
 
+    public void abrirAnuncio(int index) throws InterruptedException {
+        scrollToElement(
+                driver.findElements(By.className("btn-abrir-anuncio")).get(index)
+        ).click();
+        sleep();
+    }
 }

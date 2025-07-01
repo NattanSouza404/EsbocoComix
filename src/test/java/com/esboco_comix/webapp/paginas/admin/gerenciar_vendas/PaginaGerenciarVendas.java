@@ -14,7 +14,7 @@ public class PaginaGerenciarVendas extends AbstractPagina {
 
     public void mudarStatus(String status) throws InterruptedException {
         WebElement tr = wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.cssSelector("#orderTable tr"))
+                By.cssSelector("#tabela-pedidos tr"))
         );
 
         WebElement select = tr.findElement(By.tagName("select"));
@@ -26,15 +26,19 @@ public class PaginaGerenciarVendas extends AbstractPagina {
 
         wait.until(ExpectedConditions.alertIsPresent()).accept();
         sleep();
+
+        if (status.equals("Devolução concluída") || status.equals("Troca concluída")){
+            wait.until(ExpectedConditions.alertIsPresent()).accept();
+            sleep();
+        }
 
         wait.until(ExpectedConditions.alertIsPresent()).dismiss();
         sleep();
     }
 
-    public void mudarStatusItem(String status) throws InterruptedException {
-        WebElement tr = wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.cssSelector("#tabela-pedido-troca tr"))
-        );
+    public void mudarStatusItem(int index, String status) throws InterruptedException {
+        WebElement tr = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
+            By.cssSelector("#tabela-pedido-troca tr"))).get(index);
 
         WebElement select = tr.findElement(By.tagName("select"));
         select.sendKeys(status);
@@ -45,6 +49,11 @@ public class PaginaGerenciarVendas extends AbstractPagina {
 
         wait.until(ExpectedConditions.alertIsPresent()).accept();
         sleep();
+
+        if (status.equals("Devolução concluída") || status.equals("Troca concluída")){
+            wait.until(ExpectedConditions.alertIsPresent()).accept();
+            sleep();
+        }
 
         wait.until(ExpectedConditions.alertIsPresent()).dismiss();
         sleep();

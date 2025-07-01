@@ -48,6 +48,7 @@ public class PaginaMinhasCompras extends AbstractPagina {
         sleep();
 
         wait.until(ExpectedConditions.alertIsPresent()).sendKeys(String.valueOf(quantidade));
+        wait.until(ExpectedConditions.alertIsPresent()).accept();
         sleep();
 
         wait.until(ExpectedConditions.alertIsPresent()).dismiss();
@@ -64,6 +65,7 @@ public class PaginaMinhasCompras extends AbstractPagina {
         sleep();
 
         wait.until(ExpectedConditions.alertIsPresent()).sendKeys(String.valueOf(quantidade));
+        wait.until(ExpectedConditions.alertIsPresent()).accept();
         sleep();
 
         wait.until(ExpectedConditions.alertIsPresent()).dismiss();
