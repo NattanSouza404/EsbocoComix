@@ -1,4 +1,4 @@
-package com.esboco_comix.webapp.testes.pedido;
+package com.esboco_comix.webapp.testes;
 
 import com.esboco_comix.webapp.base.BaseTest;
 import com.esboco_comix.webapp.casos_de_uso.MudarStatusPedido;
@@ -6,11 +6,14 @@ import com.esboco_comix.webapp.casos_de_uso.PedirTrocaDevolucao;
 import org.junit.Test;
 
 public class TrocaDevolucaoTest extends BaseTest {
+
     @Test
     public void pedirTroca(){
         try {
             PedirTrocaDevolucao fluxo = new PedirTrocaDevolucao(driver, wait);
             MudarStatusPedido fluxoAdmin = new MudarStatusPedido(driver, wait);
+
+            fluxo.realizarPedidoSimples(driver, wait);
 
             fluxo.logar();
             fluxo.abrirMinhasCompras();
@@ -27,30 +30,12 @@ public class TrocaDevolucaoTest extends BaseTest {
     }
 
     @Test
-    public void pedirTrocaItem(){
-        try {
-            PedirTrocaDevolucao fluxo = new PedirTrocaDevolucao(driver, wait);
-            MudarStatusPedido fluxoAdmin = new MudarStatusPedido(driver, wait);
-
-            fluxo.logar();
-            fluxo.abrirMinhasCompras();
-            fluxo.pedirTrocaItem(0);
-
-            fluxoAdmin.abrirGerenciarVendas();
-            fluxoAdmin.mudarStatusItem("Troca concluída");
-
-            fluxo.logar();
-            fluxo.abrirSecaoCupons();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
     public void pedirDevolucao(){
         try {
             PedirTrocaDevolucao fluxo = new PedirTrocaDevolucao(driver, wait);
             MudarStatusPedido fluxoAdmin = new MudarStatusPedido(driver, wait);
+
+            fluxo.realizarPedidoSimples(driver, wait);
 
             fluxo.logar();
             fluxo.abrirMinhasCompras();
@@ -67,17 +52,21 @@ public class TrocaDevolucaoTest extends BaseTest {
     }
     
     @Test
-    public void pedirDevolucaoItem(){
+    public void pedirTrocaDevolucaoItem(){
         try {
             PedirTrocaDevolucao fluxo = new PedirTrocaDevolucao(driver, wait);
             MudarStatusPedido fluxoAdmin = new MudarStatusPedido(driver, wait);
 
+            fluxo.realizarPedidoSimplesDoisItems(driver, wait);
+
             fluxo.logar();
             fluxo.abrirMinhasCompras();
-            fluxo.pedirDevolucaoItem(0);
+            fluxo.pedirTrocaItem(0, 1);
+            fluxo.pedirDevolucaoItem(1, 1);
 
             fluxoAdmin.abrirGerenciarVendas();
-            fluxoAdmin.mudarStatusItem("Devolução concluída");
+            fluxoAdmin.mudarStatusItem(0,"Devolução concluída");
+            fluxoAdmin.mudarStatusItem(1, "Troca concluída");
 
             fluxo.logar();
             fluxo.abrirSecaoCupons();

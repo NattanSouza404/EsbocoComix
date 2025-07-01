@@ -1,4 +1,4 @@
-package com.esboco_comix.webapp.testes.sistema_inteiro;
+package com.esboco_comix.webapp.testes;
 
 import org.junit.Test;
 

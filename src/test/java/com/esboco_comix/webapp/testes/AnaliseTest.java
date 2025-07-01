@@ -1,4 +1,4 @@
-package com.esboco_comix.webapp.testes.sistema_inteiro;
+package com.esboco_comix.webapp.testes;
 
 import java.time.LocalDate;
 
@@ -14,12 +14,11 @@ public class AnaliseTest extends BaseTest {
         try {
             FiltrarAnalisePorData fluxo = new FiltrarAnalisePorData(driver, wait);
 
-            fluxo.abrirPaginaAnalise();
+            LocalDate dataInicial = LocalDate.of(2025, 6, 1);
+            LocalDate dataFinal = LocalDate.of(2025, 6, 16);
 
-            fluxo.colocarDataInicio(LocalDate.of(2025, 6, 1));
-            fluxo.colocarDataFinal(LocalDate.of(2025, 6, 16));
-
-            fluxo.filtrarPorData();
+            fluxo.mostrarPaginaAnalise();
+            fluxo.filtrarPorData(dataInicial, dataFinal);
         } catch (InterruptedException e){
             e.printStackTrace();
         }
