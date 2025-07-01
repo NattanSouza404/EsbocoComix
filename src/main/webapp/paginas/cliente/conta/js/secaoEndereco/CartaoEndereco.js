@@ -1,6 +1,6 @@
 import { deletarEndereco } from "../../../../../js/api/apiEndereco.js";
 
-export class CartaoEndereco extends HTMLElement {
+export class CartaoEndereco extends HTMLDivElement {
     constructor(endereco, modalAlterarEndereco){
 
         super();
@@ -65,4 +65,4 @@ export class CartaoEndereco extends HTMLElement {
     }
 }
 
-customElements.define('dados-endereco-conta', CartaoEndereco);
+customElements.define('dados-endereco-conta', CartaoEndereco, {extends:"div"});

@@ -1,5 +1,5 @@
 import { formatarData } from "/js/script.js"
-export class CartaoDadosPessoais extends HTMLElement {
+export class CartaoDadosPessoais extends HTMLDivElement {
     constructor() {
         super();
     }
@@ -18,4 +18,4 @@ export class CartaoDadosPessoais extends HTMLElement {
     }
 }
 
-customElements.define('dados-pessoais-conta', CartaoDadosPessoais);
+customElements.define('dados-pessoais-conta', CartaoDadosPessoais, {extends:"div"});

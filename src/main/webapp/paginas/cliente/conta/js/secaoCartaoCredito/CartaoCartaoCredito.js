@@ -1,6 +1,6 @@
 import { deletarCartaoCredito } from "/js/api/apiCartaoCredito.js";
 
-export class CartaoCartaoCredito extends HTMLElement {
+export class CartaoCartaoCredito extends HTMLDivElement {
     constructor(cartaoCredito, modalAlterarCartaoCredito){
         super();
 
@@ -44,4 +44,4 @@ export class CartaoCartaoCredito extends HTMLElement {
     
 }
 
-customElements.define('dados-cartao-credito', CartaoCartaoCredito) 
+customElements.define('dados-cartao-credito', CartaoCartaoCredito, { extends: 'div'}) 
