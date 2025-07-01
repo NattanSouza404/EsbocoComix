@@ -1,3 +1,5 @@
+import { consultarEntradasEstoque } from "../../../../js/api/apiEstoque.js";
+import { formatarDateTime } from "../../../../js/script.js";
 import ModalEntradaEstoque from "./modalEntradaEstoque.js";
 import { consultarTodosQuadrinhos } from "/js/api/apiQuadrinho.js";
 import { formatarPreco } from "/js/script.js";
@@ -5,6 +7,7 @@ import { formatarPreco } from "/js/script.js";
 const tbody = document.getElementById("stockTable");
 
 const quadrinhos = await consultarTodosQuadrinhos();
+const entradasEstoque = await consultarEntradasEstoque();
 
 const modal = new ModalEntradaEstoque();
 
@@ -34,6 +37,20 @@ quadrinhos.forEach(quadrinho => {
         modal.show(quadrinho);
     };
     tbody.append(tr);
+});
+
+entradasEstoque.forEach(entrada => {
+    document.getElementById('tabela-entrada-estoque')
+        .insertAdjacentHTML('beforeend', `
+           <tr>
+            <td>#</td>
+            <td>${entrada.nomeQuadrinho}</td>
+            <td>${formatarDateTime(entrada.dataEntrada)}</td>
+            <td>${entrada.quantidade}</td>
+            <td>${entrada.valorCusto}</td>
+            <td>${entrada.fornecedor}</td>
+           </tr>
+        `);
 });
 
 

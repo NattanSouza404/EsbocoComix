@@ -106,8 +106,8 @@ export function formatarDateTime(dateArray){
         dateArray[2], // Dia
         dateArray[3], // Hora
         dateArray[4], // Minutos
-        dateArray[5], // Segundos
-        dateArray[6] / 1000000 // Converter nanosegundos em milissegundos
+        dateArray[5] ? dateArray[5] : 0, // Segundos
+        dateArray[6] ? dateArray[6] / 1000000 : 0 // Converter nanosegundos em milissegundos
     );
     
     return dataFormatada.toLocaleString('pt-BR', {

@@ -6,7 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.esboco_comix.dto.EntradaEstoqueDTO;
 import com.esboco_comix.model.entidades.EntradaEstoque;
 import com.esboco_comix.model.entidades.Estoque;
 import com.esboco_comix.model.entidades.ItemPedido;
@@ -155,4 +158,41 @@ public class EstoqueDAO {
         }
     }
 
+    public List<EntradaEstoqueDTO> consultarEntradasEstoque() throws Exception {
+        try (
+            Connection conn = ConexaoFactory.getConexao();
+
+            PreparedStatement pst = conn.prepareStatement(
+                """
+                SELECT *, qua_titulo FROM entrada_estoque JOIN quadrinhos ON ees_qua_id = qua_id ORDER BY ees_id;
+                """,
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+            );
+        ) {
+            ResultSet rs = pst.executeQuery();
+
+            if (!rs.next()) {
+                return new ArrayList<>();
+            }
+            rs.beforeFirst();
+
+            List<EntradaEstoqueDTO> entradasEstoque = new ArrayList<>();
+            while(rs.next()){
+                entradasEstoque.add(mapearDTO(rs));
+            }
+
+            return entradasEstoque;
+        }
+    }
+
+    private EntradaEstoqueDTO mapearDTO(ResultSet rs) throws Exception {
+        EntradaEstoqueDTO dto = new EntradaEstoqueDTO();
+
+        dto.setNomeQuadrinho(rs.getString("qua_titulo"));
+
+        dto.setEntradaEstoque(mapearEntidade(rs));
+
+        return dto;
+    }
 }

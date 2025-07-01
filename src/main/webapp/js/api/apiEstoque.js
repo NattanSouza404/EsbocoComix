@@ -25,3 +25,12 @@ export async function inserirEntradaEstoque(entradaEstoque) {
         console.error('Erro ao realizar pedido:', error);
     }
 }
+
+export async function consultarEntradasEstoque(){
+     try {
+        const response = await fetch(PATH);
+        return await response.json();
+    } catch (error) {
+        console.error('Erro buscando dados:', error);
+    }
+}
