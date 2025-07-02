@@ -44,7 +44,7 @@ secoes.forEach(secao => {
 function trocarSecao(idSecao){
     secoes.forEach(secao => {
         if (secao.id === idSecao){
-            secao.style.display = 'block';
+            secao.style.display = 'flex';
             return;
         } 
 

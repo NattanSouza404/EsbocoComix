@@ -137,7 +137,7 @@ public class EnderecoDAO {
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                "SELECT * FROM enderecos WHERE end_cli_id = ? AND end_is_ativo = true;",
+                "SELECT * FROM enderecos WHERE end_cli_id = ? AND end_is_ativo = true ORDER BY end_id;",
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
             );    

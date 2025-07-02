@@ -72,7 +72,7 @@ async function confirmarDevolucaoPedido(pedido){
 }
 
 async function confirmarTrocaItem(item){
-    const confirmacaoUsuario = confirm(`Deseja realizar a troca de ${item.nomeQuadrinho}?`);
+    const confirmacaoUsuario = confirm(`Deseja realizar a troca de "${item.nomeQuadrinho}"?`);
 
     if (!confirmacaoUsuario){
         return;
@@ -100,7 +100,7 @@ async function confirmarTrocaItem(item){
 }
 
 async function confirmarDevolucaoItem(item){
-    const confirmacaoUsuario = confirm("Deseja realizar a devolução desse item?");
+    const confirmacaoUsuario = confirm(`Deseja realizar a devolução de "${item.nomeQuadrinho}"?`);
 
     if (!confirmacaoUsuario){
         return;

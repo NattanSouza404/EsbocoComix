@@ -20,7 +20,7 @@ public class MudarStatusPedido {
         paginaGerenciarVendas.abrir();
     }
 
-    public void mudarStatusItem(String status) throws InterruptedException {
-        paginaGerenciarVendas.mudarStatusItem(status);
+    public void mudarStatusItem(int index, String status) throws InterruptedException {
+        paginaGerenciarVendas.mudarStatusItem(index, status);
     }
 }

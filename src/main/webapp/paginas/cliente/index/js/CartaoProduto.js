@@ -15,7 +15,7 @@ export class CartaoProduto extends HTMLDivElement {
           <p class="card-text">${quadrinho.autor}</p>
           <p class="price text-success fw-bold">${formatarPreco(quadrinho.preco)}</p>
         </div>
-        <a href="/anuncio?id=${quadrinho.id}" class="btn btn-warning text-white">Anúncio</a>
+        <a href="/anuncio?id=${quadrinho.id}" class="btn-abrir-anuncio btn btn-warning text-white">Anúncio</a>
         <button class="btn btn-warning text-white">Adicionar ao Carrinho</button>
       </div>
     `;

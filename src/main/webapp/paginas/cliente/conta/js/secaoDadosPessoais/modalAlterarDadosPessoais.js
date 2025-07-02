@@ -28,7 +28,9 @@ export class ModalAlterarDadosPessoais extends Modal {
 
     async enviarAtualizacao(){
         const cliente = montarClientePorForm(this.form);
-        atualizarCliente(cliente);
+        await atualizarCliente(cliente);
+
+        window.location.reload();
     }
 }
 

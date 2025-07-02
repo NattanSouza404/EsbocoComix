@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.dao.impl.quadrinho.EstoqueDAO;
+import com.esboco_comix.dto.EntradaEstoqueDTO;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoDTO;
 import com.esboco_comix.model.entidades.EntradaEstoque;
@@ -52,5 +53,9 @@ public class EstoqueService {
         if (estoqueAtualizado < 0){
             throw new Exception("Quantidade do item excede a quantidade no estoque!");
         }
+    }
+
+    public List<EntradaEstoqueDTO> consultarEntradasEstoque() throws Exception {
+        return estoqueDAO.consultarEntradasEstoque();
     }
 }

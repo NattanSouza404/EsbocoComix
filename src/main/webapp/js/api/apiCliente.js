@@ -137,12 +137,6 @@ export async function atualizarSenha(cliente){
 }
 
 export async function inativarCliente(cliente){
-    const confirmacaoUsuario = confirm("Deseja mesmo ativar/inativar cliente?"); 
-
-    if (!confirmacaoUsuario){
-        return;
-    }
-
     let url = `${PATH}?opcao=atualizarstatuscadastro`;
 
     const option = {

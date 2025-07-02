@@ -35,6 +35,8 @@ public class PaginaCadastrar extends AbstractPagina {
 
         preencherInputSelect(form, "tipoTelefone", c.getTelefone().getTipo().name());
         preencherInput(form, "dataNascimento", c.getDataNascimento());
+
+        sleep();
     }
 
     public void adicionarNovoEndereco(){
@@ -50,9 +52,11 @@ public class PaginaCadastrar extends AbstractPagina {
 
         wait.until(ExpectedConditions.alertIsPresent())
             .accept();
+        sleep();
 
         wait.until(ExpectedConditions.alertIsPresent())
             .dismiss();
+        sleep();
     }
 
     public void preencherEnderecos(List<Endereco> enderecos) throws InterruptedException {
@@ -80,6 +84,8 @@ public class PaginaCadastrar extends AbstractPagina {
             form.findElement(By.name("tipoLogradouro")).sendKeys(e.getTipoLogradouro().name());
             form.findElement(By.name("tipoResidencial")).sendKeys(e.getTipoResidencial().name());
             form.findElement(By.name("numero")).sendKeys(e.getNumero());
+
+            sleep();
         }
     }
 

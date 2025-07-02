@@ -37,6 +37,13 @@
     border-radius: 2%;
 }
 
+#secoes-conta section {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
 #dados-endereco, #dados-cartao-credito {
     display: flex;
     flex-direction: column;
@@ -50,3 +57,17 @@
     justify-self: center;
 }
 
+.container-cartoes, .container-endereco, .container-cupom {
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+.cartao-credito-conta, .endereco-conta, .cupom-conta, 
+    #secao-dados-pessoais .container div  {
+    padding: 8px;
+    border: 1px solid gray;
+
+    border-radius: 2%;
+}

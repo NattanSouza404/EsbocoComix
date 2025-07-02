@@ -12,6 +12,21 @@ public class EstoqueController extends AbstractController {
     private final EstoqueService estoqueService = new EstoqueService();
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+        try {
+            retornarRespostaJson(
+                resp,
+                estoqueService.consultarEntradasEstoque(),
+                HttpServletResponse.SC_OK
+            );
+
+        } catch (Exception e) {
+            estourarErro(resp, e);
+        }
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             EntradaEstoque entradaEstoque = jsonToObject(req, EntradaEstoque.class);

@@ -4,7 +4,7 @@ export class SecaoCupom {
     constructor(cupons) {
 
         this.elementoHTML = document.getElementById('secao-cupons');
-        this.containerCupons = this.elementoHTML.querySelector('.container');
+        this.containerCupons = this.elementoHTML.querySelector('.container-cupom');
 
         this.atualizar(cupons);
     }

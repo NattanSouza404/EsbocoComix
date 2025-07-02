@@ -57,4 +57,18 @@ public class PaginaCompra extends AbstractPagina {
         new Select(scrollToElement(inputValor)).selectByIndex(indexCartao);
         sleep();
     }
+
+    public void adicionarCupomPromocional() {
+        scrollToElement(
+                driver.findElement(By.id("btn-adicionar-cupom"))
+        ).click();
+
+        WebElement selecao = scrollToElement(
+            driver.findElement(By.cssSelector("#cupons select"))
+        );
+
+        new Select(selecao).selectByIndex(
+            selecao.findElements(By.cssSelector("option")).size() - 1
+        );
+    }
 }

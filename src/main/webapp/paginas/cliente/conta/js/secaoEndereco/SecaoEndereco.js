@@ -8,7 +8,7 @@ export class SecaoEndereco {
         this.modalAlterarEndereco = new ModalAlterarEndereco();
 
         this.elementoHTML = document.getElementById('secao-endereco');
-        this.containerEnderecos = this.elementoHTML.querySelector('.container');
+        this.containerEnderecos = this.elementoHTML.querySelector('.container-endereco');
 
         this.atualizar(enderecos);
     }
