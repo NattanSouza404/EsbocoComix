@@ -11,9 +11,9 @@ public class ClienteTesteFactory {
 
     public static Cliente criar(){
         Cliente cliente = new Cliente();
-        cliente.setNome("Jorge dos Santos");
+        cliente.setNome("Humberto Neves");
         cliente.setCpf("11122233344");
-        cliente.setEmail("jorge@email.com");
+        cliente.setEmail("humberto@email.com");
         cliente.setDataNascimento(LocalDate.of(2013, 2, 3));
         cliente.setGenero(Genero.MASCULINO);
 

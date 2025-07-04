@@ -22,10 +22,7 @@ public class FluxoCadastroCartao {
         ModaisConta modal = ModaisConta.ADICIONAR_CARTAO_CREDITO;
         paginaConta.abrirModal(modal);
 
-        paginaConta.preencherInputModal(modal, "numero", c.getNumero());
-        paginaConta.preencherInputModal(modal, "nomeImpresso", c.getNomeImpresso());
-        paginaConta.preencherInputModal(modal, "codigoSeguranca", c.getCodigoSeguranca());
-        paginaConta.preencherInputSelectModal(modal, "bandeiraCartao", c.getBandeiraCartao().name());
+        paginaConta.preencherModalCartao(modal, c);
 
         paginaConta.enviar(modal);
     }
@@ -38,7 +35,7 @@ public class FluxoCadastroCartao {
         ModaisConta modal = ModaisConta.ALTERAR_CARTAO_CREDITO;
         paginaConta.abrirModal(modal);
 
-        paginaConta.preencherInputModal(modal, "codigoSeguranca", c.getCodigoSeguranca());
+        paginaConta.preencherModalCartao(modal, c);
 
         paginaConta.enviar(modal);
     }

@@ -1,5 +1,7 @@
 package com.esboco_comix.webapp.paginas.cliente.conta;
 
+import com.esboco_comix.model.entidades.CartaoCredito;
+import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.webapp.base.AbstractPagina;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -122,5 +124,41 @@ public class PaginaConta extends AbstractPagina {
         ).size() - 1;
 
         removerCartao(ultimoIndex);
+    }
+
+    public void preencherModalEndereco(ModaisConta modal, Endereco e) {
+        preencherInputModal(modal, "fraseCurta", e.getFraseCurta());
+
+        WebElement form = scrollToElement(
+                driver.findElement(By.cssSelector(modal.getSeletorForm()))
+        );
+
+        preencherSelectTrueOrFalse(form,"isResidencial", e.getIsResidencial());
+        preencherSelectTrueOrFalse(form,"isEntrega", e.getIsEntrega());
+        preencherSelectTrueOrFalse(form,"isCobranca", e.getIsCobranca());
+
+        preencherInputModal(modal, "bairro", e.getBairro());
+        preencherInputModal(modal, "cidade", e.getCidade());
+        preencherInputModal(modal, "estado", e.getEstado());
+        preencherInputModal(modal, "pais", e.getPais());
+        preencherInputModal(modal, "cep", e.getCep());
+        preencherInputModal(modal, "observacoes", e.getObservacoes());
+        preencherInputModal(modal, "logradouro", e.getLogradouro());
+        preencherInputSelectModal(modal, "tipoLogradouro", e.getTipoLogradouro().name());
+        preencherInputSelectModal(modal, "tipoResidencial", e.getTipoResidencial().name());
+        preencherInputModal(modal, "numero", e.getNumero());
+    }
+
+    public void preencherModalCartao(ModaisConta modal, CartaoCredito c) {
+        preencherInputModal(modal, "numero", c.getNumero());
+        preencherInputModal(modal, "nomeImpresso", c.getNomeImpresso());
+        preencherInputModal(modal, "codigoSeguranca", c.getCodigoSeguranca());
+        preencherInputSelectModal(modal, "bandeiraCartao", c.getBandeiraCartao().name());
+
+        WebElement form = scrollToElement(
+                driver.findElement(By.cssSelector(modal.getSeletorForm()))
+        );
+
+        preencherSelectTrueOrFalse(form, "isPreferencial", c.isPreferencial());
     }
 }

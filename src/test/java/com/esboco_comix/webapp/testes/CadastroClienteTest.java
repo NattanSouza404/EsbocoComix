@@ -9,10 +9,12 @@ import com.esboco_comix.model.enuns.BandeiraCartao;
 import com.esboco_comix.model.enuns.Genero;
 import com.esboco_comix.webapp.base.BaseTest;
 import com.esboco_comix.webapp.base.factories.CadastrarClienteFactory;
+import com.esboco_comix.webapp.base.factories.EnderecoTesteFactory;
 import com.esboco_comix.webapp.casos_de_uso.CadastrarCliente;
 import com.esboco_comix.webapp.casos_de_uso.ConsultarClientes;
 import com.esboco_comix.webapp.casos_de_uso.FluxoCadastroCartao;
-import com.esboco_comix.webapp.casos_de_uso.conta.FluxoCadastroEndereco;
+import com.esboco_comix.webapp.casos_de_uso.FluxoCadastroEndereco;
+
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -28,7 +30,7 @@ public class CadastroClienteTest extends BaseTest {
             fluxo.mostrarPaginaConta();
 
             Cliente c = new Cliente();
-            c.setNome("Jorge dos Santos Menezes");
+            c.setNome("Humberto Neves Pereira");
             c.setDataNascimento(LocalDate.of(1998, 12, 20));
 
             fluxo.editarNovoCliente(c);
@@ -72,12 +74,12 @@ public class CadastroClienteTest extends BaseTest {
         try {
             FluxoCadastroEndereco fluxo = new FluxoCadastroEndereco(driver, wait);
 
-            Endereco e = new Endereco();
-            e.setFraseCurta("Casa");
+            Endereco e = EnderecoTesteFactory.criar().getFirst();
 
             fluxo.adicionarEndereco(e);
 
-            e.setFraseCurta("Casa longe daqui");
+            e.setFraseCurta("Casa da mãe");
+            e.setObservacoes("Perto do prédio Q");
 
             fluxo.alterarNovoEndereco(e);
 
@@ -97,6 +99,7 @@ public class CadastroClienteTest extends BaseTest {
             c.setNomeImpresso("JORGE DOS SANTOS MENEZES");
             c.setCodigoSeguranca("111");
             c.setBandeiraCartao(BandeiraCartao.MASTERCARD);
+            c.setIsAtivo(false);
 
             fluxo.adicionarCartao(c);
 

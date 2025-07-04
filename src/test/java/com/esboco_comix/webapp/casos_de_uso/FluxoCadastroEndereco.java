@@ -1,9 +1,10 @@
-package com.esboco_comix.webapp.casos_de_uso.conta;
+package com.esboco_comix.webapp.casos_de_uso;
 
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.webapp.paginas.cliente.conta.ModaisConta;
 import com.esboco_comix.webapp.paginas.cliente.conta.PaginaConta;
 import com.esboco_comix.webapp.paginas.cliente.conta.SecoesConta;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -18,11 +19,14 @@ public class FluxoCadastroEndereco {
         paginaConta.logar();
 
         paginaConta.trocarSecao(SecoesConta.ENDERECO);
-        paginaConta.abrirModal(ModaisConta.ADICIONAR_ENDERECO);
 
-        paginaConta.preencherInputModal(ModaisConta.ADICIONAR_ENDERECO, "fraseCurta", e.getFraseCurta());
+        var modal = ModaisConta.ADICIONAR_ENDERECO;
 
-        paginaConta.enviar(ModaisConta.ADICIONAR_ENDERECO);
+        paginaConta.abrirModal(modal);
+
+        paginaConta.preencherModalEndereco(modal, e);
+
+        paginaConta.enviar(modal);
     }
 
     public void alterarNovoEndereco(Endereco e) throws InterruptedException{
@@ -31,7 +35,7 @@ public class FluxoCadastroEndereco {
         paginaConta.trocarSecao(SecoesConta.ENDERECO);
         paginaConta.abrirModalAtualizar(ModaisConta.ALTERAR_ENDERECO);
 
-        paginaConta.preencherInputModal(ModaisConta.ALTERAR_ENDERECO, "fraseCurta", e.getFraseCurta());
+        paginaConta.preencherModalEndereco(ModaisConta.ALTERAR_ENDERECO, e);
 
         paginaConta.enviar(ModaisConta.ALTERAR_ENDERECO);
     }

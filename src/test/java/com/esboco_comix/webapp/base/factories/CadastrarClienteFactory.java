@@ -8,6 +8,7 @@ public class CadastrarClienteFactory {
         CadastrarClienteDTO c = new CadastrarClienteDTO();
         c.setCliente(ClienteTesteFactory.criar());
         c.setEnderecos(EnderecoTesteFactory.criar());
+        c.setCartoesCredito(CartaoCreditoTesteFactory.criarListaCartoes());
         c.setSenhaNova("1234abC!");
         c.setSenhaConfirmacao("1234abC!");
 
