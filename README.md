@@ -16,6 +16,9 @@ Dentre as funcionalidades do sistema, podemos citar:
 
 <img src="https://github.com/user-attachments/assets/f7bd76b6-f7e9-4e31-afc4-01e208f55978" height="400px" />
 
+## 🎬 Vídeo demonstração
+![Demo Video](./docs/video%20demonstração/video_demonstracao.mp4)
+
 ## 🖥️ Tecnologias
 - Java
 - JDBC
