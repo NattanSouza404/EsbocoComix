@@ -3,13 +3,11 @@
 
 main {
     display: grid;
+    width: 90%;
 }
 
 #header-clientes, #tabela-clientes {
     justify-self: center;
-
-    width: 90%;
-    max-width: 90%;
 }
 
 #opcoes-cliente, #filtro-clientes, #tabela-clientes {

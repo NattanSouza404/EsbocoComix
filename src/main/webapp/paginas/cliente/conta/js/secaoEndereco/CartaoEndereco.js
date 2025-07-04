@@ -59,8 +59,23 @@ export class CartaoEndereco extends HTMLDivElement {
         };
 
         const btnDeletar = this.querySelector('.btn-deletar');
-        btnDeletar.onclick = () => {
-            deletarEndereco(endereco);
+        btnDeletar.onclick = async () => {
+            
+            const confirmacaoUsuario = confirm("Deseja mesmo deletar esse endereço?");
+
+            if (!confirmacaoUsuario){
+                return;
+            } 
+
+            try {
+                await deletarEndereco(endereco);
+                alert('Deletado com sucesso!');
+
+                window.location.reload();
+            } catch (error){
+                 alert(`Erro ao deletar: ${error}`);
+            }
+            
         };
     }
 }

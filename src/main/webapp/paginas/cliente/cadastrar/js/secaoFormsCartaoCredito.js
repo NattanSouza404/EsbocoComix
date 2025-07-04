@@ -19,6 +19,8 @@ export class SecaoFormsCartaoCredito extends HTMLElement {
         this.btnAddCartao = this.querySelector('.btn-adicionar-cartao').onclick = () => {
             this.adicionarCartaoCredito();
         }
+
+        this.adicionarCartaoCredito();
     }
 
     adicionarCartaoCredito(){

@@ -77,32 +77,17 @@ export async function atualizarEndereco(endereco){
 }
 
 export async function deletarEndereco(endereco){
-    try {
-        const confirmacaoUsuario = confirm("Deseja mesmo deletar esse endereço?");
+    const url = PATH;
 
-        if (!confirmacaoUsuario){
-            return;
-        }
+    const option = {
+        method: 'DELETE',
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify(endereco)
+    }
 
-        const url = PATH;
+    const response = await fetch(url, option);
 
-        const option = {
-            method: 'DELETE',
-            headers:{'Content-Type': 'application/json'},
-            body: JSON.stringify(endereco)
-        }
-
-        const response = await fetch(url, option);
-
-        if (response.status === 204) {
-            alert('Deletado com sucesso');
-        }
-        else {
-            const resposta = await response.json();
-            alert("Erro ao deletar: "+resposta.erro);
-        }
-
-    } catch (error){
-        alert(error);
+    if (response.status !== 204) {
+        throw new Error(await response.json().erro);
     }
 }
