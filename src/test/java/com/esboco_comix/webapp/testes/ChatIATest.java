@@ -18,6 +18,8 @@ public class ChatIATest extends BaseTest {
             fluxoChatIA.abrirChatIA();
             fluxoChatIA.enviarMensagemChatIA("Me recomende um quadrinho");
 
+            fluxoChatIA.enviarMensagemChatIA("Quais quadrinhos estão em alta?");
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

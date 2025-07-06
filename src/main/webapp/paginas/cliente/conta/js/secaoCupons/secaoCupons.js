@@ -11,7 +11,7 @@ export class SecaoCupom {
 
     atualizar(cupons) {
 
-        if (cupons && Array.isArray(cupons)){
+        if (cupons && Array.isArray(cupons) && cupons.length > 0){
             this.containerCupons.innerHTML = "";
     
             let contador = 1;
@@ -29,6 +29,8 @@ export class SecaoCupom {
 
                 }
             )
+        } else {
+            this.containerCupons.innerHTML = "<h3>Nenhum cupom disponível.</h3>"
         }
 
     }

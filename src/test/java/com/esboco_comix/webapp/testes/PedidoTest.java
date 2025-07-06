@@ -45,13 +45,6 @@ public class PedidoTest extends BaseTest {
             fluxo.adicionarItemAoCarrinhoAnuncio(1);
             fluxo.abrirCarrinho();
 
-            // TODO: consultar entradas estoque? consultar pedidos pós venda da página minhasCompras
-            // TODO: pagar usando cupom, adicionar cupom promocional ao usuário no teste
-            // TODO: adicionar mais de um cartão no pagamento
-            // TODO: colocar o insert de um endereço lá em inserts.sql, como também cartões de crédito e mais clientes
-            // TODO: testes de inserir, alterar remover etc endereço, cartão de crédito (tomar cuidado para não cagar os outros testes)
-            // TODO: melhorar um pouco o estilo das coisas?? (principalmente na página dos clientes)
-
             fluxo.removerItemCarrinho(0);
         } catch (Exception e) {
             e.printStackTrace();

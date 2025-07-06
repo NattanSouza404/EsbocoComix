@@ -20,7 +20,7 @@ public class TrocaDevolucaoTest extends BaseTest {
             fluxo.pedirTroca(0);
 
             fluxoAdmin.abrirGerenciarVendas();
-            fluxoAdmin.mudarStatus("Troca Concluída");
+            fluxoAdmin.mudarStatus("Troca concluída");
 
             fluxo.logar();
             fluxo.abrirSecaoCupons();

@@ -1,5 +1,6 @@
 package com.esboco_comix.webapp.testes;
 
+import com.esboco_comix.webapp.paginas.cliente.conta.PaginaConta;
 import org.junit.Test;
 
 import com.esboco_comix.webapp.base.BaseTest;
@@ -11,6 +12,9 @@ public class VisualizarPedidosPosVenda extends BaseTest {
     public void visualizarPedidosPosVenda(){
         try {
             PaginaMinhasCompras paginaMinhasCompras = new PaginaMinhasCompras(driver, wait);
+
+            PaginaConta paginaConta = new PaginaConta(driver, wait);
+            paginaConta.logar();
 
             paginaMinhasCompras.abrir();
             paginaMinhasCompras.visualizarPedidosPosVenda(0);

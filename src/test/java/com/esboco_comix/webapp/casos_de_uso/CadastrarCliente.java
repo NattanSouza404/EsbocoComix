@@ -26,6 +26,7 @@ public class CadastrarCliente {
         paginaCadastrar.abrir();
         paginaCadastrar.preencherCliente(cadastro);
         paginaCadastrar.preencherEnderecos(cadastro.getEnderecos());
+        paginaCadastrar.preencherCartoesCreditos(cadastro.getCartoesCredito());
         paginaCadastrar.enviarCadastro();
     }
 
@@ -39,8 +40,6 @@ public class CadastrarCliente {
     }
 
     public void editarNovoCliente(Cliente c) throws InterruptedException {
-        paginaClientes.abrir();
-        paginaClientes.logarComoNovoCliente();
         ModaisConta modal = ModaisConta.ALTERAR_DADOS_PESSOAIS;
 
         paginaConta.trocarSecao(SecoesConta.DADOS_PESSOAIS);
@@ -52,9 +51,6 @@ public class CadastrarCliente {
     }
 
     public void editarSenhaCliente(AlterarSenhaDTO dto) throws InterruptedException {
-        paginaClientes.abrir();
-        paginaClientes.logarComoNovoCliente();
-
         ModaisConta modal = ModaisConta.ALTERAR_SENHA;
 
         paginaConta.trocarSecao(SecoesConta.DADOS_PESSOAIS);
