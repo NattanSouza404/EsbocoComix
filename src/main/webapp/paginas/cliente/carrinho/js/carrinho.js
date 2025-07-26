@@ -1,7 +1,13 @@
 import { calcularValorTotal, formatarPreco } from "../../../../js/script.js";
 import { atualizarItemCarrinho, deletarItemCarrinho, retornarCarrinho } from "../../../../js/api/apiCarrinho.js";
 
-const carrinho = await retornarCarrinho();
+let carrinho;
+
+try {
+    carrinho = await retornarCarrinho();
+} catch (error){
+    alertarErro('Erro buscando dados:', error);
+}
 
 if (carrinho.itensCarrinho.length === 0){
     document.getElementById('main-container').innerHTML = `
@@ -62,5 +68,3 @@ if (carrinho.itensCarrinho.length !== 0){
     
     document.getElementById('total-carrinho').textContent = `${formatarPreco(valorTotal)}`;
 }
-
-

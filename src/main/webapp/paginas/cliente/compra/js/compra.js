@@ -8,19 +8,19 @@ import { SecaoCartaoCredito } from "./secaoCartaoCredito/SecaoCartaoCredito.js";
 import { retornarCupons } from "/js/api/apiCupom.js";
 import { SecaoCupom } from "./secaoCupom/SecaoCupons.js";
 
-const enderecos = await retornarEnderecos(
-    localStorage.getItem('idcliente')
-);
+const idCliente = localStorage.getItem('idcliente'); 
 
-const cartoesCredito = await retornarCartoesCredito(
-    localStorage.getItem('idcliente')
-);
+const enderecos = await retornarEnderecos(idCliente);
+const cartoesCredito = await retornarCartoesCredito(idCliente);
+const cupons = await retornarCupons(idCliente);
 
-const carrinho = await retornarCarrinho();
+let carrinho;
 
-const cupons = await retornarCupons(
-    localStorage.getItem('idcliente')
-);
+try {
+    carrinho = await retornarCarrinho();
+} catch (error){
+    alertarErro('Erro buscando dados:', error);
+}
 
 const secaoSelecaoEndereco = new SecaoSelecaoEndereco(); 
 secaoSelecaoEndereco.preencher(enderecos);

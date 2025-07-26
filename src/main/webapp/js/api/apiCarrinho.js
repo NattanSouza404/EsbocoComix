@@ -3,37 +3,28 @@ import { alertarErro } from "./alertErro.js";
 const PATH = '/api/carrinho';
 
 export async function retornarCarrinho() {
-    try {
-        const response = await fetch(PATH);
-        return await response.json();
-    } catch (error) {
-        alertarErro('Erro buscando dados:', error);
+    const response = await fetch(PATH);
+
+    if (response.status !== 200){
+        throw new Error((await response.json()).erro);
     }
+
+    return await response.json();
 }
 
 export async function adicionarItemAoCarrinho(item){
-    try {
-        const option = {
-            method: 'POST',
-            headers:{'Content-Type': 'application/json'},
-            body: JSON.stringify(item)
-        }
+    const option = {
+        method: 'POST',
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify(item)
+    }
 
-        const result = await fetch(PATH, option);
+    const result = await fetch(PATH, option);
 
-        if (result.status === 201) {
-            alert('Item adicionado com sucesso!');
-            return;
-        }
-
+    if (result.status !== 201) {
         const resposta = await result.json();
-
-        throw new Error('Erro ao cadastrar: '+resposta.erro);
+        throw new Error(resposta.erro);
     }
-    catch(error){
-        alertarErro(error);
-    }
-
 }
 
 export async function atualizarItemCarrinho(item){
