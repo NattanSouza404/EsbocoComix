@@ -7,7 +7,7 @@ services:
     ports:
       - "8080:8080" # Expose the application's port
     environment:
-      - DB_URL=jdbc:postgresql://postgres:5432/mydb
+      - DB_URL=jdbc:postgresql://postgres:5432/esboco_comix
       - DB_USER=postgres
       - DB_PASSWORD=postgres
     depends_on:
@@ -23,12 +23,12 @@ services:
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432/mydb
 
   postgres:
-    image: postgres:15
+    image: postgres:16
     container_name: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
-      POSTGRES_DB: mydb
+      POSTGRES_DB: esboco_comix
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
