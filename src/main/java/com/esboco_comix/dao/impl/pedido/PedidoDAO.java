@@ -59,7 +59,6 @@ public class PedidoDAO {
                     pedidos.*,
                     itens_pedido.*,
                     qua_titulo,
-                    qua_preco,
                     qua_url_imagem,
                     cli_nome,
                     enderecos.*
@@ -96,7 +95,6 @@ public class PedidoDAO {
                     pedidos.*,
                     itens_pedido.*,
                     qua_titulo,
-                    qua_preco,
                     qua_url_imagem,
                     cli_nome,
                     enderecos.*
