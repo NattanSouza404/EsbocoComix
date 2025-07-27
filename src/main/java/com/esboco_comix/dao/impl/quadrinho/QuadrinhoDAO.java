@@ -3,18 +3,20 @@ package com.esboco_comix.dao.impl.quadrinho;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.dao.mapper.CategoriaMapper;
+import com.esboco_comix.dao.mapper.QuadrinhoMapper;
 import com.esboco_comix.dto.FiltrarQuadrinhoDTO;
 import com.esboco_comix.dto.QuadrinhoDTO;
 import com.esboco_comix.model.entidades.Categoria;
-import com.esboco_comix.model.entidades.GrupoPrecificacao;
-import com.esboco_comix.model.entidades.Quadrinho;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class QuadrinhoDAO {
+
+    private QuadrinhoMapper quadrinhoMapper = new QuadrinhoMapper();
+    private CategoriaMapper categoriaMapper = new CategoriaMapper();
 
     public List<QuadrinhoDTO> consultarTodos() throws Exception {
         try (
@@ -49,12 +51,12 @@ public class QuadrinhoDAO {
                 }
 
                 if (dto == null){
-                    dto = mapearDTO(rs);
+                    dto = quadrinhoMapper.mapearDTO(rs);
                     quadrinhos.add(dto);
                 }
 
                 List<Categoria> categorias = dto.getQuadrinho().getCategorias();
-                categorias.add(mapearCategoria(rs));
+                categorias.add(categoriaMapper.mapearEntidade(rs));
             }
 
             return quadrinhos;
@@ -82,7 +84,7 @@ public class QuadrinhoDAO {
             List<Categoria> categorias = new ArrayList<>();
 
             while (rs.next()) {
-                categorias.add(mapearCategoria(rs));
+                categorias.add(categoriaMapper.mapearEntidade(rs));
             }
 
             return categorias;
@@ -220,12 +222,12 @@ public class QuadrinhoDAO {
                 }
 
                 if (dto == null){
-                    dto = mapearDTO(rs);
+                    dto = quadrinhoMapper.mapearDTO(rs);
                     quadrinhos.add(dto);
                 }
 
                 List<Categoria> categorias = dto.getQuadrinho().getCategorias();
-                categorias.add(mapearCategoria(rs));
+                categorias.add(categoriaMapper.mapearEntidade(rs));
             }
 
             return quadrinhos;
@@ -254,67 +256,14 @@ public class QuadrinhoDAO {
 
             while (rs.next()) {
                 if (dto == null){
-                    dto = mapearDTO(rs);
+                    dto = quadrinhoMapper.mapearDTO(rs);
                 }
 
-                dto.getQuadrinho().getCategorias().add(mapearCategoria(rs));
+                dto.getQuadrinho().getCategorias().add(categoriaMapper.mapearEntidade(rs));
             }
 
             return dto;
         }
-    }
-
-    private Quadrinho mapearEntidade(ResultSet rs) throws SQLException {
-        Quadrinho q = new Quadrinho();
-        q.setId(rs.getInt("qua_id"));
-
-        q.setAno(rs.getDate("qua_ano").toLocalDate());
-        q.setTitulo(rs.getString("qua_titulo"));
-        q.setEditora(rs.getString("qua_editora"));
-        q.setEdicao(rs.getInt("qua_edicao"));
-        q.setIsbn(rs.getString("qua_isbn"));
-        q.setNumeroPaginas(rs.getInt("qua_numero_paginas"));
-        q.setSinopse(rs.getString("qua_sinopse"));
-        q.setAutor(rs.getString("qua_autor"));
-
-        q.setAltura(rs.getInt("qua_altura_cm"));
-        q.setLargura(rs.getInt("qua_largura_cm"));
-        q.setProfundidade(rs.getInt("qua_profundidade"));
-        q.setPeso(rs.getInt("qua_peso_gramas"));
-        q.setIsAtivo(rs.getBoolean("qua_is_ativo"));
-
-        q.setCodigoBarras(rs.getString("qua_codigo_barras"));
-
-        q.setUrlImagem(rs.getString("qua_url_imagem"));
-
-        GrupoPrecificacao grupo = new GrupoPrecificacao();
-        grupo.setId(rs.getInt("qua_gpr_id"));
-        grupo.setNome(rs.getString("gpr_nome"));
-        grupo.setPorcentagem(rs.getInt("gpr_porcentagem"));
-
-        q.setGrupoPrecificacao(grupo);
-
-        q.setCategorias(new ArrayList<>());
-
-        return q;
-    }
-
-    private QuadrinhoDTO mapearDTO(ResultSet rs) throws SQLException {
-        QuadrinhoDTO dto = new QuadrinhoDTO();
-
-        dto.setQuadrinho(mapearEntidade(rs));
-        dto.setQuantidadeEstoque(rs.getInt("est_quantidade_total"));
-        dto.setPreco(rs.getDouble("preco"));
-
-        return dto;
-    }
-
-    private Categoria mapearCategoria(ResultSet rs) throws Exception {
-        Categoria categoria = new Categoria();
-        categoria.setId(rs.getInt("cat_id"));
-        categoria.setNome(rs.getString("cat_nome"));
-
-        return categoria;
     }
 
 }
