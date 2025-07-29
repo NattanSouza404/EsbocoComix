@@ -1,9 +1,10 @@
-package com.esboco_comix.dao.mapper;
+package com.esboco_comix.dao.mapper.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.esboco_comix.dao.mapper.ResultSetMapper;
 import com.esboco_comix.dto.QuadrinhoDTO;
 import com.esboco_comix.model.entidades.GrupoPrecificacao;
 import com.esboco_comix.model.entidades.Quadrinho;

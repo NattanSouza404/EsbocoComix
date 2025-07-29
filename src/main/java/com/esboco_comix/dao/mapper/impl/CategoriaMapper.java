@@ -1,11 +1,12 @@
-package com.esboco_comix.dao.mapper;
+package com.esboco_comix.dao.mapper.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.esboco_comix.dao.mapper.ResultSetMapper;
 import com.esboco_comix.model.entidades.Categoria;
 
-public class CategoriaMapper implements ResultSetMapper<Categoria, Categoria>{
+public class CategoriaMapper implements ResultSetMapper<Categoria, Categoria> {
 
     @Override
     public Categoria mapearEntidade(ResultSet rs) throws SQLException {
