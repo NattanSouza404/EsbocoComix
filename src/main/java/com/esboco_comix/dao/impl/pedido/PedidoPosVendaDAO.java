@@ -1,9 +1,8 @@
 package com.esboco_comix.dao.impl.pedido;
 
+import com.esboco_comix.dao.mapper.impl.PedidoPosVendaMapper;
 import com.esboco_comix.dto.PedidoPosVendaDTO;
 import com.esboco_comix.model.entidades.PedidoPosVenda;
-import com.esboco_comix.model.enuns.StatusItemPedido;
-import com.esboco_comix.model.enuns.TipoPedidoPosVenda;
 import com.esboco_comix.utils.ConexaoFactory;
 
 import java.sql.*;
@@ -11,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PedidoPosVendaDAO {
+
+    private PedidoPosVendaMapper pedidoPosVendaMapper = new PedidoPosVendaMapper();
 
     public PedidoPosVendaDTO inserir(PedidoPosVenda p) throws Exception {
         try (
@@ -50,20 +51,7 @@ public class PedidoPosVendaDAO {
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                """
-                    SELECT
-                        pedidos_pos_venda.*,
-                        cli_nome,
-                        qua_titulo,
-                        ped_cli_id,
-                        ped_data
-                    FROM
-                        pedidos_pos_venda
-                        JOIN quadrinhos ON qua_id = ppv_qua_id
-                        JOIN pedidos ON ped_id = ppv_ped_id
-                        JOIN clientes ON ped_cli_id = cli_id
-                    ORDER BY ppv_id DESC;
-                    """,
+                "SELECT * FROM vw_pedidos_pos_venda;",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY
             );
@@ -78,7 +66,7 @@ public class PedidoPosVendaDAO {
 
             List<PedidoPosVendaDTO> pedidosPosVenda = new ArrayList<>();
             while(rs.next()){
-                pedidosPosVenda.add(mapearDTO(rs));
+                pedidosPosVenda.add(pedidoPosVendaMapper.mapearDTO(rs));
             }
 
             return pedidosPosVenda;
@@ -90,21 +78,7 @@ public class PedidoPosVendaDAO {
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-            """
-                SELECT
-                    pedidos_pos_venda.*,
-                    cli_nome,
-                    qua_titulo,
-                    ped_cli_id,
-                    ped_data
-                FROM
-                    pedidos_pos_venda
-                    JOIN quadrinhos ON qua_id = ppv_qua_id
-                    JOIN pedidos ON ped_id = ppv_ped_id
-                    JOIN clientes ON ped_cli_id = cli_id
-                WHERE
-                    ppv_id = ?;
-                """
+            "SELECT * FROM vw_pedidos_pos_venda WHERE ppv_id = ?;"
             );
         ) {
             pst.setInt(1, id);
@@ -115,7 +89,7 @@ public class PedidoPosVendaDAO {
                 throw new Exception("Nenhum pedido pós venda encontrado.");
             }
 
-            return mapearDTO(rs);
+            return pedidoPosVendaMapper.mapearDTO(rs);
         }
     }
 
@@ -145,22 +119,7 @@ public class PedidoPosVendaDAO {
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                """
-                    SELECT
-                        pedidos_pos_venda.*,
-                        cli_nome,
-                        qua_titulo,
-                        ped_cli_id,
-                        ped_data
-                    FROM
-                        pedidos_pos_venda
-                        JOIN quadrinhos ON qua_id = ppv_qua_id
-                        JOIN pedidos ON ped_id = ppv_ped_id
-                        JOIN clientes ON ped_cli_id = cli_id
-                    WHERE
-                        ppv_ped_id = ?
-                    ORDER BY ppv_id DESC;
-                    """,
+                "SELECT * FROM vw_pedidos_pos_venda WHERE ppv_ped_id = ?;",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY
             );
@@ -177,7 +136,7 @@ public class PedidoPosVendaDAO {
 
             List<PedidoPosVendaDTO> pedidosPosVenda = new ArrayList<>();
             while(rs.next()){
-                pedidosPosVenda.add(mapearDTO(rs));
+                pedidosPosVenda.add(pedidoPosVendaMapper.mapearDTO(rs));
             }
 
             return pedidosPosVenda;
@@ -189,21 +148,7 @@ public class PedidoPosVendaDAO {
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                """
-                    SELECT
-                        pedidos_pos_venda.*,
-                        cli_nome,
-                        qua_titulo,
-                        ped_cli_id,
-                        ped_data
-                    FROM
-                        pedidos_pos_venda
-                        JOIN quadrinhos ON qua_id = ppv_qua_id
-                        JOIN pedidos ON ped_id = ppv_ped_id
-                        JOIN clientes ON ped_cli_id = cli_id
-                    WHERE
-                        ped_cli_id = ?;
-                    """,
+                "SELECT * FROM vw_pedidos_pos_venda WHERE ped_cli_id = ?;",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY
             );
@@ -220,35 +165,11 @@ public class PedidoPosVendaDAO {
 
             List<PedidoPosVendaDTO> pedidosPosVenda = new ArrayList<>();
             while(rs.next()){
-                pedidosPosVenda.add(mapearDTO(rs));
+                pedidosPosVenda.add(pedidoPosVendaMapper.mapearDTO(rs));
             }
 
             return pedidosPosVenda;
         }
-    }
-
-    private PedidoPosVendaDTO mapearDTO(ResultSet rs) throws Exception{
-        PedidoPosVendaDTO dto = new PedidoPosVendaDTO();
-
-        dto.setPedidoPosVenda(mapearEntidade(rs));
-        dto.setNomeCliente(rs.getString("cli_nome"));
-        dto.setNomeQuadrinho(rs.getString("qua_titulo"));
-
-        return dto;
-    }
-
-    private PedidoPosVenda mapearEntidade(ResultSet rs) throws Exception {
-        PedidoPosVenda pedidoPosVenda = new PedidoPosVenda();
-
-        pedidoPosVenda.setId(rs.getInt("ppv_id"));
-        pedidoPosVenda.setTipo(TipoPedidoPosVenda.valueOf(rs.getString("ppv_tipo")));
-        pedidoPosVenda.setQuantidade(rs.getInt("ppv_quantidade"));
-        pedidoPosVenda.setStatus(StatusItemPedido.valueOf(rs.getString("ppv_status")));
-        pedidoPosVenda.setIdPedido(rs.getInt("ppv_ped_id"));
-        pedidoPosVenda.setIdQuadrinho(rs.getInt("ppv_qua_id"));
-        pedidoPosVenda.setData(rs.getTimestamp("ppv_data").toLocalDateTime());
-
-        return pedidoPosVenda;
     }
 
 }

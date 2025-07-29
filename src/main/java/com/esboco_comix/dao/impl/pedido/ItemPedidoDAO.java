@@ -3,16 +3,18 @@ package com.esboco_comix.dao.impl.pedido;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.dao.mapper.impl.ItemPedidoMapper;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class ItemPedidoDAO {
+
+    private ItemPedidoMapper itemPedidoMapper = new ItemPedidoMapper();
 
     public ItemPedido inserir(ItemPedido e) throws Exception {
         try (
@@ -55,7 +57,7 @@ public class ItemPedidoDAO {
                 throw new Exception("Item do pedido não encontrado!");
             }
             
-            return mapearEntidade(rs);
+            return itemPedidoMapper.mapearEntidade(rs);
         }
     }
 
@@ -64,7 +66,17 @@ public class ItemPedidoDAO {
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                "SELECT * FROM itens_pedido WHERE ite_ped_id = ?",
+                """
+                SELECT
+                    itens_pedido.*,
+                    qua_titulo,
+                    qua_url_imagem,
+                    cli_nome
+                FROM
+                    itens_pedido
+                    JOIN pedidos ON ite_ped_id = ped_id
+                    JOIN clientes ON ped_cli_id = cli_id
+                    JOIN quadrinhos ON ite_qua_id = qua_id;""",
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
             );
@@ -81,26 +93,12 @@ public class ItemPedidoDAO {
             List<ItemPedidoDTO> itens = new ArrayList<>();
             while(rs.next()){
                 itens.add(
-                    new ItemPedidoDTO(
-                        mapearEntidade(rs),
-                        null,
-                        null,
-                        null
-                    )
+                    itemPedidoMapper.mapearDTO(rs)
                 );
             }
 
             return itens;    
         }
-    }
-
-    private ItemPedido mapearEntidade(ResultSet rs) throws SQLException {
-        ItemPedido item = new ItemPedido();  
-        item.setIdPedido(rs.getInt("ite_ped_id"));
-        item.setIdQuadrinho(rs.getInt("ite_qua_id"));
-        item.setQuantidade(rs.getInt("ite_quantidade"));
-        item.setPreco(rs.getDouble("ite_valor_unitario"));
-        return item;
     }
 
 }

@@ -7,11 +7,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.dao.mapper.impl.CartaoCreditoMapper;
 import com.esboco_comix.model.entidades.CartaoCredito;
-import com.esboco_comix.model.enuns.BandeiraCartao;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class CartaoCreditoDAO {
+
+    private CartaoCreditoMapper cartaoCreditoMapper = new CartaoCreditoMapper();
 
     public CartaoCredito inserir(CartaoCredito c) throws Exception {
         try (
@@ -73,7 +75,7 @@ public class CartaoCreditoDAO {
             if (!rs.next()) {
                 throw new Exception("Cartão de crédito não encontrado.");
             }
-            return mapearEntidade(rs);  
+            return cartaoCreditoMapper.mapearEntidade(rs);
         }
     }
 
@@ -158,24 +160,11 @@ public class CartaoCreditoDAO {
     
             List<CartaoCredito> cartoesCredito = new ArrayList<>();
             while(rs.next()){
-                cartoesCredito.add(mapearEntidade(rs));
+                cartoesCredito.add(cartaoCreditoMapper.mapearEntidade(rs));
             }
 
             return cartoesCredito;    
         }
-    }
-
-    private CartaoCredito mapearEntidade(ResultSet rs) throws Exception {
-        CartaoCredito c = new CartaoCredito();
-        c.setId(rs.getInt("cre_id"));
-        c.setNumero(rs.getString("cre_numero"));
-        c.setNomeImpresso(rs.getString("cre_nome_impresso"));
-        c.setCodigoSeguranca(rs.getString("cre_codigo_seguranca"));
-        c.setPreferencial(rs.getBoolean("cre_is_preferencial"));
-        c.setBandeiraCartao(BandeiraCartao.valueOf(rs.getString("bcc_nome")));
-        c.setIdCliente(rs.getInt("cre_cli_id"));
-        c.setIsAtivo(rs.getBoolean("cre_is_ativo"));
-        return c;
     }
 
 }

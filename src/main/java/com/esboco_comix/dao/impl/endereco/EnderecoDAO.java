@@ -3,17 +3,17 @@ package com.esboco_comix.dao.impl.endereco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.dao.mapper.impl.EnderecoMapper;
 import com.esboco_comix.model.entidades.Endereco;
-import com.esboco_comix.model.enuns.TipoLogradouro;
-import com.esboco_comix.model.enuns.TipoResidencial;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class EnderecoDAO {
+
+    private EnderecoMapper enderecoMapper = new EnderecoMapper();
 
     public Endereco inserir(Endereco e) throws Exception {
         try (
@@ -72,7 +72,7 @@ public class EnderecoDAO {
             if (!rs.next()) {
                 throw new Exception("Endereço não encontrado.");
             }
-            return mapearEntidade(rs);    
+            return enderecoMapper.mapearEntidade(rs);
         }
     }
 
@@ -153,35 +153,11 @@ public class EnderecoDAO {
     
             List<Endereco> enderecos = new ArrayList<>();
             while(rs.next()){
-                enderecos.add(mapearEntidade(rs));
+                enderecos.add(enderecoMapper.mapearEntidade(rs));
             }
 
             return enderecos;    
         }
-    }
-
-    private Endereco mapearEntidade(ResultSet rs) throws SQLException {
-        Endereco e = new Endereco();        
-        e.setId(rs.getInt("end_id"));
-        e.setFraseCurta(rs.getString("end_frase_curta"));
-        e.setLogradouro(rs.getString("end_logradouro"));
-        e.setTipoLogradouro(TipoLogradouro.valueOf(rs.getString("end_tipo_logradouro")));
-        e.setTipoResidencial(TipoResidencial.valueOf(rs.getString("end_tipo_residencial")));
-        e.setNumero(rs.getString("end_numero"));
-        e.setBairro(rs.getString("end_bairro"));
-        e.setCep(rs.getString("end_cep"));
-        e.setCidade(rs.getString("end_cidade"));
-        e.setEstado(rs.getString("end_estado"));
-        e.setPais(rs.getString("end_pais"));
-        e.setIsResidencial(rs.getBoolean("end_is_residencial"));
-        e.setIsEntrega(rs.getBoolean("end_is_entrega"));
-        e.setIsCobranca(rs.getBoolean("end_is_cobranca"));
-        e.setObservacoes(rs.getString("end_observacoes"));
-        e.setIdCliente(rs.getInt("end_cli_id"));
-
-        e.setIsAtivo(rs.getBoolean("end_is_ativo"));
-
-        return e;
     }
 
 }

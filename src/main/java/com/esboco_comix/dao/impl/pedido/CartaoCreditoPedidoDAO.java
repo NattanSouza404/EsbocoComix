@@ -3,13 +3,15 @@ package com.esboco_comix.dao.impl.pedido;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.esboco_comix.dao.mapper.impl.CartaoCreditoPedidoMapper;
 import com.esboco_comix.model.entidades.CartaoCreditoPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class CartaoCreditoPedidoDAO {
+
+    private CartaoCreditoPedidoMapper cartaoCreditoPedidoMapper = new CartaoCreditoPedidoMapper();
 
     public CartaoCreditoPedido inserir(CartaoCreditoPedido e) throws Exception {
         try (
@@ -57,18 +59,8 @@ public class CartaoCreditoPedidoDAO {
                 throw new Exception("Cartão de crédito no pedido não encontrado!");
             }
             
-            return mapearEntidade(rs);
+            return cartaoCreditoPedidoMapper.mapearEntidade(rs);
         }
-    }
-
-    private CartaoCreditoPedido mapearEntidade(ResultSet rs) throws SQLException {
-        CartaoCreditoPedido ccp = new CartaoCreditoPedido();
-
-        ccp.setIdCartaoCredito(rs.getInt("ccp_cre_id"));
-        ccp.setIdCartaoCredito(rs.getInt("ccp_cre_id"));
-        ccp.setIdCartaoCredito(rs.getInt("ccp_cre_id"));
-
-        return ccp;
     }
     
 }

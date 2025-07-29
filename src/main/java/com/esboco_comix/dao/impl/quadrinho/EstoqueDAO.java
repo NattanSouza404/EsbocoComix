@@ -9,6 +9,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.dao.mapper.impl.EntradaEstoqueMapper;
 import com.esboco_comix.dto.EntradaEstoqueDTO;
 import com.esboco_comix.model.entidades.EntradaEstoque;
 import com.esboco_comix.model.entidades.Estoque;
@@ -16,6 +17,8 @@ import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class EstoqueDAO {
+
+    private EntradaEstoqueMapper entradaEstoqueMapper = new EntradaEstoqueMapper();
 
     public EntradaEstoque inserir(EntradaEstoque entradaEstoque) throws Exception {
         try (
@@ -63,7 +66,7 @@ public class EstoqueDAO {
                 throw new Exception("Entrada de estoque não encontrado!");
             }
 
-            return mapearEntidade(rs);
+            return entradaEstoqueMapper.mapearEntidade(rs);
         }
 
     }
@@ -122,19 +125,6 @@ public class EstoqueDAO {
         return e;
     }
 
-    private EntradaEstoque mapearEntidade(ResultSet rs) throws Exception {
-        EntradaEstoque e = new EntradaEstoque();
-
-        e.setId(rs.getInt("ees_id"));
-        e.setFornecedor(rs.getString("ees_fornecedor"));
-        e.setIdQuadrinho(rs.getInt("ees_qua_id"));
-        e.setQuantidade(rs.getInt("ees_quantidade"));
-        e.setValorCusto(rs.getDouble("ees_valor_custo"));
-        e.setDataEntrada(rs.getTimestamp("ees_dt_entrada").toLocalDateTime());
-
-        return e;
-    }
-
     public Estoque retirarDoEstoque(ItemPedido item) throws Exception {
         try (
             Connection conn = ConexaoFactory.getConexao(); 
@@ -179,20 +169,11 @@ public class EstoqueDAO {
 
             List<EntradaEstoqueDTO> entradasEstoque = new ArrayList<>();
             while(rs.next()){
-                entradasEstoque.add(mapearDTO(rs));
+                entradasEstoque.add(entradaEstoqueMapper.mapearDTO(rs));
             }
 
             return entradasEstoque;
         }
     }
 
-    private EntradaEstoqueDTO mapearDTO(ResultSet rs) throws Exception {
-        EntradaEstoqueDTO dto = new EntradaEstoqueDTO();
-
-        dto.setNomeQuadrinho(rs.getString("qua_titulo"));
-
-        dto.setEntradaEstoque(mapearEntidade(rs));
-
-        return dto;
-    }
 }

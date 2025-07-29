@@ -3,13 +3,16 @@ package com.esboco_comix.dao.impl.pedido;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.esboco_comix.dao.mapper.impl.CupomPedidoMapper;
 import com.esboco_comix.model.entidades.CupomPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class CupomPedidoDAO {
+
+    private CupomPedidoMapper cupomPedidoMapper = new CupomPedidoMapper();
+
     public CupomPedido inserir(CupomPedido e) throws Exception {
         try (
             Connection connection = ConexaoFactory.getConexao();
@@ -55,16 +58,8 @@ public class CupomPedidoDAO {
                 throw new Exception("Cupom do pedido não encontrado!");
             }
             
-            return mapearEntidade(rs);
+            return cupomPedidoMapper.mapearEntidade(rs);
         }
     }
 
-    private CupomPedido mapearEntidade(ResultSet rs) throws SQLException {
-        CupomPedido cupomPedido = new CupomPedido();
-
-        cupomPedido.setIdCupom(rs.getInt("cpe_cup_id"));
-        cupomPedido.setIdPedido(rs.getInt("cpe_ped_id"));
-
-        return cupomPedido;
-    }
 }

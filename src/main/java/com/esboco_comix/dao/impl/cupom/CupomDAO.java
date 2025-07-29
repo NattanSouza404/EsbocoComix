@@ -3,15 +3,17 @@ package com.esboco_comix.dao.impl.cupom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.dao.mapper.impl.CupomMapper;
 import com.esboco_comix.model.entidades.Cupom;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class CupomDAO {
+
+    private CupomMapper cupomMapper = new CupomMapper();
 
     public Cupom consultarByID(int id) throws Exception {
         try (
@@ -29,7 +31,7 @@ public class CupomDAO {
                 throw new Exception("Cupom não encontrado!");
             }
             
-            return mapearEntidade(rs);
+            return cupomMapper.mapearEntidade(rs);
         }
 
     }
@@ -55,7 +57,7 @@ public class CupomDAO {
     
             List<Cupom> cupons = new ArrayList<>();
             while(rs.next()){
-                cupons.add(mapearEntidade(rs));
+                cupons.add(cupomMapper.mapearEntidade(rs));
             }
 
             return cupons;
@@ -108,19 +110,6 @@ public class CupomDAO {
 
             return consultarByID(id);
         }
-    }
-
-    private Cupom mapearEntidade(ResultSet rs) throws SQLException {
-        Cupom cupom = new Cupom();
-
-        cupom.setId(rs.getInt("cup_id"));
-        cupom.setIdCliente(rs.getInt("cup_cli_id"));
-        cupom.setAtivo(rs.getBoolean("cup_is_ativo"));
-        cupom.setPromocional(rs.getBoolean("cup_is_promocional"));
-        cupom.setTroca(rs.getBoolean("cup_is_troca"));
-        cupom.setValor(rs.getInt("cup_valor"));
-
-        return cupom;
     }
 
 }
