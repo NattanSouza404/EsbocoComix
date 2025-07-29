@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.dao.mapper.CategoriaMapper;
-import com.esboco_comix.dao.mapper.QuadrinhoMapper;
+import com.esboco_comix.dao.mapper.impl.CategoriaMapper;
+import com.esboco_comix.dao.mapper.impl.QuadrinhoMapper;
 import com.esboco_comix.dto.FiltrarQuadrinhoDTO;
 import com.esboco_comix.dto.QuadrinhoDTO;
 import com.esboco_comix.model.entidades.Categoria;
@@ -15,10 +15,10 @@ import com.esboco_comix.utils.ConexaoFactory;
 
 public class QuadrinhoDAO {
 
-    private QuadrinhoMapper quadrinhoMapper = new QuadrinhoMapper();
-    private CategoriaMapper categoriaMapper = new CategoriaMapper();
+    private final QuadrinhoMapper quadrinhoMapper = new QuadrinhoMapper();
+    private final CategoriaMapper categoriaMapper = new CategoriaMapper();
 
-    public List<QuadrinhoDTO> consultarTodos() throws Exception {
+    public List<QuadrinhoDTO> consultarTodos() {
         try (
             Connection conn = ConexaoFactory.getConexao();
 
@@ -33,7 +33,7 @@ public class QuadrinhoDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Nenhum registro encontrado de quadrinho.");
+                throw new IllegalStateException("Nenhum registro encontrado de quadrinho.");
             }
             rs.beforeFirst();
 
@@ -60,10 +60,12 @@ public class QuadrinhoDAO {
             }
 
             return quadrinhos;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<Categoria> consultarTodasCategorias() throws Exception {
+    public List<Categoria> consultarTodasCategorias()  {
         try (
             Connection conn = ConexaoFactory.getConexao();
             PreparedStatement pst = conn.prepareStatement(
@@ -77,7 +79,7 @@ public class QuadrinhoDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Nenhuma categoria encontrada.");
+                throw new IllegalStateException("Nenhuma categoria encontrada.");
             }
             rs.beforeFirst();
 
@@ -88,10 +90,12 @@ public class QuadrinhoDAO {
             }
 
             return categorias;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<QuadrinhoDTO> filtrarTodos(FiltrarQuadrinhoDTO filtro) throws Exception {
+    public List<QuadrinhoDTO> filtrarTodos(FiltrarQuadrinhoDTO filtro) {
         StringBuilder query = new StringBuilder(
             "SELECT * FROM vw_quadrinhos WHERE 1=1"
         );
@@ -204,7 +208,7 @@ public class QuadrinhoDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Nenhum registro encontrado de quadrinho.");
+                throw new IllegalStateException("Nenhum registro encontrado de quadrinho.");
             }
             rs.beforeFirst();
 
@@ -231,10 +235,12 @@ public class QuadrinhoDAO {
             }
 
             return quadrinhos;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public QuadrinhoDTO consultarByID(int id) throws Exception {
+    public QuadrinhoDTO consultarByID(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -249,7 +255,7 @@ public class QuadrinhoDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Quadrinho não encontrado!");
+                throw new IllegalStateException("Quadrinho não encontrado!");
             }
 
             QuadrinhoDTO dto = null;
@@ -263,6 +269,8 @@ public class QuadrinhoDAO {
             }
 
             return dto;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
