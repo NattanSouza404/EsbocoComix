@@ -21,6 +21,37 @@ CREATE VIEW vw_quadrinhos AS
 		gpr_porcentagem, cat_id, cat_nome
 	ORDER BY qua_id DESC;
 
+CREATE VIEW vw_pedidos AS 
+	SELECT
+		pedidos.*,
+		itens_pedido.*,
+		qua_titulo,
+		qua_url_imagem,
+		cli_id,
+		cli_nome,
+		enderecos.*
+	FROM
+		pedidos
+		JOIN clientes ON ped_cli_id = cli_id
+		JOIN enderecos ON ped_end_id = end_id
+		JOIN itens_pedido ON ite_ped_id = ped_id
+		JOIN quadrinhos ON ite_qua_id = qua_id
+	ORDER BY ped_data DESC;
+
+CREATE VIEW vw_pedidos_pos_venda AS
+    SELECT
+        pedidos_pos_venda.*,
+        cli_nome,
+        qua_titulo,
+        ped_cli_id,
+        ped_data
+    FROM
+        pedidos_pos_venda
+        JOIN quadrinhos ON qua_id = ppv_qua_id
+        JOIN pedidos ON ped_id = ppv_ped_id
+        JOIN clientes ON ped_cli_id = cli_id
+    ORDER BY ppv_id DESC;
+
 CREATE VIEW vw_analise_produtos AS
 	SELECT
 		qua_titulo AS titulo_quadrinho,
