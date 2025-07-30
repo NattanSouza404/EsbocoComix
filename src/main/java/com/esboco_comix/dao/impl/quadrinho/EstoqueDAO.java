@@ -4,12 +4,12 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.dao.mapper.impl.EntradaEstoqueMapper;
+import com.esboco_comix.dao.mapper.impl.EstoqueMapper;
 import com.esboco_comix.dto.EntradaEstoqueDTO;
 import com.esboco_comix.model.entidades.EntradaEstoque;
 import com.esboco_comix.model.entidades.Estoque;
@@ -18,9 +18,10 @@ import com.esboco_comix.utils.ConexaoFactory;
 
 public class EstoqueDAO {
 
-    private EntradaEstoqueMapper entradaEstoqueMapper = new EntradaEstoqueMapper();
+    private final EstoqueMapper estoqueMapper = new EstoqueMapper();
+    private final EntradaEstoqueMapper entradaEstoqueMapper = new EntradaEstoqueMapper();
 
-    public EntradaEstoque inserir(EntradaEstoque entradaEstoque) throws Exception {
+    public EntradaEstoque inserir(EntradaEstoque entradaEstoque) {
         try (
             Connection conn = ConexaoFactory.getConexao();
             CallableStatement cs = conn.prepareCall(
@@ -44,11 +45,13 @@ public class EstoqueDAO {
             }
 
             return consultarByID(id);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
 
     }
 
-    public EntradaEstoque consultarByID(int id) throws Exception {
+    public EntradaEstoque consultarByID(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -63,15 +66,17 @@ public class EstoqueDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Entrada de estoque não encontrado!");
+                throw new IllegalStateException("Entrada de estoque não encontrado!");
             }
 
             return entradaEstoqueMapper.mapearEntidade(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
 
     }
 
-    public Estoque consultarEstoqueByIDQuadrinho(int idQuadrinho) throws Exception {
+    public Estoque consultarEstoqueByIDQuadrinho(int idQuadrinho) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -86,46 +91,41 @@ public class EstoqueDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Estoque não encontrado!");
+                throw new IllegalStateException("Estoque não encontrado!");
             }
 
-            return mapearEntidadeEstoque(rs);
+            return estoqueMapper.mapearEntidade(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public Estoque retornarAoEstoque(ItemPedido itemPedido) throws Exception {
+    public Estoque retornarAoEstoque(ItemPedido itemPedido) {
         try (
-            Connection conn = ConexaoFactory.getConexao(); 
-    
-            PreparedStatement pst = conn.prepareStatement(
-                """
-                UPDATE estoque
-                    SET est_quantidade_total = est_quantidade_total + ?
-                WHERE est_qua_id = ?;
-                """
-            );
+                Connection conn = ConexaoFactory.getConexao();
+
+                PreparedStatement pst = conn.prepareStatement(
+                        """
+                                UPDATE estoque
+                                    SET est_quantidade_total = est_quantidade_total + ?
+                                WHERE est_qua_id = ?;
+                                """
+                );
         ) {
             pst.setInt(1, itemPedido.getQuantidade());
             pst.setInt(2, itemPedido.getIdQuadrinho());
 
             if (pst.executeUpdate() == 0) {
-                throw new Exception("Atualização não foi sucedida!");
+                throw new IllegalStateException("Atualização não foi sucedida!");
             }
 
             return consultarEstoqueByIDQuadrinho(itemPedido.getIdQuadrinho());
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
         }
     }
 
-    private Estoque mapearEntidadeEstoque(ResultSet rs) throws SQLException {
-        Estoque e  = new Estoque();
-
-        e.setIdQuadrinho(rs.getInt("est_qua_id"));
-        e.setQuantidadeTotal(rs.getInt("est_quantidade_total"));
-
-        return e;
-    }
-
-    public Estoque retirarDoEstoque(ItemPedido item) throws Exception {
+    public Estoque retirarDoEstoque(ItemPedido item) {
         try (
             Connection conn = ConexaoFactory.getConexao(); 
     
@@ -141,14 +141,16 @@ public class EstoqueDAO {
             pst.setInt(2, item.getIdQuadrinho());
 
             if (pst.executeUpdate() == 0) {
-                throw new Exception("Atualização não foi sucedida!");
+                throw new IllegalStateException("Atualização não foi sucedida!");
             }
 
             return consultarEstoqueByIDQuadrinho(item.getIdQuadrinho());
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<EntradaEstoqueDTO> consultarEntradasEstoque() throws Exception {
+    public List<EntradaEstoqueDTO> consultarEntradasEstoque() {
         try (
             Connection conn = ConexaoFactory.getConexao();
 
@@ -173,6 +175,8 @@ public class EstoqueDAO {
             }
 
             return entradasEstoque;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 

@@ -1,9 +1,6 @@
 package com.esboco_comix.dao.impl.pedido;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +12,10 @@ import com.esboco_comix.utils.ConexaoFactory;
 
 public class PedidoDAO {
 
-    private PedidoMapper pedidoMapper = new PedidoMapper();
-    private ItemPedidoMapper itemPedidoMapper = new ItemPedidoMapper();
+    private final PedidoMapper pedidoMapper = new PedidoMapper();
+    private final ItemPedidoMapper itemPedidoMapper = new ItemPedidoMapper();
 
-    public Pedido inserir(Pedido e) throws Exception {
+    public Pedido inserir(Pedido pedido) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -29,14 +26,14 @@ public class PedidoDAO {
                     Statement.RETURN_GENERATED_KEYS
             );
         ) {
-            pst.setInt(1, e.getIdCliente());
-            pst.setString(2, e.getStatus().name());
-            pst.setInt(3, e.getEnderecoEntrega().getId());
-            pst.setDouble(4, e.getValorTotal());
-            pst.setDouble(5, e.getValorFrete());
+            pst.setInt(1, pedido.getIdCliente());
+            pst.setString(2, pedido.getStatus().name());
+            pst.setInt(3, pedido.getEnderecoEntrega().getId());
+            pst.setDouble(4, pedido.getValorTotal());
+            pst.setDouble(5, pedido.getValorFrete());
 
             if (pst.executeUpdate() == 0){
-                throw new Exception("Inserção de pedido não executada!");
+                throw new IllegalStateException("Inserção de pedido não executada!");
             }
 
             ResultSet rs = pst.getGeneratedKeys();
@@ -46,10 +43,12 @@ public class PedidoDAO {
             }
 
             return pedidoInserido;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<PedidoDTO> consultarTodos() throws Exception {
+    public List<PedidoDTO> consultarTodos() {
         try (
             Connection conn = ConexaoFactory.getConexao();
 
@@ -69,10 +68,12 @@ public class PedidoDAO {
             rs.beforeFirst();
 
             return mapearPedidosDTO(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<PedidoDTO> consultarByIDCliente(int idCliente) throws Exception {
+    public List<PedidoDTO> consultarByIDCliente(int idCliente) {
         try (
             Connection conn = ConexaoFactory.getConexao();
 
@@ -94,10 +95,12 @@ public class PedidoDAO {
             rs.beforeFirst();
 
             return mapearPedidosDTO(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public Pedido consultarByID(int id) throws Exception {
+    public Pedido consultarByID(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -108,15 +111,17 @@ public class PedidoDAO {
             pst.setInt(1, id);
 
             ResultSet rs = pst.executeQuery();
-    
+
             if (!rs.next()) {
-                throw new Exception("Pedido não encontrado.");
+                throw new IllegalStateException("Pedido não encontrado.");
             }
-            return pedidoMapper.mapearEntidade(rs);    
+            return pedidoMapper.mapearEntidade(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public Pedido atualizarStatus(Pedido p) throws Exception {
+    public Pedido atualizarStatus(Pedido p) {
         try (
             Connection conn = ConexaoFactory.getConexao(); 
     
@@ -129,14 +134,16 @@ public class PedidoDAO {
             pst.setInt(2, p.getId());
 
             if (pst.executeUpdate() == 0) {
-                throw new Exception("Atualização não foi sucedida!");
+                throw new IllegalStateException("Atualização não foi sucedida!");
             }
 
             return consultarByID(p.getId());
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    private List<PedidoDTO> mapearPedidosDTO(ResultSet rs) throws Exception {
+    private List<PedidoDTO> mapearPedidosDTO(ResultSet rs) throws SQLException {
         List<PedidoDTO> pedidos = new ArrayList<>();
 
         while (rs.next()){

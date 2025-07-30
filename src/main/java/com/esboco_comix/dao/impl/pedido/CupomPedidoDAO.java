@@ -11,9 +11,9 @@ import com.esboco_comix.utils.ConexaoFactory;
 
 public class CupomPedidoDAO {
 
-    private CupomPedidoMapper cupomPedidoMapper = new CupomPedidoMapper();
+    private final CupomPedidoMapper cupomPedidoMapper = new CupomPedidoMapper();
 
-    public CupomPedido inserir(CupomPedido e) throws Exception {
+    public CupomPedido inserir(CupomPedido cupom) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -24,24 +24,26 @@ public class CupomPedidoDAO {
                     Statement.RETURN_GENERATED_KEYS
             );
         ) {
-            pst.setInt(1, e.getIdCupom());
-            pst.setInt(2, e.getIdPedido());
+            pst.setInt(1, cupom.getIdCupom());
+            pst.setInt(2, cupom.getIdPedido());
 
             if (pst.executeUpdate() == 0){
-                throw new Exception("Inserção de cupom no pedido não executada!");
+                throw new IllegalStateException("Inserção de cupom no pedido não executada!");
             }
 
             ResultSet rs = pst.getGeneratedKeys();
             CupomPedido cupomPedidoInserido = null;
             if (rs.next()){
-                cupomPedidoInserido = consultarByID(e.getIdCupom(), e.getIdPedido());
+                cupomPedidoInserido = consultarByID(cupom.getIdCupom(), cupom.getIdPedido());
             }
 
             return cupomPedidoInserido;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public CupomPedido consultarByID(int idCupom, int idPedido) throws Exception {
+    public CupomPedido consultarByID(int idCupom, int idPedido) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -55,10 +57,12 @@ public class CupomPedidoDAO {
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()){
-                throw new Exception("Cupom do pedido não encontrado!");
+                throw new IllegalStateException("Cupom do pedido não encontrado!");
             }
             
             return cupomPedidoMapper.mapearEntidade(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 

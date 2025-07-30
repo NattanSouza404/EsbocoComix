@@ -14,9 +14,9 @@ import com.esboco_comix.utils.ConexaoFactory;
 
 public class ItemPedidoDAO {
 
-    private ItemPedidoMapper itemPedidoMapper = new ItemPedidoMapper();
+    private final ItemPedidoMapper itemPedidoMapper = new ItemPedidoMapper();
 
-    public ItemPedido inserir(ItemPedido e) throws Exception {
+    public ItemPedido inserir(ItemPedido item) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -27,20 +27,22 @@ public class ItemPedidoDAO {
                     Statement.RETURN_GENERATED_KEYS
             );
         ){
-            pst.setInt(1, e.getIdPedido());
-            pst.setInt(2, e.getIdQuadrinho());
-            pst.setInt(3, e.getQuantidade());
-            pst.setDouble(4, e.getPreco());
+            pst.setInt(1, item.getIdPedido());
+            pst.setInt(2, item.getIdQuadrinho());
+            pst.setInt(3, item.getQuantidade());
+            pst.setDouble(4, item.getPreco());
 
             if (pst.executeUpdate() == 0){
-                throw new Exception("Inserção de item de pedido não executada!");
+                throw new IllegalStateException("Inserção de item de pedido não executada!");
             }
 
-            return consultarByID(e.getIdPedido(), e.getIdQuadrinho());
+            return consultarByID(item.getIdPedido(), item.getIdQuadrinho());
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public ItemPedido consultarByID(int idPedido, int idQuadrinho) throws Exception {
+    public ItemPedido consultarByID(int idPedido, int idQuadrinho) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -54,14 +56,16 @@ public class ItemPedidoDAO {
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()){
-                throw new Exception("Item do pedido não encontrado!");
+                throw new IllegalStateException("Item do pedido não encontrado!");
             }
             
             return itemPedidoMapper.mapearEntidade(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<ItemPedidoDTO> consultarByIDPedido(int idPedido) throws Exception {
+    public List<ItemPedidoDTO> consultarByIDPedido(int idPedido) {
         try(
             Connection connection = ConexaoFactory.getConexao();
 
@@ -86,7 +90,7 @@ public class ItemPedidoDAO {
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()) {
-                throw new Exception("Pedido não possui nenhum item.");
+                throw new IllegalStateException("Pedido não possui nenhum item.");
             }
             rs.beforeFirst();
     
@@ -98,6 +102,8 @@ public class ItemPedidoDAO {
             }
 
             return itens;    
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 

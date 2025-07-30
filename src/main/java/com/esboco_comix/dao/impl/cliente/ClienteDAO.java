@@ -15,9 +15,9 @@ import com.esboco_comix.utils.ConexaoFactory;
 
 public class ClienteDAO {
 
-    private ClienteMapper clienteMapper = new ClienteMapper();
+    private final ClienteMapper clienteMapper = new ClienteMapper();
 
-    public Cliente inserir(Cliente c) throws Exception {
+    public Cliente inserir(Cliente c) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -28,7 +28,7 @@ public class ClienteDAO {
                     "cli_tel_tipo, cli_tel_ddd, cli_tel_numero, cli_is_ativo) "+
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
                     Statement.RETURN_GENERATED_KEYS
-            );
+            )
         ){
             pst.setString(1, c.getNome());
             pst.setString(2, c.getGenero().name());
@@ -44,7 +44,7 @@ public class ClienteDAO {
             pst.setBoolean(12, true);
     
             if (pst.executeUpdate() == 0){
-                throw new Exception("Inserção de cliente não executada!");
+                throw new IllegalStateException("Inserção de cliente não executada!");
             }
     
             ResultSet rs = pst.getGeneratedKeys();
@@ -54,10 +54,12 @@ public class ClienteDAO {
             }
 
             return clienteInserido;   
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<Cliente> consultarTodos() throws Exception {
+    public List<Cliente> consultarTodos() {
         try (
             Connection conn = ConexaoFactory.getConexao();
 
@@ -65,12 +67,12 @@ public class ClienteDAO {
                 "SELECT * FROM clientes ORDER BY cli_id;",
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
-            );
+            )
         ){
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Nenhum registro encontrado de cliente.");
+                throw new IllegalStateException("Nenhum registro encontrado de cliente.");
             }
             rs.beforeFirst();
 
@@ -81,30 +83,34 @@ public class ClienteDAO {
             }
 
             return clientes;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public Cliente consultarByID(int id) throws Exception {
+    public Cliente consultarByID(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
                 "SELECT * FROM clientes WHERE cli_id = ?;"
-            );
+            )
         ) {
             pst.setInt(1, id);
 
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()){
-                throw new Exception("Cliente não encontrado!");
+                throw new IllegalStateException("Cliente não encontrado!");
             }
             
             return clienteMapper.mapearEntidade(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public Cliente atualizar(Cliente c) throws Exception {
+    public Cliente atualizar(Cliente c) {
         try (
             Connection conn = ConexaoFactory.getConexao(); 
     
@@ -113,7 +119,7 @@ public class ClienteDAO {
                     "cli_nome = ?, cli_genero = ?, cli_dt_nascimento = ?, cli_cpf = ?, cli_email = ?,"+
                     "cli_tel_tipo = ?, cli_tel_ddd = ?, cli_tel_numero = ? "+
                     "WHERE cli_id = ?"
-            );
+            )
         ) {
             pst.setString(1, c.getNome());
             pst.setString(2, c.getGenero().name());
@@ -126,17 +132,19 @@ public class ClienteDAO {
             pst.setInt(9, c.getId());
         
             if (pst.executeUpdate() == 0) {
-                throw new Exception("Atualização não foi sucedida!");
+                throw new IllegalStateException("Atualização não foi sucedida!");
             }
 
             return consultarByID(c.getId());
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
     /***
      * Operador ILIKE somente suportado pelo PostgreSQL
      */
-    public List<Cliente> consultarTodos(FiltrarClienteDTO filtro) throws Exception {
+    public List<Cliente> consultarTodos(FiltrarClienteDTO filtro) {
         StringBuilder query = new StringBuilder("SELECT * FROM clientes WHERE 1=1");
 
         List<Object> params = new ArrayList<>();
@@ -201,7 +209,7 @@ public class ClienteDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Nenhum registro encontrado de cliente.");
+                throw new IllegalStateException("Nenhum registro encontrado de cliente.");
             }
             rs.beforeFirst();
 
@@ -212,10 +220,12 @@ public class ClienteDAO {
             }
 
             return clientes;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public Cliente consultarByIDPedido(int idPedido) throws Exception {
+    public Cliente consultarByIDPedido(int idPedido) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -231,14 +241,16 @@ public class ClienteDAO {
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()){
-                throw new Exception("Cliente não encontrado!");
+                throw new IllegalStateException("Cliente não encontrado!");
             }
             
             return clienteMapper.mapearEntidade(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public Cliente atualizarSenha(Cliente c) throws Exception {
+    public Cliente atualizarSenha(Cliente c) {
         try (
             Connection conn = ConexaoFactory.getConexao(); 
     
@@ -254,40 +266,44 @@ public class ClienteDAO {
             pst.setInt(3, c.getId());
         
             if (pst.executeUpdate() == 0) {
-                throw new Exception("Atualização não foi sucedida!");
+                throw new IllegalStateException("Atualização não foi sucedida!");
             }
     
             return consultarByID(c.getId());
 
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public Cliente atualizarStatusCadastro(Cliente c) throws Exception {
+    public Cliente atualizarStatusCadastro(Cliente c) {
         try (
             Connection conn = ConexaoFactory.getConexao(); 
     
             PreparedStatement pst = conn.prepareStatement(
                 "UPDATE clientes set "+
                     "cli_is_ativo = ? WHERE cli_id = ?"
-            );
+            )
         ) {
             pst.setBoolean(1, !c.getIsAtivo());
             
             pst.setInt(2, c.getId());
         
             if (pst.executeUpdate() == 0) {
-                throw new Exception("Atualização não foi sucedida!");
+                throw new IllegalStateException("Atualização não foi sucedida!");
             }
     
             return consultarByID(c.getId());
 
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
     /***
      * Apenas esse método retorna o hash e o salt da senha do ClienteDAO.
      */
-    public Cliente consultarHashSaltPorID(int id) throws Exception {
+    public Cliente consultarHashSaltPorID(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -300,7 +316,7 @@ public class ClienteDAO {
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()){
-                throw new Exception("Cliente não encontrado!");
+                throw new IllegalStateException("Cliente não encontrado!");
             }
     
             Cliente c = new Cliente();
@@ -308,6 +324,8 @@ public class ClienteDAO {
             c.setHashSenha(rs.getString("cli_hash_senha"));
             c.setSaltSenha(rs.getString("cli_salt_senha"));
             return c;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
     

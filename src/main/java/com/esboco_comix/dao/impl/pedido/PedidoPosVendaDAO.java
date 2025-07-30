@@ -11,9 +11,9 @@ import java.util.List;
 
 public class PedidoPosVendaDAO {
 
-    private PedidoPosVendaMapper pedidoPosVendaMapper = new PedidoPosVendaMapper();
+    private final PedidoPosVendaMapper pedidoPosVendaMapper = new PedidoPosVendaMapper();
 
-    public PedidoPosVendaDTO inserir(PedidoPosVenda p) throws Exception {
+    public PedidoPosVendaDTO inserir(PedidoPosVenda p) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -34,7 +34,7 @@ public class PedidoPosVendaDAO {
             pst.setString(5, p.getTipo().name());
 
             if (pst.executeUpdate() == 0){
-                throw new Exception("Inserção de pedido pós-venda não executada!");
+                throw new IllegalStateException("Inserção de pedido pós-venda não executada!");
             }
             ResultSet rs = pst.getGeneratedKeys();
             PedidoPosVendaDTO pedido = null;
@@ -43,10 +43,12 @@ public class PedidoPosVendaDAO {
             }
 
             return pedido;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<PedidoPosVendaDTO> consultarTodos() throws Exception {
+    public List<PedidoPosVendaDTO> consultarTodos() {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -70,10 +72,12 @@ public class PedidoPosVendaDAO {
             }
 
             return pedidosPosVenda;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public PedidoPosVendaDTO consultarByID(int id) throws Exception {
+    public PedidoPosVendaDTO consultarByID(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -86,14 +90,16 @@ public class PedidoPosVendaDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Nenhum pedido pós venda encontrado.");
+                throw new IllegalStateException("Nenhum pedido pós venda encontrado.");
             }
 
             return pedidoPosVendaMapper.mapearDTO(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public PedidoPosVendaDTO atualizarStatus(PedidoPosVenda p) throws Exception {
+    public PedidoPosVendaDTO atualizarStatus(PedidoPosVenda p) {
         try (
             Connection conn = ConexaoFactory.getConexao();
 
@@ -107,14 +113,16 @@ public class PedidoPosVendaDAO {
             pst.setInt(3, p.getIdQuadrinho());
 
             if (pst.executeUpdate() == 0) {
-                throw new Exception("Atualização não foi sucedida!");
+                throw new IllegalStateException("Atualização não foi sucedida!");
             }
 
             return consultarByID(p.getId());
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<PedidoPosVendaDTO> consultarByIdPedido(int id) throws Exception {
+    public List<PedidoPosVendaDTO> consultarByIdPedido(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -140,10 +148,12 @@ public class PedidoPosVendaDAO {
             }
 
             return pedidosPosVenda;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<PedidoPosVendaDTO> consultarPorIDCliente(int id) throws Exception {
+    public List<PedidoPosVendaDTO> consultarPorIDCliente(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -169,6 +179,8 @@ public class PedidoPosVendaDAO {
             }
 
             return pedidosPosVenda;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
