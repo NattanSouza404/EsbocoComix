@@ -1,15 +1,23 @@
 import { retornarPedidos } from "../../../../js/api/apiPedido.js";
 import { retornarPedidosPosVendaByCliente } from "../../../../js/api/apiPedidoPosVenda.js";
-import { atualizarStatusPedido } from "../../../../../js/api/apiPedido.js";
-import { atualizarStatusPedidoPosVenda, inserirPedidoPosVenda } from "../../../../../js/api/apiPedidoPosVenda.js";
+import { atualizarStatusPedido } from "../../../../js/api/apiPedido.js";
+import { inserirPedidoPosVenda } from "../../../../js/api/apiPedidoPosVenda.js";
 
 import { ModalConsultarPedidosPosVenda } from "./ModalConsultarPedidosVenda.js";
 import { ContainerPedido } from "./containerPedido/ContainerPedido.js";
+import { alertarErro } from "../../../../js/api/alertErro.js";
 
 const idCliente = localStorage.getItem('idcliente');
 
-const pedidos = await retornarPedidos(idCliente);
-const pedidosPosVenda = await retornarPedidosPosVendaByCliente(idCliente);
+let pedidos;
+let pedidosPosVenda;
+
+try {
+    pedidos = await retornarPedidos(idCliente);
+    pedidosPosVenda = await retornarPedidosPosVendaByCliente(idCliente);
+} catch (error){
+    alertarErro(error);
+}
 
 const modalConsultarPedidosPosVenda = new ModalConsultarPedidosPosVenda();
 
@@ -56,18 +64,34 @@ pedidos.forEach(pedido => {
 async function confirmarTrocaPedido(pedido){
     const confirmacaoUsuario = confirm("Deseja realizar a troca desse pedido?");
 
-    if (confirmacaoUsuario){
-        pedido.status = 'TROCA_SOLICITADA';
+    if (!confirmacaoUsuario){
+        return;
+    }
+
+    pedido.status = 'TROCA_SOLICITADA';
+
+    try {
         await atualizarStatusPedido(pedido);
+        alert('Atualizado com sucesso!');
+    } catch (error){
+        alertarErro(error);
     }
 }
 
 async function confirmarDevolucaoPedido(pedido){
     const confirmacaoUsuario = confirm("Deseja realizar a devolução desse pedido?");
 
-    if (confirmacaoUsuario){
-        pedido.status = 'DEVOLUCAO_SOLICITADA';
+    if (!confirmacaoUsuario){
+        return;
+    }
+
+    pedido.status = 'DEVOLUCAO_SOLICITADA';
+        
+    try {
         await atualizarStatusPedido(pedido);
+        alert('Atualizado com sucesso!');
+    } catch (error){
+        alertarErro(error);
     }
 }
 
@@ -94,8 +118,10 @@ async function confirmarTrocaItem(item){
                 tipo: "TROCA"
             }
         );
+
+        alert('Pedido realizado!');
     } catch (error){
-        alert(error);
+        alertarErro(error);
     }
 }
 
@@ -122,7 +148,9 @@ async function confirmarDevolucaoItem(item){
                 tipo: "DEVOLUCAO"
             }
         );
+
+        alert('Pedido realizado!');
     } catch (error){
-        alert(error);
+        alertarErro(error);
     }
 }

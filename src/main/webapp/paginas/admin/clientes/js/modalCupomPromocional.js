@@ -1,3 +1,4 @@
+import { alertarErro } from "../../../../js/api/alertErro.js";
 import { inserirCupom } from "/js/api/apiCupom.js";
 import { Modal } from "/js/componentes/modal.js";
 
@@ -9,8 +10,8 @@ export default class ModalCupomPromocional extends Modal {
 
         this.conteudoModal = conteudoModal;
 
-        this.conteudoModal.querySelector('button').onclick = () => {
-            this.enviarFormulario()
+        this.conteudoModal.querySelector('button').onclick = async () => {
+            await this.enviarFormulario()
         }
     }
 
@@ -20,7 +21,13 @@ export default class ModalCupomPromocional extends Modal {
         super.show();
     }
     
-    enviarFormulario(){
+    async enviarFormulario(){
+        const confirmacaoUsuario = confirm("Deseja mesmo cadastrar esse cupom?");
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+                
         const formData = new FormData(this.conteudoModal);
 
         const cupom = {
@@ -29,7 +36,13 @@ export default class ModalCupomPromocional extends Modal {
             isPromocional: true
         }
 
-        inserirCupom(cupom);
+        try {
+            await inserirCupom(cupom);
+            alert('Cadastrado com sucesso');    
+        } catch (error){
+            alertarErro(error);
+        }
+        
     }
 
 }

@@ -13,7 +13,7 @@ try {
 } catch (error){
     document.getElementById('container-anuncio').innerHTML = `
         <h3 class="text-center">Produto não encontrado!</h3>
-    `
+    `;
 }
 
 function carregarPagina(){

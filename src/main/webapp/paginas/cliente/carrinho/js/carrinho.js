@@ -1,5 +1,6 @@
 import { calcularValorTotal, formatarPreco } from "../../../../js/script.js";
 import { atualizarItemCarrinho, deletarItemCarrinho, retornarCarrinho } from "../../../../js/api/apiCarrinho.js";
+import { alertarErro } from "../../../../js/api/alertErro.js";
 
 let carrinho;
 
@@ -36,29 +37,14 @@ if (carrinho.itensCarrinho.length !== 0){
             </td>
         `;
     
-        linha.querySelector('.btn-atualizar').onclick = () => {
+        linha.querySelector('.btn-atualizar').onclick = async () => {
             item.quantidade = linha.querySelector('input').value;
+            await confirmarAtualizarItem(item);
+        }
 
-            const confirmacaoUsuario = confirm("Deseja mesmo atualizar quantidade desse item?"); 
-
-            if (confirmacaoUsuario){
-                atualizarItemCarrinho(item).then(
-                    () => window.location.reload()
-                )
-            }
-            
-        };
-
-        linha.querySelector('.btn-deletar').onclick = () => {
-            const confirmacaoUsuario = confirm("Deseja mesmo deletar esse item?");
-
-            if (confirmacaoUsuario){
-                deletarItemCarrinho(item).then(
-                    () => window.location.reload()
-                )
-            }
- 
-        };
+        linha.querySelector('.btn-deletar').onclick = async () => {
+            await confirmarDelecaoItem(item);   
+        }
     
         document.getElementById("tabela-produtos-carrinho")
             .append(linha);
@@ -67,4 +53,39 @@ if (carrinho.itensCarrinho.length !== 0){
     let valorTotal = calcularValorTotal(carrinho);
     
     document.getElementById('total-carrinho').textContent = `${formatarPreco(valorTotal)}`;
+}
+
+async function confirmarAtualizarItem(item){
+    const confirmacaoUsuario = confirm("Deseja mesmo atualizar quantidade desse item?"); 
+
+    if (!confirmacaoUsuario){
+        return;
+    }
+
+    try {
+        await atualizarItemCarrinho(item);
+
+        alert('Item atualizado com sucesso!');
+
+        window.location.reload();
+    } catch (error){
+        alertarErro(error);
+    }
+}
+
+async function confirmarDelecaoItem(item){
+    const confirmacaoUsuario = confirm("Deseja mesmo deletar esse item?");
+
+    if (!confirmacaoUsuario){
+        return;
+    }
+
+    try {
+        await deletarItemCarrinho(item);
+        alert("Item deletado com sucesso!");
+        window.location.reload();
+    } catch (error){
+        alertarErro(error);
+    }
+    
 }

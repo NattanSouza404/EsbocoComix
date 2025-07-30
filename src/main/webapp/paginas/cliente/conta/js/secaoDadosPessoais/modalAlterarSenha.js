@@ -1,3 +1,4 @@
+import { alertarErro } from "../../../../../js/api/alertErro.js";
 import { atualizarSenha } from "/js/api/apiCliente.js";
 import { Modal } from "/js/componentes/modal.js";
 
@@ -8,8 +9,8 @@ export class ModalAlterarSenha extends Modal {
 
         super('modal-alterar-senha', "Alterar Senha", conteudoModal);
 
-        conteudoModal.querySelector('.botao-salvar').onclick = () => {
-            this.enviarFormulario(this.cliente)
+        conteudoModal.querySelector('.botao-salvar').onclick = async () => {
+            await this.enviarFormulario(this.cliente);
         }
 
         this.conteudoModal = conteudoModal;
@@ -19,7 +20,13 @@ export class ModalAlterarSenha extends Modal {
         this.cliente = cliente;
     }
 
-    enviarFormulario(cliente) {
+    async enviarFormulario(cliente) {
+        const confirmacaoUsuario = confirm("Deseja mesmo atualizar?"); 
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+
         const form = document.getElementById("alterar-senha");
         const formData = new FormData(form);
 
@@ -32,7 +39,14 @@ export class ModalAlterarSenha extends Modal {
             "senhaConfirmacao": formData.get('senhaConfirmacao')
         };
 
-        atualizarSenha(pedidoAlterarSenha);
+        try {
+            await atualizarSenha(pedidoAlterarSenha);
+            alert('Atualizado com sucesso!');
+            window.location.reload();
+        } catch (error){
+            alertarErro(error);
+        }
+        
     }
 }
 

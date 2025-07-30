@@ -7,19 +7,23 @@ import { SecaoSelecaoEndereco } from "./secaoEndereco/SecaoSelecaoEndereco.js";
 import { SecaoCartaoCredito } from "./secaoCartaoCredito/SecaoCartaoCredito.js";
 import { retornarCupons } from "/js/api/apiCupom.js";
 import { SecaoCupom } from "./secaoCupom/SecaoCupons.js";
+import { alertarErro } from "../../../../js/api/alertErro.js";
 
 const idCliente = localStorage.getItem('idcliente'); 
 
-const enderecos = await retornarEnderecos(idCliente);
-const cartoesCredito = await retornarCartoesCredito(idCliente);
-const cupons = await retornarCupons(idCliente);
-
+let enderecos;
+let cartoesCredito;
+let cupons;
 let carrinho;
 
 try {
-    carrinho = await retornarCarrinho();
+    enderecos = await retornarEnderecos(idCliente);
+    cartoesCredito = await retornarCartoesCredito(idCliente);
+    cupons = await retornarCupons(idCliente);
+    carrinho = await retornarCarrinho(idCliente);
 } catch (error){
-    alertarErro('Erro buscando dados:', error);
+    alertarErro(error);
+    window.location.href = "/";
 }
 
 const secaoSelecaoEndereco = new SecaoSelecaoEndereco(); 
@@ -35,7 +39,13 @@ const resumoPedido = new ResumoPedido(
 
 resumoPedido.preencherResumo(carrinho, secaoSelecaoEndereco.getEnderecoSelecionado());
 
-document.getElementById('btn-enviar-pedido').onclick = () => {
+document.getElementById('btn-enviar-pedido').onclick = async () => {
+    const confirmacaoUsuario = confirm("Deseja mesmo realizar essa compra?");
+
+    if (!confirmacaoUsuario){
+        return;
+    }
+    
     const idCliente = localStorage.getItem('idcliente');
     const endereco = secaoSelecaoEndereco.getEnderecoSelecionado();
 
@@ -50,21 +60,21 @@ document.getElementById('btn-enviar-pedido').onclick = () => {
         });
     });
 
-    enviarPedido(
-        {
-            idCliente: idCliente,
-    
-            valorFrete: valorFrete,
+    try {
+        await enviarPedido(
+            {
+                idCliente: idCliente,
+                valorFrete: valorFrete,
 
-            enderecoEntrega: {
-                id: idEndereco
-            },
+                enderecoEntrega: { id: idEndereco },
 
-            cuponsPedido: cuponsPedido,
+                cuponsPedido: cuponsPedido,
+                cartoesCreditoPedido: secaoSelecaoCartao.getCartoesCreditoPedido()
+            }
+        );
 
-            cartoesCreditoPedido: secaoSelecaoCartao.getCartoesCreditoPedido()
-            
-        }
-    
-    )
+        alert('Pedido realizado');
+    } catch (error){
+        alertarErro(error);
+    }
 };

@@ -2,6 +2,7 @@ import { montarCartaoCreditoPorForm } from "/js/script.js";
 import { atualizarCartaoCredito } from "/js/api/apiCartaoCredito.js";;
 import { Modal } from "/js/componentes/modal.js";
 import { FormularioCartaoCredito } from "/js/componentes/forms/formCartaoCredito.js";
+import { alertarErro } from "../../../../../js/api/alertErro.js";
 
 export class ModalAlterarCartaoCredito extends Modal {
     constructor(){
@@ -11,8 +12,8 @@ export class ModalAlterarCartaoCredito extends Modal {
 
         this.conteudoModal = conteudoModal;
 
-        this.conteudoModal.querySelector('.botao-salvar').onclick = () => {
-            this.enviarAtualizacao();
+        this.conteudoModal.querySelector('.botao-salvar').onclick = async () => {
+            await this.enviarAtualizacao();
         }; 
     }
 
@@ -24,7 +25,25 @@ export class ModalAlterarCartaoCredito extends Modal {
     async enviarAtualizacao(){
         const cartao = montarCartaoCreditoPorForm(this.conteudoModal);
         cartao.id = this.conteudoModal.cartaoCredito.id;
-        atualizarCartaoCredito(cartao);
+
+        const confirmacaoUsuario = confirm("Deseja mesmo atualizar esse cartão de crédito?"); 
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+
+        try {
+            cartao.idCliente = localStorage.getItem('idcliente');
+
+            await atualizarCartaoCredito(cartao);
+            
+            alert("Atualizado com sucesso!");
+
+            window.location.reload();
+        } catch (error){
+            alertarErro(error);
+        }
+
     }
 
 }

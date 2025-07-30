@@ -1,3 +1,4 @@
+import { alertarErro } from "../../../../../js/api/alertErro.js";
 import { deletarEndereco } from "../../../../../js/api/apiEndereco.js";
 
 export class CartaoEndereco extends HTMLDivElement {
@@ -70,10 +71,9 @@ export class CartaoEndereco extends HTMLDivElement {
             try {
                 await deletarEndereco(endereco);
                 alert('Deletado com sucesso!');
-
                 window.location.reload();
             } catch (error){
-                 alert(`Erro ao deletar: ${error}`);
+                alertarErro(error);
             }
             
         };
