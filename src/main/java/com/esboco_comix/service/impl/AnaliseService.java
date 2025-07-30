@@ -1,6 +1,7 @@
 package com.esboco_comix.service.impl;
 
 import com.esboco_comix.dao.impl.analise.AnaliseDAO;
+import com.esboco_comix.dto.FiltroAnaliseDTO;
 import com.esboco_comix.dto.ItemVendaDTO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,7 +15,7 @@ import java.util.Map;
 public class AnaliseService {
     private final AnaliseDAO analiseDAO = new AnaliseDAO();
 
-    public Map<String, List<ItemVendaDTO>> retornarAnalise(HttpServletRequest req) throws Exception {
+    public Map<String, List<ItemVendaDTO>> retornarAnalise(HttpServletRequest req) {
         Map<String, List<ItemVendaDTO>> analise = new HashMap<>();
 
         FiltroAnaliseDTO filtro = new FiltroAnaliseDTO();

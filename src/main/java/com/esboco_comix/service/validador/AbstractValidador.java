@@ -2,25 +2,25 @@ package com.esboco_comix.service.validador;
 
 public class AbstractValidador {
 
-    public void validarAtributoObrigatorio(Object atributo, String nome) throws Exception{
+    public void validarAtributoObrigatorio(Object atributo, String nome) {
         if (atributo == null){
-            throw new Exception(nome+" é obrigatório!");
+            throw new IllegalArgumentException(nome+" é obrigatório!");
         }
     }
 
-    public void validarAtributoObrigatorio(String atributo, String nome) throws Exception{
+    public void validarAtributoObrigatorio(String atributo, String nome) {
         if (atributo == null){
-            throw new Exception(nome+" é obrigatório!");
+            throw new IllegalArgumentException(nome+" é obrigatório!");
         }
 
         if (atributo.isEmpty()){
-            throw new Exception(nome+" é obrigatório!");
+            throw new IllegalArgumentException(nome+" é obrigatório!");
         }
     }
 
-    public void validarSeApenasNumeros(String atributo, String nome) throws Exception{
+    public void validarSeApenasNumeros(String atributo, String nome) {
         if (!atributo.matches("\\d+")){
-            throw new Exception(nome+" só pode conter números!");
+            throw new IllegalArgumentException(nome+" só pode conter números!");
         }
     }
 

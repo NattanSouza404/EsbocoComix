@@ -6,7 +6,7 @@ import com.esboco_comix.service.validador.IValidador;
 
 public class CartaoCreditoValidador extends AbstractValidador implements IValidador<CartaoCredito> {
     @Override
-    public void validar(CartaoCredito c) throws Exception {
+    public void validar(CartaoCredito c) {
         validarAtributoObrigatorio(c.getNomeImpresso(), "Nome impresso do cartão");
         validarAtributoObrigatorio(c.getBandeiraCartao(), "Bandeira do cartão");
         validarAtributoObrigatorio(c.getNumero(), "Número do cartão");
