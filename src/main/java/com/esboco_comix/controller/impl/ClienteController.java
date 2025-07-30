@@ -47,7 +47,7 @@ public class ClienteController extends AbstractController {
             ); 
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao consultar cliente(s)", e));
         }
     }
 
@@ -62,7 +62,7 @@ public class ClienteController extends AbstractController {
                 HttpServletResponse.SC_CREATED
             );
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao adicionar cliente", e));
         }
     }
 
@@ -96,7 +96,7 @@ public class ClienteController extends AbstractController {
                 HttpServletResponse.SC_OK
             );
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao atualizar cliente", e));
         }
     }
 

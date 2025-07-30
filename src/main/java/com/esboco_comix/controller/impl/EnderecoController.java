@@ -30,7 +30,7 @@ public class EnderecoController extends AbstractController {
             }
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao consultar endereço(s)", e));
         }
     }
 
@@ -44,7 +44,7 @@ public class EnderecoController extends AbstractController {
                 HttpServletResponse.SC_CREATED
             );
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao adicionar endereço", e));
         }
     }
 
@@ -59,7 +59,7 @@ public class EnderecoController extends AbstractController {
                 HttpServletResponse.SC_OK
             );
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao atualizar endereço", e));
         }
     }
 
@@ -70,7 +70,7 @@ public class EnderecoController extends AbstractController {
             enderecoService.inativar(endereco);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao deletar endereço", e));
         }
     }
 }

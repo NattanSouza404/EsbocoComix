@@ -33,7 +33,7 @@ public class PedidoPosVendaController extends AbstractController {
             );
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao consultar pedido(s)-pós-venda", e));
         }
     }
 
@@ -48,7 +48,7 @@ public class PedidoPosVendaController extends AbstractController {
             );
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao adicionar pedido-pós-venda", e));
         }
     }
 
@@ -64,7 +64,7 @@ public class PedidoPosVendaController extends AbstractController {
             );
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao atualizar pedido-pós-venda", e));
         }
     }
 }
