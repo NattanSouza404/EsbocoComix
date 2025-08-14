@@ -1,24 +1,21 @@
 package com.esboco_comix.dao.impl.pedido;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.dto.ItemPedidoDTO;
+import com.esboco_comix.dao.mapper.impl.ItemPedidoMapper;
+import com.esboco_comix.dao.mapper.impl.PedidoMapper;
 import com.esboco_comix.dto.PedidoDTO;
-import com.esboco_comix.model.entidades.Endereco;
-import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
-import com.esboco_comix.model.enuns.StatusPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class PedidoDAO {
 
-    public Pedido inserir(Pedido e) throws Exception {
+    private final PedidoMapper pedidoMapper = new PedidoMapper();
+    private final ItemPedidoMapper itemPedidoMapper = new ItemPedidoMapper();
+
+    public Pedido inserir(Pedido pedido) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -29,14 +26,14 @@ public class PedidoDAO {
                     Statement.RETURN_GENERATED_KEYS
             );
         ) {
-            pst.setInt(1, e.getIdCliente());
-            pst.setString(2, e.getStatus().name());
-            pst.setInt(3, e.getEnderecoEntrega().getId());
-            pst.setDouble(4, e.getValorTotal());
-            pst.setDouble(5, e.getValorFrete());
+            pst.setInt(1, pedido.getIdCliente());
+            pst.setString(2, pedido.getStatus().name());
+            pst.setInt(3, pedido.getEnderecoEntrega().getId());
+            pst.setDouble(4, pedido.getValorTotal());
+            pst.setDouble(5, pedido.getValorFrete());
 
             if (pst.executeUpdate() == 0){
-                throw new Exception("Inserção de pedido não executada!");
+                throw new IllegalStateException("Inserção de pedido não executada!");
             }
 
             ResultSet rs = pst.getGeneratedKeys();
@@ -46,29 +43,18 @@ public class PedidoDAO {
             }
 
             return pedidoInserido;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<PedidoDTO> consultarTodos() throws Exception {
+    public List<PedidoDTO> consultarTodos() {
         try (
             Connection conn = ConexaoFactory.getConexao();
 
             PreparedStatement pst = conn.prepareStatement(
             """
-                SELECT
-                    pedidos.*,
-                    itens_pedido.*,
-                    qua_titulo,
-                    qua_url_imagem,
-                    cli_nome,
-                    enderecos.*
-                FROM
-                    pedidos
-                    JOIN clientes ON ped_cli_id = cli_id
-                    JOIN enderecos ON ped_end_id = end_id
-                    JOIN itens_pedido ON ite_ped_id = ped_id
-                    JOIN quadrinhos ON ite_qua_id = qua_id
-                ORDER BY ped_data DESC;
+                SELECT * FROM vw_pedidos;
                 """,
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
@@ -82,30 +68,18 @@ public class PedidoDAO {
             rs.beforeFirst();
 
             return mapearPedidosDTO(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<PedidoDTO> consultarByIDCliente(int idCliente) throws Exception {
+    public List<PedidoDTO> consultarByIDCliente(int idCliente) {
         try (
             Connection conn = ConexaoFactory.getConexao();
 
             PreparedStatement pst = conn.prepareStatement(
             """
-                SELECT
-                    pedidos.*,
-                    itens_pedido.*,
-                    qua_titulo,
-                    qua_url_imagem,
-                    cli_nome,
-                    enderecos.*
-                FROM
-                    pedidos
-                    JOIN clientes ON ped_cli_id = cli_id
-                    JOIN enderecos ON ped_end_id = end_id
-                    JOIN itens_pedido ON ite_ped_id = ped_id
-                    JOIN quadrinhos ON ite_qua_id = qua_id
-                WHERE cli_id = ?
-                ORDER BY ped_data DESC;
+                SELECT * FROM vw_pedidos WHERE cli_id = ?;
                 """,
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
@@ -121,29 +95,33 @@ public class PedidoDAO {
             rs.beforeFirst();
 
             return mapearPedidosDTO(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public Pedido consultarByID(int id) throws Exception {
+    public Pedido consultarByID(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                "SELECT pedidos.*, enderecos.* FROM pedidos JOIN enderecos ON ped_end_id = end_id WHERE ped_id = ?;"
+                "SELECT * FROM vw_pedidos WHERE ped_id = ?;"
             );
         ) {
             pst.setInt(1, id);
 
             ResultSet rs = pst.executeQuery();
-    
+
             if (!rs.next()) {
-                throw new Exception("Pedido não encontrado.");
+                throw new IllegalStateException("Pedido não encontrado.");
             }
-            return mapearEntidade(rs);    
+            return pedidoMapper.mapearEntidade(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public Pedido atualizarStatus(Pedido p) throws Exception {
+    public Pedido atualizarStatus(Pedido p) {
         try (
             Connection conn = ConexaoFactory.getConexao(); 
     
@@ -156,14 +134,16 @@ public class PedidoDAO {
             pst.setInt(2, p.getId());
 
             if (pst.executeUpdate() == 0) {
-                throw new Exception("Atualização não foi sucedida!");
+                throw new IllegalStateException("Atualização não foi sucedida!");
             }
 
             return consultarByID(p.getId());
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    private List<PedidoDTO> mapearPedidosDTO(ResultSet rs) throws Exception {
+    private List<PedidoDTO> mapearPedidosDTO(ResultSet rs) throws SQLException {
         List<PedidoDTO> pedidos = new ArrayList<>();
 
         while (rs.next()){
@@ -178,63 +158,14 @@ public class PedidoDAO {
             }
 
             if (dto == null){
-                dto = mapearPedidoDTO(rs);
+                dto = pedidoMapper.mapearDTO(rs);
                 pedidos.add(dto);
             }
 
-            dto.getItensPedidoDTO().add(mapearItemPedidoDTO(rs));
+            dto.getItensPedidoDTO().add(itemPedidoMapper.mapearDTO(rs));
         }
 
         return pedidos;
-    }
-
-    private Pedido mapearEntidade(ResultSet rs) throws SQLException {
-        Pedido pedido = new Pedido();
-        pedido.setId(rs.getInt("ped_id"));
-        pedido.setIdCliente(rs.getInt("ped_cli_id"));
-        pedido.setStatus(StatusPedido.valueOf(rs.getString("ped_status")));
-        pedido.setValorTotal(rs.getDouble("ped_valor_total"));
-        
-        Endereco endereco = new Endereco();
-        endereco.setId(rs.getInt("ped_end_id"));
-        endereco.setFraseCurta(rs.getString("end_frase_curta"));
-        endereco.setCidade(rs.getString("end_cidade"));
-        endereco.setEstado(rs.getString("end_estado"));
-        endereco.setPais(rs.getString("end_pais"));
-        endereco.setCep(rs.getString("end_cep"));
-        pedido.setEnderecoEntrega(endereco);
-
-        pedido.setValorFrete(rs.getDouble("ped_valor_frete"));
-        pedido.setData(rs.getTimestamp("ped_data").toLocalDateTime());
-
-        return pedido;
-    }
-
-    private PedidoDTO mapearPedidoDTO(ResultSet rs) throws Exception {
-        PedidoDTO dto = new PedidoDTO();
-        dto.setPedido(mapearEntidade(rs));
-        dto.setItensPedidoDTO(new ArrayList<>());
-        dto.setNomeCliente(rs.getString("cli_nome"));
-        return dto;
-    }
-
-    private ItemPedidoDTO mapearItemPedidoDTO(ResultSet rs) throws SQLException{
-        ItemPedidoDTO dto = new ItemPedidoDTO();
-
-        ItemPedido item = new ItemPedido();
-        item.setIdPedido(rs.getInt("ped_id"));
-        item.setQuantidade(rs.getInt("ite_quantidade"));
-
-        item.setIdQuadrinho(rs.getInt("ite_qua_id"));
-        item.setPreco(rs.getDouble("ite_valor_unitario"));
-
-        dto.setItemPedido(item);
-
-        dto.setNomeCliente(rs.getString("cli_nome"));
-        dto.setNomeQuadrinho(rs.getString("qua_titulo"));
-        dto.setUrlImagem(rs.getString("qua_url_imagem"));
-
-        return dto;
     }
     
 }

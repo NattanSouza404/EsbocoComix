@@ -7,13 +7,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.dao.mapper.impl.CartaoCreditoMapper;
 import com.esboco_comix.model.entidades.CartaoCredito;
-import com.esboco_comix.model.enuns.BandeiraCartao;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class CartaoCreditoDAO {
 
-    public CartaoCredito inserir(CartaoCredito c) throws Exception {
+    private final CartaoCreditoMapper cartaoCreditoMapper = new CartaoCreditoMapper();
+
+    public CartaoCredito inserir(CartaoCredito c) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -28,7 +30,7 @@ public class CartaoCreditoDAO {
                 );
                 """,
                 Statement.RETURN_GENERATED_KEYS
-            );
+            )
         ) {
             pst.setString(1, c.getNumero());
             pst.setString(2, c.getNomeImpresso());
@@ -38,7 +40,7 @@ public class CartaoCreditoDAO {
             pst.setInt(6, c.getIdCliente());
 
             if (pst.executeUpdate() == 0){
-                throw new Exception("Inserção de cartão de crédito não executada!");
+                throw new IllegalStateException("Inserção de cartão de crédito não executada!");
             }
             ResultSet rs = pst.getGeneratedKeys();
             CartaoCredito cartaoCreditoInserido = null;
@@ -47,10 +49,12 @@ public class CartaoCreditoDAO {
             }
 
             return cartaoCreditoInserido;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public CartaoCredito consultarByID(int id) throws Exception {
+    public CartaoCredito consultarByID(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -64,20 +68,22 @@ public class CartaoCreditoDAO {
                     bandeiras_cartao_credito ON bcc_id = cre_bcc_id
                 WHERE cre_id = ?;
                 """
-            );
+            )
         ){
             pst.setInt(1, id);
 
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()) {
-                throw new Exception("Cartão de crédito não encontrado.");
+                throw new IllegalStateException("Cartão de crédito não encontrado.");
             }
-            return mapearEntidade(rs);  
+            return cartaoCreditoMapper.mapearEntidade(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public CartaoCredito atualizar(CartaoCredito c) throws Exception {
+    public CartaoCredito atualizar(CartaoCredito c) {
         try (
             Connection conn = ConexaoFactory.getConexao(); 
     
@@ -92,7 +98,7 @@ public class CartaoCreditoDAO {
                         cre_cli_id = ?
                     WHERE cre_id = ?;
                     """
-            );
+            )
         ){
             pst.setString(1, c.getNumero());
             pst.setString(2, c.getNomeImpresso());
@@ -104,31 +110,35 @@ public class CartaoCreditoDAO {
             pst.setInt(7, c.getId());
         
             if (pst.executeUpdate() == 0) {
-                throw new Exception("Atualização não foi sucedida!");
+                throw new IllegalStateException("Atualização não foi sucedida!");
             }
 
             return consultarByID(c.getId());
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public void inativar(CartaoCredito c) throws Exception {
+    public void inativar(CartaoCredito c) {
         try(
             Connection conn = ConexaoFactory.getConexao();
 
             PreparedStatement pst = conn.prepareStatement(
                 "UPDATE cartoes_credito SET cre_is_ativo = false WHERE cre_id = ?;"
-            );
+            )
         ){
             pst.setInt(1, c.getId());
 
             if (pst.executeUpdate() == 0) {
-                throw new Exception("Deleção não realizada. Cartão de crédito de id " + c.getId() + " não encontrado.");
+                throw new IllegalStateException("Deleção não realizada. Cartão de crédito de id " + c.getId() + " não encontrado.");
             }
 
+        }  catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<CartaoCredito> consultarByIDCliente(int idCliente) throws Exception {
+    public List<CartaoCredito> consultarByIDCliente(int idCliente) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -145,37 +155,26 @@ public class CartaoCreditoDAO {
                     """,
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
-            );
+            )
         ){
             pst.setInt(1, idCliente);
 
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()) {
-                throw new Exception("Esse cliente não possui cartão de crédito.");
+                throw new IllegalStateException("Esse cliente não possui cartão de crédito.");
             }
             rs.beforeFirst();
     
             List<CartaoCredito> cartoesCredito = new ArrayList<>();
             while(rs.next()){
-                cartoesCredito.add(mapearEntidade(rs));
+                cartoesCredito.add(cartaoCreditoMapper.mapearEntidade(rs));
             }
 
             return cartoesCredito;    
+        }  catch (Exception e){
+            throw new IllegalStateException(e);
         }
-    }
-
-    private CartaoCredito mapearEntidade(ResultSet rs) throws Exception {
-        CartaoCredito c = new CartaoCredito();
-        c.setId(rs.getInt("cre_id"));
-        c.setNumero(rs.getString("cre_numero"));
-        c.setNomeImpresso(rs.getString("cre_nome_impresso"));
-        c.setCodigoSeguranca(rs.getString("cre_codigo_seguranca"));
-        c.setPreferencial(rs.getBoolean("cre_is_preferencial"));
-        c.setBandeiraCartao(BandeiraCartao.valueOf(rs.getString("bcc_nome")));
-        c.setIdCliente(rs.getInt("cre_cli_id"));
-        c.setIsAtivo(rs.getBoolean("cre_is_ativo"));
-        return c;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.esboco_comix.service.impl;
+package com.esboco_comix.dto;
 
 import java.time.LocalDateTime;
 
