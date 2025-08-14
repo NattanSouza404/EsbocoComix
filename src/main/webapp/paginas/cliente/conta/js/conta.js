@@ -8,6 +8,7 @@ import { SecaoCartaoCredito } from "./secaoCartaoCredito/SecaoCartaoCredito.js";
 import { retornarCupons } from "/js/api/apiCupom.js";
 import { SecaoCupom } from "./secaoCupons/secaoCupons.js";
 import { removerHistorico } from "../../../../js/localStorage.js";
+import { alertarErro } from "../../../../js/api/alertErro.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const idClienteURL = urlParams.get('idcliente'); 
@@ -17,12 +18,22 @@ if (idClienteURL !== null && idClienteURL !== undefined){
     window.location.href = "/conta";
 }
 
-let idCliente = localStorage.getItem('idcliente');
+const idCliente = localStorage.getItem('idcliente');
 
-const cliente = await retornarCliente(idCliente);
-const enderecos = await retornarEnderecos(idCliente);
-const cartoesCredito = await retornarCartoesCredito(idCliente);
-const cupons = await retornarCupons(idCliente);
+let cliente;
+let enderecos;
+let cartoesCredito;
+let cupons;
+
+try {
+    cliente = await retornarCliente(idCliente);
+    enderecos = await retornarEnderecos(idCliente);
+    cartoesCredito = await retornarCartoesCredito(idCliente);
+    cupons = await retornarCupons(idCliente);
+} catch (error){
+    alertarErro(error);
+    window.location.href = "/";
+}
 
 const secaoDadosPessoais = new SecaoDadosPessoais(cliente);
 const secaoCartaoCredito = new SecaoCartaoCredito(cartoesCredito);

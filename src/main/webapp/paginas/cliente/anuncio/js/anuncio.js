@@ -1,5 +1,5 @@
 import { retornarQuadrinho } from "../../../../js/api/apiQuadrinho.js";
-import { adicionarItemAoCarrinho } from "/js/api/apiCarrinho.js";
+import { adicionarItemAoCarrinho } from "../../../../js/api/apiCarrinho.js";
 import { formatarData, formatarPreco } from "/js/script.js";
 
 const uRLSearchParams = new URLSearchParams(window.location.search);
@@ -13,7 +13,7 @@ try {
 } catch (error){
     document.getElementById('container-anuncio').innerHTML = `
         <h3 class="text-center">Produto não encontrado!</h3>
-    `
+    `;
 }
 
 function carregarPagina(){
@@ -84,17 +84,23 @@ function carregarPagina(){
 
     document.getElementById('tabela-info').append(corpoTabela);
 
-    window.adicionarItem = () => {
+    window.adicionarItem = async () => {
 
-        adicionarItemAoCarrinho(
-            {
-                idQuadrinho: quadrinho.id,
-                preco: quadrinho.preco,
-                quantidade: document.getElementsByName('quantidade')[0].value,
-                nome: quadrinho.titulo,
-                urlImagem: quadrinho.urlImagem
-            } 
-        )
+        try {
+            await adicionarItemAoCarrinho(
+                {
+                    idQuadrinho: quadrinho.id,
+                    preco: quadrinho.preco,
+                    quantidade: document.getElementsByName('quantidade')[0].value,
+                    nome: quadrinho.titulo,
+                    urlImagem: quadrinho.urlImagem
+                } 
+            );
+
+            alert('Item adicionado com sucesso!');
+        } catch (error){
+            alert("Erro ao adicionar quadrinho: "+error);
+        }
 
     };
 }

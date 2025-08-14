@@ -1,3 +1,4 @@
+import { alertarErro } from "../../../../js/api/alertErro.js";
 import { atualizarStatusPedidoPosVenda } from "../../../../js/api/apiPedidoPosVenda.js";
 import { formatarDateTime } from "/js/script.js";
 
@@ -55,7 +56,7 @@ export class SecaoPedidosPosVenda {
         }
     }
 
-    confirmarAtualizarStatusPedidoPosVenda(pedidoTroca, status){
+    async confirmarAtualizarStatusPedidoPosVenda(pedidoTroca, status){
         const confirmacaoUsuario = confirm(`Deseja mesmo atualizar o status desse item para ${status}?`);
 
         if (!confirmacaoUsuario){
@@ -71,6 +72,12 @@ export class SecaoPedidosPosVenda {
             }
         }
 
-        atualizarStatusPedidoPosVenda(pedidoTroca);
+        try {
+            await atualizarStatusPedidoPosVenda(pedidoTroca);
+            alert("Atualizado com sucesso!");
+        } catch(error){
+            alertarErro(error);
+        }
+        
     }
 }

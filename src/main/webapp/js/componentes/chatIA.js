@@ -98,23 +98,27 @@ export class ChatIA extends Modal {
         this.adicionarMensagem(mensagem, 'texto-usuario');
         this.scrollar();
 
-        const mensagemIA = await retornarRespostaIA(mensagem);
+        try {
+            const mensagemIA = await retornarRespostaIA(mensagem);
 
-        let resposta = "";
-        if (mensagemIA !== undefined && mensagem !== null && mensagem !== ''){
-            resposta = mensagemIA.resposta;
-        } else {
-            resposta = "[Assistente virtual fora de serviço]";
+            if (mensagemIA === undefined || mensagem === null || mensagem === ''){
+                throw new Error("[Assistente virtual fora de serviço]");
+            }
+
+            const resposta = mensagemIA.resposta;
+
+            this.adicionarMensagem(resposta, 'texto-ia');
+
+            textarea.value = '';
+
+            this.scrollar();
+
+            adicionarMensagemHistorico(mensagem, 'texto-usuario');
+            adicionarMensagemHistorico(mensagemIA.resposta, 'texto-ia');
+
+        } catch (error){
+            alert("Erro no assistente virtual: "+error.message);
         }
-
-        this.adicionarMensagem(resposta, 'texto-ia');
-
-        textarea.value = '';
-
-        this.scrollar();
-
-        adicionarMensagemHistorico(mensagem, 'texto-usuario');
-        adicionarMensagemHistorico(mensagemIA.resposta, 'texto-ia');
     }
 
     scrollar(){

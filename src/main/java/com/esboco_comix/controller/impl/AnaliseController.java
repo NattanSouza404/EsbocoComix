@@ -20,7 +20,7 @@ public class AnaliseController extends AbstractController {
             );
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro buscando dados para análise", e));
         }
     }
 }

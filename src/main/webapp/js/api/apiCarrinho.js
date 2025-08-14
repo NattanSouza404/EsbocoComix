@@ -1,82 +1,55 @@
-import { alertarErro } from "./alertErro.js";
+import { estourarErroAPI } from "./alertErro.js";
 
 const PATH = '/api/carrinho';
 
 export async function retornarCarrinho() {
-    try {
-        const response = await fetch(PATH);
-        return await response.json();
-    } catch (error) {
-        alertarErro('Erro buscando dados:', error);
+    const resposta = await fetch(PATH);
+
+    if (resposta.status !== 200){
+        await estourarErroAPI(resposta);
     }
+
+    return await resposta.json();
 }
 
 export async function adicionarItemAoCarrinho(item){
-    try {
-        const option = {
-            method: 'POST',
-            headers:{'Content-Type': 'application/json'},
-            body: JSON.stringify(item)
-        }
-
-        const result = await fetch(PATH, option);
-
-        if (result.status === 201) {
-            alert('Item adicionado com sucesso!');
-            return;
-        }
-
-        const resposta = await result.json();
-
-        throw new Error('Erro ao cadastrar: '+resposta.erro);
-    }
-    catch(error){
-        alertarErro(error);
+    const option = {
+        method: 'POST',
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify(item)
     }
 
+    const resposta = await fetch(PATH, option);
+
+    if (resposta.status !== 201) {
+        await estourarErroAPI(resposta);
+    }
 }
 
 export async function atualizarItemCarrinho(item){
-    try {
-        const option = {
-            method: 'PUT',
-            headers:{'Content-Type': 'application/json'},
-            body: JSON.stringify(item)
-        }
+    const option = {
+        method: 'PUT',
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify(item)
+    }
 
-        const result = await fetch(PATH, option);
+    const resposta = await fetch(PATH, option);
 
-        if (result.status === 200) {
-            alert('Item atualizado com sucesso!');
-            return;
-        }
-
-        const resposta = await result.json();
-        throw new Error("Erro ao atualizar: "+resposta.erro);
-    } catch (error){
-        alertarErro(error);
+    if (resposta.status !== 200) {
+        await estourarErroAPI(resposta);
     }
 }
 
 export async function  deletarItemCarrinho(item){
-    try {
-        const option = {
-            method: 'DELETE',
-            headers:{'Content-Type': 'application/json'},
-            body: JSON.stringify(item)
-        }
+    const option = {
+        method: 'DELETE',
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify(item)
+    }
 
-        const response = await fetch(PATH, option);
+    const resposta = await fetch(PATH, option);
 
-        if (response.status === 204) {
-            alert('Deletado com sucesso');
-            return;
-        }
-
-        const resposta = await result.json();
-        throw new Error('Erro ao deletar: '+resposta.erro);
-
-    } catch (error){
-        alertarErro(error);
+    if (resposta.status !== 204) {
+        await estourarErroAPI(resposta);
     }
 }

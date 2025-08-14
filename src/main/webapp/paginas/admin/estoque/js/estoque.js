@@ -1,3 +1,4 @@
+import { alertarErro } from "../../../../js/api/alertErro.js";
 import { consultarEntradasEstoque } from "../../../../js/api/apiEstoque.js";
 import { formatarDateTime } from "../../../../js/script.js";
 import ModalEntradaEstoque from "./modalEntradaEstoque.js";
@@ -6,8 +7,15 @@ import { formatarPreco } from "/js/script.js";
 
 const tbody = document.getElementById("stockTable");
 
-const quadrinhos = await consultarTodosQuadrinhos();
-const entradasEstoque = await consultarEntradasEstoque();
+let quadrinhos;
+let entradasEstoque;
+
+try {
+    entradasEstoque = await consultarEntradasEstoque();
+    quadrinhos = await consultarTodosQuadrinhos();
+} catch (error){
+    alertarErro(error);
+}
 
 const modal = new ModalEntradaEstoque();
 

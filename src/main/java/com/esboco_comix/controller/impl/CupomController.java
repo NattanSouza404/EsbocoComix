@@ -29,7 +29,7 @@ public class CupomController extends AbstractController {
             }
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao consultar cupom(s)", e));
         }
     }
 
@@ -44,7 +44,7 @@ public class CupomController extends AbstractController {
                 HttpServletResponse.SC_CREATED
             );
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao adicionar cupom", e));
         }
     }
 }
