@@ -33,6 +33,10 @@ Para iniciar o subsistema de recomendação por IA, deve-se navegar para a pasta
 
 ```
 cd src/main/chatbot
+
+# Para instalar as dependências
+pip install -r requirements.txt
+
 uvicorn main:app --reload
 ```
 
