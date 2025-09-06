@@ -2,6 +2,7 @@ import { montarClientePorForm } from "/js/script.js";
 import { atualizarCliente } from "/js/api/apiCliente.js";
 import { FormularioDadosPessoais } from "/js/componentes/forms/formDadosPessoais.js";
 import { Modal } from "/js/componentes/modal.js";
+import { alertarErro } from "../../../../../js/api/alertErro.js";
 
 export class ModalAlterarDadosPessoais extends Modal {
 
@@ -27,10 +28,22 @@ export class ModalAlterarDadosPessoais extends Modal {
     }
 
     async enviarAtualizacao(){
-        const cliente = montarClientePorForm(this.form);
-        await atualizarCliente(cliente);
+        const confirmacaoUsuario = confirm("Deseja mesmo atualizar ?"); 
 
-        window.location.reload();
+        if (!confirmacaoUsuario){
+            return;
+        }
+
+        const cliente = montarClientePorForm(this.form);
+        cliente.id = localStorage.getItem('idcliente');
+
+        try {
+            await atualizarCliente(cliente);
+            alert('Atualizado com sucesso!');
+            window.location.reload();
+        } catch (error){
+            alertarErro(error);
+        }
     }
 }
 

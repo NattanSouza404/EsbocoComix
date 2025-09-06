@@ -1,3 +1,4 @@
+import { alertarErro } from "../../../../js/api/alertErro.js";
 import { adicionarItemAoCarrinho } from "/js/api/apiCarrinho.js";
 import { formatarPreco } from "/js/script.js";
 
@@ -20,16 +21,22 @@ export class CartaoProduto extends HTMLDivElement {
       </div>
     `;
 
-    this.querySelector('button').onclick = () => {
-      adicionarItemAoCarrinho(
-        {
-          idQuadrinho: quadrinho.id,
-          preco: quadrinho.preco,
-          quantidade: 1,
-          nome: quadrinho.titulo,
-          urlImagem: quadrinho.urlImagem
-        }
-      )
+    this.querySelector('button').onclick = async () => {
+      try {
+        await adicionarItemAoCarrinho(
+            {
+                idQuadrinho: quadrinho.id,
+                preco: quadrinho.preco,
+                quantidade: 1,
+                nome: quadrinho.titulo,
+                urlImagem: quadrinho.urlImagem
+            } 
+        );
+
+        alert('Item adicionado com sucesso!');
+      } catch (error){
+        alertarErro(error);
+      }
     }
   }
 }

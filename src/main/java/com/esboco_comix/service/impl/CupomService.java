@@ -11,24 +11,24 @@ public class CupomService {
     private final CupomDAO cupomDAO = new CupomDAO();
     private final CupomValidador cupomValidador = new CupomValidador();
 
-    public Cupom consultarByID(int id) throws Exception{
+    public Cupom consultarByID(int id){
         return cupomDAO.consultarByID(id);
     }
 
-    public List<Cupom> consultarByIDCliente(int idCliente) throws Exception {
+    public List<Cupom> consultarByIDCliente(int idCliente) {
         return cupomDAO.consultarByIDCliente(idCliente);
     }
 
-    public Cupom inserir(Cupom cupom) throws Exception {
+    public Cupom inserir(Cupom cupom) {
         cupomValidador.validar(cupom);
         return cupomDAO.inserir(cupom);
     }
 
-    public Cupom inativar(int id) throws Exception {
+    public Cupom inativar(int id) {
         return cupomDAO.inativar(id);
     }
 
-    public Cupom gerarCupomTroca(int idCliente, double valor) throws Exception {
+    public Cupom gerarCupomTroca(int idCliente, double valor) {
         Cupom cupom = new Cupom();
         cupom.setAtivo(true);
         cupom.setIdCliente(idCliente);

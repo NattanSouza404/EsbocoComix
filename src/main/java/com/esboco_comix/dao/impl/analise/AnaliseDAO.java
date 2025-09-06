@@ -1,7 +1,7 @@
 package com.esboco_comix.dao.impl.analise;
 
 import com.esboco_comix.dto.ItemVendaDTO;
-import com.esboco_comix.service.impl.FiltroAnaliseDTO;
+import com.esboco_comix.dto.FiltroAnaliseDTO;
 import com.esboco_comix.utils.ConexaoFactory;
 
 import java.sql.Connection;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnaliseDAO {
-    public List<ItemVendaDTO> consultarProdutos(FiltroAnaliseDTO filtro) throws Exception {
+    public List<ItemVendaDTO> consultarProdutos(FiltroAnaliseDTO filtro) {
         StringBuilder query = new StringBuilder(
             """
             SELECT * FROM vw_analise_produtos WHERE 1 = 1
@@ -37,7 +37,7 @@ public class AnaliseDAO {
                     query.toString(),
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY
-            );
+            )
         ){
             for (int i = 0; i < params.size(); i++) {
                 pst.setTimestamp(i + 1, java.sql.Timestamp.valueOf(params.get(i)));
@@ -46,7 +46,7 @@ public class AnaliseDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Nenhum registro encontrado de venda.");
+                throw new IllegalStateException("Nenhum registro encontrado de venda.");
             }
             rs.beforeFirst();
 
@@ -82,10 +82,12 @@ public class AnaliseDAO {
             }
 
             return itensVendidos;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<ItemVendaDTO> consultarCategorias(FiltroAnaliseDTO filtro) throws Exception{
+    public List<ItemVendaDTO> consultarCategorias(FiltroAnaliseDTO filtro) {
         StringBuilder query = new StringBuilder( 
             """
             SELECT * FROM vw_analise_categorias WHERE 1 = 1
@@ -110,7 +112,7 @@ public class AnaliseDAO {
                     query.toString(),
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY
-            );
+            )
         ) {
             for (int i = 0; i < params.size(); i++) {
                 pst.setTimestamp(i + 1, java.sql.Timestamp.valueOf(params.get(i)));
@@ -119,7 +121,7 @@ public class AnaliseDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Nenhum registro encontrado de venda.");
+                throw new IllegalStateException("Nenhum registro encontrado de venda.");
             }
             rs.beforeFirst();
 
@@ -155,6 +157,8 @@ public class AnaliseDAO {
             }
 
             return itensVendidos;
+        }  catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 }

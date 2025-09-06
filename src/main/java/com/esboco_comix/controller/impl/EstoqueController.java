@@ -22,7 +22,7 @@ public class EstoqueController extends AbstractController {
             );
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao consultar estoque", e));
         }
     }
 
@@ -36,7 +36,7 @@ public class EstoqueController extends AbstractController {
                 HttpServletResponse.SC_CREATED
             );
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao adicionar estoque", e));
         }
     }
 }

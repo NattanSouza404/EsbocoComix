@@ -1,36 +1,30 @@
+import { estourarErroAPI } from "./alertErro.js";
+
 const PATH = "/api/estoque";
 
 export async function inserirEntradaEstoque(entradaEstoque) {
-    try {
-        const url = PATH;
+    const url = PATH;
 
-        const option = {
-            method: 'POST',
-            headers:{'Content-Type': 'application/json'},
-            body: JSON.stringify(entradaEstoque)
-        }
-
-        const result = await fetch(url, option);
-
-        if (result.status === 201) {
-            alert('Entrada realizada!');
-        }
-        else {
-            const resposta = await result.json();
-            alert("Erro ao realizar entrada: "+resposta.erro);
-        }
-        
+    const option = {
+        method: 'POST',
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify(entradaEstoque)
     }
-    catch (error){
-        console.error('Erro ao realizar pedido:', error);
+
+    const resposta = await fetch(url, option);
+
+    if (resposta.status !== 201) {
+        await estourarErroAPI(resposta);
     }
+
 }
 
 export async function consultarEntradasEstoque(){
-     try {
-        const response = await fetch(PATH);
-        return await response.json();
-    } catch (error) {
-        console.error('Erro buscando dados:', error);
+    const resposta = await fetch(PATH);
+
+    if (resposta.status !== 200){
+        await estourarErroAPI(resposta);
     }
+
+    return await resposta.json();
 }

@@ -35,6 +35,10 @@ Para iniciar o subsistema de recomendação por IA, deve-se navegar para a pasta
 
 ```
 cd src/main/chatbot
+
+# Para instalar as dependências
+pip install -r requirements.txt
+
 uvicorn main:app --reload
 ```
 
@@ -50,11 +54,6 @@ database.password=admin123
 # Especí­fico ao Java
 database.driver=org.postgresql.Driver
 database.url=jdbc:postgresql://localhost:5432/esboco_comix
-
-# Especí­fico ao Python
-database.host=localhost
-database.port=5432
-database.database=esboco_comix
 ```
 
 Para realizar os testes, também é necessário um config.properties dentro de src/test/resources com essa estrutura. Os browsers suportados são "edge" e "firefox".

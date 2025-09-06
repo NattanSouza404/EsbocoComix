@@ -1,14 +1,21 @@
 import { consultarTodosQuadrinhos } from "/js/api/apiQuadrinho.js";
 import { CartaoProduto } from "./CartaoProduto.js";
 import { consultarTodasCategorias, filtrarTodosQuadrinhos } from "../../../../js/api/apiQuadrinho.js";
+import { alertarErro } from "../../../../js/api/alertErro.js";
 
-const quadrinhos = await consultarTodosQuadrinhos();
+let quadrinhos;
+let categorias;
+
+try {
+    quadrinhos = await consultarTodosQuadrinhos();
+    categorias = await consultarTodasCategorias();
+} catch (error){
+    alertarErro(error);
+}
 
 quadrinhos.forEach(quadrinho => {
     document.getElementById('container-produtos').append(new CartaoProduto(quadrinho))
 });
-
-const categorias = await consultarTodasCategorias();
 
 categorias.forEach(c => {
     document.getElementById("fieldset-categorias").insertAdjacentHTML(
@@ -57,9 +64,12 @@ async function pesquisarQuadrinhos(){
 
     filtro.categorias = categorias;
 
-    const quadrinhos = await filtrarTodosQuadrinhos(
-        filtro
-    );
+    let quadrinhos;
+    try {
+        quadrinhos = await filtrarTodosQuadrinhos(filtro);
+    } catch (error){
+        alertarErro(error);
+    }
 
     if (!Array.isArray(quadrinhos) || quadrinhos.length === 0){
         document.getElementById('container-produtos').innerHTML = `<h1 class="text-center">Nenhum item encontrado!</h1>`; 

@@ -15,19 +15,19 @@ public class QuadrinhoService {
 
     private final QuadrinhoDAO quadrinhoDAO = new QuadrinhoDAO();
 
-    public QuadrinhoDTO consultarByID(int id) throws Exception {
+    public QuadrinhoDTO consultarByID(int id) {
         return quadrinhoDAO.consultarByID(id);
     }
 
-    public List<QuadrinhoDTO> consultarTodos() throws Exception {
+    public List<QuadrinhoDTO> consultarTodos() {
         return quadrinhoDAO.consultarTodos();
     }
 
-    public List<Categoria> consultarTodasCategorias() throws Exception {
+    public List<Categoria> consultarTodasCategorias() {
         return quadrinhoDAO.consultarTodasCategorias();
     }
 
-    public List<QuadrinhoDTO> filtrarTodos(HttpServletRequest req) throws Exception {
+    public List<QuadrinhoDTO> filtrarTodos(HttpServletRequest req) {
         FiltrarQuadrinhoDTO filtro = new FiltrarQuadrinhoDTO();
 
         String titulo = req.getParameter("titulo");

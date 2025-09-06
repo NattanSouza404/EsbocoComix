@@ -8,7 +8,7 @@ import com.esboco_comix.utils.CriptografadorSenha;
 
 public class SenhaValidador extends AbstractValidador implements IValidador<CadastrarClienteDTO> {
     @Override
-    public void validar(CadastrarClienteDTO pedido) throws Exception {
+    public void validar(CadastrarClienteDTO pedido) {
         String senhaNova = pedido.getSenhaNova();
         String senhaConfirmacao = pedido.getSenhaConfirmacao();
 
@@ -16,27 +16,27 @@ public class SenhaValidador extends AbstractValidador implements IValidador<Cada
         validarAtributoObrigatorio(senhaNova, "Senha de confirmação");
 
         if (!(senhaNova.equals(senhaConfirmacao))){
-            throw new Exception("Senha e senha de confirmação devem ser iguais!");
+            throw new IllegalArgumentException("Senha e senha de confirmação devem ser iguais!");
         }
 
         if (senhaNova.length() < 8 || senhaNova.length() > 64){
-            throw new Exception("Senha deve ter entre 8 e 64 caracteres!");
+            throw new IllegalArgumentException("Senha deve ter entre 8 e 64 caracteres!");
         }
 
         if (!(senhaNova.matches(".*[A-Z].*"))){
-            throw new Exception("Senha deve conter pelo menos um caractere maiúsculo!");
+            throw new IllegalArgumentException("Senha deve conter pelo menos um caractere maiúsculo!");
         }
 
         if (!(senhaNova.matches(".*[a-z].*"))){
-            throw new Exception("Senha deve conter pelo menos um caractere minúsculo!");
+            throw new IllegalArgumentException("Senha deve conter pelo menos um caractere minúsculo!");
         }
 
         if (!(senhaNova.matches(".*[!@#$%^&*(),.?\":{}|<>].*"))){
-            throw new Exception("Senha deve conter pelo menos um caractere especial!");
+            throw new IllegalArgumentException("Senha deve conter pelo menos um caractere especial!");
         }
     }
 
-    public void validar(AlterarSenhaDTO pedido) throws Exception {
+    public void validar(AlterarSenhaDTO pedido) {
         CadastrarClienteDTO c = new CadastrarClienteDTO();
         c.setSenhaNova(pedido.getSenhaNova());
         c.setSenhaConfirmacao(pedido.getSenhaConfirmacao());
@@ -44,10 +44,10 @@ public class SenhaValidador extends AbstractValidador implements IValidador<Cada
         validar(c);
     }
 
-    public void validarSenhaAntiga(String senhaNova, String hashGuardado, String saltGuardado) throws Exception {
+    public void validarSenhaAntiga(String senhaNova, String hashGuardado, String saltGuardado) {
         String hashNovo = CriptografadorSenha.hashSenha(senhaNova, saltGuardado);
         if (!hashNovo.equals(hashGuardado)){
-            throw new Exception("Senha antiga não consta com senha inserida pelo usuário!");
+            throw new IllegalArgumentException("Senha antiga não consta com senha inserida pelo usuário!");
         }
     }
 

@@ -3,19 +3,19 @@ package com.esboco_comix.dao.impl.endereco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.dao.mapper.impl.EnderecoMapper;
 import com.esboco_comix.model.entidades.Endereco;
-import com.esboco_comix.model.enuns.TipoLogradouro;
-import com.esboco_comix.model.enuns.TipoResidencial;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class EnderecoDAO {
 
-    public Endereco inserir(Endereco e) throws Exception {
+    private final EnderecoMapper enderecoMapper = new EnderecoMapper();
+
+    public Endereco inserir(Endereco e) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -45,7 +45,7 @@ public class EnderecoDAO {
             pst.setInt(15, e.getIdCliente());
     
             if (pst.executeUpdate() == 0){
-                throw new Exception("Inserção de endereço não executada!");
+                throw new IllegalStateException("Inserção de endereço não executada!");
             }
             ResultSet rs = pst.getGeneratedKeys();
             Endereco enderecoInserido = null;
@@ -54,10 +54,12 @@ public class EnderecoDAO {
             }
 
             return enderecoInserido;
+        } catch (Exception ex){
+            throw new IllegalStateException(ex);
         }
     }
 
-    public Endereco consultarByID(int id) throws Exception {
+    public Endereco consultarByID(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -70,13 +72,15 @@ public class EnderecoDAO {
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()) {
-                throw new Exception("Endereço não encontrado.");
+                throw new IllegalStateException("Endereço não encontrado.");
             }
-            return mapearEntidade(rs);    
+            return enderecoMapper.mapearEntidade(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public Endereco atualizar(Endereco e) throws Exception {
+    public Endereco atualizar(Endereco e) {
         try (
             Connection conn = ConexaoFactory.getConexao(); 
     
@@ -108,14 +112,16 @@ public class EnderecoDAO {
             pst.setInt(16, e.getId());
         
             if (pst.executeUpdate() == 0) {
-                throw new Exception("Atualização não foi sucedida!");
+                throw new IllegalStateException("Atualização não foi sucedida!");
             }
 
             return consultarByID(e.getId());
+        } catch (Exception ex){
+            throw new IllegalStateException(ex);
         }
     }
 
-    public void inativar(Endereco e) throws Exception {
+    public void inativar(Endereco e) {
         try (
             Connection conn = ConexaoFactory.getConexao();
 
@@ -126,13 +132,15 @@ public class EnderecoDAO {
             pst.setInt(1, e.getId());
 
             if (pst.executeUpdate() == 0) {
-                throw new Exception("Inativação não realizada. Endereço de id " + e.getId() + " não encontrado.");
+                throw new IllegalStateException("Inativação não realizada. Endereço de id " + e.getId() + " não encontrado.");
             }
 
+        } catch (Exception ex){
+            throw new IllegalStateException(ex);
         }
     }
 
-    public List<Endereco> consultarByIDCliente(int idCliente) throws Exception {
+    public List<Endereco> consultarByIDCliente(int idCliente) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -147,41 +155,19 @@ public class EnderecoDAO {
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()) {
-                throw new Exception("Cliente não possui nenhum endereco.");
+                throw new IllegalStateException("Cliente não possui nenhum endereco.");
             }
             rs.beforeFirst();
     
             List<Endereco> enderecos = new ArrayList<>();
             while(rs.next()){
-                enderecos.add(mapearEntidade(rs));
+                enderecos.add(enderecoMapper.mapearEntidade(rs));
             }
 
             return enderecos;    
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
-    }
-
-    private Endereco mapearEntidade(ResultSet rs) throws SQLException {
-        Endereco e = new Endereco();        
-        e.setId(rs.getInt("end_id"));
-        e.setFraseCurta(rs.getString("end_frase_curta"));
-        e.setLogradouro(rs.getString("end_logradouro"));
-        e.setTipoLogradouro(TipoLogradouro.valueOf(rs.getString("end_tipo_logradouro")));
-        e.setTipoResidencial(TipoResidencial.valueOf(rs.getString("end_tipo_residencial")));
-        e.setNumero(rs.getString("end_numero"));
-        e.setBairro(rs.getString("end_bairro"));
-        e.setCep(rs.getString("end_cep"));
-        e.setCidade(rs.getString("end_cidade"));
-        e.setEstado(rs.getString("end_estado"));
-        e.setPais(rs.getString("end_pais"));
-        e.setIsResidencial(rs.getBoolean("end_is_residencial"));
-        e.setIsEntrega(rs.getBoolean("end_is_entrega"));
-        e.setIsCobranca(rs.getBoolean("end_is_cobranca"));
-        e.setObservacoes(rs.getString("end_observacoes"));
-        e.setIdCliente(rs.getInt("end_cli_id"));
-
-        e.setIsAtivo(rs.getBoolean("end_is_ativo"));
-
-        return e;
     }
 
 }

@@ -6,7 +6,7 @@ import com.esboco_comix.service.validador.IValidador;
 
 public class EnderecoValidador extends AbstractValidador implements IValidador<Endereco> {
     @Override
-    public void validar(Endereco endereco) throws Exception{
+    public void validar(Endereco endereco) {
         validarAtributoObrigatorio(endereco.getFraseCurta(), "Frase curta");
         validarAtributoObrigatorio(endereco.getNumero(), "Número do endereço");
         validarAtributoObrigatorio(endereco.getCep(), "CEP");
@@ -19,15 +19,15 @@ public class EnderecoValidador extends AbstractValidador implements IValidador<E
         validarAtributoObrigatorio(endereco.getPais(), "País");
 
         if (endereco.getIsResidencial() == null){
-            throw new Exception("Obrigatório informar se o endereço é residencial ou não!");
+            throw new IllegalArgumentException("Obrigatório informar se o endereço é residencial ou não!");
         }
 
         if (endereco.getIsEntrega() == null){
-            throw new Exception("Obrigatório informar se o endereço é de entrega ou não!");
+            throw new IllegalArgumentException("Obrigatório informar se o endereço é de entrega ou não!");
         }
         
         if (endereco.getIsCobranca() == null){
-            throw new Exception("Obrigatório informar se o endereço é de cobrança ou não!");
+            throw new IllegalArgumentException("Obrigatório informar se o endereço é de cobrança ou não!");
         }
 
         validarSeApenasNumeros(endereco.getCep(), "CEP");

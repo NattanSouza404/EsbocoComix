@@ -1,79 +1,47 @@
+import { estourarErroAPI } from "./alertErro.js";
+
 const PATH = "/api/endereco";
 
 export async function retornarEnderecos(idCliente){
-    try {
-        const response = await fetch(`${PATH}?idcliente=${idCliente}`);
-        return await response.json();
-    } catch (error) {
-        console.error('Erro buscando dados:', error);
+    const resposta = await fetch(`${PATH}?idcliente=${idCliente}`);
+
+    if (resposta.status !== 200){
+        await estourarErroAPI(resposta);
     }
+
+    return await resposta.json();
 }
 
 export async function inserirEndereco(endereco){
-    try {
-        const confirmacaoUsuario = confirm("Deseja mesmo cadastrar esse endereço?");
+    const url = PATH;
 
-        if (!confirmacaoUsuario){
-            return;
-        }
-
-        const url = PATH;
-
-        const option = {
-            method: 'POST',
-            headers:{'Content-Type': 'application/json'},
-            body: JSON.stringify(endereco)
-        }
-
-        const result = await fetch(url, option);
-
-        if (result.status === 201) {
-            alert('Cadastrado com sucesso');
-        }
-        else {
-            const resposta = await result.json();
-            alert("Erro ao cadastrar: "+resposta.erro);
-        }
-        
+    const option = {
+        method: 'POST',
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify(endereco)
     }
-    catch (error){
-        console.error('Erro ao cadastrar:', error);
+
+    const resposta = await fetch(url, option);
+
+    if (resposta.status !== 201) {
+        await estourarErroAPI(resposta);
     }
 } 
 
-export async function atualizarEndereco(endereco){
+export async function atualizarEndereco(endereco){ 
+    let url = PATH;
 
-    try {
-        const confirmacaoUsuario = confirm("Deseja mesmo atualizar esse endereço?"); 
-
-        if (!confirmacaoUsuario){
-            return;
-        }
-
-        endereco.idCliente = localStorage.getItem('idcliente');
-
-        let url = PATH;
-
-        const option = {
-            method: 'PUT',
-            headers:{'Content-Type': 'application/json'},
-            body: JSON.stringify(endereco)
-        }
-
-        const result = await fetch(url, option);
-
-        if (result.status === 200) {
-            alert('Atualizado com sucesso!');
-        }
-        else {
-            const resposta = await result.json();
-            alert("Erro ao atualizar: "+resposta.erro);
-        }
-
-    } catch (error){
-        console.error('Erro ao atualizar:', error);
+    const option = {
+        method: 'PUT',
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify(endereco)
     }
-    
+
+    const resposta = await fetch(url, option);
+
+    if (resposta.status !== 200) {
+        await estourarErroAPI(resposta);
+    }
 }
 
 export async function deletarEndereco(endereco){
@@ -85,9 +53,9 @@ export async function deletarEndereco(endereco){
         body: JSON.stringify(endereco)
     }
 
-    const response = await fetch(url, option);
+    const resposta = await fetch(url, option);
 
-    if (response.status !== 204) {
-        throw new Error(await response.json().erro);
+    if (resposta.status !== 204) {
+        await estourarErroAPI(resposta);
     }
 }

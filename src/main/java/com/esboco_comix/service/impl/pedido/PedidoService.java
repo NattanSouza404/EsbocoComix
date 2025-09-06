@@ -43,12 +43,12 @@ public class PedidoService {
 
     private final FormaPagamentoValidador validador = new FormaPagamentoValidador(calculadora);
 
-    public Pedido inserir(Pedido pedido, HttpSession session) throws Exception {
+    public Pedido inserir(Pedido pedido, HttpSession session) {
 
         Carrinho carrinho = carrinhoService.retornarCarrinhoSessao(session);
 
         if (carrinho.isVazio()) {
-            throw new Exception("Nenhum item presente no carrinho!");
+            throw new IllegalStateException("Nenhum item presente no carrinho!");
         }
 
         pedido.setItensPedido(carrinho.getItensPedido());
@@ -91,19 +91,19 @@ public class PedidoService {
         return pedidoInserido;
     }
 
-    public List<PedidoDTO> consultarTodos() throws Exception {
+    public List<PedidoDTO> consultarTodos() {
         return pedidoDAO.consultarTodos();
     }
 
-    public List<PedidoDTO> consultarPorIDCliente(int idCliente) throws Exception {
+    public List<PedidoDTO> consultarPorIDCliente(int idCliente) {
         return pedidoDAO.consultarByIDCliente(idCliente);
     }
 
-    public Pedido consultarByID(int id) throws Exception {
+    public Pedido consultarByID(int id) {
 		return pedidoDAO.consultarByID(id);
 	}
 
-    public Pedido atualizarStatus(AtualizarPedidoDTO atualizarPedidoDTO) throws Exception {
+    public Pedido atualizarStatus(AtualizarPedidoDTO atualizarPedidoDTO) {
         Pedido pedido = atualizarPedidoDTO.getPedido().getPedido();
         Pedido pedidoNoBanco = pedidoDAO.consultarByID(pedido.getId());
 
@@ -113,16 +113,16 @@ public class PedidoService {
         List<PedidoPosVendaDTO> pedidosPosVenda = pedidoPosVendaDAO.consultarByIdPedido(pedido.getId());
 
         if (!pedidosPosVenda.isEmpty()){
-            throw new Exception("Esse pedido já possui item com pedido de troca/devolução!");
+            throw new IllegalArgumentException("Esse pedido já possui item com pedido de troca/devolução!");
         }
 
         if (statusNoBanco == StatusPedido.TROCA_CONCLUIDA || statusNoBanco == StatusPedido.DEVOLUCAO_CONCLUIDA){
-            throw new Exception("Não é possível alterar pedido com troca ou devolução já concluída!");
+            throw new IllegalArgumentException("Não é possível alterar pedido com troca ou devolução já concluída!");
         }
 
         if (status.equals(StatusPedido.TROCA_SOLICITADA) || status.equals(StatusPedido.DEVOLUCAO_SOLICITADA)){
             if (!pedidoNoBanco.getStatus().equals(StatusPedido.ENTREGUE)){
-                throw new Exception("Não se pode pedir troca ou devolução se o pedido não foi entregue!");
+                throw new IllegalArgumentException("Não se pode pedir troca ou devolução se o pedido não foi entregue!");
             }
         }
 

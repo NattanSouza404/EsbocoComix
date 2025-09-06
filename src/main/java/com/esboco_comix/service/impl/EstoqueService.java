@@ -15,19 +15,19 @@ public class EstoqueService {
 
     private final EstoqueDAO estoqueDAO = new EstoqueDAO();
 
-    public EntradaEstoque inserir(EntradaEstoque entradaEstoque) throws Exception {
-        if (!(entradaEstoque.getQuantidade() > 0)){
-            throw new Exception("Entrada no estoque deve ser maior que 0!");
+    public EntradaEstoque inserir(EntradaEstoque entradaEstoque) {
+        if (entradaEstoque.getQuantidade() <= 0){
+            throw new IllegalArgumentException("Entrada no estoque deve ser maior que 0!");
         }
 
         return estoqueDAO.inserir(entradaEstoque);
     }
 
-    public Estoque retornarAoEstoque(ItemPedidoDTO itemPedido) throws Exception {
+    public Estoque retornarAoEstoque(ItemPedidoDTO itemPedido) {
         return estoqueDAO.retornarAoEstoque(itemPedido.getItemPedido());
     }
 
-    public List<ItemPedidoDTO> retornarAoEstoque(PedidoDTO pedido) throws Exception {
+    public List<ItemPedidoDTO> retornarAoEstoque(PedidoDTO pedido) {
         List<ItemPedidoDTO> lista = new ArrayList<>();
 
         for (ItemPedidoDTO item : pedido.getItensPedidoDTO()) {
@@ -38,24 +38,24 @@ public class EstoqueService {
         return lista;
     }
 
-    public Estoque retirarDoEstoque(ItemPedido item) throws Exception {
+    public Estoque retirarDoEstoque(ItemPedido item) {
         return estoqueDAO.retirarDoEstoque(item);
     }
 
-    public Estoque consultarEstoqueByIDQuadrinho(int idQuadrinho) throws Exception {
+    public Estoque consultarEstoqueByIDQuadrinho(int idQuadrinho) {
         return estoqueDAO.consultarEstoqueByIDQuadrinho(idQuadrinho);
     }
 
-    public void validarEstoque(ItemPedido item) throws Exception {
+    public void validarEstoque(ItemPedido item) {
         Estoque estoque = consultarEstoqueByIDQuadrinho(item.getIdQuadrinho());
 
         int estoqueAtualizado = estoque.getQuantidadeTotal() - item.getQuantidade();
         if (estoqueAtualizado < 0){
-            throw new Exception("Quantidade do item excede a quantidade no estoque!");
+            throw new IllegalArgumentException("Quantidade do item excede a quantidade no estoque!");
         }
     }
 
-    public List<EntradaEstoqueDTO> consultarEntradasEstoque() throws Exception {
+    public List<EntradaEstoqueDTO> consultarEntradasEstoque() {
         return estoqueDAO.consultarEntradasEstoque();
     }
 }

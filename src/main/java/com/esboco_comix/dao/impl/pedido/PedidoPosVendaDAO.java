@@ -1,9 +1,8 @@
 package com.esboco_comix.dao.impl.pedido;
 
+import com.esboco_comix.dao.mapper.impl.PedidoPosVendaMapper;
 import com.esboco_comix.dto.PedidoPosVendaDTO;
 import com.esboco_comix.model.entidades.PedidoPosVenda;
-import com.esboco_comix.model.enuns.StatusItemPedido;
-import com.esboco_comix.model.enuns.TipoPedidoPosVenda;
 import com.esboco_comix.utils.ConexaoFactory;
 
 import java.sql.*;
@@ -12,7 +11,9 @@ import java.util.List;
 
 public class PedidoPosVendaDAO {
 
-    public PedidoPosVendaDTO inserir(PedidoPosVenda p) throws Exception {
+    private final PedidoPosVendaMapper pedidoPosVendaMapper = new PedidoPosVendaMapper();
+
+    public PedidoPosVendaDTO inserir(PedidoPosVenda p) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -33,7 +34,7 @@ public class PedidoPosVendaDAO {
             pst.setString(5, p.getTipo().name());
 
             if (pst.executeUpdate() == 0){
-                throw new Exception("Inserção de pedido pós-venda não executada!");
+                throw new IllegalStateException("Inserção de pedido pós-venda não executada!");
             }
             ResultSet rs = pst.getGeneratedKeys();
             PedidoPosVendaDTO pedido = null;
@@ -42,28 +43,17 @@ public class PedidoPosVendaDAO {
             }
 
             return pedido;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<PedidoPosVendaDTO> consultarTodos() throws Exception {
+    public List<PedidoPosVendaDTO> consultarTodos() {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                """
-                    SELECT
-                        pedidos_pos_venda.*,
-                        cli_nome,
-                        qua_titulo,
-                        ped_cli_id,
-                        ped_data
-                    FROM
-                        pedidos_pos_venda
-                        JOIN quadrinhos ON qua_id = ppv_qua_id
-                        JOIN pedidos ON ped_id = ppv_ped_id
-                        JOIN clientes ON ped_cli_id = cli_id
-                    ORDER BY ppv_id DESC;
-                    """,
+                "SELECT * FROM vw_pedidos_pos_venda;",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY
             );
@@ -78,33 +68,21 @@ public class PedidoPosVendaDAO {
 
             List<PedidoPosVendaDTO> pedidosPosVenda = new ArrayList<>();
             while(rs.next()){
-                pedidosPosVenda.add(mapearDTO(rs));
+                pedidosPosVenda.add(pedidoPosVendaMapper.mapearDTO(rs));
             }
 
             return pedidosPosVenda;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public PedidoPosVendaDTO consultarByID(int id) throws Exception {
+    public PedidoPosVendaDTO consultarByID(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-            """
-                SELECT
-                    pedidos_pos_venda.*,
-                    cli_nome,
-                    qua_titulo,
-                    ped_cli_id,
-                    ped_data
-                FROM
-                    pedidos_pos_venda
-                    JOIN quadrinhos ON qua_id = ppv_qua_id
-                    JOIN pedidos ON ped_id = ppv_ped_id
-                    JOIN clientes ON ped_cli_id = cli_id
-                WHERE
-                    ppv_id = ?;
-                """
+            "SELECT * FROM vw_pedidos_pos_venda WHERE ppv_id = ?;"
             );
         ) {
             pst.setInt(1, id);
@@ -112,14 +90,16 @@ public class PedidoPosVendaDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Nenhum pedido pós venda encontrado.");
+                throw new IllegalStateException("Nenhum pedido pós venda encontrado.");
             }
 
-            return mapearDTO(rs);
+            return pedidoPosVendaMapper.mapearDTO(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public PedidoPosVendaDTO atualizarStatus(PedidoPosVenda p) throws Exception {
+    public PedidoPosVendaDTO atualizarStatus(PedidoPosVenda p) {
         try (
             Connection conn = ConexaoFactory.getConexao();
 
@@ -133,34 +113,21 @@ public class PedidoPosVendaDAO {
             pst.setInt(3, p.getIdQuadrinho());
 
             if (pst.executeUpdate() == 0) {
-                throw new Exception("Atualização não foi sucedida!");
+                throw new IllegalStateException("Atualização não foi sucedida!");
             }
 
             return consultarByID(p.getId());
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<PedidoPosVendaDTO> consultarByIdPedido(int id) throws Exception {
+    public List<PedidoPosVendaDTO> consultarByIdPedido(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                """
-                    SELECT
-                        pedidos_pos_venda.*,
-                        cli_nome,
-                        qua_titulo,
-                        ped_cli_id,
-                        ped_data
-                    FROM
-                        pedidos_pos_venda
-                        JOIN quadrinhos ON qua_id = ppv_qua_id
-                        JOIN pedidos ON ped_id = ppv_ped_id
-                        JOIN clientes ON ped_cli_id = cli_id
-                    WHERE
-                        ppv_ped_id = ?
-                    ORDER BY ppv_id DESC;
-                    """,
+                "SELECT * FROM vw_pedidos_pos_venda WHERE ppv_ped_id = ?;",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY
             );
@@ -177,33 +144,21 @@ public class PedidoPosVendaDAO {
 
             List<PedidoPosVendaDTO> pedidosPosVenda = new ArrayList<>();
             while(rs.next()){
-                pedidosPosVenda.add(mapearDTO(rs));
+                pedidosPosVenda.add(pedidoPosVendaMapper.mapearDTO(rs));
             }
 
             return pedidosPosVenda;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<PedidoPosVendaDTO> consultarPorIDCliente(int id) throws Exception {
+    public List<PedidoPosVendaDTO> consultarPorIDCliente(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                """
-                    SELECT
-                        pedidos_pos_venda.*,
-                        cli_nome,
-                        qua_titulo,
-                        ped_cli_id,
-                        ped_data
-                    FROM
-                        pedidos_pos_venda
-                        JOIN quadrinhos ON qua_id = ppv_qua_id
-                        JOIN pedidos ON ped_id = ppv_ped_id
-                        JOIN clientes ON ped_cli_id = cli_id
-                    WHERE
-                        ped_cli_id = ?;
-                    """,
+                "SELECT * FROM vw_pedidos_pos_venda WHERE ped_cli_id = ?;",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY
             );
@@ -220,35 +175,13 @@ public class PedidoPosVendaDAO {
 
             List<PedidoPosVendaDTO> pedidosPosVenda = new ArrayList<>();
             while(rs.next()){
-                pedidosPosVenda.add(mapearDTO(rs));
+                pedidosPosVenda.add(pedidoPosVendaMapper.mapearDTO(rs));
             }
 
             return pedidosPosVenda;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
-    }
-
-    private PedidoPosVendaDTO mapearDTO(ResultSet rs) throws Exception{
-        PedidoPosVendaDTO dto = new PedidoPosVendaDTO();
-
-        dto.setPedidoPosVenda(mapearEntidade(rs));
-        dto.setNomeCliente(rs.getString("cli_nome"));
-        dto.setNomeQuadrinho(rs.getString("qua_titulo"));
-
-        return dto;
-    }
-
-    private PedidoPosVenda mapearEntidade(ResultSet rs) throws Exception {
-        PedidoPosVenda pedidoPosVenda = new PedidoPosVenda();
-
-        pedidoPosVenda.setId(rs.getInt("ppv_id"));
-        pedidoPosVenda.setTipo(TipoPedidoPosVenda.valueOf(rs.getString("ppv_tipo")));
-        pedidoPosVenda.setQuantidade(rs.getInt("ppv_quantidade"));
-        pedidoPosVenda.setStatus(StatusItemPedido.valueOf(rs.getString("ppv_status")));
-        pedidoPosVenda.setIdPedido(rs.getInt("ppv_ped_id"));
-        pedidoPosVenda.setIdQuadrinho(rs.getInt("ppv_qua_id"));
-        pedidoPosVenda.setData(rs.getTimestamp("ppv_data").toLocalDateTime());
-
-        return pedidoPosVenda;
     }
 
 }

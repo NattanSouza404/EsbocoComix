@@ -3,15 +3,17 @@ package com.esboco_comix.dao.impl.pedido;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.esboco_comix.dao.mapper.impl.CartaoCreditoPedidoMapper;
 import com.esboco_comix.model.entidades.CartaoCreditoPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class CartaoCreditoPedidoDAO {
 
-    public CartaoCreditoPedido inserir(CartaoCreditoPedido e) throws Exception {
+    private final CartaoCreditoPedidoMapper cartaoCreditoPedidoMapper = new CartaoCreditoPedidoMapper();
+
+    public CartaoCreditoPedido inserir(CartaoCreditoPedido cartao) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -22,25 +24,27 @@ public class CartaoCreditoPedidoDAO {
                     Statement.RETURN_GENERATED_KEYS
             );
         ){
-            pst.setInt(1, e.getIdCartaoCredito());
-            pst.setInt(2, e.getIdPedido());
-            pst.setDouble(3, e.getValor());
+            pst.setInt(1, cartao.getIdCartaoCredito());
+            pst.setInt(2, cartao.getIdPedido());
+            pst.setDouble(3, cartao.getValor());
 
             if (pst.executeUpdate() == 0){
-                throw new Exception("Inserção de cartão de crédito no pedido não executada!");
+                throw new IllegalStateException("Inserção de cartão de crédito no pedido não executada!");
             }
 
             ResultSet rs = pst.getGeneratedKeys();
             CartaoCreditoPedido cartaoCreditoPedidoInserido = null;
             if (rs.next()){
-                cartaoCreditoPedidoInserido = consultarByID(e.getIdCartaoCredito(), e.getIdPedido());
+                cartaoCreditoPedidoInserido = consultarByID(cartao.getIdCartaoCredito(), cartao.getIdPedido());
             }
 
             return cartaoCreditoPedidoInserido;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public CartaoCreditoPedido consultarByID(int idCartaoCredito, int idPedido) throws Exception {
+    public CartaoCreditoPedido consultarByID(int idCartaoCredito, int idPedido) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -54,21 +58,13 @@ public class CartaoCreditoPedidoDAO {
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()){
-                throw new Exception("Cartão de crédito no pedido não encontrado!");
+                throw new IllegalStateException("Cartão de crédito no pedido não encontrado!");
             }
             
-            return mapearEntidade(rs);
+            return cartaoCreditoPedidoMapper.mapearEntidade(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
-    }
-
-    private CartaoCreditoPedido mapearEntidade(ResultSet rs) throws SQLException {
-        CartaoCreditoPedido ccp = new CartaoCreditoPedido();
-
-        ccp.setIdCartaoCredito(rs.getInt("ccp_cre_id"));
-        ccp.setIdCartaoCredito(rs.getInt("ccp_cre_id"));
-        ccp.setIdCartaoCredito(rs.getInt("ccp_cre_id"));
-
-        return ccp;
     }
     
 }

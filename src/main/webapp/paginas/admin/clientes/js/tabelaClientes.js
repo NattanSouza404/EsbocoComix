@@ -2,6 +2,7 @@ import { inativarCliente } from "../../../../js/api/apiCliente.js";
 import ModalTransacoes from "./modalTransacoes.js";
 import { formatarData } from "/js/script.js";
 import ModalCupomPromocional from "./modalCupomPromocional.js";
+import { alertarErro } from "../../../../js/api/alertErro.js";
 
 export default class TabelaClientes {
     
@@ -14,10 +15,6 @@ export default class TabelaClientes {
 
     async atualizarTabelaClientes(clientes){
         this.tBody.textContent = '';
-
-        if (clientes === null || clientes === undefined){
-            return;
-        }
 
         let contador = 1;
 
@@ -80,7 +77,7 @@ export default class TabelaClientes {
 
             window.location.reload();
         } catch (error){
-            alert(`Erro ao atualizar: ${error}`);
+            alertarErro(error);
         }
         
     }

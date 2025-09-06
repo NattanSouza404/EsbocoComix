@@ -3,20 +3,22 @@ package com.esboco_comix.dao.impl.quadrinho;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.dao.mapper.impl.CategoriaMapper;
+import com.esboco_comix.dao.mapper.impl.QuadrinhoMapper;
 import com.esboco_comix.dto.FiltrarQuadrinhoDTO;
 import com.esboco_comix.dto.QuadrinhoDTO;
 import com.esboco_comix.model.entidades.Categoria;
-import com.esboco_comix.model.entidades.GrupoPrecificacao;
-import com.esboco_comix.model.entidades.Quadrinho;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class QuadrinhoDAO {
 
-    public List<QuadrinhoDTO> consultarTodos() throws Exception {
+    private final QuadrinhoMapper quadrinhoMapper = new QuadrinhoMapper();
+    private final CategoriaMapper categoriaMapper = new CategoriaMapper();
+
+    public List<QuadrinhoDTO> consultarTodos() {
         try (
             Connection conn = ConexaoFactory.getConexao();
 
@@ -31,7 +33,7 @@ public class QuadrinhoDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Nenhum registro encontrado de quadrinho.");
+                throw new IllegalStateException("Nenhum registro encontrado de quadrinho.");
             }
             rs.beforeFirst();
 
@@ -49,19 +51,21 @@ public class QuadrinhoDAO {
                 }
 
                 if (dto == null){
-                    dto = mapearDTO(rs);
+                    dto = quadrinhoMapper.mapearDTO(rs);
                     quadrinhos.add(dto);
                 }
 
                 List<Categoria> categorias = dto.getQuadrinho().getCategorias();
-                categorias.add(mapearCategoria(rs));
+                categorias.add(categoriaMapper.mapearEntidade(rs));
             }
 
             return quadrinhos;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<Categoria> consultarTodasCategorias() throws Exception {
+    public List<Categoria> consultarTodasCategorias()  {
         try (
             Connection conn = ConexaoFactory.getConexao();
             PreparedStatement pst = conn.prepareStatement(
@@ -75,21 +79,23 @@ public class QuadrinhoDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Nenhuma categoria encontrada.");
+                throw new IllegalStateException("Nenhuma categoria encontrada.");
             }
             rs.beforeFirst();
 
             List<Categoria> categorias = new ArrayList<>();
 
             while (rs.next()) {
-                categorias.add(mapearCategoria(rs));
+                categorias.add(categoriaMapper.mapearEntidade(rs));
             }
 
             return categorias;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public List<QuadrinhoDTO> filtrarTodos(FiltrarQuadrinhoDTO filtro) throws Exception {
+    public List<QuadrinhoDTO> filtrarTodos(FiltrarQuadrinhoDTO filtro) {
         StringBuilder query = new StringBuilder(
             "SELECT * FROM vw_quadrinhos WHERE 1=1"
         );
@@ -202,7 +208,7 @@ public class QuadrinhoDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Nenhum registro encontrado de quadrinho.");
+                throw new IllegalStateException("Nenhum registro encontrado de quadrinho.");
             }
             rs.beforeFirst();
 
@@ -220,19 +226,21 @@ public class QuadrinhoDAO {
                 }
 
                 if (dto == null){
-                    dto = mapearDTO(rs);
+                    dto = quadrinhoMapper.mapearDTO(rs);
                     quadrinhos.add(dto);
                 }
 
                 List<Categoria> categorias = dto.getQuadrinho().getCategorias();
-                categorias.add(mapearCategoria(rs));
+                categorias.add(categoriaMapper.mapearEntidade(rs));
             }
 
             return quadrinhos;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
     }
 
-    public QuadrinhoDTO consultarByID(int id) throws Exception {
+    public QuadrinhoDTO consultarByID(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
@@ -247,74 +255,23 @@ public class QuadrinhoDAO {
             ResultSet rs = pst.executeQuery();
 
             if (!rs.next()) {
-                throw new Exception("Quadrinho não encontrado!");
+                throw new IllegalStateException("Quadrinho não encontrado!");
             }
 
             QuadrinhoDTO dto = null;
 
             while (rs.next()) {
                 if (dto == null){
-                    dto = mapearDTO(rs);
+                    dto = quadrinhoMapper.mapearDTO(rs);
                 }
 
-                dto.getQuadrinho().getCategorias().add(mapearCategoria(rs));
+                dto.getQuadrinho().getCategorias().add(categoriaMapper.mapearEntidade(rs));
             }
 
             return dto;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
         }
-    }
-
-    private Quadrinho mapearEntidade(ResultSet rs) throws SQLException {
-        Quadrinho q = new Quadrinho();
-        q.setId(rs.getInt("qua_id"));
-
-        q.setAno(rs.getDate("qua_ano").toLocalDate());
-        q.setTitulo(rs.getString("qua_titulo"));
-        q.setEditora(rs.getString("qua_editora"));
-        q.setEdicao(rs.getInt("qua_edicao"));
-        q.setIsbn(rs.getString("qua_isbn"));
-        q.setNumeroPaginas(rs.getInt("qua_numero_paginas"));
-        q.setSinopse(rs.getString("qua_sinopse"));
-        q.setAutor(rs.getString("qua_autor"));
-
-        q.setAltura(rs.getInt("qua_altura_cm"));
-        q.setLargura(rs.getInt("qua_largura_cm"));
-        q.setProfundidade(rs.getInt("qua_profundidade"));
-        q.setPeso(rs.getInt("qua_peso_gramas"));
-        q.setIsAtivo(rs.getBoolean("qua_is_ativo"));
-
-        q.setCodigoBarras(rs.getString("qua_codigo_barras"));
-
-        q.setUrlImagem(rs.getString("qua_url_imagem"));
-
-        GrupoPrecificacao grupo = new GrupoPrecificacao();
-        grupo.setId(rs.getInt("qua_gpr_id"));
-        grupo.setNome(rs.getString("gpr_nome"));
-        grupo.setPorcentagem(rs.getInt("gpr_porcentagem"));
-
-        q.setGrupoPrecificacao(grupo);
-
-        q.setCategorias(new ArrayList<>());
-
-        return q;
-    }
-
-    private QuadrinhoDTO mapearDTO(ResultSet rs) throws SQLException {
-        QuadrinhoDTO dto = new QuadrinhoDTO();
-
-        dto.setQuadrinho(mapearEntidade(rs));
-        dto.setQuantidadeEstoque(rs.getInt("est_quantidade_total"));
-        dto.setPreco(rs.getDouble("preco"));
-
-        return dto;
-    }
-
-    private Categoria mapearCategoria(ResultSet rs) throws Exception {
-        Categoria categoria = new Categoria();
-        categoria.setId(rs.getInt("cat_id"));
-        categoria.setNome(rs.getString("cat_nome"));
-
-        return categoria;
     }
 
 }

@@ -1,3 +1,4 @@
+import { alertarErro } from "../../../../../js/api/alertErro.js";
 import { deletarCartaoCredito } from "/js/api/apiCartaoCredito.js";
 
 export class CartaoCartaoCredito extends HTMLDivElement {
@@ -31,14 +32,26 @@ export class CartaoCartaoCredito extends HTMLDivElement {
             <button class="btn-deletar">Remover</button> 
         `);
 
-        const btnAtualizar = this.querySelector('.btn-atualizar');
-        btnAtualizar.onclick = () => {
+        this.querySelector('.btn-atualizar').onclick = () => {
             this.modalAlterarCartaoCredito.show(this.cartaoCredito);
         };
 
-        const btnDeletar = this.querySelector('.btn-deletar');
-        btnDeletar.onclick = () => {
-            deletarCartaoCredito(this.cartaoCredito);
+        this.querySelector('.btn-deletar').onclick = async () => {
+
+            const confirmacaoUsuario = confirm("Deseja mesmo deletar esse cartão de crédito?");
+
+            if (!confirmacaoUsuario){
+                return;
+            }
+
+            try {
+                await deletarCartaoCredito(this.cartaoCredito);
+                alert("Deletado com sucesso!");
+                window.location.reload();
+            } catch (error){
+                alertarErro(error);
+            }
+            
         };
     }
     

@@ -1,3 +1,4 @@
+import { alertarErro } from "../../../../js/api/alertErro.js";
 import { retornarAnalise } from "../../../../js/api/apiAnalise.js";
 import FormatadorAnalise from "./FormatadorAnalise.js";
 import GraficoLinha from "./GraficoLinha.js";
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             graficoValorCategorias.atualizar(formatador.formatarValor(dadosAnalise.categorias));
 
         } catch (error){
-            alert(error)
+            alertarErro(error);
         }
     }
 })

@@ -1,3 +1,4 @@
+import { alertarErro } from "../../../../js/api/alertErro.js";
 import { inserirEntradaEstoque } from "../../../../js/api/apiEstoque.js";
 import { Modal } from "/js/componentes/modal.js";
 
@@ -31,7 +32,11 @@ export default class ModalEntradaEstoque extends Modal {
         super.show();
     }
     
-    enviarFormulario(){
+    async enviarFormulario(){
+        if (!confirm("Deseja mesmo realizar essa entrada no estoque?")){
+            return;    
+        }
+        
         const formData = new FormData(this.conteudoModal);
 
         const entradaEstoque = {
@@ -53,8 +58,11 @@ export default class ModalEntradaEstoque extends Modal {
             entradaEstoque.dataEntrada = "";
         }
 
-        if (confirm("Deseja mesmo realizar essa entrada no estoque?")){
-            inserirEntradaEstoque(entradaEstoque);
+        try {
+            await inserirEntradaEstoque(entradaEstoque);
+            alert('Entrada realizada!');
+        } catch (error){
+            alertarErro(error);
         }
 
     }

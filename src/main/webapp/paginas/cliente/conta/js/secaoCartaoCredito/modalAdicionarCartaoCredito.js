@@ -2,6 +2,7 @@ import { Modal } from "/js/componentes/modal.js";
 import { montarCartaoCreditoPorForm } from "/js/script.js";
 import { FormularioCartaoCredito } from "/js/componentes/forms/formCartaoCredito.js";
 import { inserirCartaoCredito } from "/js/api/apiCartaoCredito.js";
+import { alertarErro } from "../../../../../js/api/alertErro.js";
 
 export class ModalAdicionarCartaoCredito extends Modal {
 
@@ -12,19 +13,32 @@ export class ModalAdicionarCartaoCredito extends Modal {
 
         this.conteudoModal = conteudoModal;
 
-        this.conteudoModal.querySelector('.botao-salvar').onclick = () => {
-            this.enviarFormulario();
+        this.conteudoModal.querySelector('.botao-salvar').onclick = async () => {
+            await this.enviarFormulario();
         };
     }
 
-    enviarFormulario(){
+    async enviarFormulario(){
         const cartao = montarCartaoCreditoPorForm(
             this.conteudoModal
         );
 
         cartao.idCliente = localStorage.getItem('idcliente');
 
-        inserirCartaoCredito(cartao);
+        const confirmacaoUsuario = confirm("Deseja mesmo cadastrar esse cartão de crédito?");
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+
+        try {
+            await inserirCartaoCredito(cartao);
+            alert("Cadastrado com sucesso!");
+            window.location.reload();
+        } catch(error){
+            alertarErro(error);
+        }
+
     }
 
 }

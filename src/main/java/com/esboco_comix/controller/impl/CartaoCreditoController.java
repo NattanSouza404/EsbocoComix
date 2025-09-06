@@ -30,7 +30,7 @@ public class CartaoCreditoController extends AbstractController {
             }
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao consultar cartões de crédito", e));
         }
 
     }
@@ -45,7 +45,7 @@ public class CartaoCreditoController extends AbstractController {
                 HttpServletResponse.SC_CREATED
             );
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao adicionar cartão de crédito", e));
         }
     }
 
@@ -60,7 +60,7 @@ public class CartaoCreditoController extends AbstractController {
                 HttpServletResponse.SC_OK
             );
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao atualizar cartão de crédito", e));
         }
     }
 
@@ -71,7 +71,7 @@ public class CartaoCreditoController extends AbstractController {
             cartaoCreditoService.deletar(cartaoCredito);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao deletar cartão de crédito", e));
         }
     }
 }

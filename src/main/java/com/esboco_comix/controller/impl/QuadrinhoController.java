@@ -49,7 +49,7 @@ public class QuadrinhoController extends AbstractController {
             ); 
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao consultar quadrinho(s)", e));
         }
     }
 }

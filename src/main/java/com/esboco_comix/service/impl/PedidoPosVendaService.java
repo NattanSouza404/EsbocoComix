@@ -26,22 +26,22 @@ public class PedidoPosVendaService {
 
     private final ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
 
-    public PedidoPosVendaDTO inserir(PedidoPosVenda pedido) throws Exception{
+    public PedidoPosVendaDTO inserir(PedidoPosVenda pedido){
         ItemPedido item = itemPedidoDAO.consultarByID(pedido.getIdPedido(), pedido.getIdQuadrinho());
         
         Pedido pedidoNoBanco = pedidoService.consultarByID(pedido.getIdPedido());
         StatusPedido statusPedidoBanco = pedidoNoBanco.getStatus();
         
         if (statusPedidoBanco != StatusPedido.ENTREGUE){
-            throw new Exception("Pedido não entregue ou pedido de troca/devolução dos itens já foi realizado!");
+            throw new IllegalArgumentException("Pedido não entregue ou pedido de troca/devolução dos itens já foi realizado!");
         }
 
         if (pedido.getQuantidade() < 1){
-            throw new Exception("Quantidade da troca/devolução precisa ser maior que zero!");
+            throw new IllegalArgumentException("Quantidade da troca/devolução precisa ser maior que zero!");
         }
 
         if (pedido.getQuantidade() > item.getQuantidade()){
-            throw new Exception("Quantidade de troca/devolução maior do que o limite!");
+            throw new IllegalArgumentException("Quantidade de troca/devolução maior do que o limite!");
         }
 
         List<PedidoPosVendaDTO> pedidosPosVenda = pedidoPosVendaDAO.consultarByIdPedido(pedido.getIdPedido());
@@ -57,30 +57,30 @@ public class PedidoPosVendaService {
         int limite = quantidadeTotalJaTrocadaOuDevoluida + pedido.getQuantidade();
 
         if (item.getQuantidade() < limite ){
-            throw new Exception("Não é possível realizar mais trocas ou devoluções desse item!");
+            throw new IllegalArgumentException("Não é possível realizar mais trocas ou devoluções desse item!");
         }
 
         return pedidoPosVendaDAO.inserir(pedido);
     }
 
-    public List<PedidoPosVendaDTO> consultarTodos() throws Exception {
+    public List<PedidoPosVendaDTO> consultarTodos() {
         return pedidoPosVendaDAO.consultarTodos();
     }
 
-    public PedidoPosVendaDTO atualizarStatus(AtualizarPedidoPosVendaDTO atualizarPedido) throws Exception {
+    public PedidoPosVendaDTO atualizarStatus(AtualizarPedidoPosVendaDTO atualizarPedido) {
         PedidoPosVenda pedidoPosVenda = atualizarPedido.getPedidoPosVenda();
         
         Pedido pedidoNoBanco = pedidoService.consultarByID(atualizarPedido.getPedidoPosVenda().getIdPedido());
         StatusPedido statusPedidoBanco = pedidoNoBanco.getStatus();
         
         if (statusPedidoBanco != StatusPedido.ENTREGUE){
-            throw new Exception("Pedido não entregue ou pedido de troca/devolução dos itens já foi realizado!");
+            throw new IllegalArgumentException("Pedido não entregue ou pedido de troca/devolução dos itens já foi realizado!");
         }
 
         StatusItemPedido statusItemPedidoNoBanco = pedidoPosVendaDAO.consultarByID(pedidoPosVenda.getId()).getPedidoPosVenda().getStatus();
 
         if (statusItemPedidoNoBanco == StatusItemPedido.TROCA_CONCLUIDA || statusItemPedidoNoBanco == StatusItemPedido.DEVOLUCAO_CONCLUIDA){
-            throw new Exception("Troca ou devolução do pedido já foi realizada.");
+            throw new IllegalArgumentException("Troca ou devolução do pedido já foi realizada.");
         }
 
         StatusItemPedido statusItemPedido = pedidoPosVenda.getStatus();
@@ -110,7 +110,7 @@ public class PedidoPosVendaService {
         return pedidoPosVendaDAO.atualizarStatus(atualizarPedido.getPedidoPosVenda());
     }
 
-    public List<PedidoPosVendaDTO> consultarPorIDCliente(int id) throws Exception {
+    public List<PedidoPosVendaDTO> consultarPorIDCliente(int id) {
         return pedidoPosVendaDAO.consultarPorIDCliente(id);
     }
 

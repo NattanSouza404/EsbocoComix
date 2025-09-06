@@ -30,7 +30,7 @@ public class ClienteService {
     private final EnderecoValidador enderecoValidador = new EnderecoValidador();
     private final CartaoCreditoValidador cartaoCreditoValidador = new CartaoCreditoValidador();
 
-    public CadastrarClienteDTO inserir(CadastrarClienteDTO pedido) throws Exception {
+    public CadastrarClienteDTO inserir(CadastrarClienteDTO pedido) {
         clienteValidador.validarCadastro(pedido);
         for (Endereco e : pedido.getEnderecos()) {
             enderecoValidador.validar(e);
@@ -66,23 +66,23 @@ public class ClienteService {
         return pedidoInserido;
     }
 
-    public List<Cliente> consultarTodos() throws Exception {
+    public List<Cliente> consultarTodos() {
         return clienteDAO.consultarTodos();
     }
 
-    public List<Cliente> consultarTodos(HttpServletRequest req) throws Exception {
+    public List<Cliente> consultarTodos(HttpServletRequest req) {
         return clienteDAO.consultarTodos(mapearToFiltrarClienteDTO(req));
     }
 
-    public Cliente consultarByID(int id) throws Exception {
+    public Cliente consultarByID(int id) {
         return clienteDAO.consultarByID(id);
     }
 
-    public Cliente atualizar(Cliente c) throws Exception {
+    public Cliente atualizar(Cliente c) {
         return clienteDAO.atualizar(c);
     }
 
-    public Cliente atualizarSenha(AlterarSenhaDTO pedido) throws Exception {
+    public Cliente atualizarSenha(AlterarSenhaDTO pedido) {
         Cliente c = pedido.getCliente();
         Cliente clienteInserido = clienteDAO.consultarHashSaltPorID(c.getId());
 
@@ -97,11 +97,11 @@ public class ClienteService {
         return clienteDAO.atualizarSenha(c);
     }
 
-    public Cliente atualizarStatusCadastro(Cliente c) throws Exception {
+    public Cliente atualizarStatusCadastro(Cliente c) {
         return clienteDAO.atualizarStatusCadastro(c);
     }
 
-    private void inserirNovoHash(Cliente c, String senhaNova) throws Exception {
+    private void inserirNovoHash(Cliente c, String senhaNova) {
         String saltSenha = CriptografadorSenha.generateSalt();
         c.setHashSenha(CriptografadorSenha.hashSenha(senhaNova, saltSenha));
         c.setSaltSenha(saltSenha);
@@ -148,7 +148,7 @@ public class ClienteService {
         return filtro;
     }
 
-    public Cliente consultarByIDPedido(int idPedido) throws Exception {
+    public Cliente consultarByIDPedido(int idPedido) {
         return clienteDAO.consultarByIDPedido(idPedido);
     }
 

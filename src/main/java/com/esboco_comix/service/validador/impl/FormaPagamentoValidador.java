@@ -19,26 +19,26 @@ public class FormaPagamentoValidador extends AbstractValidador implements IValid
     }
 
     @Override
-    public void validar(Pedido pedido) throws Exception {
+    public void validar(Pedido pedido)  {
         if (pedido.getCartoesCreditoPedido().isEmpty() && pedido.getCuponsPedido().isEmpty()) {
-            throw new Exception("Nenhuma forma de pagamento foi provida!");
+            throw new IllegalArgumentException("Nenhuma forma de pagamento foi provida!");
         }
 
         Set<Integer> idsCartao = new HashSet<>();
         for (CartaoCreditoPedido cartao : pedido.getCartoesCreditoPedido()) {
             if (!idsCartao.add(cartao.getIdCartaoCredito())){
-                throw new Exception("Não é possível usar o mesmo cartão duas vezes no mesmo pedido!");
+                throw new IllegalArgumentException("Não é possível usar o mesmo cartão duas vezes no mesmo pedido!");
             }
 
             if (pedido.getCuponsPedido().isEmpty() && cartao.getValor() < 10){
-                throw new Exception("Valor do cartão de crédito deve ser no mínimo R$ 10,00");
+                throw new IllegalArgumentException("Valor do cartão de crédito deve ser no mínimo R$ 10,00");
             }
         }
 
         Set<Integer> idsCupom = new HashSet<>();
         for (CupomPedido cupom : pedido.getCuponsPedido()) {
             if (!idsCupom.add(cupom.getIdCupom())){
-                throw new Exception("Não é possível usar o mesmo cupom duas vezes no mesmo pedido!");
+                throw new IllegalArgumentException("Não é possível usar o mesmo cupom duas vezes no mesmo pedido!");
             }
         }
 
@@ -46,7 +46,7 @@ public class FormaPagamentoValidador extends AbstractValidador implements IValid
         double valorTotalPago = calculadora.calcularValorFormaPagamento(pedido);
 
         if (valorTotalPago != valorTotalPedido){
-            throw new Exception("Valor pago não condiz com valor do pedido!");
+            throw new IllegalArgumentException("Valor pago não condiz com valor do pedido!");
         }
     }
 
