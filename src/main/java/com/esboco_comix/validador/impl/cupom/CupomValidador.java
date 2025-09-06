@@ -1,8 +1,8 @@
-package com.esboco_comix.service.validador.impl;
+package com.esboco_comix.validador.impl.cupom;
 
 import com.esboco_comix.model.entidades.Cupom;
-import com.esboco_comix.service.validador.AbstractValidador;
-import com.esboco_comix.service.validador.IValidador;
+import com.esboco_comix.validador.AbstractValidador;
+import com.esboco_comix.validador.IValidador;
 
 public class CupomValidador extends AbstractValidador implements IValidador<Cupom> {
     @Override

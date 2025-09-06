@@ -1,4 +1,4 @@
-package com.esboco_comix.service.validador.impl;
+package com.esboco_comix.validador.impl;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -7,8 +7,8 @@ import com.esboco_comix.model.entidades.CartaoCreditoPedido;
 import com.esboco_comix.model.entidades.CupomPedido;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.service.impl.pedido.CalculadoraPedido;
-import com.esboco_comix.service.validador.AbstractValidador;
-import com.esboco_comix.service.validador.IValidador;
+import com.esboco_comix.validador.AbstractValidador;
+import com.esboco_comix.validador.IValidador;
 
 public class FormaPagamentoValidador extends AbstractValidador implements IValidador<Pedido> {
 

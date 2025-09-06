@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.esboco_comix.dao.impl.cupom.CupomDAO;
 import com.esboco_comix.model.entidades.Cupom;
-import com.esboco_comix.service.validador.impl.CupomValidador;
+import com.esboco_comix.validador.impl.cupom.CupomValidador;
 
 public class CupomService {
 

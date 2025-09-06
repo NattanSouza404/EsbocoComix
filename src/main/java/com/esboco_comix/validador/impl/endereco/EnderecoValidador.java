@@ -1,8 +1,8 @@
-package com.esboco_comix.service.validador.impl;
+package com.esboco_comix.validador.impl.endereco;
 
 import com.esboco_comix.model.entidades.Endereco;
-import com.esboco_comix.service.validador.AbstractValidador;
-import com.esboco_comix.service.validador.IValidador;
+import com.esboco_comix.validador.AbstractValidador;
+import com.esboco_comix.validador.IValidador;
 
 public class EnderecoValidador extends AbstractValidador implements IValidador<Endereco> {
     @Override

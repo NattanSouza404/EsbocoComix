@@ -14,11 +14,11 @@ import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.model.enuns.Genero;
-import com.esboco_comix.service.validador.impl.CartaoCreditoValidador;
-import com.esboco_comix.service.validador.impl.ClienteValidador;
-import com.esboco_comix.service.validador.impl.EnderecoValidador;
-import com.esboco_comix.service.validador.impl.SenhaValidador;
 import com.esboco_comix.utils.CriptografadorSenha;
+import com.esboco_comix.validador.impl.cartao_credito.CartaoCreditoValidador;
+import com.esboco_comix.validador.impl.cliente.ClienteValidador;
+import com.esboco_comix.validador.impl.cliente.SenhaValidador;
+import com.esboco_comix.validador.impl.endereco.EnderecoValidador;
 
 public class ClienteService {
     private final ClienteDAO clienteDAO = new ClienteDAO();

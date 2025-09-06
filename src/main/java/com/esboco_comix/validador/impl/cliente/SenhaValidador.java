@@ -1,10 +1,10 @@
-package com.esboco_comix.service.validador.impl;
+package com.esboco_comix.validador.impl.cliente;
 
 import com.esboco_comix.dto.AlterarSenhaDTO;
 import com.esboco_comix.dto.CadastrarClienteDTO;
-import com.esboco_comix.service.validador.AbstractValidador;
-import com.esboco_comix.service.validador.IValidador;
 import com.esboco_comix.utils.CriptografadorSenha;
+import com.esboco_comix.validador.AbstractValidador;
+import com.esboco_comix.validador.IValidador;
 
 public class SenhaValidador extends AbstractValidador implements IValidador<CadastrarClienteDTO> {
     @Override

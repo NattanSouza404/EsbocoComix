@@ -1,9 +1,9 @@
-package com.esboco_comix.service.validador.impl;
+package com.esboco_comix.validador.impl.cliente;
 
 import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.model.entidades.Cliente;
-import com.esboco_comix.service.validador.AbstractValidador;
-import com.esboco_comix.service.validador.IValidador;
+import com.esboco_comix.validador.AbstractValidador;
+import com.esboco_comix.validador.IValidador;
 
 public class ClienteValidador extends AbstractValidador implements IValidador<Cliente> {
     private final IValidador<CadastrarClienteDTO> senhaValidador = new SenhaValidador();

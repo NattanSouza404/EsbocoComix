@@ -18,7 +18,7 @@ import com.esboco_comix.service.impl.CartaoCreditoService;
 import com.esboco_comix.service.impl.CupomService;
 import com.esboco_comix.service.impl.EstoqueService;
 import com.esboco_comix.service.impl.QuadrinhoService;
-import com.esboco_comix.service.validador.impl.FormaPagamentoValidador;
+import com.esboco_comix.validador.impl.FormaPagamentoValidador;
 
 public class PedidoService {
 
