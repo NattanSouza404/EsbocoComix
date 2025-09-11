@@ -37,11 +37,12 @@ public class SenhaValidador extends AbstractValidador implements IValidador<Cada
     }
 
     public void validar(AlterarSenhaDTO pedido) {
-        CadastrarClienteDTO c = new CadastrarClienteDTO();
-        c.setSenhaNova(pedido.getSenhaNova());
-        c.setSenhaConfirmacao(pedido.getSenhaConfirmacao());
-
-        validar(c);
+        validar(
+            CadastrarClienteDTO.builder()
+                .senhaNova(pedido.getSenhaNova())
+                .senhaConfirmacao(pedido.getSenhaConfirmacao())
+            .build()
+        );
     }
 
     public void validarSenhaAntiga(String senhaNova, String hashGuardado, String saltGuardado) {

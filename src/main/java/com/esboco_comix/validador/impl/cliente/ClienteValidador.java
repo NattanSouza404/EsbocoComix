@@ -2,28 +2,30 @@ package com.esboco_comix.validador.impl.cliente;
 
 import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.model.entidades.Cliente;
+import com.esboco_comix.model.entidades.Telefone;
 import com.esboco_comix.validador.AbstractValidador;
 import com.esboco_comix.validador.IValidador;
 
 public class ClienteValidador extends AbstractValidador implements IValidador<Cliente> {
+    
     private final IValidador<CadastrarClienteDTO> senhaValidador = new SenhaValidador();
     private final IValidador<String> emailValidador = new EmailValidador();
+    private final IValidador<String> cpfValidador = new CPFValidador();
+    private final IValidador<Telefone> telefoneValidador = new TelefoneValidador();
 
     @Override
     public void validar(Cliente cliente) {
         validarAtributoObrigatorio(cliente.getNome(), "Nome");
-        validarAtributoObrigatorio(cliente.getCpf(), "CPF");
-        validarAtributoObrigatorio(cliente.getGenero(), "Gênero");
-        validarAtributoObrigatorio(cliente.getEmail(), "E-mail");
-        validarAtributoObrigatorio(cliente.getDataNascimento(), "Data de Nascimento");
-        validarAtributoObrigatorio(cliente.getTelefone(), "Telefone");
-        validarAtributoObrigatorio(cliente.getTelefone().getDdd(), "DDD");
-        validarAtributoObrigatorio(cliente.getTelefone().getNumero(), "Número de telefone");
-        validarAtributoObrigatorio(cliente.getTelefone().getTipo(), "Tipo de telefone");
 
-        validarSeApenasNumeros(cliente.getCpf(), "CPF");
-        validarSeApenasNumeros(cliente.getTelefone().getDdd(), "DDD");
-        validarSeApenasNumeros(cliente.getTelefone().getNumero(), "Número de telefone");
+        if (cliente.getNome().length() > 100){
+            throw new IllegalArgumentException("Nome deve conter menos de 100 caracteres!");
+        }
+
+        validarAtributoObrigatorio(cliente.getGenero(), "Gênero");
+        validarAtributoObrigatorio(cliente.getDataNascimento(), "Data de Nascimento");
+
+        cpfValidador.validar(cliente.getCpf());
+        telefoneValidador.validar(cliente.getTelefone());
         emailValidador.validar(cliente.getEmail());
     }
 
