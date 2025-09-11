@@ -15,10 +15,9 @@ import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.model.enuns.Genero;
 import com.esboco_comix.utils.CriptografadorSenha;
-import com.esboco_comix.validador.impl.cartao_credito.CartaoCreditoValidador;
+import com.esboco_comix.validador.impl.CadastrarClienteValidador;
 import com.esboco_comix.validador.impl.cliente.ClienteValidador;
 import com.esboco_comix.validador.impl.cliente.SenhaValidador;
-import com.esboco_comix.validador.impl.endereco.EnderecoValidador;
 
 public class ClienteService {
     private final ClienteDAO clienteDAO = new ClienteDAO();
@@ -27,18 +26,10 @@ public class ClienteService {
     private final SenhaValidador senhaValidador = new SenhaValidador();
 
     private final ClienteValidador clienteValidador = new ClienteValidador();
-    private final EnderecoValidador enderecoValidador = new EnderecoValidador();
-    private final CartaoCreditoValidador cartaoCreditoValidador = new CartaoCreditoValidador();
+    private final CadastrarClienteValidador cadastrarClienteValidador = new CadastrarClienteValidador();
 
     public CadastrarClienteDTO inserir(CadastrarClienteDTO pedido) {
-        clienteValidador.validarCadastro(pedido);
-        for (Endereco e : pedido.getEnderecos()) {
-            enderecoValidador.validar(e);
-        }
-
-        for (CartaoCredito c : pedido.getCartoesCredito()) {
-            cartaoCreditoValidador.validar(c);
-        }
+        cadastrarClienteValidador.validar(pedido);
 
         Cliente clienteToAdd = pedido.getCliente();
         inserirNovoHash(clienteToAdd, pedido.getSenhaNova());
@@ -58,12 +49,11 @@ public class ClienteService {
             cartoesCredito.add(cartaoCreditoService.inserir(c));
         }
 
-        CadastrarClienteDTO pedidoInserido = new CadastrarClienteDTO();
-        pedidoInserido.setCliente(clienteInserido);
-        pedidoInserido.setEnderecos(enderecosInseridos);
-        pedidoInserido.setCartoesCredito(cartoesCredito);
-
-        return pedidoInserido;
+        return CadastrarClienteDTO.builder()
+            .cliente(clienteInserido)
+            .enderecos(enderecosInseridos)
+            .cartoesCredito(cartoesCredito)
+        .build();
     }
 
     public List<Cliente> consultarTodos() {
@@ -79,6 +69,7 @@ public class ClienteService {
     }
 
     public Cliente atualizar(Cliente c) {
+        clienteValidador.validar(c);
         return clienteDAO.atualizar(c);
     }
 
@@ -99,6 +90,10 @@ public class ClienteService {
 
     public Cliente atualizarStatusCadastro(Cliente c) {
         return clienteDAO.atualizarStatusCadastro(c);
+    }
+
+    public Cliente consultarByIDPedido(int idPedido) {
+        return clienteDAO.consultarByIDPedido(idPedido);
     }
 
     private void inserirNovoHash(Cliente c, String senhaNova) {
@@ -146,10 +141,6 @@ public class ClienteService {
         }
 
         return filtro;
-    }
-
-    public Cliente consultarByIDPedido(int idPedido) {
-        return clienteDAO.consultarByIDPedido(idPedido);
     }
 
 }
