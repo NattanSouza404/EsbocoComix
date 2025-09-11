@@ -32,6 +32,10 @@ Dentre as funcionalidades do sistema, podemos citar:
 Para iniciar o subsistema de recomendação por IA, deve-se navegar para a pasta src/main/chatbot e iniciar o servidor Python FastAPI:
 
 ```
+# Caso for necessário usar um ambiente virtual para o Python
+python3 -m venv my-venv
+source my-venv/bin/activate
+
 cd src/main/chatbot
 
 # Para instalar as dependências
