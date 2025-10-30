@@ -11,6 +11,8 @@ public class Main {
 		ServidorConfig.configurar(tomcat);
 
 		tomcat.start();
+		
+		System.out.println("Servidor rodando em http://localhost:8080");
 		tomcat.getServer().await();
 	}
 	

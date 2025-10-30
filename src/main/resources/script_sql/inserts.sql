@@ -178,12 +178,17 @@ UPDATE quadrinhos
 
 
 -- Exemplo de cadastro de cliente
-INSERT INTO clientes VALUES ('Jorge dos Santos Menezes', 'MASCULINO', '1998-12-20', '11122233344', 'jorge@email.com', '696YDOwfrZKwB8Zc053W7AIU7IPVPEEpTBDaz2edWk8=', 'YIGCwc/BvOPLriML2n0zng==', 0, 'FIXO', '11', '99999999 ', true);
+
+INSERT INTO clientes(
+  cli_nome, cli_genero, cli_dt_nascimento, cli_cpf, cli_email, 
+  cli_hash_senha, cli_salt_senha, cli_ranking,
+  cli_tel_tipo, cli_tel_ddd, cli_tel_numero, cli_is_ativo)
+VALUES ('Jorge dos Santos Menezes', 'MASCULINO', '1998-12-20', '11122233344', 'jorge@email.com', '696YDOwfrZKwB8Zc053W7AIU7IPVPEEpTBDaz2edWk8=', 'YIGCwc/BvOPLriML2n0zng==', 0, 'FIXO', '11', '99999999 ', true);
 
 INSERT INTO cartoes_credito
 	(cre_numero, cre_nome_impresso, cre_codigo_seguranca, cre_is_preferencial, cre_bcc_id, cre_cli_id, cre_is_ativo)
 VALUES
-	('1111222233334444', 'JORGE DOS SANTOS MENEZES', '111', true, 6, 1, true);
+	('1111222233334444', 'JORGE DOS SANTOS MENEZES', '111', true, 2, 1, true);
 
 INSERT INTO enderecos
 (end_frase_curta, end_logradouro, end_tipo_logradouro, end_tipo_residencial, end_numero, end_bairro, end_cep, end_cidade, end_estado, end_pais, end_is_residencial, end_is_entrega, end_is_cobranca, end_observacoes, end_cli_id, end_is_ativo)
