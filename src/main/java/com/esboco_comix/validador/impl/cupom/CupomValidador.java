@@ -7,6 +7,10 @@ import com.esboco_comix.validador.IValidador;
 public class CupomValidador extends AbstractValidador implements IValidador<Cupom> {
     @Override
     public void validar(Cupom cupom) {
+        if (cupom == null){
+            throw new IllegalArgumentException("Cupom não pode ser nulo!");
+        }
+
         if (cupom.getValor() <= 0){
             throw new IllegalArgumentException("Cupom deve ter valor maior que 0!");
         }

@@ -10,7 +10,7 @@ public class ClienteValidador extends AbstractValidador implements IValidador<Cl
     
     private final IValidador<CadastrarClienteDTO> senhaValidador = new SenhaValidador();
     private final IValidador<String> emailValidador = new EmailValidador();
-    private final IValidador<String> cpfValidador = new CPFValidador();
+    private final IValidador<Cliente> cpfValidador = new CPFValidador();
     private final IValidador<Telefone> telefoneValidador = new TelefoneValidador();
 
     @Override
@@ -24,7 +24,7 @@ public class ClienteValidador extends AbstractValidador implements IValidador<Cl
         validarAtributoObrigatorio(cliente.getGenero(), "Gênero");
         validarAtributoObrigatorio(cliente.getDataNascimento(), "Data de Nascimento");
 
-        cpfValidador.validar(cliente.getCpf());
+        cpfValidador.validar(cliente);
         telefoneValidador.validar(cliente.getTelefone());
         emailValidador.validar(cliente.getEmail());
     }

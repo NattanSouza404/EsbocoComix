@@ -19,6 +19,10 @@ public class CupomValidadorTest {
         cupom.setValor(0);
 
         assertThrows(IllegalArgumentException.class, () -> {
+            validador.validar(null);
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
             validador.validar(cupom);
         });
 
