@@ -29,11 +29,14 @@ function carregarPagina(){
     `
 
     let estoque = quadrinho.quantidadeEstoque;
-    if (quadrinho.isForaDeEstoque){
-        estoque = "Fora de Estoque";
-    }
 
-    document.getElementById('estoque').textContent = `Estoque: ${estoque}`;
+    if (estoque > 0){
+         document.getElementById('estoque').innerHTML = `Estoque: ${estoque}`;
+    } else {
+        document.getElementById('adicionar-carrinho').innerHTML = `
+            <p>Fora de estoque</p>
+        `;
+    }
 
     let categorias = '';
     quadrinho.categorias.forEach(categoria => {
