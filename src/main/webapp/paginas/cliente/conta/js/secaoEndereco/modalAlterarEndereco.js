@@ -2,6 +2,7 @@ import { montarEnderecoPorForm } from "/js/script.js";
 import { atualizarEndereco } from "../../../../../js/api/apiEndereco.js";
 import { Modal } from "/js/componentes/modal.js";
 import { FormularioEndereco } from "/js/componentes/forms/formEndereco.js";
+import { alertarErro } from "../../../../../js/api/alertErro.js";
 
 export class ModalAlterarEndereco extends Modal {
 
@@ -23,9 +24,24 @@ export class ModalAlterarEndereco extends Modal {
     }
 
     async enviarAtualizacao() {
+        const confirmacaoUsuario = confirm("Deseja mesmo atualizar esse endereço?"); 
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+
         const endereco = montarEnderecoPorForm(this.conteudoModal);
         endereco.id = this.conteudoModal.endereco.id;
-        atualizarEndereco(endereco);
+        endereco.idCliente = localStorage.getItem('idcliente');
+
+        try {
+            await atualizarEndereco(endereco);
+            alert('Atualizado com sucesso!');
+            window.location.reload();
+        } catch (error){
+            alertarErro(error);
+        }
+
     }
 
 }

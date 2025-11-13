@@ -10,7 +10,7 @@ public class ClienteValidador extends AbstractValidador implements IValidador<Cl
     private final IValidador<String> emailValidador = new EmailValidador();
 
     @Override
-    public void validar(Cliente cliente) throws Exception {
+    public void validar(Cliente cliente) {
         validarAtributoObrigatorio(cliente.getNome(), "Nome");
         validarAtributoObrigatorio(cliente.getCpf(), "CPF");
         validarAtributoObrigatorio(cliente.getGenero(), "Gênero");
@@ -27,7 +27,7 @@ public class ClienteValidador extends AbstractValidador implements IValidador<Cl
         emailValidador.validar(cliente.getEmail());
     }
 
-    public void validarCadastro(CadastrarClienteDTO pedido) throws Exception{
+    public void validarCadastro(CadastrarClienteDTO pedido) {
         validar(pedido.getCliente());
         senhaValidador.validar(pedido);
     }

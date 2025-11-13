@@ -1,5 +1,6 @@
 import { formatarPreco, formatarDateTime } from "/js/script.js";
 import { atualizarStatusPedido} from "../../../../js/api/apiPedido.js";
+import { alertarErro } from "../../../../js/api/alertErro.js";
 
 export class SecaoPedidos {
     constructor(pedidos){
@@ -96,7 +97,7 @@ export class SecaoPedidos {
 
     }
 
-    confirmarAtualizarStatusPedido(pedido, status){
+    async confirmarAtualizarStatusPedido(pedido, status){
         const confirmacaoUsuario = confirm(`Deseja mesmo atualizar o status desse pedido para ${status}?`);
 
         if (!confirmacaoUsuario){
@@ -112,6 +113,12 @@ export class SecaoPedidos {
             }
         }
 
-        atualizarStatusPedido(pedido);
+        try {
+            await atualizarStatusPedido(pedido);
+            alert("Atualizado com sucesso!");
+        } catch (error){
+            alertarErro(error);
+        }
+        
     }
 }

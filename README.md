@@ -36,12 +36,17 @@ Dentre as funcionalidades do sistema, podemos citar:
 Para iniciar o subsistema de recomendação por IA, deve-se navegar para a pasta src/main/chatbot e iniciar o servidor Python FastAPI:
 
 ```
+# Navegar até a pasta
+cd src/main/chatbot
+
 # Caso estiver sendo usado um ambiente virtual do python
 python -m venv .venv
 source .venv/bin/activate
 
-# Para executar o subsistema
-cd src/main/chatbot
+# Instalando dependências
+pip install -r requirements.txt
+
+# Executando
 uvicorn main:app --reload
 ```
 
@@ -56,14 +61,9 @@ api.key=INSIRA_SUA_CHAVE_GEMINI
 database.user=postgres
 database.password=admin123
 
-# Especí­fico ao Java
+# Específico ao Java
 database.driver=org.postgresql.Driver
 database.url=jdbc:postgresql://localhost:5432/esboco_comix
-
-# Especí­fico ao Python
-database.host=localhost
-database.port=5432
-database.database=esboco_comix
 ```
 
 ### Banco de Dados

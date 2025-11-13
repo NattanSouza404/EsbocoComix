@@ -8,23 +8,23 @@ import com.esboco_comix.model.entidades.CartaoCredito;
 public class CartaoCreditoService {
     private CartaoCreditoDAO cartaoCreditoDAO = new CartaoCreditoDAO();
 
-    public CartaoCredito inserir(CartaoCredito c) throws Exception {
+    public CartaoCredito inserir(CartaoCredito c) {
         return cartaoCreditoDAO.inserir(c);
     }
 
-    public List<CartaoCredito> consultarByIDCliente(int id) throws Exception {
+    public List<CartaoCredito> consultarByIDCliente(int id) {
         return cartaoCreditoDAO.consultarByIDCliente(id);
     }
 
-    public CartaoCredito consultarByID(int id) throws Exception {
+    public CartaoCredito consultarByID(int id) {
         return cartaoCreditoDAO.consultarByID(id);
     }
 
-    public CartaoCredito atualizar(CartaoCredito c) throws Exception{
+    public CartaoCredito atualizar(CartaoCredito c){
         return cartaoCreditoDAO.atualizar(c);
     }
 
-    public void deletar(CartaoCredito c) throws Exception {
+    public void deletar(CartaoCredito c) {
         cartaoCreditoDAO.inativar(c);
     }
 

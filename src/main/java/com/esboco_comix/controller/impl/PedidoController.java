@@ -35,7 +35,7 @@ public class PedidoController extends AbstractController {
             ); 
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao consultar pedido(s)", e));
         }
     }
 
@@ -53,7 +53,7 @@ public class PedidoController extends AbstractController {
             );
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao adicionar pedido", e));
         }
     }
 
@@ -79,7 +79,7 @@ public class PedidoController extends AbstractController {
             );
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao atualizar pedido", e));
         }
     }
 }

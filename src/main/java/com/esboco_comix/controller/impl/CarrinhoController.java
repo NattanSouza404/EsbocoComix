@@ -23,7 +23,7 @@ public class CarrinhoController extends AbstractController {
             ); 
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao buscar carrinho", e));
         }
     }
 
@@ -39,7 +39,7 @@ public class CarrinhoController extends AbstractController {
             ); 
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao adicionar item ao carrinho", e));
         }
     }
 
@@ -56,7 +56,7 @@ public class CarrinhoController extends AbstractController {
             ); 
 
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao atualizar item do carrinho",e));
         }
     }
 
@@ -69,7 +69,7 @@ public class CarrinhoController extends AbstractController {
 
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         } catch (Exception e) {
-            estourarErro(resp, e);
+            estourarErro(resp, new Exception("Erro ao deletar item do carrinho", e));
         }
     }
 }

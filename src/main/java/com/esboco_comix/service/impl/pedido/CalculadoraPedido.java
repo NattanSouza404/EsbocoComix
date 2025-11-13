@@ -29,7 +29,7 @@ public class CalculadoraPedido {
         this.cartaoCreditoService = cartaoCreditoService;
     }
 
-    public double calcularValorFormaPagamento(Pedido pedido) throws Exception {
+    public double calcularValorFormaPagamento(Pedido pedido) {
         List<Cupom> cuponsAplicados = new ArrayList<>();
 
         int quantCupomPromocional = 0;
@@ -37,7 +37,7 @@ public class CalculadoraPedido {
             Cupom cupomBanco = cupomService.consultarByID(cupom.getIdCupom());
 
             if (!cupomBanco.isAtivo()) {
-                throw new Exception("Cupom inválido para essa compra!");
+                throw new IllegalArgumentException("Cupom inválido para essa compra!");
             }
 
             if (cupomBanco.isPromocional()) {
@@ -48,7 +48,7 @@ public class CalculadoraPedido {
         }
 
         if (quantCupomPromocional > 1) {
-            throw new Exception("Não é possível usar mais de um cupom promocional na mesma compra!");
+            throw new IllegalArgumentException("Não é possível usar mais de um cupom promocional na mesma compra!");
         }
 
         double valorTotal = 0;
@@ -57,7 +57,7 @@ public class CalculadoraPedido {
             CartaoCredito cartaoBanco = cartaoCreditoService.consultarByID(cartao.getIdCartaoCredito());
 
             if (pedido.getIdCliente() != cartaoBanco.getIdCliente()) {
-                throw new Exception("Cartão de crédito não pertence ao cliente da compra!");
+                throw new IllegalArgumentException("Cartão de crédito não pertence ao cliente da compra!");
             }
 
             valorTotal += cartao.getValor();
@@ -70,9 +70,9 @@ public class CalculadoraPedido {
         return valorTotal;
     }
 
-    public double calcularValorTotalPedido(Pedido pedido, List<ItemPedido> itensPedido) throws Exception {
+    public double calcularValorTotalPedido(Pedido pedido, List<ItemPedido> itensPedido) {
         Map<Integer, QuadrinhoDTO> quadrinhoMap = quadrinhoService.consultarTodos().stream()
-            .collect(Collectors.toMap((quadrinho) -> quadrinho.getQuadrinho().getId() , quadrinho -> quadrinho));
+            .collect(Collectors.toMap(quadrinho -> quadrinho.getQuadrinho().getId() , quadrinho -> quadrinho));
 
         double valor = 0;
         for (ItemPedido itemPedido : itensPedido) {
@@ -80,7 +80,7 @@ public class CalculadoraPedido {
             Quadrinho quadrinho = dto.getQuadrinho();
 
             if (quadrinho == null) {
-                throw new Exception("Quadrinho do pedido não encontrado!");
+                throw new IllegalStateException("Quadrinho do pedido não encontrado!");
             }
 
             valor += dto.getPreco() * itemPedido.getQuantidade();
@@ -92,7 +92,7 @@ public class CalculadoraPedido {
 
     }
 
-    public double calcularItemPedido(ItemPedido itemPedido) throws Exception {
+    public double calcularItemPedido(ItemPedido itemPedido) {
         QuadrinhoDTO quadrinho = quadrinhoService.consultarByID(itemPedido.getIdQuadrinho());
         return quadrinho.getPreco() * itemPedido.getQuantidade();
     }

@@ -1,3 +1,5 @@
+import { estourarErroAPI } from "./alertErro.js";
+
 const PATH = "/api/analise";
 
 export async function retornarAnalise(filtro) {
@@ -8,11 +10,11 @@ export async function retornarAnalise(filtro) {
         url += `&dataFinal=${filtro.dataFinal}`;
     }
 
-    const response = await fetch(url);
+    const resposta = await fetch(url);
 
-    if (response.status === 500){
-        throw Error('Nenhum dado encontrado!');
+    if (resposta.status !== 200){
+        await estourarErroAPI(resposta);
     }
 
-    return await response.json();
+    return await resposta.json();
 }

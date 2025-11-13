@@ -1,25 +1,27 @@
+import { estourarErroAPI } from "./alertErro.js";
+
 const PATH = "/api/pedido_pos_venda";
 
 export async function retornarPedidosPosVenda(){
-    try {
-        let url = PATH;
-        const response = await fetch(url);
+    const resposta = await fetch(PATH);
 
-        return await response.json();
-    } catch (error) {
-        console.error('Erro buscando dados:', error);
+    if (resposta.status !== 200){
+        await estourarErroAPI(resposta);
     }
+
+    return await resposta.json();
 }
 
 export async function retornarPedidosPosVendaByCliente(idCliente){
-    try {
-        let url = `${PATH}?idcliente=${idCliente}`;
-        const response = await fetch(url);
+    let url = `${PATH}?idcliente=${idCliente}`;
 
-        return await response.json();
-    } catch (error) {
-        console.error('Erro buscando dados:', error);
+    const resposta = await fetch(url);
+
+    if (resposta.status !== 200){
+        await estourarErroAPI(resposta);
     }
+
+    return await resposta.json();
 }
 
 export async function inserirPedidoPosVenda(pedido) {
@@ -31,36 +33,25 @@ export async function inserirPedidoPosVenda(pedido) {
         body: JSON.stringify(pedido)
     }
 
-    const result = await fetch(url, option);
+    const resposta = await fetch(url, option);
 
-    if (result.status !== 201) {
-        throw new Error((await result.json()).erro);
+    if (resposta.status !== 201) {
+        await estourarErroAPI(resposta);
     }
-
-    alert('Pedido realizado');
 }
 
 export async function atualizarStatusPedidoPosVenda(pedido){
-    try {
-        let url = PATH;
+    let url = PATH;
 
-        const option = {
-            method: 'PUT',
-            headers:{'Content-Type': 'application/json'},
-            body: JSON.stringify(pedido)
-        }
+    const option = {
+        method: 'PUT',
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify(pedido)
+    }
 
-        const result = await fetch(url, option);
+    const resposta = await fetch(url, option);
 
-        if (result.status === 200) {
-            alert('Atualizado com sucesso!');
-        }
-        else {
-            const resposta = await result.json();
-            alert("Erro ao atualizar: "+resposta.erro);
-        }
-
-    } catch (error){
-        console.error('Erro ao atualizar:', error);
+    if (resposta.status !== 200) {
+        await estourarErroAPI(resposta);
     }
 }
