@@ -13,8 +13,8 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 
-# Copy the built artifact from the Maven build stage
-COPY --from=build /app/target/*.jar app.jar
+# Copy the fat JAR
+COPY --from=build /app/target/*-jar-with-dependencies.jar app.jar
+COPY --from=build /app/src/main/webapp /app/webapp
 
-# Command to run the Java application
 ENTRYPOINT ["java", "-jar", "app.jar"]

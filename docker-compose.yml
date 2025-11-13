@@ -6,31 +6,27 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080" # Expose the application's port
-    environment:
-      - DB_URL=jdbc:postgresql://postgres:5432/mydb
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
     depends_on:
       - postgres
 
   python-app:
     build:
-      context: ./python-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./src/main/chatbot/Dockerfile
+    ports:
+      - "8000:8000"
     depends_on:
-      - postgres
-    environment:
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/mydb
+      - java-app
 
   postgres:
-    image: postgres:15
+    image: postgres:16
     container_name: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
-      POSTGRES_DB: mydb
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres-data:/var/lib/postgresql/data
 

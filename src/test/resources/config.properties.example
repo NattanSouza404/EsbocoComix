@@ -1,3 +1,3 @@
 # test config
-browser=firefox
+browser=firefox # Browsers suportados = 'edge' e 'firefox'
 headless=false

@@ -3,4 +3,5 @@ import configparser
 config = configparser.ConfigParser()
 config.read('../resources/config.properties')
 
-api_key = config['DEFAULT']['api.key']
+API_KEY = config['DEFAULT']['api.key']
+GEMINI_MODEL = config['DEFAULT']['gemini.model']
