@@ -1,26 +1,56 @@
 import requests
 
+urls = [
+    "http://localhost:8080",            # para quando roda localmente
+    "http://host.docker.internal:8080", # para quando roda no Docker
+]
+
 def consultarQuadrinhos():
-    url = "http://localhost:8080/api/quadrinho"
+    for url in urls:
+        try:
+            resposta = requests.get(
+                f"{url}/api/quadrinho", 
+                timeout=2
+            )
+            resposta.raise_for_status()
+            return resposta.json()
+        except Exception as e:
+            print(f"Tentativa falhou para {url}: {e}")
 
-    resposta = requests.get(url).json()
-
-    return resposta
+    raise ConnectionError("Não foi possível conectar ao serviço de quadrinhos.")
 
 def consultarClienteByID(idcliente):
-    url = f"http://localhost:8080/api/cliente?id={idcliente}"
+    for url in urls:
+        try:
+            resposta = requests.get(
+                f"{url}/api/cliente?id={idcliente}",
+                timeout=2
+            )
 
-    resposta = requests.get(url).json()
+            resposta.raise_for_status()
 
-    return {
-        "nome": resposta["nome"],
-        "genero": resposta["genero"],
-        "dataNascimento": resposta["dataNascimento"]
-    }
+            cliente = resposta.json()
+
+            return {
+                "nome": cliente["nome"],
+                "genero": cliente["genero"],
+                "dataNascimento": cliente["dataNascimento"]
+            }
+        except Exception as e:
+            print(f"Tentativa falhou para {url}: {e}")
+
+    raise ConnectionError("Não foi possível conectar ao serviço de clientes.")
 
 def consultarPedidosByIDCliente(idcliente):
-    url = f"http://localhost:8080/api/pedido?idcliente={idcliente}"
+    for url in urls:
+        try:
+            resposta = requests.get(
+                f"{url}/api/pedido?idcliente={idcliente}", 
+                timeout=2
+            )
+            resposta.raise_for_status()
+            return resposta.json()
+        except Exception as e:
+            print(f"Tentativa falhou para {url}: {e}")
 
-    resposta = requests.get(url).json()
-
-    return resposta 
+    raise ConnectionError("Não foi possível conectar ao serviço de pedidos.")
