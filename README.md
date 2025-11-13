@@ -29,41 +29,30 @@ Dentre as funcionalidades do sistema, podemos citar:
 - Python
 - Gemini AI
 
-## ⚙️ Instruções de Uso e Configurações
+## ⚙️ Configurações
 
-### Subsistema Python
+### Criando o arquivo config.properties
+
+Para usar esse programa, é necessário ter um arquivo chamado config.properties, dentro da pasta src/main/resources. O arquivo deve seguir a estrutura do arquivo config.properties.example, que pode ser encontrado no mesmo diretório.
+
+### Configurando os testes
+
+Para realizar os testes, é necessário outro arquivo de 'config.properties', dessa vez dentro de src/test/resources. Basta seguir o arquivo config.properties.example, presente nesse mesmo diretório. Os browsers suportados são "edge" e "firefox".
+
+### Preparando o sistema do Chatbot
 
 Para iniciar o subsistema de recomendação por IA, deve-se navegar para a pasta src/main/chatbot e iniciar o servidor Python FastAPI:
 
 ```
-# Navegar até a pasta
+# Navegando até a pasta
 cd src/main/chatbot
 
-# Caso estiver sendo usado um ambiente virtual do python
+# OPCIONAL: Adicionando e iniciando um ambiente virtual Python
 python -m venv .venv
 source .venv/bin/activate
 
 # Instalando dependências
 pip install -r requirements.txt
-
-# Executando
-uvicorn main:app --reload
-```
-
-### Backend Java
-
-Para usar esse programa, é necessário ter um arquivo chamado config.properties, dentro da pasta src/main/resources. Esse arquivo deve ter essa estrutura: 
-
-```
-[DEFAULT]
-api.key=INSIRA_SUA_CHAVE_GEMINI
-
-database.user=postgres
-database.password=admin123
-
-# Específico ao Java
-database.driver=org.postgresql.Driver
-database.url=jdbc:postgresql://localhost:5432/esboco_comix
 ```
 
 ### Banco de Dados
@@ -76,17 +65,23 @@ Para criar o banco, é necessário utilizar os scripts SQL disponíveis no diret
 4. procedures.sql
 5. inserts.sql
 
-### Testes Backend
+### Docker
 
-Para realizar os testes, também é necessário um config.properties dentro de src/test/resources com essa estrutura. Os browsers suportados são "edge" e "firefox".
+Caso estiver usando o Docker, deve-se criar um arquivo .env na raíz do projeto, seguindo a estrutura do .env.example.
+
+## ▶️ Executando
+
+### Sistema Chatbot
+
+Para iniciar o sistema do Chatbot, basta executar os seguintes comandos:
 
 ```
-# config.properties
-browser=edge
-headless=false
-```
+# Navegando até a pasta
+cd src/main/chatbot
 
-Obs.: os valores presentes servem apenas como exemplo.
+# Executando
+uvicorn app.main:app --reload
+```
 
 ## ✨ Principais Inspirações
 
