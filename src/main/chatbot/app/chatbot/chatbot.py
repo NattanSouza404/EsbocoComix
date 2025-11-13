@@ -1,11 +1,11 @@
 import google.generativeai as genai
-from app.config.config import api_key
+from app.config.config import API_KEY, GEMINI_MODEL
 from app.model.mensagem import Mensagem
 from app.api_call.api_call import consultarQuadrinhos, consultarClienteByID, consultarPedidosByIDCliente
 
-genai.configure(api_key=api_key)
+genai.configure(api_key=API_KEY)
 
-modelo = genai.GenerativeModel('gemini-1.5-flash')
+modelo = genai.GenerativeModel(GEMINI_MODEL)
 
 def iniciarChat():
     return modelo.start_chat(
