@@ -15,10 +15,10 @@ services:
 
   python-app:
     build:
-      context: ./python-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./src/main/chatbot/Dockerfile
     depends_on:
-      - postgres
+      - java-app
     environment:
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432/mydb
 
