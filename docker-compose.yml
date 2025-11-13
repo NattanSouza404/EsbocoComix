@@ -6,10 +6,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080" # Expose the application's port
-    environment:
-      - DB_URL=jdbc:postgresql://postgres:5432/esboco_comix
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
     depends_on:
       - postgres
 
@@ -17,10 +13,10 @@ services:
     build:
       context: .
       dockerfile: ./src/main/chatbot/Dockerfile
+    ports:
+      - "8000:8000"
     depends_on:
       - java-app
-    environment:
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/mydb
 
   postgres:
     image: postgres:16
@@ -28,9 +24,9 @@ services:
     ports:
       - "5433:5432"
     environment:
-      POSTGRES_DB: esboco_comix
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
