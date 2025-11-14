@@ -17,7 +17,9 @@ Dentre as funcionalidades do sistema, podemos citar:
 <img src="https://github.com/user-attachments/assets/f7bd76b6-f7e9-4e31-afc4-01e208f55978" height="400px" />
 
 ## 🎬 Vídeo demonstração
-![Demo Video](./docs/video%20demonstração/video_demonstracao.mp4)
+Vídeo demonstração disponível [aqui](https://www.youtube.com/watch?v=v4lKc46paZg).
+
+![image](https://github.com/user-attachments/assets/be59ac69-010e-40ba-b12b-10fc1af7c29e)
 
 ## 🖥️ Tecnologias
 - Java
@@ -113,3 +115,6 @@ uvicorn app.main:app --reload
 
 - [Docker docs](https://docs.docker.com/get-started/introduction/)
 - [FastAPI docs](https://fastapi.tiangolo.com/deployment/docker/)
+ 
+ ### Vídeo Demonstração
+ *Cartoon Animation Music (Funny Happy Cute Sweet Background)* - BackgroundMusicForVideos: [Link](https://pixabay.com/music/cartoons-cartoon-animation-music-funny-happy-cute-sweet-background-249671/)
