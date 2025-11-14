@@ -15,11 +15,19 @@ public class ServidorConfig {
 		tomcat.setPort(8080);
 		tomcat.getConnector();
 
-		Context context = tomcat.addWebapp(
-			"",
-			new File("src/main/webapp").getAbsolutePath()
-		);
+		String webappDir;
+		File idePath = new File("src/main/webapp");
+		File dockerPath = new File("/app/webapp");
 
+		if (idePath.exists()) {
+			webappDir = idePath.getAbsolutePath();
+		} else if (dockerPath.exists()) {
+			webappDir = dockerPath.getAbsolutePath();
+		} else {
+			throw new RuntimeException("Diretório do webapp não encontrado!");
+		}
+
+		Context context = tomcat.addWebapp("", webappDir);
 		configurarRotas(context);
     }
 

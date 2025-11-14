@@ -53,7 +53,7 @@ public class CupomDAO {
             ResultSet rs = pst.executeQuery();
     
             if (!rs.next()) {
-                throw new IllegalStateException("Cliente não possui nenhum cupom.");
+                return new ArrayList<>();
             }
             rs.beforeFirst();
     
