@@ -16,11 +16,19 @@ buildNumber.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+# IDE
 .vscode/
+.idea/
+
+# Pasta do Tomcat
 tomcat.8080/
+
+# Config.properties
 /src/main/resources/config.properties
 /src/test/resources/config.properties
-.idea/
+
+# .env
+.env
 
 # Ambiente virtual do python
 venv/

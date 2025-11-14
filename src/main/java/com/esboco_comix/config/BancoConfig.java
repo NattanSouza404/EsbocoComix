@@ -1,7 +1,7 @@
 package com.esboco_comix.config;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class BancoConfig {
@@ -11,17 +11,28 @@ public class BancoConfig {
     public static final String PASSWORD ;
 
     static {
-
         Properties properties = new Properties();
-        
-        try (FileInputStream input = new FileInputStream("src/main/resources/config.properties")) {
+
+        try (InputStream input = BancoConfig.class.getClassLoader()
+                .getResourceAsStream("config.properties")) {
+
+            if (input == null){
+                throw new RuntimeException("config.properties não encontrado!");
+            }
+            
             properties.load(input);
+        
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         DRIVER  = properties.getProperty("database.driver");
-        URL     = properties.getProperty("database.url");
+
+        String dbUrl = System.getenv("DB_URL") != null 
+            ? System.getenv("DB_URL")
+            : properties.getProperty("database.url");
+
+        URL     = dbUrl;
         USER    = properties.getProperty("database.user");
         PASSWORD= properties.getProperty("database.password");
 

@@ -1,8 +1,9 @@
 [DEFAULT]
 api.key=GEMINI_API_KEY
+gemini.model=GEMINI_MODEL
 
-database.user=user
-database.password=password
+database.user=USUARIO
+database.password=SENHA
 
 # Especifico ao Java
 database.driver=org.postgresql.Driver
