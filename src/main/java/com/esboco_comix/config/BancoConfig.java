@@ -8,11 +8,11 @@ public class BancoConfig {
     public static final String DRIVER;
     public static final String URL;
     public static final String USER;  
-    public static final String PASSWORD ;
+    public static final String PASSWORD;
+
+    private static Properties properties = new Properties();
 
     static {
-        Properties properties = new Properties();
-
         try (InputStream input = BancoConfig.class.getClassLoader()
                 .getResourceAsStream("config.properties")) {
 
@@ -26,20 +26,24 @@ public class BancoConfig {
             e.printStackTrace();
         }
 
-        DRIVER  = properties.getProperty("database.driver");
-
-        String dbUrl = System.getenv("DB_URL") != null 
-            ? System.getenv("DB_URL")
-            : properties.getProperty("database.url");
-
-        URL     = dbUrl;
-        USER    = properties.getProperty("database.user");
-        PASSWORD= properties.getProperty("database.password");
-
+        DRIVER = get("DB_DRIVER", "database.driver");
+        URL = get("DB_URL", "database.url");
+        USER = get("POSTGRES_USER", "database.user");
+        PASSWORD = get("POSTGRES_PASSWORD", "database.password");
+        
         System.out.println("Carregando propriedades do banco de dados");
         System.out.println("database.url = "+URL);
         System.out.println("database.driver = "+DRIVER);
         System.out.println("database.user = "+USER);
-        System.out.println("database.password = "+PASSWORD);
+        System.out.println("database.password = []");
+    }
+
+    private static String get(String envName, String propertiesName){
+        String env = System.getenv(envName);
+
+        return
+            env != null
+            ? env
+            : properties.getProperty(propertiesName);
     }
 }
