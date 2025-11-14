@@ -1,7 +1,8 @@
 [DEFAULT]
-api.key=GEMINI_API_KEY
+gemini.apikey=GEMINI_API_KEY
 gemini.model=GEMINI_MODEL
 
+database.name=esboco_comix
 database.user=USUARIO
 database.password=SENHA
 
