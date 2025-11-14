@@ -31,15 +31,39 @@ Dentre as funcionalidades do sistema, podemos citar:
 
 ## ⚙️ Configurações
 
-### Criando o arquivo config.properties
+### Banco de Dados
+
+Para criar o banco, é necessário utilizar os scripts SQL disponíveis no diretório src/main/resources/script_sql. A ordem de execução é a seguinte:
+
+1. criacao_banco.sql
+2. triggers_sequences.sql
+3. views.sql
+4. procedures.sql
+5. inserts.sql
+
+### Docker
+
+Caso estiver usando o Docker, deve-se criar um arquivo .env na raíz do projeto, seguindo a estrutura do .env.example. IMPORTANTE: Caso realmente for usar no Docker, não é necessário configurar nenhum 'arquivo config.properties'.
+
+Comandos úteis:
+```
+# Para listar as variáveis de ambiente
+docker exec postgres /usr/bin/env
+```
+
+### Local
+
+Caso estiver usando o sistema localmente, deve-se fazer as seguintes configurações.
+
+#### Criando o arquivo config.properties
 
 Para usar esse programa, é necessário ter um arquivo chamado config.properties, dentro da pasta src/main/resources. O arquivo deve seguir a estrutura do arquivo config.properties.example, que pode ser encontrado no mesmo diretório.
 
-### Configurando os testes
+#### Configurando os testes
 
 Para realizar os testes, é necessário outro arquivo de 'config.properties', dessa vez dentro de src/test/resources. Basta seguir o arquivo config.properties.example, presente nesse mesmo diretório. Os browsers suportados são "edge" e "firefox".
 
-### Preparando o sistema do Chatbot
+#### Preparando o sistema do Chatbot
 
 Para iniciar o subsistema de recomendação por IA, deve-se navegar para a pasta src/main/chatbot e iniciar o servidor Python FastAPI:
 
@@ -55,20 +79,6 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Banco de Dados
-
-Para criar o banco, é necessário utilizar os scripts SQL disponíveis no diretório src/main/resources/script_sql. A ordem de execução é a seguinte:
-
-1. criacao_banco.sql
-2. triggers_sequences.sql
-3. views.sql
-4. procedures.sql
-5. inserts.sql
-
-### Docker
-
-Caso estiver usando o Docker, deve-se criar um arquivo .env na raíz do projeto, seguindo a estrutura do .env.example.
-
 ## ▶️ Executando
 
 ### Sistema Chatbot
@@ -78,6 +88,9 @@ Para iniciar o sistema do Chatbot, basta executar os seguintes comandos:
 ```
 # Navegando até a pasta
 cd src/main/chatbot
+
+# OPCIONAL: Iniciando ambiente virtual Python
+source .venv/bin/activate
 
 # Executando
 uvicorn app.main:app --reload
