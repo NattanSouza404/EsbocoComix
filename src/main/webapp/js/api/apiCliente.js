@@ -49,6 +49,8 @@ export async function inserirCliente(pedidoCadastrarCliente){
     if (resposta.status !== 201){
         await estourarErroAPI(resposta);
     }
+
+    return await resposta.json();
 }
 
 export async function atualizarCliente(cliente, opcao){

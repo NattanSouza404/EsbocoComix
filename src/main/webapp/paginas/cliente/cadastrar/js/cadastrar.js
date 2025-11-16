@@ -41,7 +41,7 @@ async function enviarCliente(){
     const senhaConfirmacao = new FormData(formDadosPessoais).get("senhaConfirmacao");
 
     try {
-        await inserirCliente({
+        const cadastro = await inserirCliente({
             cliente: cliente,
             enderecos: enderecos,
             cartoesCredito: cartoesCredito,
@@ -50,6 +50,8 @@ async function enviarCliente(){
         });
 
         alert('Cadastrado com sucesso');
+
+        localStorage.setItem('idcliente', cadastro.cliente.id);
         window.location.href = "/";
     } catch (error){
         alertarErro(error);

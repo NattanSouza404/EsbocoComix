@@ -3,6 +3,7 @@ import ModalTransacoes from "./modalTransacoes.js";
 import { formatarData } from "/js/script.js";
 import ModalCupomPromocional from "./modalCupomPromocional.js";
 import { alertarErro } from "../../../../js/api/alertErro.js";
+import { mascararCpf } from "../../../../js/script.js";
 
 export default class TabelaClientes {
     
@@ -27,7 +28,7 @@ export default class TabelaClientes {
                 <td>${c.nome}</td>
                 <td>${c.genero}</td>
                 <td>${formatarData(c.dataNascimento)}</td>
-                <td>${c.cpf}</td>
+                <td>${mascararCpf(c.cpf)}</td>
                 <td>${c.email}</td>
                 <td>${c.ranking}</td>
                 <td>${(c.isAtivo === true) ? 'Ativo' : "Inativo"}</td>
