@@ -21,7 +21,7 @@ public class PedidoController extends AbstractController {
             String parametroId = req.getParameter("idcliente");
             Object objetoResposta;
 
-            if (parametroId != null){
+            if (parametroId != null && !parametroId.equals("undefined")){
                 int id = Integer.parseInt(parametroId);
                 objetoResposta = pedidoService.consultarPorIDCliente(id);
             } else {
