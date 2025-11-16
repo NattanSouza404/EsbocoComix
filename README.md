@@ -128,6 +128,7 @@ uvicorn app.main:app --reload
 
 - [Docker docs](https://docs.docker.com/get-started/introduction/)
 - [FastAPI docs](https://fastapi.tiangolo.com/deployment/docker/)
+- [W3 Schools](https://www.w3schools.com/html/default.asp)
  
  ### Vídeo Demonstração
  *Cartoon Animation Music (Funny Happy Cute Sweet Background)* - BackgroundMusicForVideos: [Link](https://pixabay.com/music/cartoons-cartoon-animation-music-funny-happy-cute-sweet-background-249671/)

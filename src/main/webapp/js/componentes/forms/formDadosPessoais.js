@@ -30,7 +30,7 @@ export class FormularioDadosPessoais extends HTMLFormElement {
 
                 <label>
                     CPF
-                    <input name="cpf" placeholder="111.111.111-11"></input>
+                    <input name="cpf" placeholder="111.111.111-11" minlength="11" maxlength="11"></input>
                 </label>
 
                 <label>
@@ -52,12 +52,12 @@ export class FormularioDadosPessoais extends HTMLFormElement {
 
                 <label>
                     DDD
-                    <input name="ddd" placeholder="11"></input>
+                    <input name="ddd" placeholder="11" minlength="2" maxlength="2"></input>
                 </label>
 
                 <label>
                     Número do Telefone
-                    <input name="numero" placeholder="11111-1111"></input>
+                    <input name="numero" placeholder="11111-1111" minlength="9" maxlength="9"></input>
                 </label>
 
             </div>
