@@ -1,9 +1,9 @@
 import { estourarErroAPI } from "./alertErro.js";
 
-const PATH = "http://localhost:8000/";
+const PATH = "/api/chatbot";
 
 export async function retornarRespostaIA(mensagem){
-    const url = `${PATH}get-message`;
+    const url = `${PATH}?opcao=get-message`;
 
     const option = {
         method: 'POST',
