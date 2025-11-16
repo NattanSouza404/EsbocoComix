@@ -19,7 +19,7 @@ public class CartaoCreditoPedidoDAO {
 
             PreparedStatement pst = connection.prepareStatement(
                 "INSERT INTO cartoes_credito_pedido ("+
-                    "ccp_cre_id, ccp_ped_id, cpp_valor)"+
+                    "ccp_cre_id, ccp_ped_id, ccp_valor)"+
                     "VALUES (?, ?, ?);",
                     Statement.RETURN_GENERATED_KEYS
             );
