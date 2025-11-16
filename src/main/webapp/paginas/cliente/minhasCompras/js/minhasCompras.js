@@ -16,50 +16,60 @@ try {
     pedidos = await retornarPedidos(idCliente);
     pedidosPosVenda = await retornarPedidosPosVendaByCliente(idCliente);
 } catch (error){
-    alertarErro(error);
+    if (!idCliente || idCliente.length === 0){
+        alertarErro(new Error("Você deve ter uma conta para acessar essa página!"));
+        window.location.href = "/cadastrar";
+    } else {
+        alertarErro(error);
+    }
 }
 
 const modalConsultarPedidosPosVenda = new ModalConsultarPedidosPosVenda();
 
-pedidos.forEach(pedido => {
-    const containerPedido = new ContainerPedido(pedido); 
+if (pedidos.length === 0){
+    document.getElementById('container-compras')
+        .innerHTML = "<h4 class=\"text-center\">Nenhuma compra realizada.</h4>"
+} else {
+    pedidos.forEach(pedido => {
+        const containerPedido = new ContainerPedido(pedido); 
 
-    containerPedido.querySelector('.botao-troca').onclick = () => {
-        confirmarTrocaPedido(pedido);
-    };
-    
-    containerPedido.querySelector('.botao-devolucao').onclick = () => {
-        confirmarDevolucaoPedido(pedido);
-    };
-
-    containerPedido.querySelector('.botao-consultar-pedidos-pos-venda').onclick = () => {
-        const pedidosPosVendaPedido = [];
+        containerPedido.querySelector('.botao-troca').onclick = () => {
+            confirmarTrocaPedido(pedido);
+        };
         
-        pedidosPosVenda.forEach(p => {
-            if (p.idPedido === pedido.id){
-                pedidosPosVendaPedido.push(p);
-            }
-        });
-
-        modalConsultarPedidosPosVenda.show(pedidosPosVendaPedido);
-    };
-
-    const cartoesItens = containerPedido.containerItens.cartoesItens;
-
-    for (const [cartao, item] of cartoesItens){
-        cartao.querySelector('.botao-troca-item').onclick = () => {
-            confirmarTrocaItem(item);
+        containerPedido.querySelector('.botao-devolucao').onclick = () => {
+            confirmarDevolucaoPedido(pedido);
         };
 
-        cartao.querySelector('.botao-devolucao-item').onclick = () => {
-            confirmarDevolucaoItem(item);
-        };
-    }
+        containerPedido.querySelector('.botao-consultar-pedidos-pos-venda').onclick = () => {
+            const pedidosPosVendaPedido = [];
+            
+            pedidosPosVenda.forEach(p => {
+                if (p.idPedido === pedido.id){
+                    pedidosPosVendaPedido.push(p);
+                }
+            });
 
-    document.getElementById('container-compras').append(
-        containerPedido
-    );
-});
+            modalConsultarPedidosPosVenda.show(pedidosPosVendaPedido);
+        };
+
+        const cartoesItens = containerPedido.containerItens.cartoesItens;
+
+        for (const [cartao, item] of cartoesItens){
+            cartao.querySelector('.botao-troca-item').onclick = () => {
+                confirmarTrocaItem(item);
+            };
+
+            cartao.querySelector('.botao-devolucao-item').onclick = () => {
+                confirmarDevolucaoItem(item);
+            };
+        }
+
+        document.getElementById('container-compras').append(
+            containerPedido
+        );
+    });
+}
 
 async function confirmarTrocaPedido(pedido){
     const confirmacaoUsuario = confirm("Deseja realizar a troca desse pedido?");

@@ -31,8 +31,13 @@ try {
     cartoesCredito = await retornarCartoesCredito(idCliente);
     cupons = await retornarCupons(idCliente);
 } catch (error){
-    alertarErro(error);
-    window.location.href = "/";
+    if (!idCliente || idCliente.length === 0){
+        alertarErro(new Error("Você deve ter uma conta para acessar essa página!"));
+        window.location.href = "/cadastrar";
+    } else {
+        alertarErro(error);
+        window.location.href = "/";
+    } 
 }
 
 const secaoDadosPessoais = new SecaoDadosPessoais(cliente);
