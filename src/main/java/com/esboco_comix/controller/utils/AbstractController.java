@@ -47,7 +47,7 @@ public abstract class AbstractController extends HttpServlet {
         retornarRespostaJson(resp, mapaErro, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 
-    private static String bodyRequestToString(HttpServletRequest req) throws IOException {
+    protected static String bodyRequestToString(HttpServletRequest req) throws IOException {
         req.setCharacterEncoding("UTF-8");
         StringBuilder string = new StringBuilder();
 
