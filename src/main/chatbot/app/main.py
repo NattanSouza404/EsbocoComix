@@ -4,11 +4,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.model.mensagem import Mensagem
 from app.chatbot.chatbot import iniciarChat, gerarResposta
 
+from app.config.config import BACKEND_URL
+
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8080"],
+    allow_origins=[BACKEND_URL],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -16,7 +18,7 @@ app.add_middleware(
 
 sessoes = {}
 
-@app.post("/get-message")
+@app.post("/api/chatbot/get-message")
 async def message(mensagem: Mensagem):
     idcliente = mensagem.idcliente
 

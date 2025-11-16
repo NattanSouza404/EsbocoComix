@@ -11,3 +11,4 @@ def getConfig(envName: str, propertiesName: str):
 
 GEMINI_API_KEY = getConfig('GEMINI_API_KEY', 'gemini.apikey')
 GEMINI_MODEL = getConfig('GEMINI_MODEL', 'gemini.model')
+BACKEND_URL = getConfig('BACKEND_URL', 'backend.url')
