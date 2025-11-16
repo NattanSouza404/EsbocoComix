@@ -6,6 +6,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080" # Expose the application's port
+    environment:
+      DB_DRIVER: ${DB_DRIVER}
+      DB_URL: ${DB_URL}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     depends_on:
       - postgres
 
@@ -15,6 +20,9 @@ services:
       dockerfile: ./src/main/chatbot/Dockerfile
     ports:
       - "8000:8000"
+    environment:
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_MODEL: ${GEMINI_MODEL}
     depends_on:
       - java-app
 

@@ -1,9 +1,9 @@
 import google.generativeai as genai
-from app.config.config import API_KEY, GEMINI_MODEL
+from app.config.config import GEMINI_API_KEY, GEMINI_MODEL
 from app.model.mensagem import Mensagem
 from app.api_call.api_call import consultarQuadrinhos, consultarClienteByID, consultarPedidosByIDCliente
 
-genai.configure(api_key=API_KEY)
+genai.configure(api_key=GEMINI_API_KEY)
 
 modelo = genai.GenerativeModel(GEMINI_MODEL)
 
