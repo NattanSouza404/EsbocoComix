@@ -9,3 +9,7 @@ database.password=SENHA
 # Especifico ao Java
 database.driver=org.postgresql.Driver
 database.url=jdbc:postgresql://localhost:5432/esboco_comix
+
+# URLS para comunicação entre sistemas
+backend.url=localhost:8080
+chatbot.url=localhost:8000
