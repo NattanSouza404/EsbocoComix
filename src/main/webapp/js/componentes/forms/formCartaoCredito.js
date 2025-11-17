@@ -15,7 +15,7 @@ export class FormularioCartaoCredito extends HTMLFormElement {
             <div class="dados-cartao-credito">
                 <label>
                     Número Cartão de Crédito
-                    <input name="numero" placeholder="xxxx.xxxx.xxxx.xxxx" minlength="16" maxlength="16"></input>
+                    <input name="numero" placeholder="xxxxxxxxxxxxxxxx" minlength="16" maxlength="16"></input>
                 </label>
 
                 <label>
