@@ -15,9 +15,9 @@ import com.esboco_comix.webapp.casos_de_uso.ConsultarClientes;
 import com.esboco_comix.webapp.casos_de_uso.FluxoCadastroCartao;
 import com.esboco_comix.webapp.casos_de_uso.FluxoCadastroEndereco;
 
-import org.junit.Test;
-
 import java.time.LocalDate;
+
+import org.junit.jupiter.api.Test;
 
 public class CadastroClienteTest extends BaseTest {
 

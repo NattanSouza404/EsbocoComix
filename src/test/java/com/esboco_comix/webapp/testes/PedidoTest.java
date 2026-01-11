@@ -4,7 +4,8 @@ import com.esboco_comix.webapp.base.BaseTest;
 import com.esboco_comix.webapp.casos_de_uso.FiltrarQuadrinhos;
 import com.esboco_comix.webapp.casos_de_uso.FluxoVenda;
 import com.esboco_comix.webapp.casos_de_uso.MudarStatusPedido;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 public class PedidoTest extends BaseTest {
 

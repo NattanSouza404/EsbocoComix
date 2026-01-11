@@ -1,7 +1,7 @@
 package com.esboco_comix.webapp.base;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -11,13 +11,13 @@ public class BaseTest {
     protected WebDriver driver;
     protected WebDriverWait wait;
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception{
         driver = DriverManager.criaDriver();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    @After
+    @AfterEach
     public void destroy() {
         driver.quit();
         DriverManager.cleanup();
