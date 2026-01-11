@@ -14,6 +14,15 @@ export class ContainerNav extends HTMLDivElement {
                 <h5 class="fw-bold">Livraria de<br/>Quadrinhos</h5>
             </a>
 
+            <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbar-nav"
+                aria-controls="navbar-nav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
             <div id="navbar-nav" class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-link">
