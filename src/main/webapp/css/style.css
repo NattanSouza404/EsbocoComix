@@ -83,3 +83,15 @@ label > * {
     display: block;
     margin-top: 0.5em;
 }
+
+.secao-senha {
+    display: flex;
+    flex-direction: column;
+}
+
+.aviso-senha {
+    background-color: lightyellow;
+    border: solid black 1px;
+
+    margin: 8px;
+}

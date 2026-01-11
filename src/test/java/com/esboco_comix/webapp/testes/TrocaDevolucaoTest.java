@@ -3,7 +3,7 @@ package com.esboco_comix.webapp.testes;
 import com.esboco_comix.webapp.base.BaseTest;
 import com.esboco_comix.webapp.casos_de_uso.MudarStatusPedido;
 import com.esboco_comix.webapp.casos_de_uso.PedirTrocaDevolucao;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TrocaDevolucaoTest extends BaseTest {
 

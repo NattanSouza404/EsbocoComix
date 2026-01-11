@@ -33,3 +33,6 @@ tomcat.8080/
 # Ambiente virtual do python
 venv/
 .venv/
+
+# Chaves AWS
+*.pem

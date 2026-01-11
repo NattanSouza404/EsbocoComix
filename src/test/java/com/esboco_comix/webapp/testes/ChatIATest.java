@@ -1,6 +1,7 @@
 package com.esboco_comix.webapp.testes;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 import com.esboco_comix.webapp.base.BaseTest;
 import com.esboco_comix.webapp.casos_de_uso.FluxoChatIA;
