@@ -1,6 +1,8 @@
 services:
   java-app:
-    image: nattansouza404/esboco-comix-java:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8080:8080" # Expose the application's port
     environment:
@@ -13,7 +15,9 @@ services:
       - postgres
 
   python-app:
-    image: nattansouza404/esboco-comix-python:latest
+    build:
+      context: .
+      dockerfile: ./src/main/chatbot/Dockerfile
     ports:
       - "8000:8000"
     environment:
