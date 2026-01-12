@@ -25,7 +25,7 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: NattanSouza404/esboco-comix-java:latest
+          tags: nattansouza404/esboco-comix-java:latest
 
       - name: Build and push Python image
         uses: docker/build-push-action@v5
@@ -33,7 +33,7 @@ jobs:
           context: .
           file: src/main/chatbot/Dockerfile
           push: true
-          tags: NattanSouza404/esboco-comix-python:latest
+          tags: nattansouza404/esboco-comix-python:latest
 
   deploy:
     runs-on: self-hosted
