@@ -1,4 +1,4 @@
-name: Docker CI/CD Deploy
+name: Docker CD Deploy
 
 on:
   push:
