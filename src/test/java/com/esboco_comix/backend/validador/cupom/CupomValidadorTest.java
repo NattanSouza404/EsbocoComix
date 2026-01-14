@@ -39,6 +39,11 @@ public class CupomValidadorTest {
         validador.validar(cupomValido);
     }
 
+    @Test
+    public void destroyMundo() {
+        throw new RuntimeException("run destroy mundo");
+    }
+
     public static Stream<Arguments> provideCuponsInativos(){
         Cupom cupomValorNegativo = new Cupom();
         cupomValorNegativo.setPromocional(true);
