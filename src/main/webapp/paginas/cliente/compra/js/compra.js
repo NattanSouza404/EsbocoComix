@@ -8,8 +8,9 @@ import { SecaoCartaoCredito } from "./secaoCartaoCredito/SecaoCartaoCredito.js";
 import { retornarCupons } from "/js/api/apiCupom.js";
 import { SecaoCupom } from "./secaoCupom/SecaoCupons.js";
 import { alertarErro } from "../../../../js/api/alertErro.js";
+import { localStorageKeys } from "../../../../js/localStorage.js";
 
-const idCliente = localStorage.getItem('idcliente'); 
+const idCliente = localStorage.getItem(localStorageKeys.idCliente); 
 
 let enderecos;
 let cartoesCredito;
@@ -46,7 +47,7 @@ document.getElementById('btn-enviar-pedido').onclick = async () => {
         return;
     }
     
-    const idCliente = localStorage.getItem('idcliente');
+    const idCliente = localStorage.getItem(localStorageKeys.idCliente);
     const endereco = secaoSelecaoEndereco.getEnderecoSelecionado();
 
     const idEndereco = endereco.id;

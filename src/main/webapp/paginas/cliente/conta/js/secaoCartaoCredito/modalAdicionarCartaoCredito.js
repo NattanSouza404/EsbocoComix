@@ -3,6 +3,7 @@ import { montarCartaoCreditoPorForm } from "/js/script.js";
 import { FormularioCartaoCredito } from "/js/componentes/forms/formCartaoCredito.js";
 import { inserirCartaoCredito } from "/js/api/apiCartaoCredito.js";
 import { alertarErro } from "../../../../../js/api/alertErro.js";
+import { localStorageKeys } from "../../../../../js/localStorage.js";
 
 export class ModalAdicionarCartaoCredito extends Modal {
 
@@ -23,7 +24,7 @@ export class ModalAdicionarCartaoCredito extends Modal {
             this.conteudoModal
         );
 
-        cartao.idCliente = localStorage.getItem('idcliente');
+        cartao.idCliente = localStorage.getItem(localStorageKeys.idCliente);
 
         const confirmacaoUsuario = confirm("Deseja mesmo cadastrar esse cartão de crédito?");
 

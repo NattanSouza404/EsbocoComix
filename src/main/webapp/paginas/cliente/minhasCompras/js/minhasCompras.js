@@ -6,8 +6,9 @@ import { inserirPedidoPosVenda } from "../../../../js/api/apiPedidoPosVenda.js";
 import { ModalConsultarPedidosPosVenda } from "./ModalConsultarPedidosVenda.js";
 import { ContainerPedido } from "./containerPedido/ContainerPedido.js";
 import { alertarErro } from "../../../../js/api/alertErro.js";
+import { localStorageKeys } from "../../../../js/localStorage.js";
 
-const idCliente = localStorage.getItem('idcliente');
+const idCliente = localStorage.getItem(localStorageKeys.idCliente);
 
 let pedidos;
 let pedidosPosVenda;

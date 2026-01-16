@@ -7,7 +7,7 @@ import { SecaoEndereco } from "./secaoEndereco/SecaoEndereco.js";
 import { SecaoCartaoCredito } from "./secaoCartaoCredito/SecaoCartaoCredito.js";
 import { retornarCupons } from "/js/api/apiCupom.js";
 import { SecaoCupom } from "./secaoCupons/secaoCupons.js";
-import { removerHistorico } from "../../../../js/localStorage.js";
+import { localStorageKeys, removerHistorico } from "../../../../js/localStorage.js";
 import { alertarErro } from "../../../../js/api/alertErro.js";
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -18,7 +18,7 @@ if (idClienteURL !== null && idClienteURL !== undefined){
     window.location.href = "/conta";
 }
 
-const idCliente = localStorage.getItem('idcliente');
+const idCliente = localStorage.getItem(localStorageKeys.idCliente);
 
 let cliente;
 let enderecos;

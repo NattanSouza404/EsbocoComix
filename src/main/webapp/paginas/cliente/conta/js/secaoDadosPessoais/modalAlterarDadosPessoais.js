@@ -3,6 +3,7 @@ import { atualizarCliente } from "/js/api/apiCliente.js";
 import { FormularioDadosPessoais } from "/js/componentes/forms/formDadosPessoais.js";
 import { Modal } from "/js/componentes/modal.js";
 import { alertarErro } from "../../../../../js/api/alertErro.js";
+import { localStorageKeys } from "../../../../../js/localStorage.js";
 
 export class ModalAlterarDadosPessoais extends Modal {
 
@@ -35,7 +36,7 @@ export class ModalAlterarDadosPessoais extends Modal {
         }
 
         const cliente = montarClientePorForm(this.form);
-        cliente.id = localStorage.getItem('idcliente');
+        cliente.id = localStorage.getItem(localStorageKeys.idCliente);
 
         try {
             await atualizarCliente(cliente);

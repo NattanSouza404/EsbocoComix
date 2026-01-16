@@ -4,6 +4,7 @@ import { SecaoFormsCartaoCredito } from "./secaoFormsCartaoCredito.js";
 import { FormularioCadastrarDadosPessoais } from "./formsCadastrar.js";
 import { SecaoFormsEndereco } from "./secaoFormsEndereco.js";
 import { alertarErro } from "../../../../js/api/alertErro.js";
+import { localStorageKeys } from "../../../../js/localStorage.js";
 
 const mainContainer = document.getElementById('container-cadastrar-cliente');
 
@@ -51,7 +52,7 @@ async function enviarCliente(){
 
         alert('Cadastrado com sucesso');
 
-        localStorage.setItem('idcliente', cadastro.cliente.id);
+        localStorage.setItem(localStorageKeys.idCliente, cadastro.cliente.id);
         window.location.href = "/";
     } catch (error){
         alertarErro(error);

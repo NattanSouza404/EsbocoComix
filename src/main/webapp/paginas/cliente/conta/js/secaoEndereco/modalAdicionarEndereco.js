@@ -3,6 +3,7 @@ import { Modal } from "/js/componentes/modal.js";
 import { FormularioEndereco } from "/js/componentes/forms/formEndereco.js";
 import { inserirEndereco } from "/js/api/apiEndereco.js";
 import { alertarErro } from "../../../../../js/api/alertErro.js";
+import { localStorageKeys } from "../../../../../js/localStorage.js";
 
 export class ModalAdicionarEndereco extends Modal {
 
@@ -30,7 +31,7 @@ export class ModalAdicionarEndereco extends Modal {
             this.conteudoModal
         );
 
-        endereco.idCliente = localStorage.getItem('idcliente');
+        endereco.idCliente = localStorage.getItem(localStorageKeys.idCliente);
 
         try {
             await inserirEndereco(endereco);
