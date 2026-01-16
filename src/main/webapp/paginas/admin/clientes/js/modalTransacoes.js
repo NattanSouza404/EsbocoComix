@@ -17,7 +17,8 @@ export default class ModalTransacoes extends Modal {
     }
 
     async show(cliente){
-        
+        this.cliente = cliente;
+
         let pedidos;
         try {
             pedidos = await retornarPedidos(this.cliente.id);
@@ -25,8 +26,6 @@ export default class ModalTransacoes extends Modal {
             alertarErro(error);
             return;
         }
-
-        this.cliente = cliente;
 
         super.mudarTitulo(`Transações de ${this.cliente.nome}`);
 
