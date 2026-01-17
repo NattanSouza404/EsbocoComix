@@ -1,6 +1,7 @@
 package com.esboco_comix.controller.impl;
 
 import com.esboco_comix.controller.utils.AbstractController;
+import com.esboco_comix.controller.utils.Router;
 import com.esboco_comix.dto.AtualizarPedidoDTO;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.service.impl.pedido.PedidoService;
@@ -8,78 +9,83 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.util.Map;
 
 public class PedidoController extends AbstractController {
 
     private final PedidoService pedidoService = new PedidoService();
 
+    private final Router rotasGet = new Router(
+        Map.of(
+            "", this::consultarTodos,
+            "/por-id-cliente", this::consultarPorIdCliente
+        )
+    );
+
+    private final Router rotasPost = new Router(
+        Map.of(
+            "", this::adicionar
+        )
+    );
+
+    private final Router rotasPut = new Router(
+        Map.of(
+            "/atualizar-status", this::atualizarStatus
+        )
+    );
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
-        try {
-            String parametroId = req.getParameter("idcliente");
-            Object objetoResposta;
-
-            if (parametroId != null && !parametroId.equals("undefined")){
-                int id = Integer.parseInt(parametroId);
-                objetoResposta = pedidoService.consultarPorIDCliente(id);
-            } else {
-                objetoResposta = pedidoService.consultarTodos();
-            }
-
-            retornarRespostaJson(
-                resp, 
-                objetoResposta,
-                HttpServletResponse.SC_OK
-            ); 
-
-        } catch (Exception e) {
-            estourarErro(resp, new Exception("Erro ao consultar pedido(s)", e));
-        }
+        processar(
+            req,
+            resp,
+            rotasGet,
+            HttpServletResponse.SC_OK,
+            "Erro ao consultar pedido(s)"
+        );
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        try {
-            Pedido pedido = jsonToObject(req, Pedido.class);
-            
-            Pedido pedidoInserido = pedidoService.inserir(pedido, getSession(req));
-
-            retornarRespostaJson(
-                resp,
-                pedidoInserido,
-                HttpServletResponse.SC_CREATED
-            );
-
-        } catch (Exception e) {
-            estourarErro(resp, new Exception("Erro ao adicionar pedido", e));
-        }
+        processar(
+            req,
+            resp,
+            rotasPost,
+            HttpServletResponse.SC_CREATED,
+            "Erro ao adicionar pedido"
+        );
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        
-        try {
+        processar(
+            req,
+            resp,
+            rotasPut,
+            HttpServletResponse.SC_OK,
+            "Erro ao atualizar pedido"
+        );
+    }
 
-            String opcao = Optional.ofNullable(req.getParameter("opcao")).orElse("default");
-            Object objetoResposta = null;
+    private Object consultarTodos(HttpServletRequest req) throws Exception {
+        return pedidoService.consultarTodos();
+    }
 
-            switch (opcao) {
-                case "atualizarstatuspedido":
-                    AtualizarPedidoDTO pedido = jsonToObject(req, AtualizarPedidoDTO.class);
-                    objetoResposta = pedidoService.atualizarStatus(pedido);
-                    break;
-            }
+    private Object consultarPorIdCliente(HttpServletRequest req) throws Exception {
+        int idCliente = Integer.parseInt(
+            requireParam(req, "id")
+        );
 
-            retornarRespostaJson(
-                resp,
-                objetoResposta,
-                HttpServletResponse.SC_OK
-            );
+        return pedidoService.consultarPorIDCliente(idCliente);
+    }
 
-        } catch (Exception e) {
-            estourarErro(resp, new Exception("Erro ao atualizar pedido", e));
-        }
+    private Object adicionar(HttpServletRequest req) throws Exception {
+        Pedido pedido = jsonToObject(req, Pedido.class);   
+        return pedidoService.inserir(pedido, req.getSession());
+    }
+
+    private Object atualizarStatus(HttpServletRequest req) throws Exception {
+        AtualizarPedidoDTO pedido = jsonToObject(req, AtualizarPedidoDTO.class);
+        return pedidoService.atualizarStatus(pedido);
     }
 }

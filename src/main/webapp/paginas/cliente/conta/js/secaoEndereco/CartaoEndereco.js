@@ -1,5 +1,5 @@
 import { alertarErro } from "../../../../../js/api/alertErro.js";
-import { deletarEndereco } from "../../../../../js/api/apiEndereco.js";
+import { deletarEndereco } from "../../../../../js/api/endereco.api.js";
 
 export class CartaoEndereco extends HTMLDivElement {
     constructor(endereco, modalAlterarEndereco){

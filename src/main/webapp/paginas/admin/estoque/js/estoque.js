@@ -1,8 +1,8 @@
 import { alertarErro } from "../../../../js/api/alertErro.js";
-import { consultarEntradasEstoque } from "../../../../js/api/apiEstoque.js";
+import { consultarEntradasEstoque } from "../../../../js/api/estoque.api.js";
 import { formatarDateTime } from "../../../../js/script.js";
 import ModalEntradaEstoque from "./modalEntradaEstoque.js";
-import { consultarTodosQuadrinhos } from "/js/api/apiQuadrinho.js";
+import { consultarTodosQuadrinhos } from "/js/api/quadrinho.api.js";
 import { formatarPreco } from "/js/script.js";
 
 const tbody = document.getElementById("stockTable");

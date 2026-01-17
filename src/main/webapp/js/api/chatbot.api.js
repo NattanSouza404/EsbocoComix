@@ -3,7 +3,7 @@ import { estourarErroAPI } from "./alertErro.js";
 const PATH = "/api/chatbot";
 
 export async function retornarRespostaIA(mensagem){
-    const url = `${PATH}?opcao=get-message`;
+    const url = `${PATH}/prompt-mensagem`;
 
     const option = {
         method: 'POST',

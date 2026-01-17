@@ -1,5 +1,5 @@
 import { alertarErro } from "../../../../../js/api/alertErro.js";
-import { deletarCartaoCredito } from "/js/api/apiCartaoCredito.js";
+import { deletarCartaoCredito } from "/js/api/cartaoCredito.api.js";
 
 export class CartaoCartaoCredito extends HTMLDivElement {
     constructor(cartaoCredito, modalAlterarCartaoCredito){

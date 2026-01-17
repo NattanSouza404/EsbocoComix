@@ -1,9 +1,9 @@
 import { estourarErroAPI } from "./alertErro.js";
 
-const PATH = "/api/cartaocredito";
+const PATH = "/api/endereco";
 
-export async function retornarCartoesCredito(idCliente) {
-    const resposta = await fetch(`${PATH}?idcliente=${idCliente}`);
+export async function retornarEnderecos(idCliente){
+    const resposta = await fetch(`${PATH}/por-id-cliente?id=${idCliente}`);
 
     if (resposta.status !== 200){
         await estourarErroAPI(resposta);
@@ -12,13 +12,13 @@ export async function retornarCartoesCredito(idCliente) {
     return await resposta.json();
 }
 
-export async function inserirCartaoCredito(cartao){
+export async function inserirEndereco(endereco){
     const url = PATH;
 
     const option = {
         method: 'POST',
         headers:{'Content-Type': 'application/json'},
-        body: JSON.stringify(cartao)
+        body: JSON.stringify(endereco)
     }
 
     const resposta = await fetch(url, option);
@@ -28,13 +28,13 @@ export async function inserirCartaoCredito(cartao){
     }
 } 
 
-export async function atualizarCartaoCredito(cartaoCredito){
+export async function atualizarEndereco(endereco){ 
     let url = PATH;
 
     const option = {
         method: 'PUT',
         headers:{'Content-Type': 'application/json'},
-        body: JSON.stringify(cartaoCredito)
+        body: JSON.stringify(endereco)
     }
 
     const resposta = await fetch(url, option);
@@ -44,13 +44,13 @@ export async function atualizarCartaoCredito(cartaoCredito){
     }
 }
 
-export async function deletarCartaoCredito(cartaoCredito){
+export async function deletarEndereco(endereco){
     const url = PATH;
 
     const option = {
         method: 'DELETE',
         headers:{'Content-Type': 'application/json'},
-        body: JSON.stringify(cartaoCredito)
+        body: JSON.stringify(endereco)
     }
 
     const resposta = await fetch(url, option);

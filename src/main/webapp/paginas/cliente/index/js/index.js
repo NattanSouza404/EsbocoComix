@@ -1,6 +1,6 @@
-import { consultarTodosQuadrinhos } from "/js/api/apiQuadrinho.js";
+import { consultarTodosQuadrinhos } from "@api/quadrinho.api.js";
 import { CartaoProduto } from "./CartaoProduto.js";
-import { consultarTodasCategorias, filtrarTodosQuadrinhos } from "../../../../js/api/apiQuadrinho.js";
+import { consultarTodasCategorias, filtrarTodosQuadrinhos } from "../../../../js/api/quadrinho.api.js";
 import { alertarErro } from "../../../../js/api/alertErro.js";
 
 let quadrinhos;

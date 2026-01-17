@@ -13,13 +13,15 @@ export async function retornarCarrinho() {
 }
 
 export async function adicionarItemAoCarrinho(item){
+    const url = `${PATH}/adicionar-item`;
+
     const option = {
         method: 'POST',
         headers:{'Content-Type': 'application/json'},
         body: JSON.stringify(item)
     }
 
-    const resposta = await fetch(PATH, option);
+    const resposta = await fetch(url, option);
 
     if (resposta.status !== 201) {
         await estourarErroAPI(resposta);
@@ -27,13 +29,15 @@ export async function adicionarItemAoCarrinho(item){
 }
 
 export async function atualizarItemCarrinho(item){
+    const url = `${PATH}/atualizar-item`;
+    
     const option = {
         method: 'PUT',
         headers:{'Content-Type': 'application/json'},
         body: JSON.stringify(item)
     }
 
-    const resposta = await fetch(PATH, option);
+    const resposta = await fetch(url, option);
 
     if (resposta.status !== 200) {
         await estourarErroAPI(resposta);

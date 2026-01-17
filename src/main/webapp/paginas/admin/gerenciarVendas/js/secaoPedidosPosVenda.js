@@ -1,5 +1,5 @@
 import { alertarErro } from "../../../../js/api/alertErro.js";
-import { atualizarStatusPedidoPosVenda } from "../../../../js/api/apiPedidoPosVenda.js";
+import { atualizarStatusPedidoPosVenda } from "../../../../js/api/pedidoPosVenda.api.js";
 import { formatarDateTime } from "/js/script.js";
 
 export class SecaoPedidosPosVenda {

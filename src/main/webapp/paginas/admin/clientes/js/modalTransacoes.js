@@ -1,5 +1,5 @@
 import { formatarDateTime, formatarPreco } from "/js/script.js";
-import { retornarPedidos } from "/js/api/apiPedido.js";
+import { retornarPedidos } from "/js/api/pedido.api.js";
 import { Modal } from "/js/componentes/modal.js";
 import { alertarErro } from "../../../../js/api/alertErro.js";
 
