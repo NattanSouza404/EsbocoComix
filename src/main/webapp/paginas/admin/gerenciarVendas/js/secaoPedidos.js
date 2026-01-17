@@ -1,5 +1,5 @@
 import { formatarPreco, formatarDateTime } from "/js/script.js";
-import { atualizarStatusPedido} from "../../../../js/api/apiPedido.js";
+import { atualizarStatusPedido} from "../../../../js/api/pedido.api.js";
 import { alertarErro } from "../../../../js/api/alertErro.js";
 
 export class SecaoPedidos {

@@ -1,11 +1,11 @@
-import { retornarCliente } from "/js/api/apiCliente.js";
-import { retornarEnderecos } from "/js/api/apiEndereco.js";
-import { retornarCartoesCredito } from "/js/api/apiCartaoCredito.js";
+import { retornarCliente } from "/js/api/cliente.api.js";
+import { retornarEnderecos } from "/js/api/endereco.api.js";
+import { retornarCartoesCredito } from "/js/api/cartaoCredito.api.js";
 
 import { SecaoDadosPessoais } from "./secaoDadosPessoais/SecaoDadosPessoais.js";
 import { SecaoEndereco } from "./secaoEndereco/SecaoEndereco.js";
 import { SecaoCartaoCredito } from "./secaoCartaoCredito/SecaoCartaoCredito.js";
-import { retornarCupons } from "/js/api/apiCupom.js";
+import { retornarCupons } from "../../../../js/api/cupom.api.js";
 import { SecaoCupom } from "./secaoCupons/secaoCupons.js";
 import { localStorageKeys, removerHistorico } from "../../../../js/localStorage.js";
 import { alertarErro } from "../../../../js/api/alertErro.js";

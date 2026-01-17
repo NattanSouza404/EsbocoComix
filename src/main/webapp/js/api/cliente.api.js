@@ -3,7 +3,7 @@ import { estourarErroAPI } from "./alertErro.js";
 const PATH = "/api/cliente";
 
 export async function retornarCliente(id) {
-    const resposta = await fetch(`${PATH}?id=${id}`);
+    const resposta = await fetch(`${PATH}/id?id=${id}`);
 
     if (resposta.status !== 200){
         await estourarErroAPI(resposta);
@@ -15,7 +15,7 @@ export async function retornarCliente(id) {
 export async function retornarAllClientes(filtro) {
     let url = PATH;
     if (filtro !== undefined){
-
+        url += "/filtrar";
         url += "?opcao=consultarporfiltro";
         url += "&nome="+filtro.nome;
         url += "&cpf="+filtro.cpf;
@@ -53,11 +53,8 @@ export async function inserirCliente(pedidoCadastrarCliente){
     return await resposta.json();
 }
 
-export async function atualizarCliente(cliente, opcao){
+export async function atualizarCliente(cliente){
     let url = PATH;
-    if (opcao != null){
-        url += "?opcao="+opcao;
-    }
 
     const option = {
         method: 'PUT',
@@ -74,9 +71,8 @@ export async function atualizarCliente(cliente, opcao){
 }
 
 export async function atualizarSenha(cliente){
-
-    let url = `${PATH}?opcao=atualizarsenha`;
-
+    let url = `${PATH}/atualizar-senha`;
+    
     const option = {
         method: 'PUT',
         headers:{'Content-Type': 'application/json'},
@@ -92,7 +88,7 @@ export async function atualizarSenha(cliente){
 }
 
 export async function inativarCliente(cliente){
-    let url = `${PATH}?opcao=atualizarstatuscadastro`;
+    let url = `${PATH}/atualizar-status-cadastro`;
 
     const option = {
         method: 'PUT',

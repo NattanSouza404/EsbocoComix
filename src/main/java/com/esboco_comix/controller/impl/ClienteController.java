@@ -1,6 +1,7 @@
 package com.esboco_comix.controller.impl;
 
 import com.esboco_comix.controller.utils.AbstractController;
+import com.esboco_comix.controller.utils.Router;
 import com.esboco_comix.dto.AlterarSenhaDTO;
 import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.model.entidades.Cliente;
@@ -9,95 +10,103 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.util.Map;
 
 public class ClienteController extends AbstractController {
     private final ClienteService clienteService = new ClienteService();
 
+    private final Router rotasGet = new Router(
+        Map.of(
+            "", this::consultarTodos,
+            "/id", this::consultarPorId,
+            "/filtrar", this::consultarPorFiltro
+        )
+    );
+
+    private final Router rotasPost = new Router(
+        Map.of(
+            "", this::cadastrarCliente
+        )
+    );
+
+    private final Router rotasPut = new Router(
+        Map.of(
+            "", this::atualizarCliente,
+            "/atualizar-senha", this::atualizarSenha,
+            "/atualizar-status-cadastro", this::atualizarStatusCadastro
+        )
+    );
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-         
-        try {
-            String opcao = Optional.ofNullable(req.getParameter("opcao")).orElse("default");
-            Object objetoResposta;
-
-            switch (opcao) {
-                case "consultarporfiltro":
-                    objetoResposta = clienteService.consultarTodos(req);
-                    break;
-            
-                default:
-                    String parametroId = req.getParameter("id");
-
-                    if (parametroId != null){
-                        int id = Integer.parseInt(parametroId);
-                        objetoResposta = clienteService.consultarByID(id);
-                        break;
-                    }
-
-                    objetoResposta = clienteService.consultarTodos();
-
-                    break;
-            }
-
-            retornarRespostaJson(
-                resp, 
-                objetoResposta,
-                HttpServletResponse.SC_OK
-            ); 
-
-        } catch (Exception e) {
-            estourarErro(resp, new Exception("Erro ao consultar cliente(s)", e));
-        }
+        processar(
+            req,
+            resp,
+            rotasGet,
+            HttpServletResponse.SC_OK,
+            "Erro ao consultar cliente(s)"
+        );
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        try {
-            CadastrarClienteDTO pedidoCadastrarCliente = jsonToObject(req, CadastrarClienteDTO.class);
-
-            retornarRespostaJson(
-                resp,
-                clienteService.inserir(pedidoCadastrarCliente),
-                HttpServletResponse.SC_CREATED
-            );
-        } catch (Exception e) {
-            estourarErro(resp, new Exception("Erro ao adicionar cliente", e));
-        }
+        processar(
+            req,
+            resp,
+            rotasPost,
+            HttpServletResponse.SC_CREATED,
+            "Erro ao adicionar cliente(s)"
+        );
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        processar(
+            req,
+            resp,
+            rotasPut,
+            HttpServletResponse.SC_OK,
+            "Erro ao atualizar cliente"
+        );
+    }
 
-        try {
-            String opcao = Optional.ofNullable(req.getParameter("opcao")).orElse("default");
-            Object objetoResposta;
+    private Object consultarTodos(HttpServletRequest req){
+        return clienteService.consultarTodos();
+    }
 
-            switch (opcao) {
-                case "atualizarsenha":
-                    AlterarSenhaDTO pedido = jsonToObject(req, AlterarSenhaDTO.class);
-                    objetoResposta = clienteService.atualizarSenha(pedido);
-                    break;
+    private Object consultarPorId(HttpServletRequest req){
+        String parametroId = req.getParameter("id");
 
-                case "atualizarstatuscadastro":
-                    Cliente clienteToUpdateStatus = jsonToObject(req, Cliente.class);
-                    objetoResposta = clienteService.atualizarStatusCadastro(clienteToUpdateStatus);
-                    break;
-
-                default:
-                    Cliente clienteToUpdate = jsonToObject(req, Cliente.class);
-                    objetoResposta = clienteService.atualizar(clienteToUpdate);
-                    break;
-            }
-
-            retornarRespostaJson(
-                resp,
-                objetoResposta,
-                HttpServletResponse.SC_OK
-            );
-        } catch (Exception e) {
-            estourarErro(resp, new Exception("Erro ao atualizar cliente", e));
+        if (parametroId != null){
+            int id = Integer.parseInt(parametroId);
+            return clienteService.consultarByID(id);
         }
+
+        throw new IllegalArgumentException("Id de cliente não incluído");
+    }
+
+    private Object consultarPorFiltro(HttpServletRequest req){
+        return clienteService.consultarTodos(req);
+    }
+
+    private Object cadastrarCliente(HttpServletRequest req) throws Exception {
+        CadastrarClienteDTO pedidoCadastrarCliente = jsonToObject(req, CadastrarClienteDTO.class);
+        return clienteService.inserir(pedidoCadastrarCliente);
+    }
+
+    public Object atualizarCliente(HttpServletRequest req) throws Exception {
+        Cliente clienteToUpdate = jsonToObject(req, Cliente.class);
+        return clienteService.atualizar(clienteToUpdate);
+    }
+
+    public Object atualizarSenha(HttpServletRequest req) throws Exception {
+        AlterarSenhaDTO pedido = jsonToObject(req, AlterarSenhaDTO.class);
+        return clienteService.atualizarSenha(pedido);
+    }
+
+    public Object atualizarStatusCadastro(HttpServletRequest req) throws Exception {
+        Cliente clienteToUpdateStatus = jsonToObject(req, Cliente.class);
+        return clienteService.atualizarStatusCadastro(clienteToUpdateStatus);
     }
 
 }

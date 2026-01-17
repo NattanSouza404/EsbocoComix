@@ -1,19 +1,13 @@
 import { estourarErroAPI } from "./alertErro.js";
 
-const PATH = "/api/pedido_pos_venda";
+const PATH = "/api/pedido";
 
-export async function retornarPedidosPosVenda(){
-    const resposta = await fetch(PATH);
+export async function retornarPedidos(idCliente){
+    let url = PATH;
 
-    if (resposta.status !== 200){
-        await estourarErroAPI(resposta);
+    if (idCliente){
+        url += `?id=${idCliente}`;
     }
-
-    return await resposta.json();
-}
-
-export async function retornarPedidosPosVendaByCliente(idCliente){
-    let url = `${PATH}?idcliente=${idCliente}`;
 
     const resposta = await fetch(url);
 
@@ -24,7 +18,7 @@ export async function retornarPedidosPosVendaByCliente(idCliente){
     return await resposta.json();
 }
 
-export async function inserirPedidoPosVenda(pedido) {
+export async function enviarPedido(pedido) {
     const url = PATH;
 
     const option = {
@@ -40,8 +34,8 @@ export async function inserirPedidoPosVenda(pedido) {
     }
 }
 
-export async function atualizarStatusPedidoPosVenda(pedido){
-    let url = PATH;
+export async function atualizarStatusPedido(pedido){
+    let url = `${PATH}/atualizar-status`;
 
     const option = {
         method: 'PUT',

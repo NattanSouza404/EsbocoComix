@@ -1,7 +1,7 @@
-import { retornarPedidos } from "../../../../js/api/apiPedido.js";
-import { retornarPedidosPosVendaByCliente } from "../../../../js/api/apiPedidoPosVenda.js";
-import { atualizarStatusPedido } from "../../../../js/api/apiPedido.js";
-import { inserirPedidoPosVenda } from "../../../../js/api/apiPedidoPosVenda.js";
+import { retornarPedidos } from "../../../../js/api/pedido.api.js";
+import { retornarPedidosPosVendaByCliente } from "../../../../js/api/pedidoPosVenda.api.js";
+import { atualizarStatusPedido } from "../../../../js/api/pedido.api.js";
+import { inserirPedidoPosVenda } from "../../../../js/api/pedidoPosVenda.api.js";
 
 import { ModalConsultarPedidosPosVenda } from "./ModalConsultarPedidosVenda.js";
 import { ContainerPedido } from "./containerPedido/ContainerPedido.js";

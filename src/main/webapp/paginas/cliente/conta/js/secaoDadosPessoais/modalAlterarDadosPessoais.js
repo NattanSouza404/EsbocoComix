@@ -1,5 +1,5 @@
 import { montarClientePorForm } from "/js/script.js";
-import { atualizarCliente } from "/js/api/apiCliente.js";
+import { atualizarCliente } from "../../../../../js/api/cliente.api.js";
 import { FormularioDadosPessoais } from "/js/componentes/forms/formDadosPessoais.js";
 import { Modal } from "/js/componentes/modal.js";
 import { alertarErro } from "../../../../../js/api/alertErro.js";

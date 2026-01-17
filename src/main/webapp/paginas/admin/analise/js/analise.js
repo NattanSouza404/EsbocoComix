@@ -1,5 +1,5 @@
 import { alertarErro } from "../../../../js/api/alertErro.js";
-import { retornarAnalise } from "../../../../js/api/apiAnalise.js";
+import { retornarAnalise } from "../../../../js/api/analise.api.js";
 import FormatadorAnalise from "./FormatadorAnalise.js";
 import GraficoLinha from "./GraficoLinha.js";
 

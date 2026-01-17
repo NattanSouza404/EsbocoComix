@@ -1,4 +1,4 @@
-import { inativarCliente } from "../../../../js/api/apiCliente.js";
+import { inativarCliente } from "../../../../js/api/cliente.api.js";
 import ModalTransacoes from "./modalTransacoes.js";
 import { formatarData } from "/js/script.js";
 import ModalCupomPromocional from "./modalCupomPromocional.js";

@@ -67,7 +67,7 @@ public class ServidorConfig {
 		);
 
 		for (Map.Entry<String, HttpServlet> entry: servlets.entrySet()){
-			String path = "/" + entry.getKey();
+			String path = "/" + entry.getKey() + "/*";
 			Tomcat.addServlet(context, entry.getKey(), entry.getValue());
 			context.addServletMappingDecoded(path, entry.getKey());
 		}
