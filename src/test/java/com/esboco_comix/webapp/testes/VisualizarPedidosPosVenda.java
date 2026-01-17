@@ -1,7 +1,8 @@
 package com.esboco_comix.webapp.testes;
 
 import com.esboco_comix.webapp.paginas.cliente.conta.PaginaConta;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 import com.esboco_comix.webapp.base.BaseTest;
 import com.esboco_comix.webapp.paginas.cliente.minhas_compras.PaginaMinhasCompras;

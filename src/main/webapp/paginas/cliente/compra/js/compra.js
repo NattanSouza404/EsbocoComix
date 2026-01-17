@@ -1,11 +1,11 @@
-import { enviarPedido } from "/js/api/apiPedido.js";
-import { retornarCarrinho } from "/js/api/apiCarrinho.js";
-import { retornarEnderecos } from "/js/api/apiEndereco.js";
-import { retornarCartoesCredito } from "/js/api/apiCartaoCredito.js";
+import { enviarPedido } from "/js/api/pedido.api.js";
+import { retornarCarrinho } from "/js/api/carrinho.api.js";
+import { retornarEnderecos } from "/js/api/endereco.api.js";
+import { retornarCartoesCredito } from "/js/api/cartaoCredito.api.js";
 import { ResumoPedido } from "./secaoResumo/SecaoResumo.js";
 import { SecaoSelecaoEndereco } from "./secaoEndereco/SecaoSelecaoEndereco.js";
 import { SecaoCartaoCredito } from "./secaoCartaoCredito/SecaoCartaoCredito.js";
-import { retornarCupons } from "/js/api/apiCupom.js";
+import { retornarCupons } from "../../../../js/api/cupom.api.js";
 import { SecaoCupom } from "./secaoCupom/SecaoCupons.js";
 import { alertarErro } from "../../../../js/api/alertErro.js";
 

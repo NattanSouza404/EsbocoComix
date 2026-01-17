@@ -33,7 +33,7 @@ ALTER TABLE cartoes_credito ADD CONSTRAINT pk_cre PRIMARY KEY ( cre_id );
 CREATE TABLE cartoes_credito_pedido (
     ccp_cre_id NUMBER(9) NOT NULL,
     ccp_ped_id NUMBER(9) NOT NULL,
-    cpp_valor  NUMBER(6, 2) NOT NULL
+    ccp_valor  NUMBER(6, 2) NOT NULL
 )
 LOGGING;
 

@@ -9,12 +9,35 @@ import com.esboco_comix.utils.ConversorJson;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 public abstract class AbstractController extends HttpServlet {
-    
-    public HttpSession getSession(HttpServletRequest req) {
-        return req.getSession();
+
+    public String getPath(HttpServletRequest req){
+        return 
+            req.getPathInfo() != null ? req.getPathInfo() : ""; 
+    }
+
+    protected void processar(
+        HttpServletRequest req,
+        HttpServletResponse resp,
+        Router router,
+        int statusSucesso,
+        String mensagemErro
+    ) throws IOException {
+        try {
+            var handler = router.getHandler(getPath(req));
+            Object resposta = handler.handle(req);
+            retornarRespostaJson(resp, resposta, statusSucesso);
+        } catch (Exception e) {
+            estourarErro(resp, new Exception(mensagemErro, e));
+        }
+    }
+
+    public String requireParam(HttpServletRequest req, String name) {
+        String value = req.getParameter(name);
+        if (value == null)
+            throw new IllegalArgumentException("Parâmetro obrigatório: " + name);
+        return value;
     }
 
     public void retornarRespostaJson(HttpServletResponse resp, Object object, int sc) throws IOException {
@@ -47,7 +70,7 @@ public abstract class AbstractController extends HttpServlet {
         retornarRespostaJson(resp, mapaErro, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 
-    private static String bodyRequestToString(HttpServletRequest req) throws IOException {
+    protected static String bodyRequestToString(HttpServletRequest req) throws IOException {
         req.setCharacterEncoding("UTF-8");
         StringBuilder string = new StringBuilder();
 

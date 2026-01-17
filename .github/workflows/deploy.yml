@@ -1,0 +1,59 @@
+name: Docker CD Deploy
+
+# Secrets necessários
+# - DOCKER_USERNAME
+# - DOCKER_PASSWORD
+# - DOCKER_EC2_HOST (Obs.: Usar o DNS público)
+# - DOCKER_PRIVATE_KEY
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Java image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: nattansouza404/esboco-comix-java:latest
+
+      - name: Build and push Python image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: src/main/chatbot/Dockerfile
+          push: true
+          tags: nattansouza404/esboco-comix-python:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          command_timeout: 10m
+          script: |
+            cd /home/ec2-user/esboco-comix
+            docker compose pull
+            docker compose up -d --remove-orphans

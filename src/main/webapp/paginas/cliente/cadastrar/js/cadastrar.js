@@ -1,5 +1,5 @@
 import { montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm } from "/js/script.js";
-import { inserirCliente } from "/js/api/apiCliente.js";
+import { inserirCliente } from "/js/api/cliente.api.js";
 import { SecaoFormsCartaoCredito } from "./secaoFormsCartaoCredito.js";
 import { FormularioCadastrarDadosPessoais } from "./formsCadastrar.js";
 import { SecaoFormsEndereco } from "./secaoFormsEndereco.js";
@@ -41,7 +41,7 @@ async function enviarCliente(){
     const senhaConfirmacao = new FormData(formDadosPessoais).get("senhaConfirmacao");
 
     try {
-        await inserirCliente({
+        const cadastro = await inserirCliente({
             cliente: cliente,
             enderecos: enderecos,
             cartoesCredito: cartoesCredito,
@@ -50,6 +50,8 @@ async function enviarCliente(){
         });
 
         alert('Cadastrado com sucesso');
+
+        localStorage.setItem('idcliente', cadastro.cliente.id);
         window.location.href = "/";
     } catch (error){
         alertarErro(error);

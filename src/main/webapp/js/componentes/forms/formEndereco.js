@@ -67,7 +67,7 @@ export class FormularioEndereco extends HTMLFormElement {
 
                 <label>
                     CEP
-                    <input name="cep" placeholder="00000-000"></input>
+                    <input name="cep" placeholder="00000-000" minlength="8" maxlength="8"></input>
                 </label>  
 
                 <label>

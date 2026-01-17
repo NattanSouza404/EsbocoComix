@@ -128,7 +128,7 @@ CREATE TABLE pedidos (
 CREATE TABLE cartoes_credito_pedido (
     ccp_cre_id NUMERIC(9) NOT NULL,
     ccp_ped_id NUMERIC(9) NOT NULL,
-    cpp_valor  NUMERIC(6, 2) NOT NULL,
+    ccp_valor  NUMERIC(6, 2) NOT NULL,
     PRIMARY KEY(ccp_cre_id, ccp_ped_id)
 );
 

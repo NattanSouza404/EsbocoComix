@@ -61,11 +61,13 @@ public class ServidorConfig {
 				Map.entry("api/cupom", new CupomController()),
 				Map.entry("api/estoque", new EstoqueController()),
 				Map.entry("api/analise", new AnaliseController()),
-				Map.entry("api/pedido_pos_venda", new PedidoPosVendaController())
+				Map.entry("api/pedido_pos_venda", new PedidoPosVendaController()),
+				
+				Map.entry("api/chatbot", new ChatbotProxyController())
 		);
 
 		for (Map.Entry<String, HttpServlet> entry: servlets.entrySet()){
-			String path = "/" + entry.getKey();
+			String path = "/" + entry.getKey() + "/*";
 			Tomcat.addServlet(context, entry.getKey(), entry.getValue());
 			context.addServletMappingDecoded(path, entry.getKey());
 		}

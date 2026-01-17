@@ -105,7 +105,7 @@ public class PedidoDAO {
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                "SELECT * FROM vw_pedidos WHERE ped_id = ?;"
+                "SELECT * FROM pedidos JOIN enderecos ON ped_end_id = end_id WHERE ped_id = ?;"
             );
         ) {
             pst.setInt(1, id);

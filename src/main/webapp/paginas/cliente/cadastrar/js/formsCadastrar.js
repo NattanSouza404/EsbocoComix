@@ -6,19 +6,29 @@ export class FormularioCadastrarDadosPessoais extends FormularioDadosPessoais {
 
         this.insertAdjacentHTML('beforeend', `
             <div class="header-dados-cadastro">
-                <p>Senha</p>
+                <p><strong>Senha</strong></p>
             </div>
 
-            <div class="dados-formulario">
-                <label>
-                    Senha
-                    <input name="senhaNova" type="password"></input> 
-                </label>
+            <div class="dados-formulario secao-senha">
+                <div class="aviso-senha">
+                    <p>
+                        A senha cadastrada pelo usuário deve ser composta<br/>
+                        de pelo menos 8 caracteres, ter letras maiúsculas e<br/>
+                        minúsculas além de conter caracteres especiais.<br/>
+                    </p>
+                </div>
 
-                <label>
-                    Confirme a senha
-                    <input name="senhaConfirmacao" type="password"></input> 
-                </label>
+                <div>
+                    <label>
+                        Senha
+                        <input name="senhaNova" type="password"></input> 
+                    </label>
+
+                    <label>
+                        Confirme a senha
+                        <input name="senhaConfirmacao" type="password"></input> 
+                    </label>
+                </div>
             </div>
         `);
     }

@@ -1,6 +1,10 @@
 
 @import url(/css/style.css);
 
+#container-compras {
+    min-height: 280px;
+}
+
 .secao-superior {
     background-color: #212529;
 }

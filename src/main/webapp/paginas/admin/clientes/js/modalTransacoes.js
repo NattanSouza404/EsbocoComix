@@ -1,5 +1,5 @@
 import { formatarDateTime, formatarPreco } from "/js/script.js";
-import { retornarPedidos } from "/js/api/apiPedido.js";
+import { retornarPedidos } from "/js/api/pedido.api.js";
 import { Modal } from "/js/componentes/modal.js";
 import { alertarErro } from "../../../../js/api/alertErro.js";
 
@@ -17,7 +17,8 @@ export default class ModalTransacoes extends Modal {
     }
 
     async show(cliente){
-        
+        this.cliente = cliente;
+
         let pedidos;
         try {
             pedidos = await retornarPedidos(this.cliente.id);
@@ -25,8 +26,6 @@ export default class ModalTransacoes extends Modal {
             alertarErro(error);
             return;
         }
-
-        this.cliente = cliente;
 
         super.mudarTitulo(`Transações de ${this.cliente.nome}`);
 

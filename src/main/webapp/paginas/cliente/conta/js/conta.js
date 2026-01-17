@@ -1,11 +1,11 @@
-import { retornarCliente } from "/js/api/apiCliente.js";
-import { retornarEnderecos } from "/js/api/apiEndereco.js";
-import { retornarCartoesCredito } from "/js/api/apiCartaoCredito.js";
+import { retornarCliente } from "/js/api/cliente.api.js";
+import { retornarEnderecos } from "/js/api/endereco.api.js";
+import { retornarCartoesCredito } from "/js/api/cartaoCredito.api.js";
 
 import { SecaoDadosPessoais } from "./secaoDadosPessoais/SecaoDadosPessoais.js";
 import { SecaoEndereco } from "./secaoEndereco/SecaoEndereco.js";
 import { SecaoCartaoCredito } from "./secaoCartaoCredito/SecaoCartaoCredito.js";
-import { retornarCupons } from "/js/api/apiCupom.js";
+import { retornarCupons } from "../../../../js/api/cupom.api.js";
 import { SecaoCupom } from "./secaoCupons/secaoCupons.js";
 import { removerHistorico } from "../../../../js/localStorage.js";
 import { alertarErro } from "../../../../js/api/alertErro.js";
@@ -31,8 +31,13 @@ try {
     cartoesCredito = await retornarCartoesCredito(idCliente);
     cupons = await retornarCupons(idCliente);
 } catch (error){
-    alertarErro(error);
-    window.location.href = "/";
+    if (!idCliente || idCliente.length === 0){
+        alertarErro(new Error("Você deve ter uma conta para acessar essa página!"));
+        window.location.href = "/cadastrar";
+    } else {
+        alertarErro(error);
+        window.location.href = "/";
+    } 
 }
 
 const secaoDadosPessoais = new SecaoDadosPessoais(cliente);

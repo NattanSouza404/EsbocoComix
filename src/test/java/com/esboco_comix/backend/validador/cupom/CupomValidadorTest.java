@@ -1,76 +1,64 @@
 package com.esboco_comix.backend.validador.cupom;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import com.esboco_comix.model.entidades.Cupom;
-import com.esboco_comix.validador.impl.cupom.CupomValidador;
+import com.esboco_comix.service.validador.impl.CupomValidador;
 
 public class CupomValidadorTest {
     
-    @Test
-    public void validarValorCupom(){
+    @ParameterizedTest
+    @MethodSource("provideCuponsInativos")
+    public void validarCuponsInvalidos(Cupom cupom) {
         CupomValidador validador = new CupomValidador();
-        
-        Cupom cupom = new Cupom();
-        cupom.setPromocional(true);
 
-        cupom.setValor(0);
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            validador.validar(null);
-        });
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            validador.validar(cupom);
-        });
-
-        cupom.setValor(-10);
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            validador.validar(cupom);
-        });
-
-        cupom.setValor(10);
-
-        validador.validar(cupom);
-
-        cupom.setValor(30);
-
-        validador.validar(cupom);
-
-        //TODO: adicionar um limite máximo para o valor de um cupom
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> {
+                validador.validar(cupom);
+            }
+        );
     }
 
     @Test
-    public void validarStatusCupom(){
+    public void validarCuponsValidos() {
         CupomValidador validador = new CupomValidador();
 
-        Cupom cupom = new Cupom();
-        cupom.setValor(10);
-        cupom.setPromocional(true);
-        cupom.setTroca(true);
+        Cupom cupomValido = new Cupom();
+        cupomValido.setValor(20);
+        cupomValido.setPromocional(true);
+        cupomValido.setTroca(false);
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            validador.validar(cupom);
-        });
+        validador.validar(cupomValido);
+    }
 
-        cupom.setPromocional(false);
-        cupom.setTroca(false);
+    public static Stream<Arguments> provideCuponsInativos(){
+        Cupom cupomValorNegativo = new Cupom();
+        cupomValorNegativo.setPromocional(true);
+        cupomValorNegativo.setTroca(true);
+        cupomValorNegativo.setValor(-9);
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            validador.validar(cupom);
-        });
+        Cupom cupomDoisTipos = new Cupom();
+        cupomDoisTipos.setValor(20);
+        cupomDoisTipos.setPromocional(true);
+        cupomDoisTipos.setTroca(true);
 
-        cupom.setPromocional(true);
-        cupom.setTroca(false);
+        Cupom cupomNenhumTipo = new Cupom();
+        cupomNenhumTipo.setValor(20);
+        cupomNenhumTipo.setPromocional(false);
+        cupomNenhumTipo.setTroca(false);
 
-        validador.validar(cupom);
-
-        cupom.setPromocional(false);
-        cupom.setTroca(true);
-
-        validador.validar(cupom);
+        return Stream.of(
+            Arguments.of(cupomValorNegativo),
+            Arguments.of(cupomDoisTipos),
+            Arguments.of(cupomNenhumTipo)
+        );
     }
 }
