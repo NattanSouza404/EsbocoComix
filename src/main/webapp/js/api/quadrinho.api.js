@@ -15,7 +15,7 @@ export async function consultarTodosQuadrinhos(){
 }
 
 export async function consultarTodasCategorias(){
-    let url = `${PATH}?opcao=consultarcategorias`;
+    let url = `${PATH}/consultar-categorias`;
 
     const resposta = await fetch(url);
 
@@ -27,7 +27,7 @@ export async function consultarTodasCategorias(){
 }
 
 export async function retornarQuadrinho(id) {
-    const url = `${PATH}?id=${id}`;
+    const url = `${PATH}/id?id=${id}`;
 
     const resposta = await fetch(url);
 
@@ -43,8 +43,8 @@ export async function filtrarTodosQuadrinhos(filtro) {
     let url = PATH;
     
     if (filtro !== undefined){
-        url += "?opcao=consultarporfiltro";
-        url += "&titulo="+filtro.titulo;
+        url += "/filtrar";
+        url += "?titulo="+filtro.titulo;
         url += "&autor="+filtro.autor;
         url += "&ano="+filtro.ano;
         url += "&numeroPaginas="+filtro.numeroPaginas;

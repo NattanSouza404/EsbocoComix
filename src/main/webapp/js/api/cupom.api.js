@@ -3,7 +3,9 @@ import { estourarErroAPI } from "./alertErro.js";
 const PATH = "/api/cupom";
 
 export async function retornarCupons(idCliente){
-    const resposta = await fetch(`${PATH}?idcliente=${idCliente}`);
+    const url = `${PATH}/por-id-cliente?id=${idCliente}`;
+
+    const resposta = await fetch(url);
 
     if (resposta.status !== 200){
         await estourarErroAPI(resposta);
