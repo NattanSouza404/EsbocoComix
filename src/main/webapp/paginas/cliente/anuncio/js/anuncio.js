@@ -1,5 +1,5 @@
-import { retornarQuadrinho } from "../../../../js/api/apiQuadrinho.js";
-import { adicionarItemAoCarrinho } from "../../../../js/api/apiCarrinho.js";
+import { retornarQuadrinho } from "../../../../js/api/quadrinho.api.js";
+import { adicionarItemAoCarrinho } from "../../../../js/api/carrinho.api.js";
 import { formatarData, formatarPreco } from "/js/script.js";
 
 const uRLSearchParams = new URLSearchParams(window.location.search);

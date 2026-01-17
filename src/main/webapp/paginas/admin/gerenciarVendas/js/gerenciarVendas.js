@@ -1,5 +1,5 @@
-import { retornarPedidos } from "../../../../js/api/apiPedido.js";
-import { retornarPedidosPosVenda } from "../../../../js/api/apiPedidoPosVenda.js";
+import { retornarPedidos } from "../../../../js/api/pedido.api.js";
+import { retornarPedidosPosVenda } from "../../../../js/api/pedidoPosVenda.api.js";
 import { SecaoPedidosPosVenda } from "./secaoPedidosPosVenda.js";
 import { SecaoPedidos } from "./secaoPedidos.js";
 import { alertarErro } from "../../../../js/api/alertErro.js";

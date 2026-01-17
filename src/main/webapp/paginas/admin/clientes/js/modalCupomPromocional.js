@@ -1,5 +1,5 @@
 import { alertarErro } from "../../../../js/api/alertErro.js";
-import { inserirCupom } from "/js/api/apiCupom.js";
+import { inserirCupom } from "../../../../js/api/cupom.api.js";
 import { Modal } from "/js/componentes/modal.js";
 
 export default class ModalCupomPromocional extends Modal {

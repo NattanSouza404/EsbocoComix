@@ -1,7 +1,7 @@
 import { Modal } from "/js/componentes/modal.js";
 import { montarCartaoCreditoPorForm } from "/js/script.js";
 import { FormularioCartaoCredito } from "/js/componentes/forms/formCartaoCredito.js";
-import { inserirCartaoCredito } from "/js/api/apiCartaoCredito.js";
+import { inserirCartaoCredito } from "/js/api/cartaoCredito.api.js";
 import { alertarErro } from "../../../../../js/api/alertErro.js";
 
 export class ModalAdicionarCartaoCredito extends Modal {

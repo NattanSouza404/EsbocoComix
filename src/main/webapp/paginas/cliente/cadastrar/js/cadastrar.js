@@ -1,5 +1,5 @@
 import { montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm } from "/js/script.js";
-import { inserirCliente } from "/js/api/apiCliente.js";
+import { inserirCliente } from "/js/api/cliente.api.js";
 import { SecaoFormsCartaoCredito } from "./secaoFormsCartaoCredito.js";
 import { FormularioCadastrarDadosPessoais } from "./formsCadastrar.js";
 import { SecaoFormsEndereco } from "./secaoFormsEndereco.js";

@@ -1,5 +1,5 @@
 import { calcularValorTotal, formatarPreco } from "../../../../js/script.js";
-import { atualizarItemCarrinho, deletarItemCarrinho, retornarCarrinho } from "../../../../js/api/apiCarrinho.js";
+import { atualizarItemCarrinho, deletarItemCarrinho, retornarCarrinho } from "../../../../js/api/carrinho.api.js";
 import { alertarErro } from "../../../../js/api/alertErro.js";
 
 let carrinho;
