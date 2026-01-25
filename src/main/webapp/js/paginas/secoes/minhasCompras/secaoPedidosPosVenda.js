@@ -1,6 +1,6 @@
-import { alertarErro } from "../../../../js/api/alertErro.js";
-import { atualizarStatusPedidoPosVenda } from "../../../../js/api/pedidoPosVenda.api.js";
-import { formatarDateTime } from "/js/script.js";
+import { alertarErro } from "@api/alertErro.js";
+import { atualizarStatusPedidoPosVenda } from "@api/pedidoPosVenda.api.js";
+import { formatarDateTime } from "../../../script.js";
 
 export class SecaoPedidosPosVenda {
     constructor(pedidosPosVenda){
@@ -8,7 +8,7 @@ export class SecaoPedidosPosVenda {
 
         let contador = 1;
 
-        if (Array.isArray(pedidosPosVenda) && pedidosPosVenda != 0){
+        if (Array.isArray(pedidosPosVenda) && pedidosPosVenda.length != 0){
             pedidosPosVenda.forEach(pedido => {
                 const tr = document.createElement('tr');
                 
@@ -41,7 +41,9 @@ export class SecaoPedidosPosVenda {
 
                 const select = tr.querySelector("select");
                 select.value = pedido.status;
-                select.querySelector(`[value="${pedido.status}"`).disabled = true;
+
+                /** @type {HTMLSelectElement} */
+                (select.querySelector(`[value="${pedido.status}"`)).disabled = true;
 
                 tr.querySelector('button').onclick = () => {
                     this.confirmarAtualizarStatusPedidoPosVenda(pedido, select.value);

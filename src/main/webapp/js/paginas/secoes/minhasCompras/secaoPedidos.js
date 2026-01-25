@@ -1,6 +1,6 @@
-import { formatarPreco, formatarDateTime } from "/js/script.js";
-import { atualizarStatusPedido} from "../../../../js/api/pedido.api.js";
-import { alertarErro } from "../../../../js/api/alertErro.js";
+import { formatarPreco, formatarDateTime } from "../../../script.js";
+import { atualizarStatusPedido} from "../../../api/pedido.api.js";
+import { alertarErro } from "../../../api/alertErro.js";
 
 export class SecaoPedidos {
     constructor(pedidos){
@@ -43,7 +43,7 @@ export class SecaoPedidos {
                 </td>
             `;
 
-            const select = tr.querySelector('select');
+            const select = /** @type {HTMLSelectElement} */ (tr.querySelector('select'));
             select.value = pedido.status;
 
             tr.querySelector('button').onclick = () => {
@@ -55,11 +55,20 @@ export class SecaoPedidos {
             });
 
             if (pedido.status === 'EM_PROCESSAMENTO'){
-                select.querySelector('[value="REPROVADO"').disabled = false;
-                select.querySelector('[value="APROVADO"').disabled = false;
-                select.querySelector('[value="CANCELADO"').disabled = false;
-                select.querySelector('[value="EM_TRANSPORTE"').disabled = false;
-                select.querySelector('[value="ENTREGUE"').disabled = false;
+                /** @type {HTMLOptionElement} */
+                (select.querySelector('[value="REPROVADO"')).disabled = false;
+                
+                /** @type {HTMLOptionElement} */
+                (select.querySelector('[value="APROVADO"')).disabled = false;
+                
+                /** @type {HTMLOptionElement} */
+                (select.querySelector('[value="CANCELADO"')).disabled = false;
+
+                /** @type {HTMLOptionElement} */
+                (select.querySelector('[value="EM_TRANSPORTE"')).disabled = false;
+                
+                /** @type {HTMLOptionElement} */
+                (select.querySelector('[value="ENTREGUE"')).disabled = false;
             }
 
             if (pedido.status.includes('TROCA')){
@@ -67,9 +76,14 @@ export class SecaoPedidos {
                     option.disabled = true; 
                 });
 
-                select.querySelector(`[value="TROCA_ACEITA"`).disabled = false;
-                select.querySelector(`[value="TROCA_CONCLUIDA"`).disabled = false;
-                select.querySelector(`[value="TROCA_RECUSADA"`).disabled = false;
+                /** @type {HTMLOptionElement} */
+                (select.querySelector(`[value="TROCA_ACEITA"`)).disabled = false;
+                
+                /** @type {HTMLOptionElement} */
+                (select.querySelector(`[value="TROCA_CONCLUIDA"`)).disabled = false;
+                
+                /** @type {HTMLOptionElement} */
+                (select.querySelector(`[value="TROCA_RECUSADA"`)).disabled = false;
             }
 
             if (pedido.status.includes('DEVOLUCAO')){
@@ -77,9 +91,14 @@ export class SecaoPedidos {
                     option.disabled = true; 
                 });
 
-                select.querySelector(`[value="DEVOLUCAO_ACEITA"`).disabled = false;
-                select.querySelector(`[value="DEVOLUCAO_CONCLUIDA"`).disabled = false;
-                select.querySelector(`[value="DEVOLUCAO_RECUSADA"`).disabled = false;
+                /** @type {HTMLOptionElement} */
+                (select.querySelector(`[value="DEVOLUCAO_ACEITA"`)).disabled = false;
+                
+                /** @type {HTMLOptionElement} */
+                (select.querySelector(`[value="DEVOLUCAO_CONCLUIDA"`)).disabled = false;
+                
+                /** @type {HTMLOptionElement} */
+                (select.querySelector(`[value="DEVOLUCAO_RECUSADA"`)).disabled = false;
             }
 
             if (pedido.status === "ENTREGUE" || pedido.status === "TROCA_CONCLUIDA" || pedido.status === "DEVOLUCAO_CONCLUIDA"){
@@ -88,7 +107,8 @@ export class SecaoPedidos {
                 });
             }
 
-            select.querySelector(`[value="${pedido.status}"`).disabled = true;
+            /** @type {HTMLOptionElement} */
+            (select.querySelector(`[value="${pedido.status}"`)).disabled = true;
 
             contador++;
 
