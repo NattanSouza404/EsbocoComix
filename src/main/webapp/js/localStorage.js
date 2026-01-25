@@ -4,21 +4,21 @@ export const localStorageKeys = {
 };
 
 export function getHistorico(){
-    let historico = localStorage.getItem(localStorageKeys.historicoChatIA);
+    let historicoStr = localStorage.getItem(localStorageKeys.historicoChatIA);
 
-    if (historico === null || historico === undefined) {
-        historico = [
+    if (historicoStr === null || historicoStr === undefined) {
+        const novaMensagem = [
             {
                 mensagem: 'Olá! Como posso ajudar?',
                 tipoMensagem: "texto-ia"
             }
-        ]
-        localStorage.setItem(localStorageKeys.historicoChatIA, JSON.stringify(historico));
+        ];
+        localStorage.setItem(localStorageKeys.historicoChatIA, JSON.stringify(novaMensagem));
     } else {
-        historico = JSON.parse(historico);
+        return JSON.parse(historicoStr);
     }
 
-    return historico;
+    return JSON.parse(localStorage.getItem(localStorageKeys.historicoChatIA));
 }
 
 export function adicionarMensagemHistorico(mensagem, tipoMensagem){

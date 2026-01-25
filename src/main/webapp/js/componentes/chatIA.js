@@ -42,11 +42,13 @@ export class ChatIA extends Modal {
             }
         );
 
-        this.modalElement.querySelector('.btn-enviar').onclick = () => {
+        /** @type {HTMLButtonElement} */
+        (this.modalElement.querySelector('.btn-enviar')).onclick = () => {;
             this.enviarMsgChatIA();
         };
 
-        this.modalElement.querySelector('#btn-limpar-chat').onclick = () => {
+        /** @type {HTMLButtonElement} */
+        (this.modalElement.querySelector('#btn-limpar-chat')).onclick = () => {
             this.limparChat();
         };
 
@@ -89,6 +91,7 @@ export class ChatIA extends Modal {
     }
 
     async enviarMsgChatIA(){
+        /** @type {HTMLTextAreaElement} */
         const textarea = document.querySelector('.caixa-mensagem-usuario');
         const mensagem = textarea.value;
         if (mensagem === null || mensagem.trim().length === 0){
