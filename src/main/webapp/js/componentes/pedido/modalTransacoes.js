@@ -1,7 +1,7 @@
-import { formatarDateTime, formatarPreco } from "/js/script.js";
-import { retornarPedidos } from "/js/api/pedido.api.js";
-import { Modal } from "/js/componentes/modal.js";
-import { alertarErro } from "../../../../js/api/alertErro.js";
+import { formatarDateTime, formatarPreco } from "../../script.js";
+import { retornarPedidos } from "@api/pedido.api.js";
+import { Modal } from "@componentes/modal.js";
+import { alertarErro } from "@api/alertErro.js";
 
 export default class ModalTransacoes extends Modal {
     constructor(){
@@ -11,7 +11,9 @@ export default class ModalTransacoes extends Modal {
         this.conteudoModal = conteudoModal;
         this.tabela = conteudoModal.querySelector('table');
         this.tbody = conteudoModal.querySelector('tbody');
-        this.aviso = conteudoModal.querySelector('.aviso');
+
+        this.aviso = /** @type {HTMLParagraphElement} */
+            conteudoModal.querySelector('.aviso');
 
         this.esconderTabela();
     }
@@ -58,12 +60,16 @@ export default class ModalTransacoes extends Modal {
 
     mostrarTabela(){
         this.tabela.style.display = 'block';
-        this.aviso.style.display = 'none';
+
+        /** @type {HTMLParagraphElement} */
+        (this.aviso).style.display = 'none';
     }
 
     esconderTabela(){
         this.tabela.style.display = 'none';
-        this.aviso.style.display = 'block';
+
+        /** @type {HTMLParagraphElement} */
+        (this.aviso).style.display = 'block';
     }
 }
 

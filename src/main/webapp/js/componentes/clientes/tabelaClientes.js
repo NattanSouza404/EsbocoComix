@@ -1,9 +1,9 @@
-import { inativarCliente } from "../../../../js/api/cliente.api.js";
-import ModalTransacoes from "./modalTransacoes.js";
-import { formatarData } from "/js/script.js";
-import ModalCupomPromocional from "./modalCupomPromocional.js";
-import { alertarErro } from "../../../../js/api/alertErro.js";
-import { mascararCpf } from "../../../../js/script.js";
+import { inativarCliente } from "../../api/cliente.api.js";
+import ModalTransacoes from "../pedido/modalTransacoes.js";
+import { formatarData } from "../../script.js";
+import ModalCupomPromocional from "../cupom/modalCupomPromocional.js";
+import { alertarErro } from "../../api/alertErro.js";
+import { mascararCpf } from "../../script.js";
 
 export default class TabelaClientes {
     
@@ -46,15 +46,18 @@ export default class TabelaClientes {
                 </td>
             `;
 
-            tableRow.querySelector('.btn-transacoes').onclick = () => {
+            /** @type {HTMLButtonElement} */
+            (tableRow.querySelector('.btn-transacoes')).onclick = () => {
                 this.modalTransacoes.show(c);
             };
 
-            tableRow.querySelector('.btn-adicionar-cupom').onclick = () => {
+            /** @type {HTMLButtonElement} */
+            (tableRow.querySelector('.btn-adicionar-cupom')).onclick = () => {
                 this.modalCupomPromocional.show(c);
             };
 
-            tableRow.querySelector('.btn-inativar').onclick = async () => {
+            /** @type {HTMLButtonElement} */
+            (tableRow.querySelector('.btn-inativar')).onclick = async () => {
                 this.confirmarInativarCliente(c);
             };
         
