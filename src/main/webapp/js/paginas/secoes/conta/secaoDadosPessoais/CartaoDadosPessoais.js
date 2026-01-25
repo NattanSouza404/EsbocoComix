@@ -1,4 +1,4 @@
-import { formatarData } from "/js/script.js"
+import { formatarData } from "../../../../script.js"
 export class CartaoDadosPessoais extends HTMLDivElement {
     constructor() {
         super();

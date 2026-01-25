@@ -1,6 +1,6 @@
-import { alertarErro } from "../../../../../js/api/alertErro.js";
-import { atualizarSenha } from "/js/api/cliente.api.js";
-import { Modal } from "/js/componentes/modal.js";
+import { alertarErro } from "@api/alertErro.js";
+import { atualizarSenha } from "@api/cliente.api.js";
+import { Modal } from "@componentes/modal.js";
 
 export class ModalAlterarSenha extends Modal {
 
@@ -9,7 +9,8 @@ export class ModalAlterarSenha extends Modal {
 
         super('modal-alterar-senha', "Alterar Senha", conteudoModal);
 
-        conteudoModal.querySelector('.botao-salvar').onclick = async () => {
+        /** @type {HTMLButtonElement} */
+        (conteudoModal.querySelector('.botao-salvar')).onclick = async () => {
             await this.enviarFormulario(this.cliente);
         }
 
@@ -27,7 +28,9 @@ export class ModalAlterarSenha extends Modal {
             return;
         }
 
-        const form = document.getElementById("alterar-senha");
+        const form = /** @type {HTMLFormElement} */
+            (document.getElementById("alterar-senha"));
+
         const formData = new FormData(form);
 
         const pedidoAlterarSenha = {

@@ -1,9 +1,9 @@
-import { Modal } from "/js/componentes/modal.js";
-import { montarCartaoCreditoPorForm } from "/js/script.js";
-import { FormularioCartaoCredito } from "/js/componentes/forms/formCartaoCredito.js";
-import { inserirCartaoCredito } from "/js/api/cartaoCredito.api.js";
-import { alertarErro } from "../../../../../js/api/alertErro.js";
-import { localStorageKeys } from "../../../../../js/localStorage.js";
+import { Modal } from "@componentes/modal.js";
+import { montarCartaoCreditoPorForm } from "../../../../script.js";
+import { FormularioCartaoCredito } from "@componentes/forms/formCartaoCredito.js";
+import { inserirCartaoCredito } from "@api/cartaoCredito.api.js";
+import { alertarErro } from "@api/alertErro.js";
+import { localStorageKeys } from "../../../../localStorage.js";
 
 export class ModalAdicionarCartaoCredito extends Modal {
 
@@ -14,7 +14,8 @@ export class ModalAdicionarCartaoCredito extends Modal {
 
         this.conteudoModal = conteudoModal;
 
-        this.conteudoModal.querySelector('.botao-salvar').onclick = async () => {
+        /** @type {HTMLButtonElement} */
+        (this.conteudoModal.querySelector('.botao-salvar')).onclick = async () => {
             await this.enviarFormulario();
         };
     }

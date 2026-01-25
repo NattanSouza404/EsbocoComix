@@ -1,5 +1,5 @@
-import { alertarErro } from "../../../../../js/api/alertErro.js";
-import { deletarEndereco } from "../../../../../js/api/endereco.api.js";
+import { alertarErro } from "../../../../api/alertErro.js";
+import { deletarEndereco } from "../../../../api/endereco.api.js";
 
 export class CartaoEndereco extends HTMLDivElement {
     constructor(endereco, modalAlterarEndereco){
@@ -54,11 +54,13 @@ export class CartaoEndereco extends HTMLDivElement {
             <button class="btn-deletar">Remover</button> 
         `);
 
+        /** @type {HTMLButtonElement} */
         const btnAtualizar = this.querySelector('.btn-atualizar');
         btnAtualizar.onclick = () => {
             this.modalAlterarEndereco.show(this.endereco);
         };
 
+        /** @type {HTMLButtonElement} */
         const btnDeletar = this.querySelector('.btn-deletar');
         btnDeletar.onclick = async () => {
             

@@ -1,9 +1,9 @@
-import { montarEnderecoPorForm } from "/js/script.js";
-import { Modal } from "/js/componentes/modal.js";
-import { FormularioEndereco } from "/js/componentes/forms/formEndereco.js";
-import { inserirEndereco } from "/js/api/endereco.api.js";
-import { alertarErro } from "../../../../../js/api/alertErro.js";
-import { localStorageKeys } from "../../../../../js/localStorage.js";
+import { montarEnderecoPorForm } from "../../../../script.js";
+import { Modal } from "@componentes/modal.js";
+import { FormularioEndereco } from "@componentes/forms/formEndereco.js";
+import { inserirEndereco } from "@api/endereco.api.js";
+import { alertarErro } from "@api/alertErro.js";
+import { localStorageKeys } from "../../../../localStorage.js";
 
 export class ModalAdicionarEndereco extends Modal {
 
@@ -14,7 +14,8 @@ export class ModalAdicionarEndereco extends Modal {
 
         this.conteudoModal = conteudoModal;
 
-        this.conteudoModal.querySelector('.botao-salvar').onclick = () => {
+        /** @type {HTMLButtonElement} */
+        (this.conteudoModal.querySelector('.botao-salvar')).onclick = () => {
             this.enviarFormulario()
         };
         

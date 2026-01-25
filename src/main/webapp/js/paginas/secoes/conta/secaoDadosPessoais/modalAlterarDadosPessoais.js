@@ -1,9 +1,9 @@
-import { montarClientePorForm } from "/js/script.js";
-import { atualizarCliente } from "../../../../../js/api/cliente.api.js";
-import { FormularioDadosPessoais } from "/js/componentes/forms/formDadosPessoais.js";
-import { Modal } from "/js/componentes/modal.js";
-import { alertarErro } from "../../../../../js/api/alertErro.js";
-import { localStorageKeys } from "../../../../../js/localStorage.js";
+import { montarClientePorForm } from "../../../../script.js";
+import { atualizarCliente } from "@api/cliente.api.js";
+import { FormularioDadosPessoais } from "@componentes/forms/formDadosPessoais.js";
+import { Modal } from "@componentes/modal.js";
+import { alertarErro } from "@api/alertErro.js";
+import { localStorageKeys } from "../../../../localStorage.js";
 
 export class ModalAlterarDadosPessoais extends Modal {
 
@@ -16,7 +16,8 @@ export class ModalAlterarDadosPessoais extends Modal {
             <button class="botao-salvar" type="button">Salvar</button>
         `);
 
-        conteudoModal.querySelector('.botao-salvar').onclick = () => {
+        /** @type {HTMLButtonElement} */
+        (conteudoModal.querySelector('.botao-salvar')).onclick = () => {
             this.enviarAtualizacao();
         };
 

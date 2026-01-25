@@ -1,5 +1,5 @@
-import { alertarErro } from "../../../../../js/api/alertErro.js";
-import { deletarCartaoCredito } from "/js/api/cartaoCredito.api.js";
+import { alertarErro } from "@api/alertErro.js";
+import { deletarCartaoCredito } from "@api/cartaoCredito.api.js";
 
 export class CartaoCartaoCredito extends HTMLDivElement {
     constructor(cartaoCredito, modalAlterarCartaoCredito){
@@ -32,11 +32,13 @@ export class CartaoCartaoCredito extends HTMLDivElement {
             <button class="btn-deletar">Remover</button> 
         `);
 
-        this.querySelector('.btn-atualizar').onclick = () => {
+        /** @type {HTMLButtonElement} */
+        (this.querySelector('.btn-atualizar')).onclick = () => {
             this.modalAlterarCartaoCredito.show(this.cartaoCredito);
         };
 
-        this.querySelector('.btn-deletar').onclick = async () => {
+        /** @type {HTMLButtonElement} */
+        (this.querySelector('.btn-deletar')).onclick = async () => {
 
             const confirmacaoUsuario = confirm("Deseja mesmo deletar esse cartão de crédito?");
 
