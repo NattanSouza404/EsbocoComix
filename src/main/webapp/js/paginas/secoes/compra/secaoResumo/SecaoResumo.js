@@ -1,4 +1,4 @@
-import { calcularValorTotal, formatarPreco } from "/js/script.js";
+import { calcularValorTotal, formatarPreco } from "../../../../script.js";
 
 export class ResumoPedido {
     constructor(secaoSelecaoEndereco, secaoSelecaoCartao, secaoCupons) {
@@ -22,7 +22,9 @@ export class ResumoPedido {
         );
 
         document.getElementById('cupons').addEventListener('change', (e) => {
-            if (e.target.tagName === 'SELECT') {
+            const target = /** @type {HTMLElement} */ (e.target);
+
+            if (target.tagName === 'SELECT') {
                 this.atualizarCupons(secaoCupons.getCuponsPedido());
             }
         });

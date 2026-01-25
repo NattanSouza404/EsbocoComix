@@ -25,6 +25,7 @@ export class SecaoCartaoCredito {
     }
 
     getCartoesCreditoPedido(){
+        /** @type {NodeListOf<SelecaoCartaoCredito>} */
         const selectCartoes = document.querySelectorAll('.selecao-cartao-credito');
 
         const cartoesCreditoPedido = [];

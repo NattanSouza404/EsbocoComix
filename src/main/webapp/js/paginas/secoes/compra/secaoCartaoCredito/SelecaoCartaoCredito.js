@@ -1,4 +1,4 @@
-import { mascararNumeroCartao } from "/js/script.js";
+import { mascararNumeroCartao } from "../../../../script.js";
 
 export class SelecaoCartaoCredito extends HTMLDivElement {
     constructor(cartoesCredito) {
@@ -14,7 +14,7 @@ export class SelecaoCartaoCredito extends HTMLDivElement {
 
         const btnRemover = this.querySelector('button');
         btnRemover.onclick = () => {
-            btnRemover.parentElement.remove(btnRemover);
+            btnRemover.parentElement.remove();
         };
 
         this.preencherSelect(cartoesCredito);
@@ -47,7 +47,7 @@ export class SelecaoCartaoCredito extends HTMLDivElement {
                 cartao = { 
                     idCartaoCredito: id,
                     valor: parseFloat(
-                        this.querySelector('input').value, 10
+                        this.querySelector('input').value
                     ),
                 };
             }

@@ -1,4 +1,4 @@
-import { calcularFrete, formatarPreco } from "/js/script.js";
+import { calcularFrete, formatarPreco } from "../../../../script.js";
 
 export class SecaoSelecaoEndereco {
     constructor(){
@@ -21,6 +21,9 @@ export class SecaoSelecaoEndereco {
     }
 
     getEnderecoSelecionado(){
-        return JSON.parse(this.selecaoEndereco.value);
+
+        return JSON.parse(
+            /** @type {HTMLSelectElement} */ (this.selecaoEndereco).value
+        );
     }
 }

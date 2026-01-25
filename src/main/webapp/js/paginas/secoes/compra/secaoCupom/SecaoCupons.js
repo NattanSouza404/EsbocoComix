@@ -24,6 +24,7 @@ export class SecaoCupom {
     }
 
     getCuponsPedido(){
+        /** @type {NodeListOf<SelecaoCupom>} */
         const selectCupons = document.querySelectorAll('.selecao-cupom');
 
         const cuponsPedido = [];

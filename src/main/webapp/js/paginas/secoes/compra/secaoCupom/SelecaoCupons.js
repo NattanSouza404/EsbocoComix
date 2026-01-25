@@ -1,4 +1,4 @@
-import { formatarPreco } from "/js/script.js";
+import { formatarPreco } from "../../../../script.js";
 
 export class SelecaoCupom extends HTMLDivElement {
     constructor(cupons){
@@ -13,7 +13,7 @@ export class SelecaoCupom extends HTMLDivElement {
 
         const btnRemover = this.querySelector('button');
         btnRemover.onclick = () => {
-            btnRemover.parentElement.remove(btnRemover);
+            btnRemover.parentElement.remove();
         };
 
         this.preencher(cupons);
