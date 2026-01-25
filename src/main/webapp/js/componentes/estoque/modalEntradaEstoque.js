@@ -1,6 +1,6 @@
-import { alertarErro } from "../../../../js/api/alertErro.js";
-import { inserirEntradaEstoque } from "../../../../js/api/estoque.api.js";
-import { Modal } from "/js/componentes/modal.js";
+import { alertarErro } from "@api/alertErro.js";
+import { inserirEntradaEstoque } from "@api/estoque.api.js";
+import { Modal } from "@componentes/modal.js";
 
 export default class ModalEntradaEstoque extends Modal {
     constructor(){
@@ -10,11 +10,15 @@ export default class ModalEntradaEstoque extends Modal {
 
         this.conteudoModal = conteudoModal;
 
-        this.conteudoModal.querySelector('#btn-enviar-entrada-estoque').onclick = () => {
+        /** @type {HTMLButtonElement} */
+        (this.conteudoModal.querySelector('#btn-enviar-entrada-estoque')).onclick = () => {
             this.enviarFormulario();
         }
 
+        /** @type {HTMLInputElement} */
         const inputDataPadrao = this.conteudoModal.querySelector('[name = "dataPadrao"]');
+        
+        /** @type {HTMLInputElement} */
         const inputDataEntrada = this.conteudoModal.querySelector('[name = "dataEntrada"]')
 
         inputDataPadrao.addEventListener('change', () => {
@@ -47,6 +51,7 @@ export default class ModalEntradaEstoque extends Modal {
             dataEntrada: formData.get('dataEntrada')
         }
 
+        /** @type {HTMLInputElement} */
         const inputDataPadrao = this.conteudoModal.querySelector('[name = "dataPadrao"]');
 
         if (!inputDataPadrao.disabled && entradaEstoque.dataEntrada === ""){
