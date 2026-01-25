@@ -1,4 +1,4 @@
-import { FormularioEndereco } from "/js/componentes/forms/formEndereco.js";
+import { FormularioEndereco } from "@componentes/forms/formEndereco.js";
 
 export class SecaoFormsEndereco extends HTMLElement {
     constructor(){
@@ -20,7 +20,9 @@ export class SecaoFormsEndereco extends HTMLElement {
         `);
 
         this.botaoAddEndereco = this.querySelector('.btn-adicionar-endereco');
-        this.botaoAddEndereco.onclick = () => this.adicionarEndereco();
+        
+        /** @type {HTMLButtonElement} */
+        (this.botaoAddEndereco).onclick = () => this.adicionarEndereco();
 
         this.container = this.querySelector("#container-enderecos");
         this.container.append(this.montarEnderecoObrigatorio());
@@ -36,7 +38,8 @@ export class SecaoFormsEndereco extends HTMLElement {
             <button class="btn-remover" type="button">Remover</button>
         `);
 
-        form.querySelector('.btn-remover').onclick = () => {
+        /** @type {HTMLButtonElement} */
+        (form.querySelector('.btn-remover')).onclick = () => {
             if (form.parentNode){
                 form.parentElement.removeChild(form);
             }
@@ -49,10 +52,12 @@ export class SecaoFormsEndereco extends HTMLElement {
     montarEnderecoObrigatorio(){
         const form = new FormularioEndereco();
     
-        form.querySelector('[name = "isResidencial"]')
+        /** @type {HTMLSelectElement} */
+        (form.querySelector('[name = "isResidencial"]'))
             .value = 'true';
 
-        form.querySelector('[name = "isResidencial"]').querySelector('[value="false"]')
+        /** @type {HTMLOptionElement} */
+        (form.querySelector('[name = "isResidencial"]').querySelector('[value="false"]'))
             .disabled = true;
     
         return form;

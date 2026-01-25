@@ -1,4 +1,4 @@
-import { FormularioCartaoCredito } from "/js/componentes/forms/formCartaoCredito.js";
+import { FormularioCartaoCredito } from "@componentes/forms/formCartaoCredito.js";
 
 export class SecaoFormsCartaoCredito extends HTMLElement {
     constructor(){
@@ -16,7 +16,7 @@ export class SecaoFormsCartaoCredito extends HTMLElement {
 
         this.container = this.querySelector('#container-cartao-credito');
 
-        this.btnAddCartao = this.querySelector('.btn-adicionar-cartao').onclick = () => {
+        this.btnAddCartao = /** @type {HTMLButtonElement} */ (this.querySelector('.btn-adicionar-cartao')).onclick = () => {
             this.adicionarCartaoCredito();
         }
 
@@ -33,7 +33,8 @@ export class SecaoFormsCartaoCredito extends HTMLElement {
             <button type="button" class="btn-remover">Remover</button>
         `);
 
-        form.querySelector('.btn-remover').onclick = () => {
+        /** @type {HTMLButtonElement} */
+        (form.querySelector('.btn-remover')).onclick = () => {
             if (form.parentNode){
                 form.parentElement.removeChild(form);
             }
