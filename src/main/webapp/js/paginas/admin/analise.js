@@ -1,9 +1,10 @@
-import { alertarErro } from "../../../../js/api/alertErro.js";
-import { retornarAnalise } from "../../../../js/api/analise.api.js";
-import FormatadorAnalise from "./FormatadorAnalise.js";
-import GraficoLinha from "./GraficoLinha.js";
+import { alertarErro } from "@api/alertErro.js";
+import { retornarAnalise } from "@api/analise.api.js";
+import FormatadorAnalise from "@utils/FormatadorAnalise.js";
+import GraficoLinha from "@componentes/analise/GraficoLinha.js";
 
-document.addEventListener('DOMContentLoaded', async function () {
+export async function initPagina() {
+
     const formatador = new FormatadorAnalise();
 
     const analise = await retornarAnalise();
@@ -34,8 +35,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     document.getElementById('btn-pesquisar').onclick = async () => {
         const filtro = {
-            dataInicio: document.querySelector('[name = "dataInicio"]').value,
-            dataFinal: document.querySelector('[name = "dataFinal"]').value
+            dataInicio: /** @type {HTMLInputElement} */(document.querySelector('[name = "dataInicio"]')).value,
+            dataFinal: /** @type {HTMLInputElement} */ (document.querySelector('[name = "dataFinal"]')).value
         }
 
         try {
@@ -50,4 +51,4 @@ document.addEventListener('DOMContentLoaded', async function () {
             alertarErro(error);
         }
     }
-})
+}

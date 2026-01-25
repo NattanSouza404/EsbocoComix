@@ -1,8 +1,15 @@
+/**
+ * @typedef {Window & { Chart?: any }} WindowComChart
+ */
+
+/** @type {WindowComChart} */
+const win = window;
+
 export default class GraficoLinha {
     constructor(elementoHTML, dados, title){
         const ctx = elementoHTML.getContext('2d');
         
-        this.chart = new Chart(ctx, {
+        this.chart = new win.Chart(ctx, {
             type: 'line',
             data: dados,
             options: {
