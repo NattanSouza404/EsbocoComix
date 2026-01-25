@@ -1,4 +1,4 @@
-import { formatarPreco, formatarDateTime } from "../../../../../js/script.js";
+import { formatarPreco, formatarDateTime } from "../../script.js";
 import { ContainerItens } from "./ContainerItens.js";
 
 export class ContainerPedido extends HTMLDivElement {
