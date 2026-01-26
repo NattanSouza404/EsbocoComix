@@ -82,7 +82,8 @@ export class FormularioDadosPessoais extends HTMLFormElement {
         this.cliente = cliente;
         Object.entries(cliente).forEach(
             ([chave, valor]) => {
-                let elemento = this.querySelector(`[name="${chave}"]`);
+                let elemento = /** @type {HTMLInputElement} */ 
+                    (this.querySelector(`[name="${chave}"]`));
 
                 if (!elemento){
                     return;
@@ -99,7 +100,8 @@ export class FormularioDadosPessoais extends HTMLFormElement {
 
         Object.entries(cliente.telefone).forEach(
             ([chave, valor]) => {
-                let elemento = document.querySelector(`[name="${chave}"]`);
+                let elemento = /** @type {HTMLInputElement} */
+                    (document.querySelector(`[name="${chave}"]`));
 
                 if (elemento){
                     elemento.value = valor;
