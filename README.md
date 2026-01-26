@@ -81,6 +81,18 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+#### Recomendado: Preferências VSCode
+
+Adicionar a propriedade `"javascript.preferences.importModuleSpecifierEnding": "js"` dentro do .vscode/settings.json. Essa configuração faz com que imports dentro de arquivos js sejam feitos com o final .js, necessário para uma página estática como a do Esboço Comix. Exemplo:
+
+```json
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "javascript.preferences.importModuleSpecifierEnding": "js",
+}
+```
+
 ## ▶️ Executando
 
 ### Sistema Chatbot
