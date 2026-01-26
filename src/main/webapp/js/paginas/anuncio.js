@@ -1,116 +1,48 @@
-import { retornarQuadrinho } from "../api/quadrinho.api.js";
-import { adicionarItemAoCarrinho } from "../api/carrinho.api.js";
-import { formatarData, formatarPreco } from "../../js/script.js";
+import { adicionarItemAoCarrinho } from "@api/carrinho.api.js";
+import { retornarQuadrinho } from "@api/quadrinho.api.js";
+import { AnuncioProduto } from "@componentes/quadrinho/AnuncioProduto.js";
+
+function getElementos() {
+  return {
+    containerAnuncio: document.getElementById("container-anuncio"),
+  };
+}
 
 export async function initPagina() {
-    const uRLSearchParams = new URLSearchParams(window.location.search);
-
-    let quadrinho;
-
     try {
-        quadrinho = await retornarQuadrinho(uRLSearchParams.get('id'));
+        const uRLSearchParams = new URLSearchParams(window.location.search);
+        const id = uRLSearchParams.get('id');
 
-        carregarPagina(quadrinho);
+        const quadrinho = await retornarQuadrinho(id);
+
+        getElementos().containerAnuncio.append(
+            AnuncioProduto(quadrinho, adicionarItem)
+        );
 
     } catch (error){
-        document.getElementById('container-anuncio').innerHTML = `
+        getElementos().containerAnuncio.innerHTML = `
             <h3 class="text-center">Produto não encontrado!</h3>
         `;
     }
+}
 
-    function carregarPagina(quadrinho){
-        document.querySelector('title').textContent = quadrinho.titulo;
+async function adicionarItem(quadrinho){
+    try {
+        const inputQuantidade = /** @type {HTMLInputElement} */
+            (document.getElementsByName('quantidade')[0]);
 
-        document.getElementById('secao-imagem').innerHTML = `
-            <img src="${quadrinho.urlImagem}" class="img-fluid rounded-start" alt="Imagem do produto"></img>
-        `;
+        await adicionarItemAoCarrinho(
+            {
+                idQuadrinho: quadrinho.id,
+                preco: quadrinho.preco,
+                quantidade: inputQuantidade.value,
+                nome: quadrinho.titulo,
+                urlImagem: quadrinho.urlImagem
+            } 
+        );
 
-        document.getElementById('header-produto').innerHTML = `
-            <h1 class="card-title">${quadrinho.titulo}</h1>
-            <p class="card-text fs-4 text-success">${formatarPreco(quadrinho.preco)}</p>
-        `
-
-        let estoque = quadrinho.quantidadeEstoque;
-
-        if (estoque > 0){
-            document.getElementById('estoque').innerHTML = `Estoque: ${estoque}`;
-        } else {
-            document.getElementById('adicionar-carrinho').innerHTML = `
-                <p>Fora de estoque</p>
-            `;
-        }
-
-        let categorias = '';
-        quadrinho.categorias.forEach(categoria => {
-            categorias += categoria.nome+", ";
-        });
-
-        const corpoTabela = document.createElement('tbody');
-        corpoTabela.innerHTML = `
-            <tbody>
-                <tr>
-                    <td>Ano: ${formatarData(quadrinho.ano)}</td>
-                </tr>
-                <tr>
-                    <td>Autor: ${quadrinho.autor}</td>
-                </tr>
-                <tr>
-                    <td>Editora: ${quadrinho.editora}</td>
-                </tr>
-                <tr>
-                    <td>Edição: ${quadrinho.edicao}</td>
-                </tr>
-                <tr>
-                    <td>ISBN: ${quadrinho.isbn}</td>
-                </tr>
-                <tr>
-                    <td>Número de Páginas: ${quadrinho.numeroPaginas}</td>
-                </tr>
-                <tr>
-                    <td>Sinopse: ${quadrinho.sinopse}</td>
-                </tr>
-                <tr>
-                    <td>Dimensões: ${quadrinho.altura}cm X ${quadrinho.largura}cm X ${quadrinho.profundidade}cm</td>
-                </tr>
-                <tr>
-                    <td>Peso: ${quadrinho.peso}g</td>
-                </tr>
-                <tr>
-                    <td>Código de Barras: ${quadrinho.codigoBarras}</td>
-                </tr>
-                <tr>
-                    <td>Categorias: ${categorias}</td>
-                </tr>
-                <tr>
-                    <td>Grupo de precificação: ${quadrinho.grupoPrecificacao.nome}
-                </tr>
-            </tbody>
-        `
-
-        document.getElementById('tabela-info').append(corpoTabela);
-
-        (/** @type {any} */ (window)).adicionarItem = async () => {
-
-            try {
-                const inputQuantidade = /** @type {HTMLInputElement} */
-                    (document.getElementsByName('quantidade')[0]);
-
-                await adicionarItemAoCarrinho(
-                    {
-                        idQuadrinho: quadrinho.id,
-                        preco: quadrinho.preco,
-                        quantidade: inputQuantidade.value,
-                        nome: quadrinho.titulo,
-                        urlImagem: quadrinho.urlImagem
-                    } 
-                );
-
-                alert('Item adicionado com sucesso!');
-            } catch (error){
-                alert("Erro ao adicionar quadrinho: "+error);
-            }
-
-        };
+        alert('Item adicionado com sucesso!');
+    } catch (error){
+        alert("Erro ao adicionar quadrinho: "+error);
     }
-
 }
