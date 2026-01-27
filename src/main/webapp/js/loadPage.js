@@ -1,6 +1,6 @@
-import { AdminContainerNav } from "@componentes/adminContainerNav.js";
-import { ContainerFooter } from "@componentes/containerFooter.js";
-import { ContainerNav } from "@componentes/containerNav.js";
+import { AdminContainerNav } from "@componentes/layout/AdminContainerNav.js";
+import { ContainerFooter } from "@componentes/layout/ContainerFooter.js";
+import { ContainerNav } from "@componentes/layout/ContainerNav.js";
 
 const app = document.getElementById("app");
 
@@ -72,7 +72,7 @@ function carregarElementosComuns(){
   if (mainNav){
     if (url.startsWith("/admin")){
       mainNav.className = "navbar navbar-expand-lg navbar-light";
-      mainNav.append(new AdminContainerNav());
+      mainNav.append(AdminContainerNav());
 
       document.querySelectorAll(".nav-link").forEach( link => {
         if (url === window.location.href){
@@ -81,12 +81,12 @@ function carregarElementosComuns(){
       });
     } else {
       mainNav.className = "navbar navbar-expand-lg navbar-light";
-      mainNav.append(new ContainerNav());
+      mainNav.append(ContainerNav());
     }
   }
 
   if (mainFooter){
     mainFooter.className="text-black text-center py-4"
-    mainFooter.append(new ContainerFooter());
+    mainFooter.append(ContainerFooter());
   }
 }
