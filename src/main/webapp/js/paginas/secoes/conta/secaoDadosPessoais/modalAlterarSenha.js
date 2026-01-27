@@ -1,6 +1,6 @@
 import { alertarErro } from "@api/alertErro.js";
 import { atualizarSenha } from "@api/cliente.api.js";
-import { Modal } from "@componentes/modal.js";
+import { Modal } from "@componentes/common/modal.js";
 
 export class ModalAlterarSenha extends Modal {
 

@@ -1,4 +1,4 @@
-import { Modal } from "@componentes/modal.js";
+import { Modal } from "@componentes/common/modal.js";
 import { formatarDateTime } from "../../script.js";
 
 export class ModalConsultarPedidosPosVenda extends Modal {

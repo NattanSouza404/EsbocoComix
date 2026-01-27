@@ -1,4 +1,4 @@
-import { Modal } from "@componentes/modal.js";
+import { Modal } from "@componentes/common/modal.js";
 import { montarCartaoCreditoPorForm } from "../../../../script.js";
 import { FormularioCartaoCredito } from "@componentes/forms/formCartaoCredito.js";
 import { inserirCartaoCredito } from "@api/cartaoCredito.api.js";

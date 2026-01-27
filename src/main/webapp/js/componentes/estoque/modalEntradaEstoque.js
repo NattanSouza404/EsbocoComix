@@ -1,6 +1,6 @@
 import { alertarErro } from "@api/alertErro.js";
 import { inserirEntradaEstoque } from "@api/estoque.api.js";
-import { Modal } from "@componentes/modal.js";
+import { Modal } from "@componentes/common/modal.js";
 
 export default class ModalEntradaEstoque extends Modal {
     constructor(){

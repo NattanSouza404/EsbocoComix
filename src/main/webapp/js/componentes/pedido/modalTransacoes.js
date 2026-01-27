@@ -1,6 +1,6 @@
 import { formatarDateTime, formatarPreco } from "../../script.js";
 import { retornarPedidos } from "@api/pedido.api.js";
-import { Modal } from "@componentes/modal.js";
+import { Modal } from "@componentes/common/modal.js";
 import { alertarErro } from "@api/alertErro.js";
 
 export default class ModalTransacoes extends Modal {

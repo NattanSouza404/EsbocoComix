@@ -1,5 +1,5 @@
 import { montarEnderecoPorForm } from "../../../../script.js";
-import { Modal } from "@componentes/modal.js";
+import { Modal } from "@componentes/common/modal.js";
 import { FormularioEndereco } from "@componentes/forms/formEndereco.js";
 import { inserirEndereco } from "@api/endereco.api.js";
 import { alertarErro } from "@api/alertErro.js";

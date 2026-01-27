@@ -1,6 +1,6 @@
 import { montarCartaoCreditoPorForm } from "../../../../script.js";
 import { atualizarCartaoCredito } from "@api/cartaoCredito.api.js";;
-import { Modal } from "@componentes/modal.js";
+import { Modal } from "@componentes/common/modal.js";
 import { FormularioCartaoCredito } from "@componentes/forms/formCartaoCredito.js";
 import { alertarErro } from "@api/alertErro.js";
 import { localStorageKeys } from "../../../../localStorage.js";
