@@ -67,12 +67,14 @@ export const AnuncioProduto = (quadrinho, adicionarItem) => {
                     <hr class="my-4">
 
                     <h3 class="mt-4">Detalhes</h3>
-
-                    ${TabelaInfoProduto(quadrinho).outerHTML}
                 </div>
             </section>
         </div>
     `;
+
+    anuncio.querySelector('.card-body').append(
+        TabelaInfoProduto(quadrinho)
+    );
 
     /** @type {HTMLButtonElement} */
     (anuncio.querySelector('.btn-adicionar-item')).onclick = () => {

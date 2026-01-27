@@ -1,6 +1,7 @@
 import { adicionarItemAoCarrinho } from "@api/carrinho.api.js";
 import { retornarQuadrinho } from "@api/quadrinho.api.js";
 import { AnuncioProduto } from "@componentes/quadrinho/AnuncioProduto.js";
+import { getUrlParam } from "../script.js";
 
 function getElementos() {
   return {
@@ -10,8 +11,7 @@ function getElementos() {
 
 export async function initPagina() {
     try {
-        const uRLSearchParams = new URLSearchParams(window.location.search);
-        const id = uRLSearchParams.get('id');
+        const id = getUrlParam('id');
 
         const quadrinho = await retornarQuadrinho(id);
 
