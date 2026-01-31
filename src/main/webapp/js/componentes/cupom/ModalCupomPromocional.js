@@ -1,9 +1,7 @@
-import { alertarErro } from "@api/alertErro.js";
-import { inserirCupom } from "@api/cupom.api.js";
 import { Modal } from "@componentes/common/modal.js";
 
 export default class ModalCupomPromocional extends Modal {
-    constructor(){
+    constructor(inserirCupom){
         const conteudoModal = ConteudoModalCupom();
 
         super('modal-cupom-promocional', "Adicionar cupom promocional", conteudoModal);
@@ -11,17 +9,21 @@ export default class ModalCupomPromocional extends Modal {
         this.conteudoModal = conteudoModal;
 
         this.conteudoModal.querySelector('button').onclick = async () => {
-            await this.enviarFormulario()
+            await inserirCupom(
+                this.confirmarCadastroCupom()
+            );
         }
     }
 
     show(cliente){
+        this.conteudoModal.querySelector("#nome-cliente").textContent = `
+            Cliente: ${cliente}
+        `;
         this.cliente = cliente;
-        this.conteudoModal.querySelector("#nome-cliente").textContent = `Cliente: ${this.cliente.nome}`;
         super.show();
     }
     
-    async enviarFormulario(){
+    confirmarCadastroCupom(){
         const confirmacaoUsuario = confirm("Deseja mesmo cadastrar esse cupom?");
 
         if (!confirmacaoUsuario){
@@ -30,18 +32,11 @@ export default class ModalCupomPromocional extends Modal {
                 
         const formData = new FormData(this.conteudoModal);
 
-        const cupom = {
+        return {
             idCliente: this.cliente.id,
             valor: formData.get('valor'),
             isPromocional: true
-        }
-
-        try {
-            await inserirCupom(cupom);
-            alert('Cadastrado com sucesso');    
-        } catch (error){
-            alertarErro(error);
-        }
+        };
         
     }
 
@@ -53,13 +48,13 @@ function ConteudoModalCupom(){
     conteudoModal.className = 'container';
     conteudoModal.style.gap = '10px';
 
-    conteudoModal.innerHTML = `
+    conteudoModal.innerHTML = /* html */ `
         <p id="nome-cliente"></p>
 
         <label>
             Valor do cupom
 
-            <input type="number" name="valor"></input>
+            <input type="number" name="valor">
         </label>
 
         <div>

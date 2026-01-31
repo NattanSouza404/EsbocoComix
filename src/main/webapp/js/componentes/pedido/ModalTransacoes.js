@@ -1,10 +1,8 @@
 import { formatarDateTime, formatarPreco } from "../../script.js";
-import { retornarPedidos } from "@api/pedido.api.js";
 import { Modal } from "@componentes/common/modal.js";
-import { alertarErro } from "@api/alertErro.js";
 
 export default class ModalTransacoes extends Modal {
-    constructor(){
+    constructor(getPedidos){
         const conteudoModal = ConteudoModalTransacoes();
         super('modal-consultar-transacoes', "Transações", conteudoModal);
         
@@ -16,20 +14,14 @@ export default class ModalTransacoes extends Modal {
             conteudoModal.querySelector('.aviso');
 
         this.esconderTabela();
+
+        this.getPedidos = getPedidos;
     }
 
     async show(cliente){
-        this.cliente = cliente;
+        const pedidos = await this.getPedidos(cliente);
 
-        let pedidos;
-        try {
-            pedidos = await retornarPedidos(this.cliente.id);
-        } catch (error){
-            alertarErro(error);
-            return;
-        }
-
-        super.mudarTitulo(`Transações de ${this.cliente.nome}`);
+        super.mudarTitulo(`Transações de ${cliente.nome}`);
 
         if (Array.isArray(pedidos) && pedidos.length > 0){
             this.tbody.innerHTML = '';
@@ -77,7 +69,7 @@ function ConteudoModalTransacoes(){
     const conteudoModal = document.createElement('div');
     conteudoModal.id = 'consultar-transacoes';
 
-    conteudoModal.innerHTML = `
+    conteudoModal.innerHTML = /* html */ `
         <table>
             <thead>
                 <th>Data e hora</th>
