@@ -38,7 +38,7 @@ export default class TabelaClientes extends HTMLTableElement {
         for (let i = 0; i < clientes.length; i++){
             this.tBody.append(
                 LinhaTabelaCliente(
-                    i,
+                    i+1,
                     clientes[i],
                     this.modalTransacoes,
                     this.modalCupomPromocional,

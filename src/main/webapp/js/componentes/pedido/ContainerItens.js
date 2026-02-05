@@ -13,7 +13,7 @@ export class ContainerItens extends HTMLDivElement {
             const div = document.createElement('div');
             div.className = "p-3 mb-2 bg-light rounded border";
 
-            div.innerHTML = `
+            div.innerHTML = /* html */ `
                 <div class="d-flex justify-content-between align-items-center">
                     <img src="${item.urlImagem}">
                     <div>

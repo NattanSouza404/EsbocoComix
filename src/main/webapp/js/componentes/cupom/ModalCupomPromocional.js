@@ -9,9 +9,11 @@ export default class ModalCupomPromocional extends Modal {
         this.conteudoModal = conteudoModal;
 
         this.conteudoModal.querySelector('button').onclick = async () => {
-            await inserirCupom(
-                this.confirmarCadastroCupom()
-            );
+            const cupom = this.confirmarCadastroCupom();
+
+            if (cupom){
+                await inserirCupom(cupom);
+            }
         }
     }
 

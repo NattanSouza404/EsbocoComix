@@ -5,7 +5,7 @@ export class ContainerPedido extends HTMLDivElement {
     constructor(pedido){
         super();
 
-        this.innerHTML = `
+        this.innerHTML = /* html */ `
             <div class="p-3 mb-3 text-white rounded secao-superior">
                 <div class="d-flex justify-content-between align-items-center">
                     <h5 class="mb-3">
