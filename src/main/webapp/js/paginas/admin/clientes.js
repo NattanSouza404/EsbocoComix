@@ -16,6 +16,8 @@ const getElementos = () => {
 
 export async function initPagina() {
     try {
+        const el = getElementos();
+
         const clientes = await retornarAllClientes();
 
         const modalTransacoes = new ModalTransacoes(getPedidos);
@@ -27,13 +29,13 @@ export async function initPagina() {
             confirmarInativarCliente
         );
 
-        getElementos().tabelaClientes.appendChild(
+        el.tabelaClientes.appendChild(
             tabelaClientes
         );
 
         await tabelaClientes.atualizarTabelaClientes(clientes);
 
-        getElementos().botaoPesquisarClientes.onclick = () => {
+        el.botaoPesquisarClientes.onclick = () => {
             pesquisarClientes(tabelaClientes);
         };
     } catch (error){

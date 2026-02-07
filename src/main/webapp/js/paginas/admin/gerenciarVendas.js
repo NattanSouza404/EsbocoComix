@@ -15,30 +15,32 @@ const getElementos = () => {
 
 export async function initPagina() {
     try {
-        getElementos().mainContainer.style.display = 'none';
+        const el = getElementos();
+
+        el.mainContainer.style.display = 'none';
 
         const pedidos = await retornarPedidos();
         const pedidosPosVenda = await retornarPedidosPosVenda();
 
-        getElementos().loading.style.display = 'none';
-        getElementos().mainContainer.style.display = 'block';
+        el.loading.style.display = 'none';
+        el.mainContainer.style.display = 'block';
 
         if (pedidos.length > 0){
-            getElementos().containerTabelaPedidos.append(
+            el.containerTabelaPedidos.append(
                 TabelaPedidos(pedidos, confirmarAtualizarStatusPedido)
             );
         } else {
-            getElementos().containerTabelaPedidos.innerHTML = `
+            el.containerTabelaPedidos.innerHTML = `
                 <p class="text-center">Nenhum pedido realizado</p>
             `;
         }
 
         if (pedidosPosVenda.length > 0){
-            getElementos().containerTabelaPedidosTroca.append(
+            el.containerTabelaPedidosTroca.append(
                 TabelaPedidosPosVenda(pedidosPosVenda, confirmarAtualizarStatusPedidoPosVenda)
             );
         } else {
-            getElementos().containerTabelaPedidosTroca.innerHTML = `
+            el.containerTabelaPedidosTroca.innerHTML = `
                 <p class="text-center">Nenhum pedido de troca/devolução realizado</p>
             `;
         }
@@ -61,7 +63,7 @@ async function confirmarAtualizarStatusPedido(pedido, status){
         pedido.status = status;
         pedido.retornarAoEstoque = false;
 
-        if (pedido.status === 'TROCA_CONCLUIDA' || pedido.status === 'DEVOLUCAO_CONCLUIDA'){
+        if (['TROCA_CONCLUIDA', 'DEVOLUCAO_CONCLUIDA'].includes(pedido.status)){
             if (confirm('Deseja retornar os itens para o estoque?')){
                 pedido.retornarAoEstoque = true;
             }

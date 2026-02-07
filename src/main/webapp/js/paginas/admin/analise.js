@@ -14,6 +14,7 @@ const getElementos = () => {
 }
 
 export async function initPagina() {
+    const el = getElementos();
 
     const formatador = new FormatadorAnalise();
 
@@ -29,17 +30,17 @@ export async function initPagina() {
     });
 
     graficos.forEach(g => {
-        getElementos().containerGraficos.append(g.instancia);
+        el.containerGraficos.append(g.instancia);
     });
 
-    getElementos().btnPesquisar.onclick = async () => {
+    el.btnPesquisar.onclick = async () => {
         try {
             const filtro = {
                 dataInicio: /** @type {HTMLInputElement} */ 
-                    (getElementos().inputDataInicio).value,
+                    (el.inputDataInicio).value,
 
                 dataFinal: /** @type {HTMLInputElement} */
-                    (getElementos().inputDataFinal).value
+                    (el.inputDataFinal).value
             };
 
             const dadosAnalise = await retornarAnalise(filtro);

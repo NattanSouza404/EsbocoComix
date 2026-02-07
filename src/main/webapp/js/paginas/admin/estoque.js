@@ -14,16 +14,18 @@ const getElementos = () => {
 
 export async function initPagina() {
     try {
+        const el = getElementos();
+
         const entradasEstoque = await consultarEntradasEstoque();
         const quadrinhos = await consultarTodosQuadrinhos();
 
         const modal = new ModalEntradaEstoque(cadastrarEntradaEstoque);
 
-        getElementos().containerTabelaEstoque.appendChild(
+        el.containerTabelaEstoque.appendChild(
             TabelaEstoque(quadrinhos, modal)
         );
 
-        getElementos().containerTabelaEntradaEstoque.appendChild(
+        el.containerTabelaEntradaEstoque.appendChild(
             TabelaEntradaEstoque(entradasEstoque)
         );
     } catch (error){

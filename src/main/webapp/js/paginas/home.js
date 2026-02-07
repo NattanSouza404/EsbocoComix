@@ -20,26 +20,28 @@ const getElementos = () => {
 
 export async function initPagina(){
     try {
-        getElementos().containerCarrossel.append(CarrosselHome());
+        const el = getElementos();
+
+        el.containerCarrossel.append(CarrosselHome());
 
         const quadrinhos = await consultarTodosQuadrinhos();
         const categorias = await consultarTodasCategorias();
         
         quadrinhos.forEach(quadrinho => {
-            getElementos().containerProdutos.append(new CartaoProduto(quadrinho))
+            el.containerProdutos.append(new CartaoProduto(quadrinho))
         });
 
         categorias.forEach(c => {
-            getElementos().fieldSetCategorias.append(CheckCategoria(c));
+            el.fieldSetCategorias.append(CheckCategoria(c));
         });
 
-        getElementos().btnBuscarQuadrinho.onclick = async () => {
+        el.btnBuscarQuadrinho.onclick = async () => {
             pesquisarQuadrinhos();
         }
 
-        getElementos().inputMaximoPaginas.append(InputMaximoPaginas());
+        el.inputMaximoPaginas.append(InputMaximoPaginas());
 
-        getElementos().buscaQuadrinhos.addEventListener(
+        el.buscaQuadrinhos.addEventListener(
             "keypress", 
             e => {
                 if (e.key === "Enter") {
@@ -56,7 +58,9 @@ export async function initPagina(){
 
 async function pesquisarQuadrinhos(){
     try {
-        const form = getElementos().buscaQuadrinhos;
+        const el = getElementos();
+
+        const form = el.buscaQuadrinhos;
 
         const dadosFormulario = formToObject(form);
         const categorias = listarCategoriasSelecionadas();
@@ -69,15 +73,15 @@ async function pesquisarQuadrinhos(){
         const quadrinhos = await filtrarTodosQuadrinhos(filtro);
 
         if (!Array.isArray(quadrinhos) || quadrinhos.length === 0){
-            getElementos().containerProdutos.innerHTML = /* html */
+            el.containerProdutos.innerHTML = /* html */
                 `<h1 class="text-center">Nenhum item encontrado!</h1>`; 
             
             return;
         }
 
-        getElementos().containerProdutos.innerHTML = "";  
+        el.containerProdutos.innerHTML = "";  
         quadrinhos.forEach(quadrinho => {
-            getElementos().containerProdutos.append(new CartaoProduto(quadrinho))
+            el.containerProdutos.append(new CartaoProduto(quadrinho))
         });
 
     } catch (error){
