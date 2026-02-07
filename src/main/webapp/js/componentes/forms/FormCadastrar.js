@@ -1,6 +1,6 @@
-import { FormularioDadosPessoais } from "@componentes/forms/formDadosPessoais.js";
+import { FormDadosPessoais } from "@componentes/forms/FormDadosPessoais.js";
 
-export class FormularioCadastrarDadosPessoais extends FormularioDadosPessoais {
+export class FormCadastrarDadosPessoais extends FormDadosPessoais {
     constructor(){
         super();
 
@@ -37,4 +37,4 @@ export class FormularioCadastrarDadosPessoais extends FormularioDadosPessoais {
 
 }
 
-customElements.define('form-cadastrar-dados-pessoais', FormularioCadastrarDadosPessoais, {extends: "form"});
+customElements.define('form-cadastrar-dados-pessoais', FormCadastrarDadosPessoais, {extends: "form"});

@@ -1,6 +1,6 @@
 import { montarClientePorForm } from "../../../../script.js";
 import { atualizarCliente } from "@api/cliente.api.js";
-import { FormularioDadosPessoais } from "@componentes/forms/formDadosPessoais.js";
+import { FormDadosPessoais } from "@componentes/forms/FormDadosPessoais.js";
 import { Modal } from "@componentes/common/modal.js";
 import { alertarErro } from "@api/alertErro.js";
 import { localStorageKeys } from "../../../../localStorage.js";
@@ -50,7 +50,7 @@ export class ModalAlterarDadosPessoais extends Modal {
 }
 
 function ConteudoModalAlterarDadosPessoais(){
-    const form = new FormularioDadosPessoais();
+    const form = new FormDadosPessoais();
     form.id = 'alterar-dados-pessoais';
     return form;
 }

@@ -1,6 +1,6 @@
 import { BANDEIRAS_CARTAO } from "../../dados.js";
 
-export class FormularioCartaoCredito extends HTMLFormElement {
+export class FormCartaoCredito extends HTMLFormElement {
     constructor(){
         super();
 
@@ -110,4 +110,4 @@ export class FormularioCartaoCredito extends HTMLFormElement {
     }
 }
 
-customElements.define('form-dados-cartao-credito', FormularioCartaoCredito, { extends: 'form'});
+customElements.define('form-dados-cartao-credito', FormCartaoCredito, { extends: 'form'});

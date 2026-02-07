@@ -1,7 +1,7 @@
 import { GENEROS, TIPOS_TELEFONE } from "../../dados.js";
 import { formatarDataParaInput } from "../../script.js";
 
-export class FormularioDadosPessoais extends HTMLFormElement {
+export class FormDadosPessoais extends HTMLFormElement {
     constructor(){
         super();
 
@@ -130,4 +130,4 @@ export class FormularioDadosPessoais extends HTMLFormElement {
     }
 }
 
-customElements.define('form-dados-pessoais', FormularioDadosPessoais, { extends: 'form'});
+customElements.define('form-dados-pessoais', FormDadosPessoais, { extends: 'form'});

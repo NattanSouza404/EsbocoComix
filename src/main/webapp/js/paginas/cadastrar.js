@@ -1,8 +1,8 @@
 import { alertarErro } from "@api/alertErro.js";
 import { inserirCliente } from "@api/cliente.api.js";
-import { FormularioCartaoCredito } from "@componentes/forms/formCartaoCredito.js";
-import { FormularioEndereco } from "@componentes/forms/formEndereco.js";
-import { FormularioCadastrarDadosPessoais } from "@componentes/forms/formsCadastrar.js";
+import { FormCartaoCredito } from "@componentes/forms/FormCartaoCredito.js";
+import { FormEndereco } from "@componentes/forms/FormEndereco.js";
+import { FormCadastrarDadosPessoais } from "@componentes/forms/FormCadastrar.js";
 import { localStorageKeys } from "../localStorage.js";
 import { montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm } from "../script.js";
 
@@ -32,18 +32,18 @@ export async function initPagina() {
     const el = getElementos();
 
     el.secaoDadosPessoais.append(
-        new FormularioCadastrarDadosPessoais()
+        new FormCadastrarDadosPessoais()
     );
 
     el.btnAddEndereco.onclick = adicionarEndereco;
     el.btnAddCartao.onclick = adicionarCartaoCredito;
 
     el.containerEnderecos.append(
-        new FormularioEndereco().tornarObrigatorio().setNumeroTitulo(1)
+        new FormEndereco().tornarObrigatorio().setNumeroTitulo(1)
     );
 
     el.containerCartoesCredito.append(
-        new FormularioCartaoCredito().setNumeroTitulo(1)
+        new FormCartaoCredito().setNumeroTitulo(1)
     );
 
     el.btnEnviarCadastro.onclick = enviarCliente;
@@ -103,7 +103,7 @@ function adicionarEndereco(){
     const el = getElementos();
 
     const numero = el.formsEndereco.length + 1;
-    const form = new FormularioEndereco()
+    const form = new FormEndereco()
         .setNumeroTitulo(numero)
         .habilitarBotaoRemover();
 
@@ -115,7 +115,7 @@ function adicionarCartaoCredito(){
 
     const numero = el.formsCartaoCredito.length + 1;
 
-    const form = new FormularioCartaoCredito()
+    const form = new FormCartaoCredito()
         .setNumeroTitulo(numero)
         .habilitarBotaoRemover();
 

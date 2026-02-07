@@ -1,7 +1,7 @@
 import { montarEnderecoPorForm } from "../../../../script.js";
 import { atualizarEndereco } from "@api/endereco.api.js";
 import { Modal } from "@componentes/common/modal.js";
-import { FormularioEndereco } from "@componentes/forms/formEndereco.js";
+import { FormEndereco } from "@componentes/forms/FormEndereco.js";
 import { alertarErro } from "@api/alertErro.js";
 import { localStorageKeys } from "../../../../localStorage.js";
 
@@ -49,7 +49,7 @@ export class ModalAlterarEndereco extends Modal {
 }
 
 function ConteudoModal() {
-    const form = new FormularioEndereco();
+    const form = new FormEndereco();
     form.id = 'alterar-endereco';
 
     form.insertAdjacentHTML('beforeend', `

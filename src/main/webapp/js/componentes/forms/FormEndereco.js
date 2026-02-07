@@ -1,6 +1,6 @@
 import { TIPOS_LOGRADOURO, TIPOS_RESIDENCIAL } from "../../dados.js";
 
-export class FormularioEndereco extends HTMLFormElement {
+export class FormEndereco extends HTMLFormElement {
     constructor(){
         super();
 
@@ -176,4 +176,4 @@ export class FormularioEndereco extends HTMLFormElement {
     }
 }
 
-customElements.define('form-dados-endereco', FormularioEndereco, { extends: 'form'});
+customElements.define('form-dados-endereco', FormEndereco, { extends: 'form'});
