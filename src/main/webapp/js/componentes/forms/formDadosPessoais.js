@@ -7,7 +7,7 @@ export class FormularioDadosPessoais extends HTMLFormElement {
 
         this.id = 'cadastrar-dados-pessoais';
 
-        this.innerHTML = `
+        this.innerHTML = /* html */`
             <div class="header-dados-cadastro">
                 <p>Dados Pessoais</p>
             </div>
@@ -15,7 +15,7 @@ export class FormularioDadosPessoais extends HTMLFormElement {
             <div class="dados-formulario">
                 <label>
                     Nome
-                    <input name="nome" placeholder="Seu nome"></input>
+                    <input name="nome" placeholder="Seu nome">
                 </label>
 
                 <label>
@@ -25,17 +25,26 @@ export class FormularioDadosPessoais extends HTMLFormElement {
 
                 <label>
                     Data de Nascimento
-                    <input name="dataNascimento" type="date"></input>
+                    <input name="dataNascimento" type="date">
                 </label>
 
                 <label>
                     CPF
-                    <input name="cpf" placeholder="11111111111" minlength="11" maxlength="11"></input>
+                    <input
+                        name="cpf"
+                        placeholder="11111111111"
+                        minlength="11"
+                        maxlength="11"
+                    >
                 </label>
 
                 <label>
                     E-mail
-                    <input name="email" type="email" placeholder="seuemail@email.com"></input>
+                    <input
+                        name="email"
+                        type="email"
+                        placeholder="seuemail@email.com"
+                    >
                 </label>
             </div>
 
@@ -52,12 +61,22 @@ export class FormularioDadosPessoais extends HTMLFormElement {
 
                 <label>
                     DDD
-                    <input name="ddd" placeholder="11" minlength="2" maxlength="2"></input>
+                    <input
+                        name="ddd"
+                        placeholder="11"
+                        minlength="2"
+                        maxlength="2"
+                    >
                 </label>
 
                 <label>
                     Número do Telefone
-                    <input name="numero" placeholder="111111111" minlength="9" maxlength="9"></input>
+                    <input
+                        name="numero"
+                        placeholder="111111111"
+                        minlength="9"
+                        maxlength="9"
+                    >
                 </label>
 
             </div>

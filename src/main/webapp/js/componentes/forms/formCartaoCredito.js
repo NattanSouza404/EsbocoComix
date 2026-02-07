@@ -6,7 +6,7 @@ export class FormularioCartaoCredito extends HTMLFormElement {
 
         this.className = 'cartao-credito';
 
-        this.innerHTML = `
+        this.innerHTML = /* html */`
             <div class="numeracao">
                 <p class="numeroTitulo">1</p>
                 <p>Cartão de Crédito</p>
@@ -15,17 +15,27 @@ export class FormularioCartaoCredito extends HTMLFormElement {
             <div class="dados-cartao-credito">
                 <label>
                     Número Cartão de Crédito
-                    <input name="numero" placeholder="xxxxxxxxxxxxxxxx" minlength="16" maxlength="16"></input>
+                    <input
+                        name="numero"
+                        placeholder="xxxxxxxxxxxxxxxx"
+                        minlength="16"
+                        maxlength="16"
+                    >
                 </label>
 
                 <label>
                     Nome Impresso
-                    <input name="nomeImpresso" placeholder="NOME IMPRESSO"></input>
+                    <input name="nomeImpresso" placeholder="NOME IMPRESSO">
                 </label>
 
                 <label>
                     Código de Segurança
-                    <input name="codigoSeguranca" placeholder="xxx" minlength="3" maxlength="3"></input>
+                    <input
+                        name="codigoSeguranca"
+                        placeholder="xxx"
+                        minlength="3"
+                        maxlength="3"
+                    >
                 </label>
 
                 <label>
@@ -42,6 +52,14 @@ export class FormularioCartaoCredito extends HTMLFormElement {
                 </label>
 
             </div>
+
+            <button
+                class="btn-remover"
+                type="button"
+                style="display: none;"
+            >
+                Remover
+            </button>
         `;
 
         this.numeroTitulo = this.querySelector('.numeroTitulo');
@@ -56,6 +74,22 @@ export class FormularioCartaoCredito extends HTMLFormElement {
 
     setNumeroTitulo(numero){
         this.numeroTitulo.textContent = numero;
+        return this;
+    }
+
+    habilitarBotaoRemover(){
+        const btnRemover = /** @type {HTMLButtonElement} */
+            (this.querySelector(".btn-remover"))
+
+        btnRemover.onclick = () => {
+            if (this.parentNode){
+                this.parentElement.removeChild(this);
+            }
+        }
+
+        btnRemover.style.display = "block";
+
+        return this;
     }
 
     atualizar(cartaoCredito){

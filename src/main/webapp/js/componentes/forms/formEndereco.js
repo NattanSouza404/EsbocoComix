@@ -6,7 +6,7 @@ export class FormularioEndereco extends HTMLFormElement {
 
         this.className = 'endereco';
 
-        this.innerHTML = `
+        this.innerHTML = /* html */`
             <div class="numeracao">
                 <p class="numeroTitulo">1</p>
                 <p>Endereço</p>
@@ -15,7 +15,7 @@ export class FormularioEndereco extends HTMLFormElement {
             <div class="dados-endereco">
                 <label>
                     Frase curta para identificação
-                    <input name="fraseCurta" placeholder="Casa"></input>
+                    <input name="fraseCurta" placeholder="Casa">
                 </label>
                 
                 <label>
@@ -52,12 +52,12 @@ export class FormularioEndereco extends HTMLFormElement {
                 
                 <label>
                     Nº Endereço
-                    <input name="numero" placeholder="34"></input>
+                    <input name="numero" placeholder="34">
                 </label>
                 
                 <label>
                     Logradouro
-                    <input name="logradouro" placeholder="Flores"></input>
+                    <input name="logradouro" placeholder="Flores">
                 </label>
                 
                 <label>
@@ -67,35 +67,47 @@ export class FormularioEndereco extends HTMLFormElement {
 
                 <label>
                     CEP
-                    <input name="cep" placeholder="00000-000" minlength="8" maxlength="8"></input>
+                    <input
+                        name="cep"
+                        placeholder="00000-000"
+                        minlength="8"
+                        maxlength="8"
+                    >
                 </label>  
 
                 <label>
                     Bairro
-                    <input name="bairro" placeholder="Vila Celestina"></bairro>
+                    <input name="bairro" placeholder="Vila Celestina">
                 </label>
                 
                 <label>
                     Cidade
-                    <input name="cidade" placeholder="Embu"></input>
+                    <input name="cidade" placeholder="Embu">
                 </label>
 
                 <label>
                     Estado
-                    <input name="estado" placeholder="São Paulo"></input>
+                    <input name="estado" placeholder="São Paulo">
                 </label>
                 
                 <label>
                     País
-                    <input name="pais" placeholder="Brasil"></input>
+                    <input name="pais" placeholder="Brasil">
                 </label>
                 
                 <label>
                     Observações
-                    <input name="observacoes" placeholder="Perto do prédio..."></input>
+                    <input name="observacoes" placeholder="Perto do prédio...">
                 </label>
-                
             </div>
+
+            <button
+                class="btn-remover"
+                type="button"
+                style="display: none;"
+            >
+                Remover
+            </button>
         `;
 
         this.numeroTitulo = this.getElementsByClassName('numeroTitulo')[0];
@@ -117,6 +129,33 @@ export class FormularioEndereco extends HTMLFormElement {
 
     setNumeroTitulo(numero){
         this.numeroTitulo.textContent = numero;
+        return this;
+    }
+
+    tornarObrigatorio(){    
+        /** @type {HTMLSelectElement} */
+        (this.querySelector('[name = "isResidencial"]'))
+            .value = 'true';
+
+        /** @type {HTMLOptionElement} */
+        (this.querySelector('[name = "isResidencial"]').querySelector('[value="false"]'))
+            .disabled = true;
+        return this;
+    }
+
+    habilitarBotaoRemover(){
+        const btnRemover = /** @type {HTMLButtonElement} */
+            (this.querySelector(".btn-remover"))
+
+        btnRemover.onclick = () => {
+             if (this.parentNode){
+                this.parentElement.removeChild(this);
+            }
+        }
+
+        btnRemover.style.display = "block";
+
+        return this;
     }
 
     atualizar(endereco){
@@ -124,7 +163,7 @@ export class FormularioEndereco extends HTMLFormElement {
 
         Object.entries(this.endereco).forEach(
             ([chave, valor]) => {
-                let elemento = /** @type {HTMLInputElement} */
+                const elemento = /** @type {HTMLInputElement} */
                     (this.querySelector(`[name="${chave}"]`));
 
                 if (!elemento){
