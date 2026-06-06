@@ -1,5 +1,11 @@
 name: Docker CD Deploy
 
+# Secrets necessários
+# - DOCKER_USERNAME
+# - DOCKER_PASSWORD
+# - DOCKER_EC2_HOST (Obs.: Usar o DNS público)
+# - DOCKER_PRIVATE_KEY
+
 on:
   push:
     branches:

@@ -124,7 +124,8 @@ export class FormularioEndereco extends HTMLFormElement {
 
         Object.entries(this.endereco).forEach(
             ([chave, valor]) => {
-                let elemento = this.querySelector(`[name="${chave}"]`);
+                let elemento = /** @type {HTMLInputElement} */
+                    (this.querySelector(`[name="${chave}"]`));
 
                 if (!elemento){
                     return;

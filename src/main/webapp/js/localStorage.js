@@ -1,19 +1,24 @@
-export function getHistorico(){
-    let historico = localStorage.getItem("historico-chat-ia");
+export const localStorageKeys = {
+    historicoChatIA: "historico-chat-ia",
+    idCliente: "idcliente",
+};
 
-    if (historico === null || historico === undefined) {
-        historico = [
+export function getHistorico(){
+    let historicoStr = localStorage.getItem(localStorageKeys.historicoChatIA);
+
+    if (historicoStr === null || historicoStr === undefined) {
+        const novaMensagem = [
             {
                 mensagem: 'Olá! Como posso ajudar?',
                 tipoMensagem: "texto-ia"
             }
-        ]
-        localStorage.setItem("historico-chat-ia", JSON.stringify(historico));
+        ];
+        localStorage.setItem(localStorageKeys.historicoChatIA, JSON.stringify(novaMensagem));
     } else {
-        historico = JSON.parse(historico);
+        return JSON.parse(historicoStr);
     }
 
-    return historico;
+    return JSON.parse(localStorage.getItem(localStorageKeys.historicoChatIA));
 }
 
 export function adicionarMensagemHistorico(mensagem, tipoMensagem){
@@ -26,10 +31,10 @@ export function adicionarMensagemHistorico(mensagem, tipoMensagem){
         }
     )
 
-    localStorage.setItem("historico-chat-ia", JSON.stringify(historico));
+    localStorage.setItem(localStorageKeys.historicoChatIA, JSON.stringify(historico));
 }
 
 export function removerHistorico(){
-    localStorage.removeItem('historico-chat-ia');
+    localStorage.removeItem(localStorageKeys.historicoChatIA);
 }
 

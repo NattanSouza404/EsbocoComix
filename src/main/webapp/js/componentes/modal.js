@@ -1,4 +1,12 @@
+/**
+ * @typedef {Window & { bootstrap?: any }} WindowComBootstrap
+ */
+
+/** @type {WindowComBootstrap} */
+const win = window;
+
 export class Modal {
+
     constructor(id, title, contentElement) {
         this.id = id;
         this.title = title;
@@ -32,12 +40,12 @@ export class Modal {
     }
 
     show() {
-        const bootstrapModal = new bootstrap.Modal(this.modalElement);
+        const bootstrapModal = new win.bootstrap.Modal(this.modalElement);
         bootstrapModal.show();
     }
 
     hide() {
-        const bootstrapModal = new bootstrap.Modal(this.modalElement);
+        const bootstrapModal = new win.bootstrap.Modal(this.modalElement);
         bootstrapModal.hide();
     }
 

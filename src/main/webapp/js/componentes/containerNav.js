@@ -1,4 +1,4 @@
-import { ChatIA } from "./chatIA.js";
+import { ChatIA } from "@componentes/chatIA.js"; 
 
 export class ContainerNav extends HTMLDivElement {
     constructor(){
@@ -9,7 +9,7 @@ export class ContainerNav extends HTMLDivElement {
         this.className = "container";
         this.innerHTML = `
         
-            <a id="logo-nav" class="navbar-brand" href="/index">
+            <a id="logo-nav" class="navbar-brand" href="/">
                 <img src="/img/logo.png">
                 <h5 class="fw-bold">Livraria de<br/>Quadrinhos</h5>
             </a>
@@ -72,7 +72,8 @@ export class ContainerNav extends HTMLDivElement {
             </div>
         `;
 
-        this.querySelector('#abrir-chat-ia').onclick = () => {
+        /** @type {HTMLButtonElement} */
+        (this.querySelector('#abrir-chat-ia')).onclick = () => {
             this.chatIA.show();
         }
 

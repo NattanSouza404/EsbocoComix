@@ -63,7 +63,8 @@ export class FormularioCartaoCredito extends HTMLFormElement {
 
         Object.entries(this.cartaoCredito).forEach(
             ([chave, valor]) => {
-                let elemento = this.querySelector(`[name="${chave}"]`);
+                let elemento = /** @type {HTMLInputElement} */
+                    (this.querySelector(`[name="${chave}"]`));
 
                 if (!elemento){
                     return;

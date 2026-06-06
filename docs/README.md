@@ -33,3 +33,8 @@ Checklist baseado no fluxo de realizar um pedido no e-commerce.
 Demonstração do sistema com testes automatizados via Selenium.
 
 [➡️ Acesso](./video%20demonstração/video_demonstracao.mp4) 
+
+## Deploy
+Alguns estudos de deploy da aplicação.
+
+[➡️ Acesso](./deploy/README.md) 

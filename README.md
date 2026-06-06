@@ -19,7 +19,7 @@ Dentre as funcionalidades do sistema, podemos citar:
 ## 🎬 Vídeo demonstração
 Vídeo demonstração disponível [aqui](https://www.youtube.com/watch?v=v4lKc46paZg).
 
-![image](https://github.com/user-attachments/assets/be59ac69-010e-40ba-b12b-10fc1af7c29e)
+[![image](https://github.com/user-attachments/assets/be59ac69-010e-40ba-b12b-10fc1af7c29e)](https://www.youtube.com/watch?v=v4lKc46paZg)
 
 ## 🖥️ Tecnologias
 - Java
@@ -48,7 +48,8 @@ Para criar o banco, é necessário utilizar os scripts SQL disponíveis no diret
 Caso estiver usando o Docker, deve-se criar um arquivo .env na raíz do projeto, seguindo a estrutura do .env.example. IMPORTANTE: Caso realmente for usar no Docker, não é necessário configurar nenhum 'arquivo config.properties'.
 
 Comandos úteis:
-```
+
+```sh
 # Para listar as variáveis de ambiente
 docker exec postgres /usr/bin/env
 ```
@@ -69,7 +70,7 @@ Para realizar os testes, é necessário outro arquivo de 'config.properties', de
 
 Para iniciar o subsistema de recomendação por IA, deve-se navegar para a pasta src/main/chatbot e iniciar o servidor Python FastAPI:
 
-```
+```sh
 # Navegando até a pasta
 cd src/main/chatbot
 
@@ -81,13 +82,25 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+#### Recomendado: Preferências VSCode
+
+Adicionar a propriedade `"javascript.preferences.importModuleSpecifierEnding": "js"` dentro do .vscode/settings.json. Essa configuração faz com que imports dentro de arquivos js sejam feitos com o final .js, necessário para uma página estática como a do Esboço Comix. Exemplo:
+
+```json
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "javascript.preferences.importModuleSpecifierEnding": "js",
+}
+```
+
 ## ▶️ Executando
 
 ### Sistema Chatbot
 
 Para iniciar o sistema do Chatbot, basta executar os seguintes comandos:
 
-```
+```sh
 # Navegando até a pasta
 cd src/main/chatbot
 
@@ -131,4 +144,4 @@ uvicorn app.main:app --reload
 - [W3 Schools](https://www.w3schools.com/html/default.asp)
  
  ### Vídeo Demonstração
- *Cartoon Animation Music (Funny Happy Cute Sweet Background)* - BackgroundMusicForVideos: [Link](https://pixabay.com/music/cartoons-cartoon-animation-music-funny-happy-cute-sweet-background-249671/)
+- [*Cartoon Animation Music (Funny Happy Cute Sweet Background)* - BackgroundMusicForVideos](https://pixabay.com/music/cartoons-cartoon-animation-music-funny-happy-cute-sweet-background-249671/)
