@@ -91,9 +91,4 @@ public class CalculadoraPedido {
         return valor;
 
     }
-
-    public double calcularItemPedido(ItemPedido itemPedido) {
-        QuadrinhoDTO quadrinho = quadrinhoService.consultarByID(itemPedido.getIdQuadrinho());
-        return quadrinho.getPreco() * itemPedido.getQuantidade();
-    }
 }

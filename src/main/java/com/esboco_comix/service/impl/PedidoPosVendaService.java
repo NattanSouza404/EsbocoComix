@@ -11,8 +11,7 @@ import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.model.entidades.PedidoPosVenda;
 import com.esboco_comix.model.enuns.StatusItemPedido;
-import com.esboco_comix.model.enuns.StatusPedido;
-import com.esboco_comix.service.impl.pedido.CalculadoraPedido;
+import com.esboco_comix.model.enuns.StatusPedido;                               
 import com.esboco_comix.service.impl.pedido.PedidoService;
 
 import java.util.List;
@@ -97,7 +96,7 @@ public class PedidoPosVendaService {
             cupomService.inserir(
                 Cupom.gerarCupomTroca(
                     cliente.getId(),
-                    new CalculadoraPedido(cupomService, new QuadrinhoService(), new CartaoCreditoService()).calcularItemPedido(item)
+                    item.calcularValor()
                 )
             );
 

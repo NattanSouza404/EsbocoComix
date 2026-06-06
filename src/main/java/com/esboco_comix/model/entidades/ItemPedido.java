@@ -10,4 +10,8 @@ public class ItemPedido {
     private int idQuadrinho;
     private int quantidade;
     private double preco;
+
+    public double calcularValor() {
+        return preco * quantidade;
+    }
 }
