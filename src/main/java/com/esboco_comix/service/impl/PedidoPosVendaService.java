@@ -6,6 +6,7 @@ import com.esboco_comix.dto.AtualizarPedidoPosVendaDTO;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoPosVendaDTO;
 import com.esboco_comix.model.entidades.Cliente;
+import com.esboco_comix.model.entidades.Cupom;
 import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.model.entidades.PedidoPosVenda;
@@ -93,10 +94,11 @@ public class PedidoPosVendaService {
             item.setIdQuadrinho(pedidoPosVenda.getIdQuadrinho());
             item.setQuantidade(pedidoPosVenda.getQuantidade());
 
-            cupomService.gerarCupomTroca(
-                cliente.getId(),
-                new CalculadoraPedido(cupomService, new QuadrinhoService(), 
-                new CartaoCreditoService()).calcularItemPedido(item)
+            cupomService.inserir(
+                Cupom.gerarCupomTroca(
+                    cliente.getId(),
+                    new CalculadoraPedido(cupomService, new QuadrinhoService(), new CartaoCreditoService()).calcularItemPedido(item)
+                )
             );
 
             ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO();

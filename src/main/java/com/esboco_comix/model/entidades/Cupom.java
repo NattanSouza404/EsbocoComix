@@ -33,4 +33,17 @@ public class Cupom {
             );
         }
     }
+
+    public static Cupom gerarCupomTroca(int idCliente, double valor) {
+        Cupom cupom = new Cupom();
+        cupom.setAtivo(true);
+        cupom.setIdCliente(idCliente);
+        cupom.setTroca(true);
+        cupom.setPromocional(false);
+        cupom.setValor(valor);
+
+        cupom.validar();
+
+        return cupom;
+    }
 }

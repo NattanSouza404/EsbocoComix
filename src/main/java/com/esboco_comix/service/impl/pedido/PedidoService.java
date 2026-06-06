@@ -128,9 +128,11 @@ public class PedidoService {
                 itensPedido.add(itemPedidoDTO.getItemPedido());
             }
 
-            cupomService.gerarCupomTroca(
-                pedido.getIdCliente(),
-                calculadora.calcularValorTotalPedido(pedido, itensPedido)
+            cupomService.inserir(
+                Cupom.gerarCupomTroca(
+                    pedido.getIdCliente(),
+                    calculadora.calcularValorTotalPedido(pedido, itensPedido)
+                )
             );
 
             if (atualizarPedidoDTO.isRetornarAoEstoque()) {
