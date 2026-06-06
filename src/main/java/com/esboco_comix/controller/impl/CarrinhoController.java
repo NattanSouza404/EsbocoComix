@@ -3,7 +3,10 @@ package com.esboco_comix.controller.impl;
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.controller.utils.Router;
 import com.esboco_comix.dto.ItemCarrinhoDTO;
+import com.esboco_comix.model.Carrinho;
 import com.esboco_comix.service.impl.CarrinhoService;
+import com.esboco_comix.sessao.SessaoService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -13,6 +16,7 @@ import java.util.Map;
 public class CarrinhoController extends AbstractController {
 
     private final CarrinhoService carrinhoService = new CarrinhoService();
+    private final SessaoService sessaoService = new SessaoService();
 
     private final Router rotasGet = new Router(
         Map.of(
@@ -83,22 +87,26 @@ public class CarrinhoController extends AbstractController {
     }
 
     private Object consultarCarrinho(HttpServletRequest req) throws Exception {
-        return carrinhoService.retornarCarrinhoSessao(req.getSession());
+        return sessaoService.retornarCarrinho(req.getSession());
     }
 
     private Object adicionarItemCarrinho(HttpServletRequest req) throws Exception {
+        Carrinho carrinho = sessaoService.retornarCarrinho(req.getSession());
         ItemCarrinhoDTO itemCarrinho = jsonToObject(req, ItemCarrinhoDTO.class); 
-        return carrinhoService.adicionar(itemCarrinho, req.getSession());
+        
+        return carrinhoService.adicionar(carrinho, itemCarrinho);
     }
 
     private Object atualizarItemCarrinho(HttpServletRequest req) throws Exception {
+        Carrinho carrinho = sessaoService.retornarCarrinho(req.getSession());
         ItemCarrinhoDTO itemCarrinho = jsonToObject(req, ItemCarrinhoDTO.class); 
-        return carrinhoService.atualizarQuantidade(itemCarrinho, req.getSession());
+        return carrinhoService.atualizarQuantidade(carrinho, itemCarrinho);
     }
 
     private Object deletarItemCarrinho(HttpServletRequest req) throws Exception {
+        Carrinho carrinho = sessaoService.retornarCarrinho(req.getSession());
         ItemCarrinhoDTO itemCarrinho = jsonToObject(req, ItemCarrinhoDTO.class);
-        carrinhoService.deletar(itemCarrinho, req.getSession());
+        carrinhoService.deletar(carrinho, itemCarrinho);
         return null;
     }
 

@@ -1,27 +1,11 @@
 package com.esboco_comix.service.impl;
 
-import com.esboco_comix.controller.session.AtributoSecao;
-import jakarta.servlet.http.HttpSession;
-
-import com.esboco_comix.controller.session.Carrinho;
 import com.esboco_comix.dto.ItemCarrinhoDTO;
+import com.esboco_comix.model.Carrinho;
 
 public class CarrinhoService {
-    
-    public Carrinho retornarCarrinhoSessao(HttpSession session) {
-        Carrinho carrinho = (Carrinho) session.getAttribute(AtributoSecao.CARRINHO);
 
-        if (carrinho == null) {
-            session.setAttribute(AtributoSecao.CARRINHO, new Carrinho());
-            carrinho = (Carrinho) session.getAttribute(AtributoSecao.CARRINHO);
-        }
-
-        return carrinho; 
-    }
-
-    public Carrinho adicionar(ItemCarrinhoDTO itemCarrinho, HttpSession session) throws Exception {
-        Carrinho carrinho = retornarCarrinhoSessao(session);
-
+    public Carrinho adicionar(Carrinho carrinho, ItemCarrinhoDTO itemCarrinho) throws Exception {
         // TODO: adicionar verificação do estoque
 
         carrinho.adicionar(itemCarrinho);
@@ -29,16 +13,13 @@ public class CarrinhoService {
         return carrinho;
     }
 
-    public Carrinho atualizarQuantidade(ItemCarrinhoDTO itemCarrinho, HttpSession session) throws Exception {
-        Carrinho carrinho = retornarCarrinhoSessao(session);
-
+    public Carrinho atualizarQuantidade(Carrinho carrinho, ItemCarrinhoDTO itemCarrinho) throws Exception {
         carrinho.atualizarQuantidade(itemCarrinho);
 
         return carrinho;
     }
 
-    public void deletar(ItemCarrinhoDTO itemCarrinho, HttpSession session) throws Exception {
-        Carrinho carrinho = retornarCarrinhoSessao(session);
+    public void deletar(Carrinho carrinho, ItemCarrinhoDTO itemCarrinho) throws Exception {
         carrinho.deletar(itemCarrinho);
     }
 

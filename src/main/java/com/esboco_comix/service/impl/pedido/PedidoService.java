@@ -5,15 +5,13 @@ import java.util.List;
 
 import com.esboco_comix.dao.impl.pedido.*;
 import com.esboco_comix.dto.AtualizarPedidoDTO;
-import jakarta.servlet.http.HttpSession;
 
-import com.esboco_comix.controller.session.Carrinho;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoDTO;
 import com.esboco_comix.dto.PedidoPosVendaDTO;
+import com.esboco_comix.model.Carrinho;
 import com.esboco_comix.model.entidades.*;
 import com.esboco_comix.model.enuns.StatusPedido;
-import com.esboco_comix.service.impl.CarrinhoService;
 import com.esboco_comix.service.impl.CartaoCreditoService;
 import com.esboco_comix.service.impl.CupomService;
 import com.esboco_comix.service.impl.EstoqueService;
@@ -22,7 +20,6 @@ import com.esboco_comix.validador.impl.FormaPagamentoValidador;
 
 public class PedidoService {
 
-    private final CarrinhoService carrinhoService = new CarrinhoService();
     private final CupomService cupomService = new CupomService();
     private final QuadrinhoService quadrinhoService = new QuadrinhoService();
     private final CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
@@ -43,10 +40,7 @@ public class PedidoService {
 
     private final FormaPagamentoValidador validador = new FormaPagamentoValidador(calculadora);
 
-    public Pedido inserir(Pedido pedido, HttpSession session) {
-
-        Carrinho carrinho = carrinhoService.retornarCarrinhoSessao(session);
-
+    public Pedido inserir(Pedido pedido, Carrinho carrinho) {
         if (carrinho.isVazio()) {
             throw new IllegalStateException("Nenhum item presente no carrinho!");
         }

@@ -1,4 +1,4 @@
-package com.esboco_comix.controller.session;
+package com.esboco_comix.model;
 
 import java.util.ArrayList;
 import java.util.List;
