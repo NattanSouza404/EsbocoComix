@@ -1,19 +1,17 @@
 package com.esboco_comix.service.impl;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import com.esboco_comix.dao.impl.cliente.ClienteDAO;
+import com.esboco_comix.mapper.ClienteDTOMapper;
 import com.esboco_comix.dto.AlterarSenhaDTO;
 import com.esboco_comix.dto.CadastrarClienteDTO;
-import com.esboco_comix.dto.FiltrarClienteDTO;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
-import com.esboco_comix.model.enuns.Genero;
 import com.esboco_comix.utils.CriptografadorSenha;
 import com.esboco_comix.validador.impl.CadastrarClienteValidador;
 import com.esboco_comix.validador.impl.cliente.ClienteValidador;
@@ -27,6 +25,8 @@ public class ClienteService {
 
     private final ClienteValidador clienteValidador = new ClienteValidador();
     private final CadastrarClienteValidador cadastrarClienteValidador = new CadastrarClienteValidador();
+
+    private final ClienteDTOMapper clienteMapper = new ClienteDTOMapper();
 
     public CadastrarClienteDTO inserir(CadastrarClienteDTO pedido) {
         cadastrarClienteValidador.validar(pedido);
@@ -61,7 +61,7 @@ public class ClienteService {
     }
 
     public List<Cliente> consultarTodos(HttpServletRequest req) {
-        return clienteDAO.consultarTodos(mapearToFiltrarClienteDTO(req));
+        return clienteDAO.consultarTodos(clienteMapper.mapearToFiltrarClienteDTO(req));
     }
 
     public Cliente consultarByID(int id) {
@@ -100,47 +100,6 @@ public class ClienteService {
         String saltSenha = CriptografadorSenha.generateSalt();
         c.setHashSenha(CriptografadorSenha.hashSenha(senhaNova, saltSenha));
         c.setSaltSenha(saltSenha);
-    }
-
-    private FiltrarClienteDTO mapearToFiltrarClienteDTO(HttpServletRequest req) {
-        FiltrarClienteDTO filtro = new FiltrarClienteDTO();
-        
-        String nome = req.getParameter("nome");
-        if (!nome.isBlank()){
-            filtro.setNome(nome);
-        }
-
-        String cpf = req.getParameter("cpf");
-        if (!cpf.isBlank()){
-            filtro.setCpf(cpf);
-        }
-
-        String dataNascimento = req.getParameter("dataNascimento");
-        if (!dataNascimento.isBlank()){
-            filtro.setDataNascimento(LocalDate.parse(dataNascimento));
-        }
-
-        String genero = req.getParameter("genero");
-        if (!genero.isBlank()){
-            filtro.setGenero(Genero.valueOf(genero));
-        }
-
-        String email = req.getParameter("email");
-        if (!email.isBlank()){
-            filtro.setEmail(email);
-        }
-
-        String ranking = req.getParameter("ranking");
-        if (!ranking.isBlank()){
-            filtro.setRanking(Integer.parseInt(ranking));
-        }
-
-        String isAtivo = req.getParameter("isAtivo");
-        if (!isAtivo.isBlank()){
-            filtro.setIsAtivo(Boolean.valueOf(isAtivo));
-        }
-
-        return filtro;
     }
 
 }
