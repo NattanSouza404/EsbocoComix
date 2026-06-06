@@ -1,33 +1,38 @@
 package com.esboco_comix.backend.validador.cliente;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
-
+import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.validador.impl.cliente.CPFValidador;
 
 public class CPFValidadorTest {
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void validarCPF(){
         CPFValidador cpfValidador = new CPFValidador();
 
-        cpfValidador.validar("15815815822");
+        Cliente cliente = new Cliente();
+        cliente.setCpf("15815815822");
+
+        cpfValidador.validar(cliente);
 
         assertThrows(IllegalArgumentException.class, () -> {
             cpfValidador.validar(null);
         });
 
         assertThrows(IllegalArgumentException.class, () -> {
-            cpfValidador.validar("");
+            cliente.setCpf("");
+            cpfValidador.validar(cliente);
         });
 
         assertThrows(IllegalArgumentException.class, () -> {
-            cpfValidador.validar("234");
+            cliente.setCpf("234");
+            cpfValidador.validar(cliente);
         });
 
         assertThrows(IllegalArgumentException.class, () -> {
-            cpfValidador.validar("1581 815 22");
+            cliente.setCpf("1581 815 22");
+            cpfValidador.validar(cliente);
         });
     }
 }

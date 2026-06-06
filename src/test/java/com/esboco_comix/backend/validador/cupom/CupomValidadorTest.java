@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import com.esboco_comix.model.entidades.Cupom;
-import com.esboco_comix.service.validador.impl.CupomValidador;
+import com.esboco_comix.validador.impl.cupom.CupomValidador;
 
 public class CupomValidadorTest {
     

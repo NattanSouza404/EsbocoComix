@@ -1,8 +1,8 @@
 package com.esboco_comix.backend.validador.endereco;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.esboco_comix.validador.impl.endereco.CEPValidador;
 
