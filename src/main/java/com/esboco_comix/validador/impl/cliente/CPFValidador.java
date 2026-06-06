@@ -8,6 +8,10 @@ public class CPFValidador extends AbstractValidador implements IValidador<Client
 
     @Override
     public void validar(Cliente cliente) {
+        if (cliente == null){
+            throw new IllegalArgumentException("Cliente não pode ser nulo!");
+        }
+        
         String cpf = cliente.getCpf();
 
         validarAtributoObrigatorio(cpf, "CPF");
