@@ -1,3 +1,4 @@
+import { localStorageKeys } from "../localStorage.js";
 import { estourarErroAPI } from "./alertErro.js";
 
 const PATH = "/api/chatbot";
@@ -10,7 +11,7 @@ export async function retornarRespostaIA(mensagem){
         headers:{'Content-Type': 'application/json'},
         body: JSON.stringify(
             { 
-                idcliente: localStorage.getItem('idcliente'),
+                idcliente: localStorage.getItem(localStorageKeys.idCliente),
                 mensagem: mensagem,
             }
         )

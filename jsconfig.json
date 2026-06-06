@@ -1,13 +1,18 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": ".",
+    "noImplicitAny": false,
+    "checkJs": false,
+    "moduleResolution": "bundler",
+    "target": "es2020",
+    "module": "es2020",
     "paths": {
-      "@api/*": ["src/main/webapp/js/api/*"],
-      "@utils/*": ["src/main/webapp/js/utils/*"],
-      "@components/*": ["src/main/webapp/js/components/*"]
+      "@api/*": ["./src/main/webapp/js/api/*"],
+      "@paginas/*": ["./src/main/webapp/js/paginas/*"],
+      "@componentes/*": ["./src/main/webapp/js/componentes/*"],
+      "@utils/*": ["./src/main/webapp/js/utils/*"]
     },
-    "lib": ["ES6"]
+    "lib": ["DOM", "ES2020"],
   },
   "include": ["src/main/webapp/js/**/*.js"]
 }

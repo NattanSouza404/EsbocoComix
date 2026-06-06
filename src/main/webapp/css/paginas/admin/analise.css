@@ -1,0 +1,39 @@
+#main-container {
+    justify-content: space-around;
+    align-content: baseline;
+    flex-direction: row;
+}
+
+.filtro-analise {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-filtros {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+
+    padding: 16px;
+}
+
+.grafico-linha {
+    height: 60vh;
+    max-height: 60vh;
+}
+
+.botao {
+    display: grid;
+    justify-items: center;
+}
+
+#btn-pesquisar {
+    border: 4px var(--cinza);
+    padding: 8px;
+    border-radius: 5%;
+}
+
+#container-graficos {
+    width: 85%;
+    max-width: 85%;
+}

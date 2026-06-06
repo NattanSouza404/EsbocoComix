@@ -1,0 +1,133 @@
+import { GENEROS, TIPOS_TELEFONE } from "../../dados.js";
+import { formatarDataParaInput } from "../../script.js";
+
+export class FormDadosPessoais extends HTMLFormElement {
+    constructor(){
+        super();
+
+        this.id = 'cadastrar-dados-pessoais';
+
+        this.innerHTML = /* html */`
+            <div class="header-dados-cadastro">
+                <p>Dados Pessoais</p>
+            </div>
+
+            <div class="dados-formulario">
+                <label>
+                    Nome
+                    <input name="nome" placeholder="Seu nome">
+                </label>
+
+                <label>
+                    Gênero
+                    <select name="genero"></select>
+                </label>
+
+                <label>
+                    Data de Nascimento
+                    <input name="dataNascimento" type="date">
+                </label>
+
+                <label>
+                    CPF
+                    <input
+                        name="cpf"
+                        placeholder="11111111111"
+                        minlength="11"
+                        maxlength="11"
+                    >
+                </label>
+
+                <label>
+                    E-mail
+                    <input
+                        name="email"
+                        type="email"
+                        placeholder="seuemail@email.com"
+                    >
+                </label>
+            </div>
+
+            <div class="header-dados-cadastro">
+                <p>Telefone</p>
+            </div>
+
+            <div class="dados-formulario">
+            
+                <label>
+                    Tipo de Telefone
+                    <select name="tipoTelefone"></select>
+                </label>
+
+                <label>
+                    DDD
+                    <input
+                        name="ddd"
+                        placeholder="11"
+                        minlength="2"
+                        maxlength="2"
+                    >
+                </label>
+
+                <label>
+                    Número do Telefone
+                    <input
+                        name="numero"
+                        placeholder="111111111"
+                        minlength="9"
+                        maxlength="9"
+                    >
+                </label>
+
+            </div>
+        `;
+        
+        let select = this.querySelector('[name="genero"]');
+        GENEROS.forEach(({ nome, valor }) => {
+            select.insertAdjacentHTML('beforeend',
+                `<option value="${valor}">${nome}</option>`
+            );
+        });
+
+        select = this.querySelector('[name="tipoTelefone"]');
+        TIPOS_TELEFONE.forEach(({ nome, valor }) => {
+            select.insertAdjacentHTML('beforeend',
+                `<option value="${valor}">${nome}</option>`
+            );
+        });
+    }
+
+    atualizar(cliente){
+        this.cliente = cliente;
+        Object.entries(cliente).forEach(
+            ([chave, valor]) => {
+                let elemento = /** @type {HTMLInputElement} */ 
+                    (this.querySelector(`[name="${chave}"]`));
+
+                if (!elemento){
+                    return;
+                }
+
+                if (chave === 'dataNascimento'){
+                    elemento.value = formatarDataParaInput(valor);
+                    return;
+                }
+
+                elemento.value = valor;
+            }
+        );
+
+        Object.entries(cliente.telefone).forEach(
+            ([chave, valor]) => {
+                let elemento = /** @type {HTMLInputElement} */
+                    (document.querySelector(`[name="${chave}"]`));
+
+                if (elemento){
+                    elemento.value = valor;
+                }
+            }
+        );
+    }
+}
+
+customElements.define('form-dados-pessoais', FormDadosPessoais, { extends: 'form'});

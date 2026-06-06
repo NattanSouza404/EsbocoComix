@@ -1,0 +1,31 @@
+<title>Análise</title>
+
+<nav id="main-nav"></nav>
+
+<div id="main-container" class="container d-flex flex-row py-5">  
+    
+    <div class="filtro-analise centered d-flex">
+
+        <form class="form-filtros">
+            <label>
+                Data início
+                <input name="dataInicio" type="date">
+            </label>
+    
+            <label>
+                Data final
+                <input name="dataFinal" type="date">
+            </label>
+        </form>
+
+        <div class="botao">
+            <button id="btn-pesquisar">
+                <img src="/img/search.svg">
+                Filtrar por data
+            </button>
+        </div>
+
+    </div>
+
+    <div id="container-graficos"></div>
+</div>

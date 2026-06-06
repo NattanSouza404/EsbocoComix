@@ -1,3 +1,82 @@
+import { loadPage } from "./loadPage.js";
+
+const routes = {
+  "/": "/paginas/home.html",
+  "/anuncio": "/paginas/anuncio.html",
+  "/cadastrar": "/paginas/cadastrar.html",
+  "/carrinho": "/paginas/carrinho.html",
+  "/compra": "/paginas/compra.html",
+  "/conta": "/paginas/conta.html",
+  "/login": "/paginas/login.html",
+  "/minhasCompras": "/paginas/minhasCompras.html",
+  "/admin/analise": "/paginas/admin/analise.html",
+  "/admin/clientes": "/paginas/admin/clientes.html",
+  "/admin/estoque": "/paginas/admin/estoque.html",
+  "/admin/gerenciarVendas": "/paginas/admin/gerenciarVendas.html",
+};
+
+async function navigate(path, push = true) {
+  const url = new URL(path, window.location.origin);
+
+  if (push) {
+    history.pushState({}, "", url.pathname + url.search);
+  }
+
+  const page = resolveRoute(url.pathname);
+
+  await loadPage(page, url);
+}
+
+function resolveRoute(pathname) {
+  const cleanPath = pathname.split("?")[0].split("#")[0];
+  const normalizedPath = cleanPath.endsWith("/") && cleanPath.length > 1
+    ? cleanPath.slice(0, -1)
+    : cleanPath;
+
+  if (routes[normalizedPath]) return routes[normalizedPath];
+
+  const segments = normalizedPath.split("/");
+  if (segments.length > 2) {
+    const basePath = `/${segments[1]}/${segments[2]}`;
+    if (routes[basePath]) return routes[basePath];
+  }
+
+  return null;
+}
+
+document.addEventListener("click", e => {
+  const target = /** @type {Element} */ (e.target);
+
+  const link = target.closest("a[data-link]");
+  if (!link) return;
+
+  e.preventDefault();
+  navigate(link.getAttribute("href"));
+});
+
+window.addEventListener("popstate", () => {
+  navigate(
+    location.pathname + location.search,
+    false
+  );
+});
+
+navigate(location.pathname + location.search, false);
+
+/*import { localStorageKeys } from "./localStorage.js";
+
+if (localStorage.getItem(localStorageKeys.primeiraVez) === null){
+    localStorage.setItem(localStorageKeys.idCliente, 1);
+
+    localStorage.setItem(localStorageKeys.primeiraVez, "true");
+}
+*/
+
+export function getUrlParam(nome) { 
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(nome);
+}
+
 export function mascararNumeroCartao(numero){
     return '**** **** **** ' + numero.slice(-4);
 }
@@ -129,4 +208,19 @@ export function formatarDateTime(dateArray){
         hour12: false // Formato de 24 horas
     });
 
+}
+
+export function formToObject(form) {
+  const formData = /** @type {any} */ (new FormData(form));
+  const obj = {};
+
+  for (const [key, value] of formData.entries()) {
+    obj[key] = value instanceof File ? '' : value;
+  }
+
+  return obj;
+}
+
+export function capitalizar(texto) {
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
 }

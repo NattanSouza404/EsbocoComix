@@ -1,0 +1,18 @@
+#container-compras {
+    min-height: 280px;
+}
+
+.secao-superior {
+    background-color: #212529;
+}
+
+.operacoes-pedido {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.container-itens img {
+    height: 80px;
+}

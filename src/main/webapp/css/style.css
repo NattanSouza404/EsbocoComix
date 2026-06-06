@@ -2,7 +2,6 @@
 @import url(main-nav.css);
 @import url(main-header.css);
 @import url(main-footer.css);
-@import url(bootstrap.min.css);
 
 :root {
     --cor-exemplo: #FFFFFF;
@@ -35,14 +34,6 @@ a {
 .text-black {
     color: black !important;
     text-decoration: none;
-}
-
-main {
-    display: flex;
-    justify-content: space-around;
-
-    gap: 5%;
-    margin: 2%;
 }
 
 .aviso {
@@ -94,4 +85,11 @@ label > * {
     border: solid black 1px;
 
     margin: 8px;
+}
+
+.modal {
+  z-index: 1055 !important;
+}
+.modal-backdrop {
+  z-index: 1050 !important;
 }

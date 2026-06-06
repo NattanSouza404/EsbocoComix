@@ -1,0 +1,19 @@
+body {
+    height: 80vh;
+}
+
+main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+    color: #4d5461;
+}
+
+main img {
+    height: 100px;
+    margin-bottom: 32px;
+}
