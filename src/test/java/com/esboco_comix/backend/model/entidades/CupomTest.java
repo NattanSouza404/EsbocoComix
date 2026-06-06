@@ -1,4 +1,4 @@
-package com.esboco_comix.backend.validador.cupom;
+package com.esboco_comix.backend.model.entidades;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -10,33 +10,28 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import com.esboco_comix.model.entidades.Cupom;
-import com.esboco_comix.validador.impl.cupom.CupomValidador;
 
-public class CupomValidadorTest {
+public class CupomTest {
     
     @ParameterizedTest
     @MethodSource("provideCuponsInativos")
     public void validarCuponsInvalidos(Cupom cupom) {
-        CupomValidador validador = new CupomValidador();
-
         assertThrows(
             IllegalArgumentException.class,
             () -> {
-                validador.validar(cupom);
+                cupom.validar();
             }
         );
     }
 
     @Test
     public void validarCuponsValidos() {
-        CupomValidador validador = new CupomValidador();
-
         Cupom cupomValido = new Cupom();
         cupomValido.setValor(20);
         cupomValido.setPromocional(true);
         cupomValido.setTroca(false);
 
-        validador.validar(cupomValido);
+        cupomValido.validar();
     }
 
     public static Stream<Arguments> provideCuponsInativos(){
