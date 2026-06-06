@@ -14,16 +14,20 @@ const getElementos = () => {
 
 export async function initPagina() {
     try {
+        const el = getElementos();
+
         const carrinho = await retornarCarrinho();
    
         if (carrinho.itensCarrinho.length === 0){
-            getElementos().mainContainer.innerHTML =
-                `<h3 class="text-center">Carrinho vazio</h3>`;
-
+            el.mainContainer.innerHTML = /* html */`
+                <div class="container mt-4">
+                    <h3 class="text-center">Carrinho vazio</h3>
+                </div>
+            `;
             return;
         }
 
-        getElementos().tabelaCarrinho.append(
+        el.tabelaCarrinho.append(
             TabelaCarrinho(
                 carrinho,
                 confirmarAtualizarItem,
@@ -31,7 +35,7 @@ export async function initPagina() {
             )
         );
 
-        getElementos().sumarioCarrinho.append(
+        el.sumarioCarrinho.append(
             SumarioCarrinho(calcularValorTotal(carrinho))
         );
 

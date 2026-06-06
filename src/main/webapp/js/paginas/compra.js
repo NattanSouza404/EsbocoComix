@@ -10,39 +10,49 @@ import { SecaoCupom } from "@paginas/secoes/compra/secaoCupom/SecaoCupons.js";
 import { alertarErro } from "@api/alertErro.js";
 import { localStorageKeys } from "../localStorage.js";
 
+const secaoSelecaoEndereco = new SecaoSelecaoEndereco();
+let secaoSelecaoCartao;
+let secaoCupons;
+
+const getElementos = () => {
+    return {
+        btnEnviarPedido: document.getElementById('btn-enviar-pedido')
+    };
+}
+
 export async function initPagina() {
-
-    const idCliente = localStorage.getItem(localStorageKeys.idCliente); 
-
-    let enderecos;
-    let cartoesCredito;
-    let cupons;
-    let carrinho;
-
     try {
-        enderecos = await retornarEnderecos(idCliente);
-        cartoesCredito = await retornarCartoesCredito(idCliente);
-        cupons = await retornarCupons(idCliente);
-        carrinho = await retornarCarrinho();
+        const idCliente = localStorage.getItem(localStorageKeys.idCliente); 
+
+        const enderecos = await retornarEnderecos(idCliente);
+        const cartoesCredito = await retornarCartoesCredito(idCliente);
+        const cupons = await retornarCupons(idCliente);
+        const carrinho = await retornarCarrinho();
+
+        secaoSelecaoEndereco.preencher(enderecos);
+        secaoSelecaoCartao = new SecaoCartaoCredito(cartoesCredito);
+        secaoCupons = new SecaoCupom(cupons);
+
+        const resumoPedido = new ResumoPedido(
+            secaoSelecaoEndereco,
+            secaoSelecaoCartao,
+            secaoCupons
+        );
+
+        resumoPedido.preencherResumo(
+            carrinho,
+            secaoSelecaoEndereco.getEnderecoSelecionado()
+        );
     } catch (error){
         alertarErro(error);
         window.location.href = "/";
     }
 
-    const secaoSelecaoEndereco = new SecaoSelecaoEndereco(); 
-    secaoSelecaoEndereco.preencher(enderecos);
+    getElementos().btnEnviarPedido.onclick = confirmarEnvioDePedido;
+}
 
-    const secaoSelecaoCartao = new SecaoCartaoCredito(cartoesCredito);
-
-    const secaoCupons = new SecaoCupom(cupons);
-
-    const resumoPedido = new ResumoPedido(
-        secaoSelecaoEndereco, secaoSelecaoCartao, secaoCupons
-    );
-
-    resumoPedido.preencherResumo(carrinho, secaoSelecaoEndereco.getEnderecoSelecionado());
-
-    document.getElementById('btn-enviar-pedido').onclick = async () => {
+async function confirmarEnvioDePedido(){
+    try {
         const confirmacaoUsuario = confirm("Deseja mesmo realizar essa compra?");
 
         if (!confirmacaoUsuario){
@@ -62,24 +72,22 @@ export async function initPagina() {
                 idCupom: cupom.idCupom
             });
         });
+    
+        await enviarPedido(
+            {
+                idCliente: idCliente,
+                valorFrete: valorFrete,
 
-        try {
-            await enviarPedido(
-                {
-                    idCliente: idCliente,
-                    valorFrete: valorFrete,
+                enderecoEntrega: { id: idEndereco },
 
-                    enderecoEntrega: { id: idEndereco },
+                cuponsPedido: cuponsPedido,
+                cartoesCreditoPedido: secaoSelecaoCartao.getCartoesCreditoPedido()
+            }
+        );
 
-                    cuponsPedido: cuponsPedido,
-                    cartoesCreditoPedido: secaoSelecaoCartao.getCartoesCreditoPedido()
-                }
-            );
-
-            alert('Pedido realizado');
-        } catch (error){
-            alertarErro(error);
-        }
-    };
-
-}
+        alert('Pedido realizado');
+        window.location.href = "/minhasCompras";
+    } catch (error){
+        alertarErro(error);
+    }
+};

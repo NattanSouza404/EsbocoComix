@@ -7,7 +7,7 @@ export class SecaoDadosPessoais {
         this.elementoHTML = document.getElementById('secao-dados-pessoais');
         this.container = this.elementoHTML.querySelector('.container');
 
-        this.cartaoDadosPessoais = new CartaoDadosPessoais();
+        this.cartaoDadosPessoais = CartaoDadosPessoais(cliente);
         this.container.append(this.cartaoDadosPessoais);
 
         this.modalAlterarDadosPessoais = new ModalAlterarDadosPessoais();
@@ -20,7 +20,6 @@ export class SecaoDadosPessoais {
         if (cliente){
             this.modalAlterarDadosPessoais.atualizar(cliente);
             this.modalAlterarSenha.atualizar(cliente);
-            this.cartaoDadosPessoais.atualizar(cliente);
         }
 
     }

@@ -57,7 +57,7 @@ function ConteudoModalAlterarSenha() {
     const form = document.createElement('form');
     form.id = 'alterar-senha';
 
-    form.innerHTML = `
+    form.innerHTML = /* html */`
         <p class="aviso">
             A senha deve ser composta de pelo menos <br/>
             8 caracteres, ter letras maiúsculas e <br/>
@@ -67,17 +67,29 @@ function ConteudoModalAlterarSenha() {
         <div class="dados-formulario">
             <label>
                 Senha Antiga
-                <input name="senhaAntiga" type="password" autocomplete="password"></input>
+                <input
+                    name="senhaAntiga"
+                    type="password"
+                    autocomplete="password"
+                >
             </label>
 
             <label>
                 Nova Senha
-                <input name="senhaNova" type="password" autocomplete="new-password"></input>
+                <input
+                    name="senhaNova"
+                    type="password"
+                    autocomplete="new-password"
+                >
             </label>
 
             <label>
                 Confirme a senha
-                <input name="senhaConfirmacao" type="password" autocomplete="new-password"></input>
+                <input
+                    name="senhaConfirmacao"
+                    type="password"
+                    autocomplete="new-password"
+                >
             </label>
         </div>
 
