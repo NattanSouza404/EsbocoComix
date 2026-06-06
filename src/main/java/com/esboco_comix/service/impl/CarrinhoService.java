@@ -22,10 +22,6 @@ public class CarrinhoService {
     public Carrinho adicionar(ItemCarrinhoDTO itemCarrinho, HttpSession session) throws Exception {
         Carrinho carrinho = retornarCarrinhoSessao(session);
 
-        if (itemCarrinho.getQuantidade() < 1){
-            throw new Exception("Item do carrinho deve ter quantidade maior que 0!");
-        }
-
         // TODO: adicionar verificação do estoque
 
         carrinho.adicionar(itemCarrinho);
@@ -34,10 +30,6 @@ public class CarrinhoService {
     }
 
     public Carrinho atualizarQuantidade(ItemCarrinhoDTO itemCarrinho, HttpSession session) throws Exception {
-        if (itemCarrinho.getQuantidade() < 1){
-            throw new Exception("Item do carrinho deve ter quantidade maior que 0!");
-        }
-
         Carrinho carrinho = retornarCarrinhoSessao(session);
 
         carrinho.atualizarQuantidade(itemCarrinho);
