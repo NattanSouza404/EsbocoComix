@@ -4,12 +4,10 @@ import java.util.List;
 
 import com.esboco_comix.dao.impl.cupom.CupomDAO;
 import com.esboco_comix.model.entidades.Cupom;
-import com.esboco_comix.validador.impl.cupom.CupomValidador;
 
 public class CupomService {
 
     private final CupomDAO cupomDAO = new CupomDAO();
-    private final CupomValidador cupomValidador = new CupomValidador();
 
     public Cupom consultarByID(int id){
         return cupomDAO.consultarByID(id);
@@ -20,7 +18,7 @@ public class CupomService {
     }
 
     public Cupom inserir(Cupom cupom) {
-        cupomValidador.validar(cupom);
+        cupom.validar();
         return cupomDAO.inserir(cupom);
     }
 
@@ -36,7 +34,7 @@ public class CupomService {
         cupom.setPromocional(false);
         cupom.setValor(valor);
 
-        cupomValidador.validar(cupom);
+        cupom.validar();
 
         return inserir(cupom);
     }
