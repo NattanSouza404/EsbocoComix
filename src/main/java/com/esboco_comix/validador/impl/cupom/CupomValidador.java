@@ -1,14 +1,18 @@
-package com.esboco_comix.service.validador.impl;
+package com.esboco_comix.validador.impl.cupom;
 
 import com.esboco_comix.model.entidades.Cupom;
-import com.esboco_comix.service.validador.AbstractValidador;
-import com.esboco_comix.service.validador.IValidador;
+import com.esboco_comix.validador.AbstractValidador;
+import com.esboco_comix.validador.IValidador;
 
 public class CupomValidador extends AbstractValidador implements IValidador<Cupom> {
     @Override
     public void validar(Cupom cupom) {
-        if (cupom.getValor() < 0){
-            throw new IllegalArgumentException("Cupom não pode ter valor negativo!");
+        if (cupom == null){
+            throw new IllegalArgumentException("Cupom não pode ser nulo!");
+        }
+
+        if (cupom.getValor() <= 0){
+            throw new IllegalArgumentException("Cupom deve ter valor maior que 0!");
         }
 
         if (cupom.isPromocional() && cupom.isTroca()){

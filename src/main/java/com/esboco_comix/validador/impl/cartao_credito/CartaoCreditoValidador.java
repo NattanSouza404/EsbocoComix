@@ -1,8 +1,8 @@
-package com.esboco_comix.service.validador.impl;
+package com.esboco_comix.validador.impl.cartao_credito;
 
 import com.esboco_comix.model.entidades.CartaoCredito;
-import com.esboco_comix.service.validador.AbstractValidador;
-import com.esboco_comix.service.validador.IValidador;
+import com.esboco_comix.validador.AbstractValidador;
+import com.esboco_comix.validador.IValidador;
 
 public class CartaoCreditoValidador extends AbstractValidador implements IValidador<CartaoCredito> {
     @Override

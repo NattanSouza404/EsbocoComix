@@ -1,11 +1,13 @@
-package com.esboco_comix.service.validador.impl;
+package com.esboco_comix.validador.impl.cliente;
 
-import com.esboco_comix.service.validador.AbstractValidador;
-import com.esboco_comix.service.validador.IValidador;
+import com.esboco_comix.validador.AbstractValidador;
+import com.esboco_comix.validador.IValidador;
 
 public class EmailValidador extends AbstractValidador implements IValidador<String> {
     @Override
     public void validar(String email) {
+        validarAtributoObrigatorio(email, "E-mail");
+
         String parteLocal = "^[A-Za-z0-9+_.-]+";
         String parteDominio = "@[A-Za-z0-9.-]+";
         String sufixoDominio = "\\.[A-Za-z]{2,}$";

@@ -1,4 +1,4 @@
-package com.esboco_comix.service.validador;
+package com.esboco_comix.validador;
 
 public class AbstractValidador {
 
