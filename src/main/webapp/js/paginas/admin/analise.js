@@ -1,54 +1,89 @@
 import { alertarErro } from "@api/alertErro.js";
 import { retornarAnalise } from "@api/analise.api.js";
-import FormatadorAnalise from "@utils/FormatadorAnalise.js";
 import GraficoLinha from "@componentes/analise/GraficoLinha.js";
+import FormatadorAnalise from "@utils/FormatadorAnalise.js";
+import { capitalizar } from "../../script.js";
+
+const getElementos = () => {
+    return {
+        containerGraficos: document.getElementById('container-graficos'),
+        btnPesquisar: document.getElementById('btn-pesquisar'),
+        inputDataInicio: document.querySelector('[name = "dataInicio"]'),
+        inputDataFinal: document.querySelector('[name = "dataFinal"]')
+    };
+}
 
 export async function initPagina() {
+    const el = getElementos();
 
     const formatador = new FormatadorAnalise();
 
     const analise = await retornarAnalise();
 
-    const graficoQuantCategorias = new GraficoLinha(
-        document.getElementById('grafico-linha-quant-categorias'),
-        formatador.formatarQuantidade(analise.categorias),
-        "Quantidade de Categorias"
-    );
+    const graficos = definicoesGraficos.map(definicao => {
+        const dados = obterDadosFormatados(formatador, definicao, analise);
 
-    const graficoQuantProdutos = new GraficoLinha(
-        document.getElementById('grafico-linha-quant-produtos'),
-        formatador.formatarQuantidade(analise.produtos),
-        "Quantidade de Produtos"
-    );
+        return {
+            ...definicao,
+            instancia: new GraficoLinha(definicao.id, dados, definicao.titulo)
+        };
+    });
 
-    const graficoValorProdutos = new GraficoLinha(
-        document.getElementById('grafico-linha-valor-produtos'),
-        formatador.formatarValor(analise.produtos),
-        "Valor dos Produtos"
-    );
+    graficos.forEach(g => {
+        el.containerGraficos.append(g.instancia);
+    });
 
-    const graficoValorCategorias = new GraficoLinha(
-        document.getElementById('grafico-linha-valor-categorias'),
-        formatador.formatarValor(analise.categorias),
-        "Valor das Categorias"
-    );
-
-    document.getElementById('btn-pesquisar').onclick = async () => {
-        const filtro = {
-            dataInicio: /** @type {HTMLInputElement} */(document.querySelector('[name = "dataInicio"]')).value,
-            dataFinal: /** @type {HTMLInputElement} */ (document.querySelector('[name = "dataFinal"]')).value
-        }
-
+    el.btnPesquisar.onclick = async () => {
         try {
+            const filtro = {
+                dataInicio: /** @type {HTMLInputElement} */ 
+                    (el.inputDataInicio).value,
+
+                dataFinal: /** @type {HTMLInputElement} */
+                    (el.inputDataFinal).value
+            };
+
             const dadosAnalise = await retornarAnalise(filtro);
 
-            graficoQuantProdutos.atualizar(formatador.formatarQuantidade(dadosAnalise.produtos));
-            graficoQuantCategorias.atualizar(formatador.formatarQuantidade(dadosAnalise.categorias));
-            graficoValorProdutos.atualizar(formatador.formatarValor(dadosAnalise.produtos));
-            graficoValorCategorias.atualizar(formatador.formatarValor(dadosAnalise.categorias));
-
-        } catch (error){
+            graficos.forEach(g => {
+                const dados = obterDadosFormatados(formatador, g, dadosAnalise);
+                g.instancia.atualizar(dados);
+            });
+        } catch (error) {
             alertarErro(error);
         }
-    }
+    };
+
 }
+
+function obterDadosFormatados(formatador, def, analise) {
+  const metodo = `formatar${capitalizar(def.tipo)}`;
+  return formatador[metodo](analise[def.origem]);
+}
+
+const definicoesGraficos = [
+  {
+    id: 'grafico-linha-quant-categorias',
+    tipo: 'quantidade',
+    origem: 'categorias',
+    titulo: 'Quantidade de Categorias'
+  },
+  {
+    id: 'grafico-linha-quant-produtos',
+    tipo: 'quantidade',
+    origem: 'produtos',
+    titulo: 'Quantidade de Produtos'
+  },
+  {
+    id: 'grafico-linha-valor-produtos',
+    tipo: 'valor',
+    origem: 'produtos',
+    titulo: 'Valor dos Produtos'
+  },
+  {
+    id: 'grafico-linha-valor-categorias',
+    tipo: 'valor',
+    origem: 'categorias',
+    titulo: 'Valor das Categorias'
+  }
+];

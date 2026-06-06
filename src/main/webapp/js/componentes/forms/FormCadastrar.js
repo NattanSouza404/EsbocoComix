@@ -1,10 +1,12 @@
-import { FormularioDadosPessoais } from "@componentes/forms/formDadosPessoais.js";
+import { FormDadosPessoais } from "@componentes/forms/FormDadosPessoais.js";
 
-export class FormularioCadastrarDadosPessoais extends FormularioDadosPessoais {
+export class FormCadastrarDadosPessoais extends FormDadosPessoais {
     constructor(){
         super();
 
-        this.insertAdjacentHTML('beforeend', `
+        this.id = "form-dados-pessoais";
+
+        this.insertAdjacentHTML('beforeend', /* html */ `
             <div class="header-dados-cadastro">
                 <p><strong>Senha</strong></p>
             </div>
@@ -21,12 +23,12 @@ export class FormularioCadastrarDadosPessoais extends FormularioDadosPessoais {
                 <div>
                     <label>
                         Senha
-                        <input name="senhaNova" type="password"></input> 
+                        <input name="senhaNova" type="password">
                     </label>
 
                     <label>
                         Confirme a senha
-                        <input name="senhaConfirmacao" type="password"></input> 
+                        <input name="senhaConfirmacao" type="password">
                     </label>
                 </div>
             </div>
@@ -35,4 +37,4 @@ export class FormularioCadastrarDadosPessoais extends FormularioDadosPessoais {
 
 }
 
-customElements.define('form-cadastrar-dados-pessoais', FormularioCadastrarDadosPessoais, {extends: "form"});
+customElements.define('form-cadastrar-dados-pessoais', FormCadastrarDadosPessoais, {extends: "form"});

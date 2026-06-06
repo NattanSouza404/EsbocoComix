@@ -4,40 +4,7 @@
 
 <!-- Hero Section -->
 <header class="text-white text-center">
-    <div class="container-fluid g-5 py-3">
-    
-    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-          <div class="carousel-item active">
-              <img src="../../../img/banner/banner-desconto.jpg" class="d-block w-100" alt="Imagem 1">
-              <div class="carousel-caption d-none d-md-block">
-                <strong><h1 class="text-center mb-4 texto-contorno">Bem vindo à Esboço Comix</h1></strong>
-                <strong><h3 class="texto-contorno">Encontre seus quadrinhos preferidos pelos melhores preços!</h3></strong>
-              </div>
-            </div>
-          <div class="carousel-item">
-              <img src="../../../img/banner/banner-o-menino-maluquinho.jpg" class="d-block w-100" alt="Imagem 2">
-              <div class="carousel-caption d-none d-md-block">
-                <strong><h1 class="texto-contorno">Confira o Menino Maluquinho!</h1></strong>
-              </div>
-          </div>
-          <div class="carousel-item">
-              <img src="../../../img/banner/banner-tintin.jpg" class="d-block w-100" alt="Imagem 3">
-              <div class="carousel-caption d-none d-md-block">
-                <strong><h1 class="texto-contorno">Confira As Aventuras de Tintin!</h1></strong>
-              </div>
-            </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Anterior</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Próximo</span>
-      </button>
-    </div>
-  </div>
+    <div id="container-carrossel" class="container-fluid g-5 py-3"></div>
 </header>
 
 <div class="container">
@@ -49,7 +16,12 @@
           <div class="d-flex align-items-center mb-3">
             <label class="form-label me-2">
               Titulo:
-              <input type="text" name="titulo" class="form-control" placeholder="O Homem-Cão">
+              <input
+                type="text"
+                name="titulo"
+                class="form-control"
+                placeholder="O Homem-Cão"
+              >
             </label>
           </div>
 
@@ -75,52 +47,92 @@
           <div class="d-flex align-items-center mb-3">
             <label class="form-label me-2">
               Autor:
-              <input type="text" name="autor" class="form-control" placeholder="Dav Pikey">
+              <input
+                type="text"
+                name="autor"
+                class="form-control"
+                placeholder="Dav Pikey"
+              >
             </label>
           </div>
 
           <div class="d-flex align-items-center mb-3">
             <label class="form-label me-2">
               Ano:
-              <input type="number" name="ano" class="form-control" placeholder="2000">
+              <input
+                type="number"
+                name="ano"
+                class="form-control"
+                placeholder="2000"
+              >
             </label>
           </div>
 
           <div class="d-flex align-items-center mb-3">
             <label class="form-label me-2">
               Edição:
-              <input type="number" name="edicao" class="form-control" placeholder="1">
+              <input
+                type="number"
+                name="edicao"
+                class="form-control"
+                placeholder="1"
+              >
             </label>
           </div>
 
           <div class="d-flex align-items-center mb-3">
             <label class="form-label me-2">
               Editora:
-              <input type="text" name="editora" class="form-control" placeholder="Companhia das Letras">
+              <input
+                type="text"
+                name="editora"
+                class="form-control"
+                placeholder="Companhia das Letras"
+              >
             </label>
           </div>
 
-          <div class="d-flex align-items-center mb-3">
-            <label class="form-label me-2">
-              <p id="input-maximo-paginas">Máximo de Páginas = 300</p>
-              <input type="range" name="numeroPaginas" class="form-control" placeholder="20" min="0" max="300" value="300">
-            </label>
-          </div>
+          <div id="input-maximo-paginas"></div>
 
           <div class="d-flex align-items-center mb-3">
             <label class="form-label me-2">
               Dimensões:
-              <input type="number" name="altura" class="form-control" placeholder="Altura">
-              <input type="number" name="largura" class="form-control" placeholder="Largura">
-              <input type="number" name="profundidade" class="form-control" placeholder="Profundidade">
-              <input type="number" name="peso" class="form-control" placeholder="Peso">
+              <input
+                type="number"
+                name="altura"
+                class="form-control"
+                placeholder="Altura"
+              >
+              <input
+                type="number"
+                name="largura"
+                class="form-control"
+                placeholder="Largura"
+              >
+              <input
+                type="number"
+                name="profundidade"
+                class="form-control"
+                placeholder="Profundidade"
+              >
+              <input
+                type="number"
+                name="peso"
+                class="form-control"
+                placeholder="Peso"
+              >
             </label>
           </div>
 
           <div class="d-flex align-items-center mb-3">
             <label class="form-label me-2">
               Código de Barras:
-              <input type="text" name="codigoBarras" class="form-control" placeholder="1111111111111">
+              <input
+                type="text"
+                name="codigoBarras"
+                class="form-control"
+                placeholder="1111111111111"
+              >
             </label>
           </div>
 
@@ -138,13 +150,20 @@
 
           <!-- Button -->
           <div class="text-center mt-3">
-            <button id="btn-buscar-quadrinho" type="button" class="btn btn-primary btn-lg">Buscar</button>
+            <button
+              id="btn-buscar-quadrinho"
+              type="button"
+              class="btn btn-primary btn-lg"
+            >
+              Buscar
+            </button>
           </div>
         </form>
       </div>
     </div>
 
     <div id="container-produtos" class="row col-md-9"></div>
+
   </div>
 </div>
 

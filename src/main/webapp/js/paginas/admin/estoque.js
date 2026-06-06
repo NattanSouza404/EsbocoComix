@@ -1,66 +1,44 @@
 import { alertarErro } from "../../api/alertErro.js";
-import { consultarEntradasEstoque } from "../../api/estoque.api.js";
-import { formatarDateTime } from "../../script.js";
-import ModalEntradaEstoque from "@componentes/estoque/modalEntradaEstoque.js";
+import { consultarEntradasEstoque, inserirEntradaEstoque } from "@api/estoque.api.js";
+import ModalEntradaEstoque from "@componentes/estoque/ModalEntradaEstoque.js";
 import { consultarTodosQuadrinhos } from "@api/quadrinho.api.js";
-import { formatarPreco } from "../../script.js";
+import { TabelaEntradaEstoque } from "@componentes/estoque/TabelaEntradaEstoque.js";
+import { TabelaEstoque } from "@componentes/estoque/TabelaEstoque.js";
+
+const getElementos = () => {
+    return {
+        containerTabelaEstoque: document.getElementById('container-tabela-estoque'),
+        containerTabelaEntradaEstoque: document.getElementById('container-tabela-entrada-estoque'),
+    };
+}
 
 export async function initPagina() {
-
-    const tbody = document.getElementById("stockTable");
-
-    let quadrinhos;
-    let entradasEstoque;
-
     try {
-        entradasEstoque = await consultarEntradasEstoque();
-        quadrinhos = await consultarTodosQuadrinhos();
+        const el = getElementos();
+
+        const entradasEstoque = await consultarEntradasEstoque();
+        const quadrinhos = await consultarTodosQuadrinhos();
+
+        const modal = new ModalEntradaEstoque(cadastrarEntradaEstoque);
+
+        el.containerTabelaEstoque.appendChild(
+            TabelaEstoque(quadrinhos, modal)
+        );
+
+        el.containerTabelaEntradaEstoque.appendChild(
+            TabelaEntradaEstoque(entradasEstoque)
+        );
     } catch (error){
         alertarErro(error);
     }
 
-    const modal = new ModalEntradaEstoque();
+}
 
-    let contador = 1;
-    quadrinhos.forEach(quadrinho => {
-        const tr = document.createElement("tr");
-
-        let estoque = quadrinho.quantidadeEstoque;
-
-        if (quadrinho.quantidadeEstoque < 1){
-            estoque = 'Fora de Estoque';
-        }
-
-        tr.innerHTML = `
-            <td>${contador++}</td>
-            <td class="item-name">${quadrinho.titulo}</td>
-            <td class="item-quantity">${estoque}</td>
-            <td class="item-price">${formatarPreco(quadrinho.preco)}</td>
-            <td class="item-precification">${quadrinho.grupoPrecificacao.nome} ${quadrinho.grupoPrecificacao.porcentagem}%</td>
-            <td>
-                <button class="btn btn-warning btn-sm btn-entrada-estoque">Fazer entrada no estoque</button>
-            </td>
-        `;
-
-        const button = tr.querySelector('button');
-        button.onclick = () => {
-            modal.show(quadrinho);
-        };
-        tbody.append(tr);
-    });
-
-    entradasEstoque.forEach(entrada => {
-        document.getElementById('tabela-entrada-estoque')
-            .insertAdjacentHTML('beforeend', `
-            <tr>
-                <td>#</td>
-                <td>${entrada.nomeQuadrinho}</td>
-                <td>${formatarDateTime(entrada.dataEntrada)}</td>
-                <td>${entrada.quantidade}</td>
-                <td>${entrada.valorCusto}</td>
-                <td>${entrada.fornecedor}</td>
-            </tr>
-            `);
-    });
-
+async function cadastrarEntradaEstoque(entradaEstoque){
+    try {
+        await inserirEntradaEstoque(entradaEstoque);
+        alert('Entrada realizada!');
+    } catch (error){
+        alertarErro(error);
+    }
 }

@@ -72,6 +72,11 @@ if (localStorage.getItem(localStorageKeys.primeiraVez) === null){
 }
 */
 
+export function getUrlParam(nome) { 
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(nome);
+}
+
 export function mascararNumeroCartao(numero){
     return '**** **** **** ' + numero.slice(-4);
 }
@@ -214,4 +219,8 @@ export function formToObject(form) {
   }
 
   return obj;
+}
+
+export function capitalizar(texto) {
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
 }

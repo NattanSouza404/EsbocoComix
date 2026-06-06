@@ -10,6 +10,8 @@
 #nav-lateral {
     width: 15%;
     max-width: 15%;
+    height: 100vh;
+    width: 250px;
 }
 
 #nav-lateral button {
@@ -36,10 +38,16 @@
     border-radius: 2%;
 }
 
-#secoes-conta section {
+.secao-atual {
     display: flex;
-    flex-direction: column;
+}
 
+.secao-nao-atual {
+    display: none;
+}
+
+#secoes-conta section {
+    flex-direction: column;
     gap: 8px;
 }
 

@@ -1,4 +1,4 @@
-import { Modal } from "./modal.js";
+import { Modal } from "./common/modal.js";
 import { retornarRespostaIA } from "../api/chatbot.api.js";
 import { adicionarMensagemHistorico, getHistorico, removerHistorico } from "../localStorage.js";
 

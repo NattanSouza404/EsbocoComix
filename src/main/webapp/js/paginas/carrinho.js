@@ -1,97 +1,79 @@
-import { calcularValorTotal, formatarPreco } from "../script.js";
-import { atualizarItemCarrinho, deletarItemCarrinho, retornarCarrinho } from "@api/carrinho.api.js";
 import { alertarErro } from "@api/alertErro.js";
+import { atualizarItemCarrinho, deletarItemCarrinho, retornarCarrinho } from "@api/carrinho.api.js";
+import { SumarioCarrinho } from "@componentes/carrinho/SumarioCarrinho.js";
+import { TabelaCarrinho } from "@componentes/carrinho/TabelaCarrinho.js";
+import { calcularValorTotal } from "../script.js";
+
+const getElementos = () => {
+    return {
+        mainContainer: document.getElementById('main-container'),
+        tabelaCarrinho: document.getElementById('tabela-carrinho'),
+        sumarioCarrinho: document.getElementById('sumario-carrinho')
+    };
+}
 
 export async function initPagina() {
-
-    let carrinho;
-
     try {
-        carrinho = await retornarCarrinho();
+        const el = getElementos();
+
+        const carrinho = await retornarCarrinho();
+   
+        if (carrinho.itensCarrinho.length === 0){
+            el.mainContainer.innerHTML = /* html */`
+                <div class="container mt-4">
+                    <h3 class="text-center">Carrinho vazio</h3>
+                </div>
+            `;
+            return;
+        }
+
+        el.tabelaCarrinho.append(
+            TabelaCarrinho(
+                carrinho,
+                confirmarAtualizarItem,
+                confirmarDelecaoItem
+            )
+        );
+
+        el.sumarioCarrinho.append(
+            SumarioCarrinho(calcularValorTotal(carrinho))
+        );
+
     } catch (error){
         alertarErro(error);
     }
+}
 
-    if (carrinho.itensCarrinho.length === 0){
-        document.getElementById('main-container').innerHTML = `
-            <h3 class="text-center">Carrinho vazio</h3>
-        `;
-    }
-
-    if (carrinho.itensCarrinho.length !== 0){
-        carrinho.itensCarrinho.forEach(item => {
-            const linha = document.createElement('tr');
-            linha.className = "item-carrinho";
-        
-            linha.innerHTML = `
-                <td class="celula-produto">
-                    <p class="text-center">${item.nome}</p> 
-                    <img class="img-carrinho" src="${item.urlImagem}">
-                </td>
-                <td class="product-price">${formatarPreco(item.preco)}</td>
-                <td class="product-quantity">
-                    <input name="quantidade" value=${item.quantidade}>
-                </td>
-                <td class="product-total">${formatarPreco(item.quantidade * item.preco)}</td>
-                <td>
-                    <button class="btn-atualizar btn btn-warning btn-sm">Atualizar Quantidade</button>
-                    <button class="btn-deletar btn btn-danger btn-sm">Remover</button>
-                </td>
-            `;
-        
-            /** @type {HTMLButtonElement} */
-            (linha.querySelector('.btn-atualizar')).onclick = async () => {
-                item.quantidade = linha.querySelector('input').value;
-                await confirmarAtualizarItem(item);
-            }
-
-            /** @type {HTMLButtonElement} */
-            (linha.querySelector('.btn-deletar')).onclick = async () => {
-                await confirmarDelecaoItem(item);   
-            }
-        
-            document.getElementById("tabela-produtos-carrinho")
-                .append(linha);
-        });
-        
-        let valorTotal = calcularValorTotal(carrinho);
-        
-        document.getElementById('total-carrinho').textContent = `${formatarPreco(valorTotal)}`;
-    }
-
-    async function confirmarAtualizarItem(item){
+async function confirmarAtualizarItem(item){
+    try {
         const confirmacaoUsuario = confirm("Deseja mesmo atualizar quantidade desse item?"); 
 
         if (!confirmacaoUsuario){
             return;
         }
+    
+        await atualizarItemCarrinho(item);
 
-        try {
-            await atualizarItemCarrinho(item);
+        alert('Item atualizado com sucesso!');
 
-            alert('Item atualizado com sucesso!');
-
-            window.location.reload();
-        } catch (error){
-            alertarErro(error);
-        }
+        window.location.reload();
+    } catch (error){
+        alertarErro(error);
     }
+}
 
-    async function confirmarDelecaoItem(item){
+async function confirmarDelecaoItem(item){
+    try {
         const confirmacaoUsuario = confirm("Deseja mesmo deletar esse item?");
 
         if (!confirmacaoUsuario){
             return;
         }
 
-        try {
-            await deletarItemCarrinho(item);
-            alert("Item deletado com sucesso!");
-            window.location.reload();
-        } catch (error){
-            alertarErro(error);
-        }
-        
+        await deletarItemCarrinho(item);
+        alert("Item deletado com sucesso!");
+        window.location.reload();
+    } catch (error){
+        alertarErro(error);
     }
-
 }

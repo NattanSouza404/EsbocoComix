@@ -82,7 +82,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-#### Recomendado: Preferências VSCode
+#### Recomendado: VSCode
 
 Adicionar a propriedade `"javascript.preferences.importModuleSpecifierEnding": "js"` dentro do .vscode/settings.json. Essa configuração faz com que imports dentro de arquivos js sejam feitos com o final .js, necessário para uma página estática como a do Esboço Comix. Exemplo:
 
@@ -93,6 +93,8 @@ Adicionar a propriedade `"javascript.preferences.importModuleSpecifierEnding": "
     "javascript.preferences.importModuleSpecifierEnding": "js",
 }
 ```
+
+Também adicionar a extensão es6-string-html, que dá highlight nos templates de HTML em arquivos .js.
 
 ## ▶️ Executando
 

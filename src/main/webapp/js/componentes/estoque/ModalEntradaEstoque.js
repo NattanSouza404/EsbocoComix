@@ -1,9 +1,7 @@
-import { alertarErro } from "@api/alertErro.js";
-import { inserirEntradaEstoque } from "@api/estoque.api.js";
-import { Modal } from "@componentes/modal.js";
+import { Modal } from "@componentes/common/modal.js";
 
 export default class ModalEntradaEstoque extends Modal {
-    constructor(){
+    constructor(cadastrarEntradaEstoque){
         const conteudoModal = ConteudoModal();
 
         super('modal-entrada-estoque', "Entrada Estoque", conteudoModal);
@@ -11,10 +9,14 @@ export default class ModalEntradaEstoque extends Modal {
         this.conteudoModal = conteudoModal;
 
         /** @type {HTMLButtonElement} */
-        (this.conteudoModal.querySelector('#btn-enviar-entrada-estoque')).onclick = () => {
-            this.enviarFormulario();
-        }
+        (this.conteudoModal.querySelector('#btn-enviar-entrada-estoque')).onclick = async () => {
+            const entradaEstoque = await this.confirmarCadastroEntradaEstoque();
 
+            if (entradaEstoque){
+                await cadastrarEntradaEstoque(entradaEstoque); 
+            }
+        }
+         
         /** @type {HTMLInputElement} */
         const inputDataPadrao = this.conteudoModal.querySelector('[name = "dataPadrao"]');
         
@@ -36,7 +38,7 @@ export default class ModalEntradaEstoque extends Modal {
         super.show();
     }
     
-    async enviarFormulario(){
+    async confirmarCadastroEntradaEstoque(){
         if (!confirm("Deseja mesmo realizar essa entrada no estoque?")){
             return;    
         }
@@ -63,13 +65,7 @@ export default class ModalEntradaEstoque extends Modal {
             entradaEstoque.dataEntrada = "";
         }
 
-        try {
-            await inserirEntradaEstoque(entradaEstoque);
-            alert('Entrada realizada!');
-        } catch (error){
-            alertarErro(error);
-        }
-
+        return entradaEstoque;
     }
 
 }
@@ -80,38 +76,52 @@ function ConteudoModal(){
     conteudoModal.className = 'container';
     conteudoModal.style.gap = '10px';
 
-    conteudoModal.innerHTML = `
+    conteudoModal.innerHTML = /* html */ `
         <h4 id="titulo-quadrinho"></h2>
 
         <label>
             Quantidade
-            <input type="number" name="quantidade"></input>
+            <input type="number" name="quantidade">
         </label>
 
         <label>
             Valor custo
-            <input type="number" name="valorCusto"></input>
+            <input type="number" name="valorCusto">
         </label>
 
         <label>
             Fornecedor
-            <input type="text" name="fornecedor"></input>
+            <input type="text" name="fornecedor">
         </label>
 
         <div class="sessao-data">
            <label>
                 Usar data padrão (Agora)
-                <input type="checkbox" name="dataPadrao" checked="true">
+                <input
+                    type="checkbox"
+                    name="dataPadrao"
+                    checked="true"
+                >
             </label>
 
             <label>
                 Data da entrada
-                <input type="datetime-local" name="dataEntrada" disabled>
+                <input
+                    type="datetime-local"
+                    name="dataEntrada"
+                    disabled
+                >
             </label>
         </div>
 
         <div>
-            <button id="btn-enviar-entrada-estoque" type="button" class="btn btn-primary">Realizar entrada</button>
+            <button
+                id="btn-enviar-entrada-estoque"
+                type="button"
+                class="btn btn-primary"
+            >
+                Realizar entrada
+            </button>
         </div>
     `;
 

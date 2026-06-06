@@ -6,7 +6,7 @@ export async function retornarPedidos(idCliente){
     let url = PATH;
 
     if (idCliente){
-        url += `?id=${idCliente}`;
+        url += `/por-id-cliente?id=${idCliente}`;
     }
 
     const resposta = await fetch(url);

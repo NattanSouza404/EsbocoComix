@@ -1,6 +1,6 @@
-import { Modal } from "@componentes/modal.js";
+import { Modal } from "@componentes/common/modal.js";
 import { montarCartaoCreditoPorForm } from "../../../../script.js";
-import { FormularioCartaoCredito } from "@componentes/forms/formCartaoCredito.js";
+import { FormCartaoCredito } from "@componentes/forms/FormCartaoCredito.js";
 import { inserirCartaoCredito } from "@api/cartaoCredito.api.js";
 import { alertarErro } from "@api/alertErro.js";
 import { localStorageKeys } from "../../../../localStorage.js";
@@ -46,7 +46,7 @@ export class ModalAdicionarCartaoCredito extends Modal {
 }
 
 function ConteudoModal() {
-    const form = new FormularioCartaoCredito();
+    const form = new FormCartaoCredito();
     form.id = 'adicionar-cartao-credito';
 
     form.insertAdjacentHTML('beforeend', `

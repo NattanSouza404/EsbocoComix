@@ -5,9 +5,17 @@
 /** @type {WindowComChart} */
 const win = window;
 
-export default class GraficoLinha {
-    constructor(elementoHTML, dados, title){
-        const ctx = elementoHTML.getContext('2d');
+export default class GraficoLinha extends HTMLDivElement {
+    constructor(id, dados, title){
+        super();
+
+        this.innerHTML = /* html */ `
+            <canvas id="${id}" class="grafico-linha"></canvas>
+            <hr/>
+        `;
+
+        const ctx = /** @type {HTMLCanvasElement} */
+            (this.querySelector('canvas')).getContext('2d');
         
         this.chart = new win.Chart(ctx, {
             type: 'line',
@@ -48,3 +56,5 @@ export default class GraficoLinha {
     }   
 
 }
+
+customElements.define('grafico-linha', GraficoLinha, { extends: 'div' });
