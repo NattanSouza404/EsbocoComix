@@ -16,9 +16,7 @@ public class EstoqueService {
     private final EstoqueDAO estoqueDAO = new EstoqueDAO();
 
     public EntradaEstoque inserir(EntradaEstoque entradaEstoque) {
-        if (entradaEstoque.getQuantidade() <= 0){
-            throw new IllegalArgumentException("Entrada no estoque deve ser maior que 0!");
-        }
+        entradaEstoque.validar();
 
         return estoqueDAO.inserir(entradaEstoque);
     }
