@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class AnaliseController extends AbstractController {
@@ -30,6 +31,12 @@ public class AnaliseController extends AbstractController {
     }
 
     private Object retornarAnalise(HttpServletRequest req) throws Exception {
-        return analiseService.retornarAnalise(req);
+        String dataInicio = req.getParameter("dataInicio");
+        String dataFinal = req.getParameter("dataFinal");
+
+        return analiseService.retornarAnalise(
+            dataInicio != null ? LocalDateTime.parse(dataInicio) : null,
+            dataFinal != null ? LocalDateTime.parse(dataFinal) : null
+        );
     }
 }

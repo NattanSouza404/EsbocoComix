@@ -1,7 +1,6 @@
 package com.esboco_comix.dao.impl.analise;
 
 import com.esboco_comix.dto.ItemVendaDTO;
-import com.esboco_comix.dto.FiltroAnaliseDTO;
 import com.esboco_comix.utils.ConexaoFactory;
 
 import java.sql.Connection;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnaliseDAO {
-    public List<ItemVendaDTO> consultarProdutos(FiltroAnaliseDTO filtro) {
+    public List<ItemVendaDTO> consultarProdutos(LocalDateTime dataInicio, LocalDateTime dataFinal) {
         StringBuilder query = new StringBuilder(
             """
             SELECT * FROM vw_analise_produtos WHERE 1 = 1
@@ -21,14 +20,14 @@ public class AnaliseDAO {
 
         List<LocalDateTime> params = new ArrayList<>();
 
-        if (filtro.getDataInicio() != null){
+        if (dataInicio != null){
             query.append(" AND data >= ?");
-            params.add(filtro.getDataInicio());
+            params.add(dataInicio);
         }
 
-        if (filtro.getDataFinal() != null){
+        if (dataFinal != null){
             query.append(" AND data <= ?");
-            params.add(filtro.getDataFinal());
+            params.add(dataFinal);
         }
 
         try (
@@ -87,7 +86,7 @@ public class AnaliseDAO {
         }
     }
 
-    public List<ItemVendaDTO> consultarCategorias(FiltroAnaliseDTO filtro) {
+    public List<ItemVendaDTO> consultarCategorias(LocalDateTime dataInicio, LocalDateTime dataFinal) {
         StringBuilder query = new StringBuilder( 
             """
             SELECT * FROM vw_analise_categorias WHERE 1 = 1
@@ -96,14 +95,14 @@ public class AnaliseDAO {
 
         List<LocalDateTime> params = new ArrayList<>();
 
-        if (filtro.getDataInicio() != null){
+        if (dataInicio != null){
             query.append(" AND data >= ?");
-            params.add(filtro.getDataInicio());
+            params.add(dataInicio);
         }
 
-        if (filtro.getDataFinal() != null){
+        if (dataFinal != null){
             query.append(" AND data <= ?");
-            params.add(filtro.getDataFinal());
+            params.add(dataFinal);
         }
 
         try (
