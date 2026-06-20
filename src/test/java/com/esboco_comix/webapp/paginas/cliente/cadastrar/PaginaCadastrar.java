@@ -26,7 +26,7 @@ public class PaginaCadastrar extends AbstractPagina {
 
         Cliente c = pedido.getCliente();
         form.findElement(By.name("nome")).sendKeys(c.getNome());
-        form.findElement(By.name("cpf")).sendKeys(c.getCpf());
+        form.findElement(By.name("cpf")).sendKeys(c.getCpf().valor());
         form.findElement(By.name("email")).sendKeys(c.getEmail().valor());
         form.findElement(By.name("tipoTelefone")).sendKeys(c.getTelefone().getTipo().name());
         form.findElement(By.name("ddd")).sendKeys(c.getTelefone().getDdd());
