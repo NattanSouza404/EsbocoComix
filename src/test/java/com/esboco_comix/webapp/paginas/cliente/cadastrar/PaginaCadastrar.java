@@ -79,7 +79,7 @@ public class PaginaCadastrar extends AbstractPagina {
             form.findElement(By.name("cidade")).sendKeys(e.getCidade());
             form.findElement(By.name("estado")).sendKeys(e.getEstado());
             form.findElement(By.name("pais")).sendKeys(e.getPais());
-            form.findElement(By.name("cep")).sendKeys(e.getCep());
+            form.findElement(By.name("cep")).sendKeys(e.getCep().valor());
             form.findElement(By.name("observacoes")).sendKeys(e.getObservacoes());
             form.findElement(By.name("logradouro")).sendKeys(e.getLogradouro());
             form.findElement(By.name("tipoLogradouro")).sendKeys(e.getTipoLogradouro().name());

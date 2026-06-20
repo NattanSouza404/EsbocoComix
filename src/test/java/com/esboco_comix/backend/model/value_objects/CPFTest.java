@@ -29,7 +29,6 @@ public class CPFTest {
         );
     }
 
-
     public static Stream<Arguments> provideCpfsValidos(){
         return Stream.of(
             Arguments.of("15815815822")
