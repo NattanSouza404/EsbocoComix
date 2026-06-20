@@ -33,7 +33,7 @@ public class ClienteDAO {
             pst.setString(1, c.getNome());
             pst.setString(2, c.getGenero().name());
             pst.setDate(3, Date.valueOf(c.getDataNascimento()));
-            pst.setString(4, c.getCpf());
+            pst.setString(4, c.getCpf().valor());
             pst.setString(5, c.getEmail().valor());
             pst.setString(6, c.getHashSenha());
             pst.setString(7, c.getSaltSenha());
@@ -124,7 +124,7 @@ public class ClienteDAO {
             pst.setString(1, c.getNome());
             pst.setString(2, c.getGenero().name());
             pst.setDate(3, Date.valueOf(c.getDataNascimento()));
-            pst.setString(4, c.getCpf());
+            pst.setString(4, c.getCpf().valor());
             pst.setString(5, c.getEmail().valor());
             pst.setString(6, c.getTelefone().getTipo().name());
             pst.setString(7, c.getTelefone().getDdd());

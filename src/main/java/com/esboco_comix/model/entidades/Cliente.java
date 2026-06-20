@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.esboco_comix.model.enuns.Genero;
+import com.esboco_comix.model.value_objects.Cpf;
 import com.esboco_comix.model.value_objects.Email;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -17,7 +18,7 @@ public class Cliente {
     private String  nome;
     private Genero  genero;
     private LocalDate dataNascimento;
-    private String  cpf;
+    private Cpf cpf;
     
     private Email email;
 

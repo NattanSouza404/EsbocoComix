@@ -9,7 +9,6 @@ import com.esboco_comix.validador.IValidador;
 public class ClienteValidador extends AbstractValidador implements IValidador<Cliente> {
     
     private final IValidador<CadastrarClienteDTO> senhaValidador = new SenhaValidador();
-    private final IValidador<Cliente> cpfValidador = new CPFValidador();
     private final IValidador<Telefone> telefoneValidador = new TelefoneValidador();
 
     @Override
@@ -23,7 +22,6 @@ public class ClienteValidador extends AbstractValidador implements IValidador<Cl
         validarAtributoObrigatorio(cliente.getGenero(), "Gênero");
         validarAtributoObrigatorio(cliente.getDataNascimento(), "Data de Nascimento");
 
-        cpfValidador.validar(cliente);
         telefoneValidador.validar(cliente.getTelefone());
     }
 
