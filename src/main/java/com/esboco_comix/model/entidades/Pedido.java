@@ -2,7 +2,9 @@ package com.esboco_comix.model.entidades;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.esboco_comix.model.enuns.StatusPedido;
 
@@ -24,4 +26,28 @@ public class Pedido {
     
     private List<CartaoCreditoPedido> cartoesCreditoPedido = new ArrayList<>();
     private List<CupomPedido> cuponsPedido = new ArrayList<>();
+
+    public void validarFormaPagamento() {
+        if (cartoesCreditoPedido.isEmpty() && cuponsPedido.isEmpty()) {
+            throw new IllegalArgumentException("Nenhuma forma de pagamento foi provida!");
+        }
+
+        Set<Integer> idsCartao = new HashSet<>();
+        for (CartaoCreditoPedido cartao : cartoesCreditoPedido) {
+            if (!idsCartao.add(cartao.getIdCartaoCredito())){
+                throw new IllegalArgumentException("Não é possível usar o mesmo cartão duas vezes no mesmo pedido!");
+            }
+
+            if (cuponsPedido.isEmpty() && cartao.getValor() < 10){
+                throw new IllegalArgumentException("Valor do cartão de crédito deve ser no mínimo R$ 10,00");
+            }
+        }
+
+        Set<Integer> idsCupom = new HashSet<>();
+        for (CupomPedido cupom : cuponsPedido) {
+            if (!idsCupom.add(cupom.getIdCupom())){
+                throw new IllegalArgumentException("Não é possível usar o mesmo cupom duas vezes no mesmo pedido!");
+            }
+        }
+    }
 }
