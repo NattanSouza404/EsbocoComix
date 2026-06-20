@@ -5,6 +5,7 @@ import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Telefone;
 import com.esboco_comix.model.enuns.Genero;
 import com.esboco_comix.model.enuns.TipoTelefone;
+import com.esboco_comix.model.value_objects.Email;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ public class ClienteMapper implements ResultSetMapper<Cliente, Cliente> {
         c.setGenero(Genero.valueOf(rs.getString("cli_genero")));
         c.setDataNascimento(rs.getDate("cli_dt_nascimento").toLocalDate());
         c.setCpf(rs.getString("cli_cpf"));
-        c.setEmail(rs.getString("cli_email"));
+        c.setEmail(new Email(rs.getString("cli_email")));
         c.setRanking(rs.getInt("cli_ranking"));
         c.setIsAtivo(rs.getBoolean("cli_is_ativo"));
 

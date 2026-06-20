@@ -4,6 +4,7 @@ import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Telefone;
 import com.esboco_comix.model.enuns.Genero;
 import com.esboco_comix.model.enuns.TipoTelefone;
+import com.esboco_comix.model.value_objects.Email;
 
 import java.time.LocalDate;
 
@@ -13,7 +14,7 @@ public class ClienteTesteFactory {
         Cliente cliente = new Cliente();
         cliente.setNome("Humberto Neves");
         cliente.setCpf("11122233344");
-        cliente.setEmail("humberto@email.com");
+        cliente.setEmail(new Email("humberto@email.com"));
         cliente.setDataNascimento(LocalDate.of(2013, 2, 3));
         cliente.setGenero(Genero.MASCULINO);
 
