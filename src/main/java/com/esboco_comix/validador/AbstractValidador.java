@@ -1,6 +1,6 @@
 package com.esboco_comix.validador;
 
-public class AbstractValidador {
+public abstract class AbstractValidador {
 
     public void validarAtributoObrigatorio(Object atributo, String nome) {
         if (atributo == null){

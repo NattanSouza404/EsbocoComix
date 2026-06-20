@@ -6,8 +6,6 @@ import com.esboco_comix.validador.IValidador;
 
 public class EnderecoValidador extends AbstractValidador implements IValidador<Endereco> {
     
-    private final CEPValidador cepValidador = new CEPValidador();
-    
     @Override
     public void validar(Endereco endereco) {
         validarAtributoObrigatorio(endereco.getFraseCurta(), "Frase curta");
@@ -31,7 +29,5 @@ public class EnderecoValidador extends AbstractValidador implements IValidador<E
         if (endereco.getIsCobranca() == null){
             throw new IllegalArgumentException("Obrigatório informar se o endereço é de cobrança ou não!");
         }
-
-        cepValidador.validar(endereco.getCep());
     }
 }
