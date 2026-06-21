@@ -44,9 +44,14 @@ public class TelefoneTest {
         return Stream.of(
             Arguments.of((String) null, "987654321", TipoTelefone.CELULAR),
             Arguments.of("11", "", TipoTelefone.CELULAR),
+            Arguments.of("11", null, TipoTelefone.CELULAR),
+            Arguments.of("", "987654321", TipoTelefone.CELULAR),
             Arguments.of("11", "1234567890", TipoTelefone.CELULAR),
             Arguments.of("112", "123456789", TipoTelefone.CELULAR),
-            Arguments.of("11", "123456789", null)
+            Arguments.of("11", "123456789", null),
+            Arguments.of("11", "1234567AB", TipoTelefone.FIXO),
+            Arguments.of("DD", "123456789", TipoTelefone.FIXO),
+            Arguments.of("11", "123", TipoTelefone.FIXO)
         );
     }
 }
