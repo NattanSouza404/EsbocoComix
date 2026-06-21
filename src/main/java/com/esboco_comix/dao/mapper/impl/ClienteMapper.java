@@ -2,11 +2,11 @@ package com.esboco_comix.dao.mapper.impl;
 
 import com.esboco_comix.dao.mapper.ResultSetMapper;
 import com.esboco_comix.model.entidades.Cliente;
-import com.esboco_comix.model.entidades.Telefone;
 import com.esboco_comix.model.enuns.Genero;
 import com.esboco_comix.model.enuns.TipoTelefone;
 import com.esboco_comix.model.value_objects.Cpf;
 import com.esboco_comix.model.value_objects.Email;
+import com.esboco_comix.model.value_objects.Telefone;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,11 +25,13 @@ public class ClienteMapper implements ResultSetMapper<Cliente, Cliente> {
         c.setRanking(rs.getInt("cli_ranking"));
         c.setIsAtivo(rs.getBoolean("cli_is_ativo"));
 
-        Telefone telefone = new Telefone();
-        telefone.setTipo(TipoTelefone.valueOf(rs.getString("cli_tel_tipo")));
-        telefone.setDdd(rs.getString("cli_tel_ddd"));
-        telefone.setNumero(rs.getString("cli_tel_numero"));
-        c.setTelefone(telefone);
+        c.setTelefone(
+            new Telefone(
+                rs.getString("cli_tel_ddd"),
+                rs.getString("cli_tel_numero"),
+                TipoTelefone.valueOf(rs.getString("cli_tel_tipo"))
+            )
+        );
 
         return c;
     }

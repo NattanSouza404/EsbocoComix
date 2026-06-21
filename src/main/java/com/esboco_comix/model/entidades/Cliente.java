@@ -6,6 +6,7 @@ import java.util.List;
 import com.esboco_comix.model.enuns.Genero;
 import com.esboco_comix.model.value_objects.Cpf;
 import com.esboco_comix.model.value_objects.Email;
+import com.esboco_comix.model.value_objects.Telefone;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;

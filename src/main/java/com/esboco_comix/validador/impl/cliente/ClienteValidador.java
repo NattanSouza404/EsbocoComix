@@ -2,14 +2,12 @@ package com.esboco_comix.validador.impl.cliente;
 
 import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.model.entidades.Cliente;
-import com.esboco_comix.model.entidades.Telefone;
 import com.esboco_comix.validador.AbstractValidador;
 import com.esboco_comix.validador.IValidador;
 
 public class ClienteValidador extends AbstractValidador implements IValidador<Cliente> {
     
     private final IValidador<CadastrarClienteDTO> senhaValidador = new SenhaValidador();
-    private final IValidador<Telefone> telefoneValidador = new TelefoneValidador();
 
     @Override
     public void validar(Cliente cliente) {
@@ -21,8 +19,6 @@ public class ClienteValidador extends AbstractValidador implements IValidador<Cl
 
         validarAtributoObrigatorio(cliente.getGenero(), "Gênero");
         validarAtributoObrigatorio(cliente.getDataNascimento(), "Data de Nascimento");
-
-        telefoneValidador.validar(cliente.getTelefone());
     }
 
     public void validarCadastro(CadastrarClienteDTO pedido) {
