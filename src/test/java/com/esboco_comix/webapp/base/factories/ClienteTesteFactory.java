@@ -1,11 +1,11 @@
 package com.esboco_comix.webapp.base.factories;
 
 import com.esboco_comix.model.entidades.Cliente;
-import com.esboco_comix.model.entidades.Telefone;
 import com.esboco_comix.model.enuns.Genero;
 import com.esboco_comix.model.enuns.TipoTelefone;
 import com.esboco_comix.model.value_objects.Cpf;
 import com.esboco_comix.model.value_objects.Email;
+import com.esboco_comix.model.value_objects.Telefone;
 
 import java.time.LocalDate;
 
@@ -19,11 +19,9 @@ public class ClienteTesteFactory {
         cliente.setDataNascimento(LocalDate.of(2013, 2, 3));
         cliente.setGenero(Genero.MASCULINO);
 
-        Telefone t = new Telefone();
-        t.setDdd("11");
-        t.setNumero("99999999");
-        t.setTipo(TipoTelefone.CELULAR);
-        cliente.setTelefone(t);
+        cliente.setTelefone(
+            new Telefone("11", "99999999", TipoTelefone.CELULAR)
+        );
 
         return cliente;
     }

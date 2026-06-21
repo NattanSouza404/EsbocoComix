@@ -28,13 +28,13 @@ public class PaginaCadastrar extends AbstractPagina {
         form.findElement(By.name("nome")).sendKeys(c.getNome());
         form.findElement(By.name("cpf")).sendKeys(c.getCpf().valor());
         form.findElement(By.name("email")).sendKeys(c.getEmail().valor());
-        form.findElement(By.name("tipoTelefone")).sendKeys(c.getTelefone().getTipo().name());
-        form.findElement(By.name("ddd")).sendKeys(c.getTelefone().getDdd());
-        form.findElement(By.name("numero")).sendKeys(c.getTelefone().getNumero());
+        form.findElement(By.name("tipoTelefone")).sendKeys(c.getTelefone().tipo().name());
+        form.findElement(By.name("ddd")).sendKeys(c.getTelefone().ddd());
+        form.findElement(By.name("numero")).sendKeys(c.getTelefone().numero());
         form.findElement(By.name("senhaNova")).sendKeys(pedido.getSenhaNova());
         form.findElement(By.name("senhaConfirmacao")).sendKeys(pedido.getSenhaConfirmacao());
 
-        preencherInputSelect(form, "tipoTelefone", c.getTelefone().getTipo().name());
+        preencherInputSelect(form, "tipoTelefone", c.getTelefone().tipo().name());
         preencherInput(form, "dataNascimento", c.getDataNascimento());
 
         sleep();
