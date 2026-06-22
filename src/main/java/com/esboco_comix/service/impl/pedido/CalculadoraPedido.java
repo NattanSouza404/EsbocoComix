@@ -1,8 +1,5 @@
 package com.esboco_comix.service.impl.pedido;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.CartaoCreditoPedido;
 import com.esboco_comix.model.entidades.Cupom;
@@ -22,25 +19,9 @@ public class CalculadoraPedido {
     }
 
     public double calcularValorFormaPagamento(Pedido pedido) {
-        List<Cupom> cuponsAplicados = new ArrayList<>();
-
-        int quantCupomPromocional = 0;
         for (CupomPedido cupom : pedido.getCuponsPedido()) {
             Cupom cupomBanco = cupomService.consultarByID(cupom.getIdCupom());
-
-            if (!cupomBanco.isAtivo()) {
-                throw new IllegalArgumentException("Cupom inválido para essa compra!");
-            }
-
-            if (cupomBanco.isPromocional()) {
-                quantCupomPromocional += 1;
-            }
-
-            cuponsAplicados.add(cupomBanco);
-        }
-
-        if (quantCupomPromocional > 1) {
-            throw new IllegalArgumentException("Não é possível usar mais de um cupom promocional na mesma compra!");
+            pedido.aplicarCupom(cupomBanco);
         }
 
         double valorTotal = 0;
@@ -55,7 +36,7 @@ public class CalculadoraPedido {
             valorTotal += cartao.getValor();
         }
 
-        for (Cupom cupom : cuponsAplicados) {
+        for (Cupom cupom : pedido.getCuponsAplicados()) {
             valorTotal += cupom.getValor();
         }
 

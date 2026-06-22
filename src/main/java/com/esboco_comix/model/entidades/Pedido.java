@@ -27,6 +27,8 @@ public class Pedido {
     private List<CartaoCreditoPedido> cartoesCreditoPedido = new ArrayList<>();
     private List<CupomPedido> cuponsPedido = new ArrayList<>();
 
+    private List<Cupom> cuponsAplicados = new ArrayList<>();
+
     public double calcularValorTotal() {
         double valor = 0;
         for (ItemPedido itemPedido : itensPedido) {
@@ -38,6 +40,27 @@ public class Pedido {
 
     public void atualizarValorTotal() {
         this.valorTotal = calcularValorTotal();
+    }
+
+    public void aplicarCupom(Cupom cupom) {
+        if (!cupom.isAtivo()) {
+            throw new IllegalArgumentException("Cupom inválido para essa compra!");
+        }
+
+        if (cupom.isPromocional()){
+            int quantCupomPromocionais = 0;
+            for (Cupom c : cuponsAplicados) {
+                if (c.isPromocional()) {
+                    quantCupomPromocionais += 1;
+                }
+            }
+
+            if (quantCupomPromocionais > 0) {
+                throw new IllegalArgumentException("Já existe um cupom promocional aplicado para esse pedido!");
+            }
+        }
+
+        cuponsAplicados.add(cupom);
     }
 
     public void validarFormaPagamento() {
