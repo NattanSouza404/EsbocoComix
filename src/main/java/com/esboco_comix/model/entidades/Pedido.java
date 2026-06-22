@@ -27,6 +27,19 @@ public class Pedido {
     private List<CartaoCreditoPedido> cartoesCreditoPedido = new ArrayList<>();
     private List<CupomPedido> cuponsPedido = new ArrayList<>();
 
+    public double calcularValorTotal() {
+        double valor = 0;
+        for (ItemPedido itemPedido : itensPedido) {
+            valor += itemPedido.calcularValor();
+        }
+
+        return valor + valorFrete;
+    }
+
+    public void atualizarValorTotal() {
+        this.valorTotal = calcularValorTotal();
+    }
+
     public void validarFormaPagamento() {
         if (cartoesCreditoPedido.isEmpty() && cuponsPedido.isEmpty()) {
             throw new IllegalArgumentException("Nenhuma forma de pagamento foi provida!");

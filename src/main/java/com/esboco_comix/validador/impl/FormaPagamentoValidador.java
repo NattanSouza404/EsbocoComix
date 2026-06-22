@@ -17,7 +17,7 @@ public class FormaPagamentoValidador extends AbstractValidador implements IValid
     public void validar(Pedido pedido)  {
         pedido.validarFormaPagamento();
 
-        double valorTotalPedido = calculadora.calcularValorTotalPedido(pedido, pedido.getItensPedido());
+        double valorTotalPedido = pedido.calcularValorTotal();
         double valorTotalPago = calculadora.calcularValorFormaPagamento(pedido);
 
         if (valorTotalPago != valorTotalPedido){

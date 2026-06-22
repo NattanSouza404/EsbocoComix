@@ -34,7 +34,6 @@ public class PedidoService {
     
     private final CalculadoraPedido calculadora = new CalculadoraPedido(
         this.cupomService,
-        this.quadrinhoService,
         this.cartaoCreditoService
     );
 
@@ -51,13 +50,14 @@ public class PedidoService {
 
         pedido.setStatus(StatusPedido.EM_PROCESSAMENTO);
         pedido.setItensPedido(carrinho.esvaziar());
-        pedido.setValorTotal(calculadora.calcularValorTotalPedido(pedido, pedido.getItensPedido()));
 
         for (ItemPedido item: pedido.getItensPedido()){
             estoqueService.validarEstoque(item);
 
             item.setPreco(quadrinhoService.consultarByID(item.getIdQuadrinho()).getPreco());
         }
+
+        pedido.atualizarValorTotal();
 
         Pedido pedidoInserido = pedidoDAO.inserir(pedido);
 
@@ -128,10 +128,12 @@ public class PedidoService {
                 itensPedido.add(itemPedidoDTO.getItemPedido());
             }
 
+            pedido.setItensPedido(itensPedido);
+
             cupomService.inserir(
                 Cupom.gerarCupomTroca(
                     pedido.getIdCliente(),
-                    calculadora.calcularValorTotalPedido(pedido, itensPedido)
+                    pedido.calcularValorTotal()
                 )
             );
 

@@ -2,30 +2,22 @@ package com.esboco_comix.service.impl.pedido;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import com.esboco_comix.dto.QuadrinhoDTO;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.CartaoCreditoPedido;
 import com.esboco_comix.model.entidades.Cupom;
 import com.esboco_comix.model.entidades.CupomPedido;
-import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
-import com.esboco_comix.model.entidades.Quadrinho;
 import com.esboco_comix.service.impl.CartaoCreditoService;
 import com.esboco_comix.service.impl.CupomService;
-import com.esboco_comix.service.impl.QuadrinhoService;
 
 public class CalculadoraPedido {
 
     private CupomService cupomService;
-    private QuadrinhoService quadrinhoService;
     private CartaoCreditoService cartaoCreditoService;
 
-    public CalculadoraPedido(CupomService cupomService, QuadrinhoService quadrinhoService, CartaoCreditoService cartaoCreditoService){
+    public CalculadoraPedido(CupomService cupomService, CartaoCreditoService cartaoCreditoService){
         this.cupomService = cupomService;
-        this.quadrinhoService = quadrinhoService;
         this.cartaoCreditoService = cartaoCreditoService;
     }
 
@@ -70,25 +62,4 @@ public class CalculadoraPedido {
         return valorTotal;
     }
 
-    public double calcularValorTotalPedido(Pedido pedido, List<ItemPedido> itensPedido) {
-        Map<Integer, QuadrinhoDTO> quadrinhoMap = quadrinhoService.consultarTodos().stream()
-            .collect(Collectors.toMap(quadrinho -> quadrinho.getQuadrinho().getId() , quadrinho -> quadrinho));
-
-        double valor = 0;
-        for (ItemPedido itemPedido : itensPedido) {
-            QuadrinhoDTO dto = quadrinhoMap.get(itemPedido.getIdQuadrinho());
-            Quadrinho quadrinho = dto.getQuadrinho();
-
-            if (quadrinho == null) {
-                throw new IllegalStateException("Quadrinho do pedido não encontrado!");
-            }
-
-            valor += dto.getPreco() * itemPedido.getQuantidade();
-        }
-
-        valor += pedido.getValorFrete();
-
-        return valor;
-
-    }
 }
