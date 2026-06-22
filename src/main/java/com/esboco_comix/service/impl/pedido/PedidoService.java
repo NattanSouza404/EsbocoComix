@@ -16,7 +16,6 @@ import com.esboco_comix.service.impl.CartaoCreditoService;
 import com.esboco_comix.service.impl.CupomService;
 import com.esboco_comix.service.impl.EstoqueService;
 import com.esboco_comix.service.impl.QuadrinhoService;
-import com.esboco_comix.validador.impl.FormaPagamentoValidador;
 
 public class PedidoService {
 
@@ -37,8 +36,6 @@ public class PedidoService {
         this.cartaoCreditoService
     );
 
-    private final FormaPagamentoValidador validador = new FormaPagamentoValidador(calculadora);
-
     public Pedido inserir(Pedido pedido, Carrinho carrinho) {
         if (carrinho.isVazio()) {
             throw new IllegalStateException("Nenhum item presente no carrinho!");
@@ -46,7 +43,14 @@ public class PedidoService {
 
         pedido.setItensPedido(carrinho.getItensPedido());
 
-        validador.validar(pedido);
+        pedido.validarFormaPagamento();
+
+        double valorTotalPedido = pedido.calcularValorTotal();
+        double valorTotalPago = calculadora.calcularValorFormaPagamento(pedido);
+
+        if (valorTotalPago != valorTotalPedido){
+            throw new IllegalArgumentException("Valor pago não condiz com valor do pedido!");
+        }
 
         pedido.setStatus(StatusPedido.EM_PROCESSAMENTO);
         pedido.setItensPedido(carrinho.esvaziar());
