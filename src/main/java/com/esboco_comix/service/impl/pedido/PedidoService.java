@@ -21,20 +21,15 @@ public class PedidoService {
 
     private final CupomService cupomService = new CupomService();
     private final QuadrinhoService quadrinhoService = new QuadrinhoService();
-    private final CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
     private final EstoqueService estoqueService = new EstoqueService();
-    
+    private final CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
+
     private final PedidoDAO pedidoDAO = new PedidoDAO();
     private final ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
     private final CartaoCreditoPedidoDAO cartaoCreditoPedidoDAO = new CartaoCreditoPedidoDAO();
     private final CupomPedidoDAO cupomPedidoDAO = new CupomPedidoDAO();
 
     private final PedidoPosVendaDAO pedidoPosVendaDAO = new PedidoPosVendaDAO();
-    
-    private final CalculadoraPedido calculadora = new CalculadoraPedido(
-        this.cupomService,
-        this.cartaoCreditoService
-    );
 
     public Pedido inserir(Pedido pedido, Carrinho carrinho) {
         if (carrinho.isVazio()) {
@@ -45,8 +40,16 @@ public class PedidoService {
 
         pedido.validarFormaPagamento();
 
+        for (CartaoCreditoPedido cartao : pedido.getCartoesCreditoPedido()) {
+            CartaoCredito cartaoBanco = cartaoCreditoService.consultarByID(cartao.getIdCartaoCredito());
+
+            if (pedido.getIdCliente() != cartaoBanco.getIdCliente()) {
+                throw new IllegalArgumentException("Cartão de crédito não pertence ao cliente da compra!");
+            }
+        }
+
         double valorTotalPedido = pedido.calcularValorTotal();
-        double valorTotalPago = calculadora.calcularValorFormaPagamento(pedido);
+        double valorTotalPago = pedido.getValorTotalPago();
 
         if (valorTotalPago != valorTotalPedido){
             throw new IllegalArgumentException("Valor pago não condiz com valor do pedido!");

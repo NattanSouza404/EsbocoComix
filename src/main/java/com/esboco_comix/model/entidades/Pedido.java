@@ -38,6 +38,20 @@ public class Pedido {
         return valor + valorFrete;
     }
 
+    public double getValorTotalPago() {
+        double valorTotal = 0;
+
+        for (CartaoCreditoPedido cartao : cartoesCreditoPedido) {
+            valorTotal += cartao.getValor();
+        }
+
+        for (Cupom cupom : cuponsAplicados) {
+            valorTotal += cupom.getValor();
+        }
+
+        return valorTotal;
+    }
+
     public void atualizarValorTotal() {
         this.valorTotal = calcularValorTotal();
     }
@@ -61,6 +75,20 @@ public class Pedido {
         }
 
         cuponsAplicados.add(cupom);
+    }
+
+    public void aplicarCartaoCredito(CartaoCreditoPedido cartao) {
+        for (CartaoCreditoPedido c : cartoesCreditoPedido) {
+            if (c.getIdCartaoCredito() == cartao.getIdCartaoCredito()) {
+                throw new IllegalArgumentException("Não é possível usar o mesmo cartão duas vezes no mesmo pedido!");
+            }
+        }
+
+        if (cuponsAplicados.isEmpty() && cartao.getValor() < 10){
+            throw new IllegalArgumentException("Valor do cartão de crédito deve ser no mínimo R$ 10,00");
+        }
+
+        cartoesCreditoPedido.add(cartao);
     }
 
     public void validarFormaPagamento() {
