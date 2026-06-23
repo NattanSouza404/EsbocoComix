@@ -5,7 +5,6 @@ import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.validador.AbstractValidador;
 import com.esboco_comix.validador.IValidador;
-import com.esboco_comix.validador.impl.cartao_credito.CartaoCreditoValidador;
 import com.esboco_comix.validador.impl.cliente.ClienteValidador;
 import com.esboco_comix.validador.impl.endereco.EnderecoValidador;
 
@@ -14,7 +13,6 @@ public class CadastrarClienteValidador extends AbstractValidador
 
     private final ClienteValidador clienteValidador = new ClienteValidador();
     private final EnderecoValidador enderecoValidador = new EnderecoValidador();
-    private final CartaoCreditoValidador cartaoCreditoValidador = new CartaoCreditoValidador();
 
     @Override
     public void validar(CadastrarClienteDTO cadastro) {
@@ -25,7 +23,7 @@ public class CadastrarClienteValidador extends AbstractValidador
         }
 
         for (CartaoCredito c : cadastro.getCartoesCredito()) {
-            cartaoCreditoValidador.validar(c);
+            c.validar();
         }
     }
     
