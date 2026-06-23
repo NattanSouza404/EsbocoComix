@@ -38,4 +38,54 @@ public class Endereco {
     private Boolean isAtivo;
 
     private int idCliente;
+
+    public void validar(){
+        if (fraseCurta == null || fraseCurta.isBlank()) {
+            throw new IllegalArgumentException("Frase curta do endereço não pode ser nula ou vazia!");
+        }
+
+        if (numero == null || numero.isBlank()) {
+            throw new IllegalArgumentException("Número do endereço não pode ser nulo ou vazio!");
+        }
+
+        if (logradouro == null || logradouro.isBlank()) {
+            throw new IllegalArgumentException("Logradouro do endereço não pode ser nulo ou vazio!");
+        }
+
+        if (tipoLogradouro == null) {
+            throw new IllegalArgumentException("Tipo de logradouro do endereço não pode ser nulo!");
+        }
+
+        if (tipoResidencial == null) {
+            throw new IllegalArgumentException("Tipo de residência do endereço não pode ser nulo!");
+        }
+
+        if (bairro == null || bairro.isBlank()) {
+            throw new IllegalArgumentException("Bairro do endereço não pode ser nulo ou vazio!");
+        }
+
+        if (cidade == null || cidade.isBlank()) {
+            throw new IllegalArgumentException("Cidade do endereço não pode ser nula ou vazia!");
+        }
+
+        if (estado == null || estado.isBlank()) {
+            throw new IllegalArgumentException("Estado do endereço não pode ser nulo ou vazio!");
+        }
+
+        if (pais == null || pais.isBlank()) {
+            throw new IllegalArgumentException("País do endereço não pode ser nulo ou vazio!");
+        }
+
+        if (isResidencial == null){
+            throw new IllegalArgumentException("Obrigatório informar se o endereço é residencial ou não!");
+        }
+
+        if (isEntrega == null){
+            throw new IllegalArgumentException("Obrigatório informar se o endereço é de entrega ou não!");
+        }
+        
+        if (isCobranca == null){
+            throw new IllegalArgumentException("Obrigatório informar se o endereço é de cobrança ou não!");
+        }
+    }
 }
