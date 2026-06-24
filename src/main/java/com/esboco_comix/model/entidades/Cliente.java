@@ -34,4 +34,22 @@ public class Cliente {
     private Telefone telefone;
     private List<CartaoCredito> cartoesCredito;
     private List<Endereco> enderecos;
+
+    public void validar(){
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("Nome do cliente não pode ser nulo ou vazio!");
+        }
+
+        if (nome.length() > 100){
+            throw new IllegalArgumentException("Nome deve conter menos de 100 caracteres!");
+        }
+
+        if (genero == null) {
+            throw new IllegalArgumentException("Gênero do cliente não pode ser nulo!");
+        }
+
+        if (dataNascimento == null) {
+            throw new IllegalArgumentException("Data de nascimento do cliente não pode ser nula!");
+        }
+    }
 }

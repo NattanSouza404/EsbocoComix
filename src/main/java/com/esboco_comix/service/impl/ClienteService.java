@@ -14,7 +14,6 @@ import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.utils.CriptografadorSenha;
 import com.esboco_comix.validador.impl.CadastrarClienteValidador;
-import com.esboco_comix.validador.impl.cliente.ClienteValidador;
 import com.esboco_comix.validador.impl.cliente.SenhaValidador;
 
 public class ClienteService {
@@ -23,7 +22,6 @@ public class ClienteService {
     private final CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
     private final SenhaValidador senhaValidador = new SenhaValidador();
 
-    private final ClienteValidador clienteValidador = new ClienteValidador();
     private final CadastrarClienteValidador cadastrarClienteValidador = new CadastrarClienteValidador();
 
     private final ClienteDTOMapper clienteMapper = new ClienteDTOMapper();
@@ -69,7 +67,7 @@ public class ClienteService {
     }
 
     public Cliente atualizar(Cliente c) {
-        clienteValidador.validar(c);
+        c.validar();
         return clienteDAO.atualizar(c);
     }
 
