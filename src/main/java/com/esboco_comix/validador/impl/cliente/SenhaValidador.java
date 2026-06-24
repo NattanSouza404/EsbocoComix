@@ -2,7 +2,6 @@ package com.esboco_comix.validador.impl.cliente;
 
 import com.esboco_comix.dto.AlterarSenhaDTO;
 import com.esboco_comix.dto.CadastrarClienteDTO;
-import com.esboco_comix.utils.CriptografadorSenha;
 import com.esboco_comix.validador.AbstractValidador;
 import com.esboco_comix.validador.IValidador;
 
@@ -43,13 +42,6 @@ public class SenhaValidador extends AbstractValidador implements IValidador<Cada
                 .senhaConfirmacao(pedido.getSenhaConfirmacao())
             .build()
         );
-    }
-
-    public void validarSenhaAntiga(String senhaNova, String hashGuardado, String saltGuardado) {
-        String hashNovo = CriptografadorSenha.hashSenha(senhaNova, saltGuardado);
-        if (!hashNovo.equals(hashGuardado)){
-            throw new IllegalArgumentException("Senha antiga não consta com senha inserida pelo usuário!");
-        }
     }
 
 }

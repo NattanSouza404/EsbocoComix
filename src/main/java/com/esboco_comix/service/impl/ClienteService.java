@@ -79,8 +79,11 @@ public class ClienteService {
 
         String hashGuardado = clienteInserido.getHashSenha();
         String saltGuardado = clienteInserido.getSaltSenha();
-
-        senhaValidador.validarSenhaAntiga(pedido.getSenhaNova(), hashGuardado, saltGuardado);
+        String hashNovo = CriptografadorSenha.hashSenha(pedido.getSenhaNova(), saltGuardado);
+        
+        if (!hashNovo.equals(hashGuardado)){
+            throw new IllegalArgumentException("Senha antiga não consta com senha inserida pelo usuário!");
+        }
 
         inserirNovoHash(c, pedido.getSenhaNova());
         return clienteDAO.atualizarSenha(c);
