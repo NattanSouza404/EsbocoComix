@@ -13,21 +13,31 @@ import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.utils.CriptografadorSenha;
-import com.esboco_comix.validador.impl.CadastrarClienteValidador;
-import com.esboco_comix.validador.impl.cliente.SenhaValidador;
 
 public class ClienteService {
     private final ClienteDAO clienteDAO = new ClienteDAO();
     private final EnderecoService enderecoService = new EnderecoService();
     private final CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
-    private final SenhaValidador senhaValidador = new SenhaValidador();
-
-    private final CadastrarClienteValidador cadastrarClienteValidador = new CadastrarClienteValidador();
 
     private final ClienteDTOMapper clienteMapper = new ClienteDTOMapper();
 
     public CadastrarClienteDTO inserir(CadastrarClienteDTO pedido) {
-        cadastrarClienteValidador.validar(pedido);
+        pedido.getCliente().validar();
+
+        String senhaNova = pedido.getSenhaNova();
+        String senhaConfirmacao = pedido.getSenhaConfirmacao();
+        
+        if (!(senhaNova.equals(senhaConfirmacao))){
+            throw new IllegalArgumentException("Senha e senha de confirmação devem ser iguais!");
+        }
+
+        for (Endereco e : pedido.getEnderecos()) {
+            e.validar();
+        }
+
+        for (CartaoCredito c : pedido.getCartoesCredito()) {
+            c.validar();
+        }
 
         Cliente clienteToAdd = pedido.getCliente();
         inserirNovoHash(clienteToAdd, pedido.getSenhaNova());
@@ -75,17 +85,17 @@ public class ClienteService {
         Cliente c = pedido.getCliente();
         Cliente clienteInserido = clienteDAO.consultarHashSaltPorID(c.getId());
 
-        senhaValidador.validar(
-            CadastrarClienteDTO.builder()
-                .senhaNova(pedido.getSenhaNova())
-                .senhaConfirmacao(pedido.getSenhaConfirmacao())
-            .build()
-        );
+        String senhaNova = pedido.getSenhaNova();
+        String senhaConfirmacao = pedido.getSenhaConfirmacao();
+
+        if (!(senhaNova.equals(senhaConfirmacao))){
+            throw new IllegalArgumentException("Senha e senha de confirmação devem ser iguais!");
+        }
 
         String hashGuardado = clienteInserido.getHashSenha();
         String saltGuardado = clienteInserido.getSaltSenha();
         String hashNovo = CriptografadorSenha.hashSenha(pedido.getSenhaNova(), saltGuardado);
-        
+
         if (!hashNovo.equals(hashGuardado)){
             throw new IllegalArgumentException("Senha antiga não consta com senha inserida pelo usuário!");
         }
