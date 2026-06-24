@@ -11,8 +11,7 @@ import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.model.entidades.PedidoPosVenda;
 import com.esboco_comix.model.enuns.StatusItemPedido;
-import com.esboco_comix.model.enuns.StatusPedido;                               
-import com.esboco_comix.service.impl.pedido.PedidoService;
+import com.esboco_comix.model.enuns.StatusPedido;
 
 import java.util.List;
 

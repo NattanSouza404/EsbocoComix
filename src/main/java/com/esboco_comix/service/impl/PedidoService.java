@@ -1,4 +1,4 @@
-package com.esboco_comix.service.impl.pedido;
+package com.esboco_comix.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +12,6 @@ import com.esboco_comix.dto.PedidoPosVendaDTO;
 import com.esboco_comix.model.Carrinho;
 import com.esboco_comix.model.entidades.*;
 import com.esboco_comix.model.enuns.StatusPedido;
-import com.esboco_comix.service.impl.CartaoCreditoService;
-import com.esboco_comix.service.impl.CupomService;
-import com.esboco_comix.service.impl.EstoqueService;
-import com.esboco_comix.service.impl.QuadrinhoService;
 
 public class PedidoService {
 

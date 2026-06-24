@@ -5,7 +5,7 @@ import com.esboco_comix.controller.utils.Router;
 import com.esboco_comix.dto.AtualizarPedidoDTO;
 import com.esboco_comix.model.Carrinho;
 import com.esboco_comix.model.entidades.Pedido;
-import com.esboco_comix.service.impl.pedido.PedidoService;
+import com.esboco_comix.service.impl.PedidoService;
 import com.esboco_comix.sessao.SessaoService;
 
 import jakarta.servlet.http.HttpServletRequest;
