@@ -12,6 +12,7 @@ import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
+import com.esboco_comix.model.value_objects.Senha;
 import com.esboco_comix.utils.CriptografadorSenha;
 
 public class ClienteService {
@@ -24,9 +25,9 @@ public class ClienteService {
     public CadastrarClienteDTO inserir(CadastrarClienteDTO pedido) {
         pedido.getCliente().validar();
 
-        String senhaNova = pedido.getSenhaNova();
-        String senhaConfirmacao = pedido.getSenhaConfirmacao();
-        
+        Senha senhaNova = new Senha(pedido.getSenhaNova());
+        Senha senhaConfirmacao = new Senha(pedido.getSenhaConfirmacao());
+
         if (!(senhaNova.equals(senhaConfirmacao))){
             throw new IllegalArgumentException("Senha e senha de confirmação devem ser iguais!");
         }
@@ -40,7 +41,9 @@ public class ClienteService {
         }
 
         Cliente clienteToAdd = pedido.getCliente();
-        inserirNovoHash(clienteToAdd, pedido.getSenhaNova());
+        String saltSenha = CriptografadorSenha.generateSalt();
+        clienteToAdd.setHashSenha(CriptografadorSenha.hashSenha(new Senha(pedido.getSenhaNova()), saltSenha));
+        clienteToAdd.setSaltSenha(saltSenha);
         clienteToAdd.setRanking(0);
         
         Cliente clienteInserido = clienteDAO.inserir(pedido.getCliente());
@@ -85,8 +88,8 @@ public class ClienteService {
         Cliente c = pedido.getCliente();
         Cliente clienteInserido = clienteDAO.consultarHashSaltPorID(c.getId());
 
-        String senhaNova = pedido.getSenhaNova();
-        String senhaConfirmacao = pedido.getSenhaConfirmacao();
+        Senha senhaNova = new Senha(pedido.getSenhaNova());
+        Senha senhaConfirmacao = new Senha(pedido.getSenhaConfirmacao());
 
         if (!(senhaNova.equals(senhaConfirmacao))){
             throw new IllegalArgumentException("Senha e senha de confirmação devem ser iguais!");
@@ -94,13 +97,16 @@ public class ClienteService {
 
         String hashGuardado = clienteInserido.getHashSenha();
         String saltGuardado = clienteInserido.getSaltSenha();
-        String hashNovo = CriptografadorSenha.hashSenha(pedido.getSenhaNova(), saltGuardado);
+        String hashNovo = CriptografadorSenha.hashSenha(senhaNova, saltGuardado);
 
         if (!hashNovo.equals(hashGuardado)){
             throw new IllegalArgumentException("Senha antiga não consta com senha inserida pelo usuário!");
         }
 
-        inserirNovoHash(c, pedido.getSenhaNova());
+        String saltSenha = CriptografadorSenha.generateSalt();
+        c.setHashSenha(CriptografadorSenha.hashSenha(senhaNova, saltSenha));
+        c.setSaltSenha(saltSenha);
+
         return clienteDAO.atualizarSenha(c);
     }
 
@@ -110,12 +116,6 @@ public class ClienteService {
 
     public Cliente consultarByIDPedido(int idPedido) {
         return clienteDAO.consultarByIDPedido(idPedido);
-    }
-
-    private void inserirNovoHash(Cliente c, String senhaNova) {
-        String saltSenha = CriptografadorSenha.generateSalt();
-        c.setHashSenha(CriptografadorSenha.hashSenha(senhaNova, saltSenha));
-        c.setSaltSenha(saltSenha);
     }
 
 }
