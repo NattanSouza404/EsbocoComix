@@ -35,13 +35,4 @@ public class SenhaValidador extends AbstractValidador implements IValidador<Cada
         }
     }
 
-    public void validar(AlterarSenhaDTO pedido) {
-        validar(
-            CadastrarClienteDTO.builder()
-                .senhaNova(pedido.getSenhaNova())
-                .senhaConfirmacao(pedido.getSenhaConfirmacao())
-            .build()
-        );
-    }
-
 }

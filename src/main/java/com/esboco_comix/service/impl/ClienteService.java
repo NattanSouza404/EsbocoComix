@@ -75,7 +75,12 @@ public class ClienteService {
         Cliente c = pedido.getCliente();
         Cliente clienteInserido = clienteDAO.consultarHashSaltPorID(c.getId());
 
-        senhaValidador.validar(pedido);
+        senhaValidador.validar(
+            CadastrarClienteDTO.builder()
+                .senhaNova(pedido.getSenhaNova())
+                .senhaConfirmacao(pedido.getSenhaConfirmacao())
+            .build()
+        );
 
         String hashGuardado = clienteInserido.getHashSenha();
         String saltGuardado = clienteInserido.getSaltSenha();
