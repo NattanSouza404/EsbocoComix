@@ -55,7 +55,8 @@ public class PedidoService {
         pedido.setItensPedido(carrinho.esvaziar());
 
         for (ItemPedido item: pedido.getItensPedido()){
-            estoqueService.validarEstoque(item);
+            Estoque estoque = estoqueService.consultarEstoqueByIDQuadrinho(item.getIdQuadrinho());
+            estoque.validarRetirada(item);
 
             item.setPreco(quadrinhoService.consultarByID(item.getIdQuadrinho()).getPreco());
         }

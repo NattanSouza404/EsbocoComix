@@ -1,11 +1,19 @@
 package com.esboco_comix.model.entidades;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
+@Builder
 @Getter
-@Setter
 public class Estoque {
     private int idQuadrinho;
     private int quantidadeTotal;
+
+    public void validarRetirada(ItemPedido item){
+        if (quantidadeTotal < item.getQuantidade()) {
+            throw new IllegalArgumentException(
+                "Quantidade do item excede a quantidade disponível em estoque!"
+            );
+        }
+    }  
 }
