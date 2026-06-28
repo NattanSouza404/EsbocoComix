@@ -10,11 +10,10 @@ public class CategoriaMapper implements ResultSetMapper<Categoria, Categoria> {
 
     @Override
     public Categoria mapearEntidade(ResultSet rs) throws SQLException {
-        Categoria categoria = new Categoria();
-        categoria.setId(rs.getInt("cat_id"));
-        categoria.setNome(rs.getString("cat_nome"));
-
-        return categoria;
+        return Categoria.builder()
+            .id(rs.getInt("cat_id"))
+            .nome(rs.getString("cat_nome"))
+        .build();
     }
 
     @Override

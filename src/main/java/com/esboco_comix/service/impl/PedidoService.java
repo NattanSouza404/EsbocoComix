@@ -9,6 +9,7 @@ import com.esboco_comix.dto.AtualizarPedidoDTO;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoDTO;
 import com.esboco_comix.dto.PedidoPosVendaDTO;
+import com.esboco_comix.dto.QuadrinhoDTO;
 import com.esboco_comix.model.Carrinho;
 import com.esboco_comix.model.entidades.*;
 import com.esboco_comix.model.enuns.StatusPedido;
@@ -58,7 +59,8 @@ public class PedidoService {
             Estoque estoque = estoqueService.consultarEstoqueByIDQuadrinho(item.getIdQuadrinho());
             estoque.validarRetirada(item);
 
-            item.setPreco(quadrinhoService.consultarByID(item.getIdQuadrinho()).getPreco());
+            QuadrinhoDTO quadrinho = quadrinhoService.consultarByID(item.getIdQuadrinho());
+            item.alterarPreco(quadrinho.getPreco());
         }
 
         pedido.atualizarValorTotal();

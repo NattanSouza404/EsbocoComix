@@ -11,12 +11,12 @@ public class ItemPedidoMapper implements ResultSetMapper<ItemPedido, ItemPedidoD
     
     @Override
     public ItemPedido mapearEntidade(ResultSet rs) throws SQLException {
-        ItemPedido item = new ItemPedido();  
-        item.setIdPedido(rs.getInt("ite_ped_id"));
-        item.setIdQuadrinho(rs.getInt("ite_qua_id"));
-        item.setQuantidade(rs.getInt("ite_quantidade"));
-        item.setPreco(rs.getDouble("ite_valor_unitario"));
-        return item;
+        return ItemPedido.builder()
+            .idPedido(rs.getInt("ite_ped_id"))
+            .idQuadrinho(rs.getInt("ite_qua_id"))
+            .quantidade(rs.getInt("ite_quantidade"))
+            .preco(rs.getDouble("ite_valor_unitario"))
+        .build();
     }
 
     @Override

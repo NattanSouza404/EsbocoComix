@@ -87,10 +87,11 @@ public class PedidoPosVendaService {
 
             Cliente cliente = clienteService.consultarByIDPedido(pedidoPosVenda.getIdPedido());
 
-            ItemPedido item = new ItemPedido();
-            item.setIdPedido(pedidoPosVenda.getIdPedido());
-            item.setIdQuadrinho(pedidoPosVenda.getIdQuadrinho());
-            item.setQuantidade(pedidoPosVenda.getQuantidade());
+            ItemPedido item = ItemPedido.builder()
+                .idPedido(pedidoPosVenda.getIdPedido())
+                .idQuadrinho(pedidoPosVenda.getIdQuadrinho())
+                .quantidade(pedidoPosVenda.getQuantidade())
+            .build();
 
             cupomService.inserir(
                 Cupom.gerarCupomTroca(

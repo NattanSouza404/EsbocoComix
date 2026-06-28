@@ -2,7 +2,6 @@ package com.esboco_comix.dao.mapper.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import com.esboco_comix.dao.mapper.ResultSetMapper;
 import com.esboco_comix.dto.QuadrinhoDTO;
@@ -35,14 +34,13 @@ public class QuadrinhoMapper implements ResultSetMapper<Quadrinho, QuadrinhoDTO>
 
         q.setUrlImagem(rs.getString("qua_url_imagem"));
 
-        GrupoPrecificacao grupo = new GrupoPrecificacao();
-        grupo.setId(rs.getInt("qua_gpr_id"));
-        grupo.setNome(rs.getString("gpr_nome"));
-        grupo.setPorcentagem(rs.getInt("gpr_porcentagem"));
-
-        q.setGrupoPrecificacao(grupo);
-
-        q.setCategorias(new ArrayList<>());
+        q.setGrupoPrecificacao(
+            GrupoPrecificacao.builder()
+                .id(rs.getInt("qua_gpr_id"))
+                .nome(rs.getString("gpr_nome"))
+                .porcentagem(rs.getInt("gpr_porcentagem"))
+            .build()
+        );
 
         return q;
     }

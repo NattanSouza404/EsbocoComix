@@ -17,12 +17,10 @@ public class ItemCarrinhoDTO {
     private String urlImagem;
 
     public ItemPedido toItemPedido(){
-        ItemPedido item = new ItemPedido();
-        
-        item.setIdPedido(idPedido);
-        item.setIdQuadrinho(idQuadrinho);
-        item.setQuantidade(quantidade);
-
-        return item;
+        return ItemPedido.builder()
+            .idPedido(idPedido)
+            .idQuadrinho(idQuadrinho)
+            .quantidade(quantidade)
+        .build();
     }
 }

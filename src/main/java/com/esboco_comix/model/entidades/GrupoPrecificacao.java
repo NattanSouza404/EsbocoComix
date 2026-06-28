@@ -1,10 +1,10 @@
 package com.esboco_comix.model.entidades;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
+@Builder
 public class GrupoPrecificacao {
     private int id;
     private int porcentagem;
