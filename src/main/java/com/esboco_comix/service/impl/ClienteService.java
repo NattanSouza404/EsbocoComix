@@ -23,14 +23,14 @@ public class ClienteService {
     private final ClienteDTOMapper clienteMapper = new ClienteDTOMapper();
 
     public CadastrarClienteDTO inserir(CadastrarClienteDTO pedido) {
-        pedido.getCliente().validar();
-
         Senha senhaNova = new Senha(pedido.getSenhaNova());
         Senha senhaConfirmacao = new Senha(pedido.getSenhaConfirmacao());
 
         if (!(senhaNova.equals(senhaConfirmacao))){
             throw new IllegalArgumentException("Senha e senha de confirmação devem ser iguais!");
         }
+
+        pedido.getCliente().validar();
 
         for (Endereco e : pedido.getEnderecos()) {
             e.validar();
