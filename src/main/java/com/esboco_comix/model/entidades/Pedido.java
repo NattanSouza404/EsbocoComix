@@ -61,17 +61,8 @@ public class Pedido {
             throw new IllegalArgumentException("Cupom inválido para essa compra!");
         }
 
-        if (cupom.isPromocional()){
-            int quantCupomPromocionais = 0;
-            for (Cupom c : cuponsAplicados) {
-                if (c.isPromocional()) {
-                    quantCupomPromocionais += 1;
-                }
-            }
-
-            if (quantCupomPromocionais > 0) {
-                throw new IllegalArgumentException("Já existe um cupom promocional aplicado para esse pedido!");
-            }
+        if (cupom.isPromocional() && jaPossuiCupomPromocional()){         
+            throw new IllegalArgumentException("Já existe um cupom promocional aplicado para esse pedido!");
         }
 
         cuponsAplicados.add(cupom);
@@ -113,5 +104,14 @@ public class Pedido {
                 throw new IllegalArgumentException("Não é possível usar o mesmo cupom duas vezes no mesmo pedido!");
             }
         }
+    }
+
+    private boolean jaPossuiCupomPromocional() {
+        for (Cupom c : cuponsAplicados) {
+            if (c.isPromocional()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
