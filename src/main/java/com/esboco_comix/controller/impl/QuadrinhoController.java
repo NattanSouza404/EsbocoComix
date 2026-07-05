@@ -2,6 +2,7 @@ package com.esboco_comix.controller.impl;
 
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.controller.utils.Router;
+import com.esboco_comix.mapper.FiltrarQuadrinhoDTOMapper;
 import com.esboco_comix.service.impl.QuadrinhoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,6 +13,8 @@ import java.util.Map;
 public class QuadrinhoController extends AbstractController {
 
     private final QuadrinhoService quadrinhoService = new QuadrinhoService();
+
+    private final FiltrarQuadrinhoDTOMapper filtrarQuadrinhoDTOMapper = new FiltrarQuadrinhoDTOMapper();
 
     private final Router rotasGet = new Router(
         Map.of(
@@ -46,7 +49,9 @@ public class QuadrinhoController extends AbstractController {
     }
 
     private Object filtrar(HttpServletRequest req) throws Exception {
-        return quadrinhoService.filtrarTodos(req);
+        return quadrinhoService.filtrarTodos(
+            filtrarQuadrinhoDTOMapper.mapearToFiltrarQuadrinhoDTO(req)
+        );
     }
 
     private Object consultarCategorias(HttpServletRequest req) throws Exception {
