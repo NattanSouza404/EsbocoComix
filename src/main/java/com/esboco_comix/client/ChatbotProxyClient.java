@@ -1,4 +1,4 @@
-package com.esboco_comix.service.impl;
+package com.esboco_comix.client;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -12,7 +12,7 @@ import com.esboco_comix.utils.ConversorJson;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-public class ChatbotProxyService {
+public class ChatbotProxyClient {
 
     private final HttpClient client = HttpClient.newHttpClient();
 
@@ -28,7 +28,7 @@ public class ChatbotProxyService {
         "upgrade"
     );
 
-    public Object forwardJson(HttpServletRequest req) throws Exception {
+    public Object criarPrompt(HttpServletRequest req) throws Exception {
 
         String path = req.getServletPath();
         String url = ConfigController.CHATBOT_URL + path+"/get-message";
@@ -53,7 +53,6 @@ public class ChatbotProxyService {
         HttpResponse<String> response =
             client.send(builder.build(), HttpResponse.BodyHandlers.ofString());
 
-        // sempre JSON
         return ConversorJson.jsonToObject(response.body(), Object.class);
     }
 }

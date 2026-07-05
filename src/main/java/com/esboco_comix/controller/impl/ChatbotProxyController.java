@@ -3,16 +3,16 @@ package com.esboco_comix.controller.impl;
 import java.io.IOException;
 import java.util.Map;
 
+import com.esboco_comix.client.ChatbotProxyClient;
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.controller.utils.Router;
-import com.esboco_comix.service.impl.ChatbotProxyService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class ChatbotProxyController extends AbstractController {
 
-    private final ChatbotProxyService proxyService = new ChatbotProxyService();
+    private final ChatbotProxyClient service = new ChatbotProxyClient();
 
     private final Router rotasPost = new Router(
         Map.of(
@@ -31,7 +31,7 @@ public class ChatbotProxyController extends AbstractController {
     }
 
     private Object promptMensagem(HttpServletRequest req) throws Exception {
-        return proxyService.forwardJson(req);
+        return service.criarPrompt(req);
     }
 
 }
