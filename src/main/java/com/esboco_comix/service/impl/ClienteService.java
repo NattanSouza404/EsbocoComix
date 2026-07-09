@@ -84,30 +84,33 @@ public class ClienteService {
         return clienteDAO.atualizar(c);
     }
 
-    public Cliente atualizarSenha(AlterarSenhaDTO pedido) {
-        Cliente c = pedido.getCliente();
-        Cliente clienteInserido = clienteDAO.consultarHashSaltPorID(c.getId());
+    public Cliente atualizarSenha(AlterarSenhaDTO dto) {
+        Cliente cliente = clienteDAO.consultarHashSaltPorID(dto.getIdCliente());
 
-        Senha senhaNova = new Senha(pedido.getSenhaNova());
-        Senha senhaConfirmacao = new Senha(pedido.getSenhaConfirmacao());
+        Senha senhaNova = new Senha(dto.getSenhaNova());
+        Senha senhaConfirmacao = new Senha(dto.getSenhaConfirmacao());
 
         if (!(senhaNova.equals(senhaConfirmacao))){
-            throw new IllegalArgumentException("Senha e senha de confirmação devem ser iguais!");
+            throw new IllegalArgumentException(
+                "Senha e senha de confirmação devem ser iguais!"
+            );
         }
 
-        String hashGuardado = clienteInserido.getHashSenha();
-        String saltGuardado = clienteInserido.getSaltSenha();
+        String hashGuardado = cliente.getHashSenha();
+        String saltGuardado = cliente.getSaltSenha();
         String hashNovo = CriptografadorSenha.hashSenha(senhaNova, saltGuardado);
 
         if (!hashNovo.equals(hashGuardado)){
-            throw new IllegalArgumentException("Senha antiga não consta com senha inserida pelo usuário!");
+            throw new IllegalArgumentException(
+                "Senha antiga não consta com senha inserida pelo usuário!"
+            );
         }
 
         String saltSenha = CriptografadorSenha.generateSalt();
-        c.setHashSenha(CriptografadorSenha.hashSenha(senhaNova, saltSenha));
-        c.setSaltSenha(saltSenha);
+        cliente.setHashSenha(CriptografadorSenha.hashSenha(senhaNova, saltSenha));
+        cliente.setSaltSenha(saltSenha);
 
-        return clienteDAO.atualizarSenha(c);
+        return clienteDAO.atualizarSenha(cliente);
     }
 
     public Cliente atualizarStatusCadastro(Cliente c) {
