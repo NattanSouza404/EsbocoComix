@@ -1,14 +1,9 @@
 package com.esboco_comix.dto;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import lombok.Getter;
-import lombok.Setter;
+import com.esboco_comix.model.enuns.StatusPedido;
 
-@Getter
-@Setter
-public class AtualizarPedidoDTO {
-    @JsonUnwrapped
-    private PedidoDTO pedido;
-
-    private boolean retornarAoEstoque;
-}
+public record AtualizarPedidoDTO (
+    int id,
+    StatusPedido status,
+    boolean retornarAoEstoque
+) {}
