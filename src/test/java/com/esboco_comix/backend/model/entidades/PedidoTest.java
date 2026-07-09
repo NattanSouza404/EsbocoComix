@@ -11,8 +11,26 @@ import com.esboco_comix.model.entidades.CartaoCreditoPedido;
 import com.esboco_comix.model.entidades.Cupom;
 import com.esboco_comix.model.entidades.CupomPedido;
 import com.esboco_comix.model.entidades.Pedido;
+import com.esboco_comix.model.enuns.StatusPedido;
 
 public class PedidoTest {
+
+    @Test
+    public void validarAlterarStatus() {
+        Pedido pedido = new Pedido();
+        pedido.setStatus(StatusPedido.ENTREGUE);
+
+        pedido.alterarStatus(StatusPedido.TROCA_SOLICITADA);
+        pedido.alterarStatus(StatusPedido.TROCA_CONCLUIDA);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            pedido.alterarStatus(StatusPedido.DEVOLUCAO_SOLICITADA);
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            pedido.alterarStatus(StatusPedido.DEVOLUCAO_CONCLUIDA);
+        });
+    }
 
     @Test
     public void validarPedidoComFormaDePagamentoValida() {
