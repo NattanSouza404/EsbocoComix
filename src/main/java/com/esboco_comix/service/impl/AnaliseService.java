@@ -1,19 +1,17 @@
 package com.esboco_comix.service.impl;
 
 import com.esboco_comix.dao.impl.analise.AnaliseDAO;
-import com.esboco_comix.dto.ItemVendaDTO;
+import com.esboco_comix.dto.AnaliseDTO;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class AnaliseService {
     private final AnaliseDAO analiseDAO = new AnaliseDAO();
 
-    public Map<String, List<ItemVendaDTO>> retornarAnalise(LocalDateTime dataInicio, LocalDateTime dataFinal) {
-        Map<String, List<ItemVendaDTO>> analise = new HashMap<>();
-
+    public AnaliseDTO retornarAnalise(
+        LocalDateTime dataInicio,
+        LocalDateTime dataFinal
+    ) {
         if (dataInicio != null) {
             dataInicio = LocalDateTime.of(
                 dataInicio.getYear(),
@@ -35,10 +33,9 @@ public class AnaliseService {
                 59
             );
         }
-
-        analise.put("produtos", analiseDAO.consultarProdutos(dataInicio, dataFinal));
-        analise.put("categorias", analiseDAO.consultarCategorias(dataInicio, dataFinal));
-
-        return analise;
+        return AnaliseDTO.builder()
+            .produtos(analiseDAO.consultarProdutos(dataInicio, dataFinal))
+            .categorias(analiseDAO.consultarCategorias(dataInicio, dataFinal))
+        .build();
     }
 }
