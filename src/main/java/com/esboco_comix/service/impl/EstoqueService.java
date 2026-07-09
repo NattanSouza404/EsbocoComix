@@ -28,9 +28,12 @@ public class EstoqueService {
     public List<ItemPedidoDTO> retornarAoEstoque(PedidoDTO pedido) {
         List<ItemPedidoDTO> lista = new ArrayList<>();
 
-        for (ItemPedidoDTO item : pedido.getItensPedidoDTO()) {
-            retornarAoEstoque(item);
-            lista.add(item);
+        for (ItemPedido item : pedido.getPedido().getItensPedido()) {
+            ItemPedidoDTO dto = new ItemPedidoDTO();
+            dto.setItemPedido(item);
+            
+            retornarAoEstoque(dto);
+            lista.add(dto);
         }
 
         return lista;

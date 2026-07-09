@@ -103,12 +103,8 @@ public class PedidoService {
 		return pedidoDAO.consultarByID(id);
 	}
 
-    public Pedido atualizarStatus(AtualizarPedidoDTO atualizarPedidoDTO) {
-        Pedido pedido = atualizarPedidoDTO.getPedido().getPedido();
-        Pedido pedidoNoBanco = pedidoDAO.consultarByID(pedido.getId());
-
-        StatusPedido status = pedido.getStatus();
-        StatusPedido statusNoBanco = pedidoNoBanco.getStatus();
+    public Pedido atualizarStatus(AtualizarPedidoDTO dto) {
+        Pedido pedido = pedidoDAO.consultarByID(dto.id());
 
         List<PedidoPosVendaDTO> pedidosPosVenda = pedidoPosVendaDAO.consultarByIdPedido(pedido.getId());
 
@@ -116,17 +112,9 @@ public class PedidoService {
             throw new IllegalArgumentException("Esse pedido já possui item com pedido de troca/devolução!");
         }
 
-        if (statusNoBanco == StatusPedido.TROCA_CONCLUIDA || statusNoBanco == StatusPedido.DEVOLUCAO_CONCLUIDA){
-            throw new IllegalArgumentException("Não é possível alterar pedido com troca ou devolução já concluída!");
-        }
+        pedido.alterarStatus(dto.status());
 
-        if (status.equals(StatusPedido.TROCA_SOLICITADA) || status.equals(StatusPedido.DEVOLUCAO_SOLICITADA)){
-            if (!pedidoNoBanco.getStatus().equals(StatusPedido.ENTREGUE)){
-                throw new IllegalArgumentException("Não se pode pedir troca ou devolução se o pedido não foi entregue!");
-            }
-        }
-
-        if (status.equals(StatusPedido.TROCA_CONCLUIDA) || status.equals(StatusPedido.DEVOLUCAO_CONCLUIDA)){
+        if (pedido.comTrocaOuDevolucaoConcluida()){
             List<ItemPedidoDTO> itensPedidoDTO = itemPedidoDAO.consultarByIDPedido(pedido.getId());
             List<ItemPedido> itensPedido = new ArrayList<>();
             
@@ -143,10 +131,11 @@ public class PedidoService {
                 )
             );
 
-            if (atualizarPedidoDTO.isRetornarAoEstoque()) {
-                estoqueService.retornarAoEstoque(atualizarPedidoDTO.getPedido());
+            if (dto.retornarAoEstoque()) {
+                var pedidoDTO = new PedidoDTO();
+                pedidoDTO.setPedido(pedido);
+                estoqueService.retornarAoEstoque(pedidoDTO);
             }
-
         }
 
         return pedidoDAO.atualizarStatus(pedido);

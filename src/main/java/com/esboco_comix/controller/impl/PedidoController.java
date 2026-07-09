@@ -90,7 +90,8 @@ public class PedidoController extends AbstractController {
     }
 
     private Object atualizarStatus(HttpServletRequest req) throws Exception {
-        AtualizarPedidoDTO pedido = jsonToObject(req, AtualizarPedidoDTO.class);
-        return pedidoService.atualizarStatus(pedido);
+        return pedidoService.atualizarStatus(
+            jsonToObject(req, AtualizarPedidoDTO.class)
+        );
     }
 }

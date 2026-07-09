@@ -106,6 +106,28 @@ public class Pedido {
         }
     }
 
+    public void alterarStatus(StatusPedido novoStatus) {
+        if (status == StatusPedido.TROCA_CONCLUIDA || status == StatusPedido.DEVOLUCAO_CONCLUIDA){
+            throw new IllegalArgumentException(
+                "Não é possível alterar pedido com troca ou devolução já concluída!"
+            );
+        }
+
+        if (novoStatus.equals(StatusPedido.TROCA_SOLICITADA) || novoStatus.equals(StatusPedido.DEVOLUCAO_SOLICITADA)){
+            if (!status.equals(StatusPedido.ENTREGUE)){
+                throw new IllegalArgumentException(
+                    "Não se pode pedir troca ou devolução se o pedido não foi entregue!"
+                );
+            }
+        } 
+
+        this.status = novoStatus;
+    }
+
+    public boolean comTrocaOuDevolucaoConcluida(){
+        return status.equals(StatusPedido.TROCA_CONCLUIDA) || status.equals(StatusPedido.DEVOLUCAO_CONCLUIDA);
+    }
+
     private boolean jaPossuiCupomPromocional() {
         for (Cupom c : cuponsAplicados) {
             if (c.isPromocional()) {
