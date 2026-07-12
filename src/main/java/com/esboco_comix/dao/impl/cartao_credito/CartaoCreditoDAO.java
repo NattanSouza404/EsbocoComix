@@ -16,10 +16,17 @@ public class CartaoCreditoDAO {
     private final CartaoCreditoMapper cartaoCreditoMapper = new CartaoCreditoMapper();
 
     public CartaoCredito inserir(CartaoCredito c) {
-        try (
-            Connection connection = ConexaoFactory.getConexao();
+        try (Connection conn = ConexaoFactory.getConexao()) {
+            return atualizar(conn, c);
+        }
+        catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
 
-            PreparedStatement pst = connection.prepareStatement(
+    public CartaoCredito inserir(Connection conn, CartaoCredito c) {
+        try (
+            PreparedStatement pst = conn.prepareStatement(
                 """
                 INSERT INTO cartoes_credito(
                 cre_numero, cre_nome_impresso, cre_codigo_seguranca,
@@ -45,7 +52,7 @@ public class CartaoCreditoDAO {
             ResultSet rs = pst.getGeneratedKeys();
             CartaoCredito cartaoCreditoInserido = null;
             if (rs.next()){
-                cartaoCreditoInserido = consultarByID(rs.getInt(1));
+                cartaoCreditoInserido = consultarByID(conn,rs.getInt(1));
             }
 
             return cartaoCreditoInserido;
@@ -55,10 +62,17 @@ public class CartaoCreditoDAO {
     }
 
     public CartaoCredito consultarByID(int id) {
-        try (
-            Connection connection = ConexaoFactory.getConexao();
+        try (Connection conn = ConexaoFactory.getConexao()) {
+            return consultarByID(conn, id);
+        }
+        catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
 
-            PreparedStatement pst = connection.prepareStatement(
+    public CartaoCredito consultarByID(Connection conn, int id) {
+        try (
+            PreparedStatement pst = conn.prepareStatement(
                 """
                 SELECT
                     *
@@ -84,9 +98,16 @@ public class CartaoCreditoDAO {
     }
 
     public CartaoCredito atualizar(CartaoCredito c) {
+        try (Connection conn = ConexaoFactory.getConexao()) {
+            return atualizar(conn, c);
+        }
+        catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public CartaoCredito atualizar(Connection conn, CartaoCredito c) {
         try (
-            Connection conn = ConexaoFactory.getConexao(); 
-    
             PreparedStatement pst = conn.prepareStatement(
                 """
                     UPDATE cartoes_credito SET
@@ -113,7 +134,7 @@ public class CartaoCreditoDAO {
                 throw new IllegalStateException("Atualização não foi sucedida!");
             }
 
-            return consultarByID(c.getId());
+            return consultarByID(conn, c.getId());
         } catch (Exception e){
             throw new IllegalStateException(e);
         }

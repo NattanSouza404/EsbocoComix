@@ -17,11 +17,9 @@ public class ClienteDAO {
 
     private final ClienteMapper clienteMapper = new ClienteMapper();
 
-    public Cliente inserir(Cliente c) {
+    public Cliente inserir(Connection conn, Cliente c) {
         try (
-            Connection connection = ConexaoFactory.getConexao();
-
-            PreparedStatement pst = connection.prepareStatement(
+            PreparedStatement pst = conn.prepareStatement(
                 "INSERT INTO clientes("+
                     "cli_nome, cli_genero, cli_dt_nascimento, cli_cpf, cli_email, "+
                     "cli_hash_senha, cli_salt_senha, cli_ranking, "+
@@ -50,7 +48,7 @@ public class ClienteDAO {
             ResultSet rs = pst.getGeneratedKeys();
             Cliente clienteInserido = null;
             if (rs.next()){
-                clienteInserido = consultarByID(rs.getInt(1));
+                clienteInserido = consultarByID(conn, rs.getInt(1));
             }
 
             return clienteInserido;   
@@ -90,9 +88,17 @@ public class ClienteDAO {
 
     public Cliente consultarByID(int id) {
         try (
-            Connection connection = ConexaoFactory.getConexao();
+            Connection conn = ConexaoFactory.getConexao();
+        ){
+            return consultarByID(conn, id);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
 
-            PreparedStatement pst = connection.prepareStatement(
+    public Cliente consultarByID(Connection conn, int id) {
+        try (
+            PreparedStatement pst = conn.prepareStatement(
                 "SELECT * FROM clientes WHERE cli_id = ?;"
             )
         ) {

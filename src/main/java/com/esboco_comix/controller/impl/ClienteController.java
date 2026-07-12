@@ -3,6 +3,7 @@ package com.esboco_comix.controller.impl;
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.controller.utils.Router;
 import com.esboco_comix.dto.AlterarSenhaDTO;
+import com.esboco_comix.dto.AtualizarClienteDTO;
 import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.service.impl.ClienteService;
@@ -95,8 +96,9 @@ public class ClienteController extends AbstractController {
     }
 
     public Object atualizarCliente(HttpServletRequest req) throws Exception {
-        Cliente clienteToUpdate = jsonToObject(req, Cliente.class);
-        return clienteService.atualizar(clienteToUpdate);
+        return clienteService.atualizar(
+            jsonToObject(req, AtualizarClienteDTO.class)
+        );
     }
 
     public Object atualizarSenha(HttpServletRequest req) throws Exception {

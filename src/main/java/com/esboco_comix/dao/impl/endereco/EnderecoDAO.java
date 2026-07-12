@@ -18,8 +18,16 @@ public class EnderecoDAO {
     public Endereco inserir(Endereco e) {
         try (
             Connection connection = ConexaoFactory.getConexao();
+        ){
+            return inserir(connection, e);
+        } catch (Exception ex){
+            throw new IllegalStateException(ex);
+        } 
+    }
 
-            PreparedStatement pst = connection.prepareStatement(
+    public Endereco inserir(Connection conn, Endereco e) {
+        try (
+            PreparedStatement pst = conn.prepareStatement(
                 "INSERT INTO enderecos("+
                     "end_frase_curta, end_logradouro, end_tipo_logradouro, end_tipo_residencial, "+
                     "end_numero, end_bairro, end_cep, end_cidade, end_estado, end_pais, "+
@@ -50,7 +58,7 @@ public class EnderecoDAO {
             ResultSet rs = pst.getGeneratedKeys();
             Endereco enderecoInserido = null;
             if (rs.next()){
-                enderecoInserido = consultarByID(rs.getInt(1));
+                enderecoInserido = consultarByID(conn, rs.getInt(1));
             }
 
             return enderecoInserido;
@@ -60,10 +68,16 @@ public class EnderecoDAO {
     }
 
     public Endereco consultarByID(int id) {
-        try (
-            Connection connection = ConexaoFactory.getConexao();
+        try (Connection conn = ConexaoFactory.getConexao()) {
+            return consultarByID(conn, id);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
 
-            PreparedStatement pst = connection.prepareStatement(
+    public Endereco consultarByID(Connection conn, int id) {
+        try (
+            PreparedStatement pst = conn.prepareStatement(
                 "SELECT * FROM enderecos WHERE end_id = ?"
             );
         ){

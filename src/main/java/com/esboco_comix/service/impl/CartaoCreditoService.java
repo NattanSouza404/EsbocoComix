@@ -9,7 +9,6 @@ public class CartaoCreditoService {
     private CartaoCreditoDAO cartaoCreditoDAO = new CartaoCreditoDAO();
 
     public CartaoCredito inserir(CartaoCredito c) {
-        // TODO: ao inserir um cliente, acabamos verificando o cartão de crédito 2 vezes
         c.validar();
         return cartaoCreditoDAO.inserir(c);
     }

@@ -40,7 +40,15 @@ export class ModalAlterarDadosPessoais extends Modal {
         cliente.id = localStorage.getItem(localStorageKeys.idCliente);
 
         try {
-            await atualizarCliente(cliente);
+            await atualizarCliente({
+                cpf:	cliente.cpf,
+                dataNascimento:	cliente.dataNascimento,
+                email:	cliente.email,
+                genero:	cliente.genero,
+                id:	cliente.id,
+                nome:	cliente.nome,
+                telefone:	cliente.telefone,
+            });
             alert('Atualizado com sucesso!');
             window.location.reload();
         } catch (error){

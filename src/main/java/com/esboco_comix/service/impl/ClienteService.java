@@ -5,9 +5,13 @@ import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import com.esboco_comix.dao.impl.cartao_credito.CartaoCreditoDAO;
 import com.esboco_comix.dao.impl.cliente.ClienteDAO;
+import com.esboco_comix.dao.impl.endereco.EnderecoDAO;
+import com.esboco_comix.dao.transaction.TransactionExecutor;
 import com.esboco_comix.mapper.ClienteDTOMapper;
 import com.esboco_comix.dto.AlterarSenhaDTO;
+import com.esboco_comix.dto.AtualizarClienteDTO;
 import com.esboco_comix.dto.CadastrarClienteDTO;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Cliente;
@@ -17,8 +21,10 @@ import com.esboco_comix.utils.CriptografadorSenha;
 
 public class ClienteService {
     private final ClienteDAO clienteDAO = new ClienteDAO();
-    private final EnderecoService enderecoService = new EnderecoService();
-    private final CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
+    private final EnderecoDAO enderecoDAO = new EnderecoDAO();
+    private final CartaoCreditoDAO cartaoCreditoDAO = new CartaoCreditoDAO();
+
+    private final TransactionExecutor transactionManager = new TransactionExecutor();
 
     private final ClienteDTOMapper clienteMapper = new ClienteDTOMapper();
 
@@ -30,41 +36,39 @@ public class ClienteService {
             throw new IllegalArgumentException("Senha e senha de confirmação devem ser iguais!");
         }
 
-        pedido.getCliente().validar();
-
-        for (Endereco e : pedido.getEnderecos()) {
-            e.validar();
-        }
-
-        for (CartaoCredito c : pedido.getCartoesCredito()) {
-            c.validar();
-        }
+        String saltSenha = CriptografadorSenha.generateSalt();
 
         Cliente clienteToAdd = pedido.getCliente();
-        String saltSenha = CriptografadorSenha.generateSalt();
-        clienteToAdd.setHashSenha(CriptografadorSenha.hashSenha(new Senha(pedido.getSenhaNova()), saltSenha));
+        clienteToAdd.setHashSenha(
+            CriptografadorSenha.hashSenha(new Senha(pedido.getSenhaNova()), saltSenha)
+        );
         clienteToAdd.setSaltSenha(saltSenha);
         clienteToAdd.setRanking(0);
-        
-        Cliente clienteInserido = clienteDAO.inserir(pedido.getCliente());
+        clienteToAdd.validar();
 
-        List<Endereco> enderecosInseridos = new ArrayList<>();
-        for (Endereco e : pedido.getEnderecos()) {
-            e.setIdCliente(clienteInserido.getId());
-            enderecosInseridos.add(enderecoService.inserir(e));
-        }
+        return transactionManager.execute(conn -> {
+            Cliente clienteInserido = clienteDAO.inserir(conn, clienteToAdd);
 
-        List<CartaoCredito> cartoesCredito = new ArrayList<>();
-        for (CartaoCredito c: pedido.getCartoesCredito()){
-            c.setIdCliente(clienteInserido.getId());
-            cartoesCredito.add(cartaoCreditoService.inserir(c));
-        }
+            List<Endereco> enderecosInseridos = new ArrayList<>();
+            for (Endereco e : pedido.getEnderecos()) {
+                e.validar();
+                e.setIdCliente(clienteInserido.getId());
+                enderecosInseridos.add(enderecoDAO.inserir(conn, e));
+            }
 
-        return CadastrarClienteDTO.builder()
-            .cliente(clienteInserido)
-            .enderecos(enderecosInseridos)
-            .cartoesCredito(cartoesCredito)
-        .build();
+            List<CartaoCredito> cartoesCredito = new ArrayList<>();
+            for (CartaoCredito c: pedido.getCartoesCredito()){
+                c.validar();
+                c.setIdCliente(clienteInserido.getId());
+                cartoesCredito.add(cartaoCreditoDAO.inserir(conn, c));
+            }
+
+            return CadastrarClienteDTO.builder()
+                .cliente(clienteInserido)
+                .enderecos(enderecosInseridos)
+                .cartoesCredito(cartoesCredito)
+            .build();
+        });
     }
 
     public List<Cliente> consultarTodos() {
@@ -79,9 +83,10 @@ public class ClienteService {
         return clienteDAO.consultarByID(id);
     }
 
-    public Cliente atualizar(Cliente c) {
-        c.validar();
-        return clienteDAO.atualizar(c);
+    public Cliente atualizar(AtualizarClienteDTO c) {
+        Cliente clienteToUpdate = clienteMapper.mapearToCliente(c);
+        clienteToUpdate.validar();
+        return clienteDAO.atualizar(clienteToUpdate);
     }
 
     public Cliente atualizarSenha(AlterarSenhaDTO dto) {

@@ -2,8 +2,12 @@ package com.esboco_comix.mapper;
 
 import java.time.LocalDate;
 
+import com.esboco_comix.dto.AtualizarClienteDTO;
 import com.esboco_comix.dto.FiltrarClienteDTO;
+import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.enuns.Genero;
+import com.esboco_comix.model.value_objects.Cpf;
+import com.esboco_comix.model.value_objects.Email;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -47,5 +51,17 @@ public class ClienteDTOMapper {
         }
 
         return filtro;
+    }
+
+    public Cliente mapearToCliente(AtualizarClienteDTO dto) {
+        Cliente cliente = new Cliente();
+        cliente.setId(dto.id());
+        cliente.setNome(dto.nome());
+        cliente.setGenero(Genero.valueOf(dto.genero()));
+        cliente.setDataNascimento(LocalDate.parse(dto.dataNascimento()));
+        cliente.setCpf(new Cpf(dto.cpf()));
+        cliente.setEmail(new Email(dto.email()));
+        cliente.setTelefone(dto.telefone());
+        return cliente;
     }
 }
