@@ -10,10 +10,10 @@ public class EstoqueMapper implements ResultSetMapper<Estoque, Estoque> {
 
     @Override
     public Estoque mapearEntidade(ResultSet rs) throws SQLException {
-        return Estoque.builder()
-            .idQuadrinho(rs.getInt("est_qua_id"))
-            .quantidadeTotal(rs.getInt("est_quantidade_total"))
-        .build();
+        return new Estoque(
+            rs.getInt("id_quadrinho"),
+            rs.getInt("quantidade_total")
+        );
     }
 
     @Override
