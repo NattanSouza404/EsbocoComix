@@ -5,8 +5,8 @@ import com.esboco_comix.cliente.dto.AlterarSenhaDTO;
 import com.esboco_comix.cliente.dto.AtualizarClienteDTO;
 import com.esboco_comix.cliente.dto.CadastrarClienteDTO;
 import com.esboco_comix.cliente.service.ClienteService;
-import com.esboco_comix.core.controller.utils.AbstractController;
-import com.esboco_comix.core.controller.utils.Router;
+import com.esboco_comix.core.controller.AbstractController;
+import com.esboco_comix.core.routing.Router;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

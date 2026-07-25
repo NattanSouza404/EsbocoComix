@@ -16,8 +16,8 @@ import com.esboco_comix.cliente.dto.AlterarSenhaDTO;
 import com.esboco_comix.cliente.dto.AtualizarClienteDTO;
 import com.esboco_comix.cliente.dto.CadastrarClienteDTO;
 import com.esboco_comix.cliente.mapper.ClienteDTOMapper;
-import com.esboco_comix.core.dao.transaction.TransactionExecutor;
-import com.esboco_comix.core.utils.CriptografadorSenha;
+import com.esboco_comix.core.dao.TransactionExecutor;
+import com.esboco_comix.core.security.CriptografadorSenha;
 
 public class ClienteService {
     private final ClienteDAO clienteDAO = new ClienteDAO();

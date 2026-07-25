@@ -6,7 +6,7 @@ import com.esboco_comix.cliente.dominio.enuns.TipoTelefone;
 import com.esboco_comix.cliente.dominio.value_objects.Cpf;
 import com.esboco_comix.cliente.dominio.value_objects.Email;
 import com.esboco_comix.cliente.dominio.value_objects.Telefone;
-import com.esboco_comix.core.dao.mapper.ResultSetMapper;
+import com.esboco_comix.core.dao.ResultSetMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -2,7 +2,7 @@ package com.esboco_comix.core.controller.impl;
 
 import java.io.IOException;
 
-import com.esboco_comix.core.controller.utils.AbstractController;
+import com.esboco_comix.core.controller.AbstractController;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

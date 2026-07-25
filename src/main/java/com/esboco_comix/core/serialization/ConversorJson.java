@@ -1,4 +1,4 @@
-package com.esboco_comix.core.utils;
+package com.esboco_comix.core.serialization;
 
 import java.io.IOException;
 

@@ -3,8 +3,8 @@ package com.esboco_comix.integracao.controller;
 import java.io.IOException;
 import java.util.Map;
 
-import com.esboco_comix.core.controller.utils.AbstractController;
-import com.esboco_comix.core.controller.utils.Router;
+import com.esboco_comix.core.controller.AbstractController;
+import com.esboco_comix.core.routing.Router;
 import com.esboco_comix.integracao.client.ChatbotProxyClient;
 
 import jakarta.servlet.http.HttpServletRequest;

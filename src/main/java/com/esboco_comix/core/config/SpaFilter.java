@@ -1,4 +1,4 @@
-package com.esboco_comix.core.controller.utils;
+package com.esboco_comix.core.config;
 
 import java.io.IOException;
 

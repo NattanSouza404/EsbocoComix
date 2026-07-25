@@ -4,8 +4,8 @@ import com.esboco_comix.carrinho.dominio.Carrinho;
 import com.esboco_comix.carrinho.dominio.ItemCarrinhoDTO;
 import com.esboco_comix.carrinho.service.CarrinhoService;
 import com.esboco_comix.carrinho.sessao.SessaoService;
-import com.esboco_comix.core.controller.utils.AbstractController;
-import com.esboco_comix.core.controller.utils.Router;
+import com.esboco_comix.core.controller.AbstractController;
+import com.esboco_comix.core.routing.Router;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

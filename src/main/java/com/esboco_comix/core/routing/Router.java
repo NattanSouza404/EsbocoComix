@@ -1,8 +1,9 @@
-package com.esboco_comix.core.controller.utils;
+package com.esboco_comix.core.routing;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -17,5 +18,10 @@ public class Router {
         }
 
         return handler;
+    }
+
+    @FunctionalInterface
+    public interface RouteHandler {
+        Object handle(HttpServletRequest request) throws Exception;
     }
 }

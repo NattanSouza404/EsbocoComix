@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.esboco_comix.cliente.dominio.entidades.Cliente;
 import com.esboco_comix.cliente.dto.FiltrarClienteDTO;
-import com.esboco_comix.core.utils.ConexaoFactory;
+import com.esboco_comix.core.dao.ConexaoFactory;
 
 public class ClienteDAO {
 

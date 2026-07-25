@@ -1,7 +1,7 @@
 package com.esboco_comix.quadrinho.controller;
 
-import com.esboco_comix.core.controller.utils.AbstractController;
-import com.esboco_comix.core.controller.utils.Router;
+import com.esboco_comix.core.controller.AbstractController;
+import com.esboco_comix.core.routing.Router;
 import com.esboco_comix.quadrinho.mapper.FiltrarQuadrinhoDTOMapper;
 import com.esboco_comix.quadrinho.service.QuadrinhoService;
 

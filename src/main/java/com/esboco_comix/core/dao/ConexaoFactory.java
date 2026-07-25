@@ -1,4 +1,4 @@
-package com.esboco_comix.core.utils;
+package com.esboco_comix.core.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

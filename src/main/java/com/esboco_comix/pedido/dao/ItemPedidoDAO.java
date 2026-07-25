@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.core.utils.ConexaoFactory;
+import com.esboco_comix.core.dao.ConexaoFactory;
 import com.esboco_comix.pedido.dominio.ItemPedido;
 import com.esboco_comix.pedido.dto.ItemPedidoDTO;
 

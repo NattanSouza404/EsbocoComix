@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.esboco_comix.core.config.ConfigController;
-import com.esboco_comix.core.utils.ConversorJson;
+import com.esboco_comix.core.serialization.ConversorJson;
 
 import jakarta.servlet.http.HttpServletRequest;
 

@@ -1,6 +1,6 @@
 package com.esboco_comix.pedido.dao;
 
-import com.esboco_comix.core.utils.ConexaoFactory;
+import com.esboco_comix.core.dao.ConexaoFactory;
 import com.esboco_comix.pedido.dominio.PedidoPosVenda;
 import com.esboco_comix.pedido.dto.PedidoPosVendaDTO;
 

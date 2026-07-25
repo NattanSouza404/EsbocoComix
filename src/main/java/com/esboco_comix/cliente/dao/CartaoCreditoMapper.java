@@ -2,7 +2,7 @@ package com.esboco_comix.cliente.dao;
 
 import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
 import com.esboco_comix.cliente.dominio.enuns.BandeiraCartao;
-import com.esboco_comix.core.dao.mapper.ResultSetMapper;
+import com.esboco_comix.core.dao.ResultSetMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

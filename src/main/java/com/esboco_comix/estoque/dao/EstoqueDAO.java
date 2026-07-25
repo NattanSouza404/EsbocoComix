@@ -8,7 +8,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.core.utils.ConexaoFactory;
+import com.esboco_comix.core.dao.ConexaoFactory;
 import com.esboco_comix.estoque.dominio.EntradaEstoque;
 import com.esboco_comix.estoque.dominio.Estoque;
 import com.esboco_comix.estoque.dto.EntradaEstoqueDTO;

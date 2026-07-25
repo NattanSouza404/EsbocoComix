@@ -1,6 +1,6 @@
 package com.esboco_comix.pedido.dao;
 
-import com.esboco_comix.core.dao.mapper.ResultSetMapper;
+import com.esboco_comix.core.dao.ResultSetMapper;
 import com.esboco_comix.pedido.dominio.CupomPedido;
 
 import java.sql.ResultSet;

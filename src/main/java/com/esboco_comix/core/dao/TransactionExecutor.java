@@ -1,8 +1,6 @@
-package com.esboco_comix.core.dao.transaction;
+package com.esboco_comix.core.dao;
 
 import java.sql.Connection;
-
-import com.esboco_comix.core.utils.ConexaoFactory;
 
 public class TransactionExecutor {
 

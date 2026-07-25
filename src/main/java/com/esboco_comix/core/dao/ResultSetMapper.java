@@ -1,4 +1,4 @@
-package com.esboco_comix.core.dao.mapper;
+package com.esboco_comix.core.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

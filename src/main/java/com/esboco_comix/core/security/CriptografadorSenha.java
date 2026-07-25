@@ -1,4 +1,4 @@
-package com.esboco_comix.core.utils;
+package com.esboco_comix.core.security;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;

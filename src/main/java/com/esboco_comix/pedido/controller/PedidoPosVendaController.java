@@ -1,7 +1,7 @@
 package com.esboco_comix.pedido.controller;
 
-import com.esboco_comix.core.controller.utils.AbstractController;
-import com.esboco_comix.core.controller.utils.Router;
+import com.esboco_comix.core.controller.AbstractController;
+import com.esboco_comix.core.routing.Router;
 import com.esboco_comix.pedido.dominio.PedidoPosVenda;
 import com.esboco_comix.pedido.dto.AtualizarPedidoPosVendaDTO;
 import com.esboco_comix.pedido.service.PedidoPosVendaService;

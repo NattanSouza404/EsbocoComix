@@ -1,7 +1,7 @@
 package com.esboco_comix.estoque.controller;
 
-import com.esboco_comix.core.controller.utils.AbstractController;
-import com.esboco_comix.core.controller.utils.Router;
+import com.esboco_comix.core.controller.AbstractController;
+import com.esboco_comix.core.routing.Router;
 import com.esboco_comix.estoque.dominio.EntradaEstoque;
 import com.esboco_comix.estoque.service.EstoqueService;
 
