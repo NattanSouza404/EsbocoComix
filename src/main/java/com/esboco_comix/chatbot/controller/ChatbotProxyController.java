@@ -1,9 +1,9 @@
-package com.esboco_comix.controller.impl;
+package com.esboco_comix.chatbot.controller;
 
 import java.io.IOException;
 import java.util.Map;
 
-import com.esboco_comix.client.ChatbotProxyClient;
+import com.esboco_comix.chatbot.client.ChatbotProxyClient;
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.controller.utils.Router;
 

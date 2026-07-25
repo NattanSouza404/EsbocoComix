@@ -1,4 +1,4 @@
-package com.esboco_comix.client;
+package com.esboco_comix.chatbot.client;
 
 import java.net.URI;
 import java.net.http.HttpClient;
