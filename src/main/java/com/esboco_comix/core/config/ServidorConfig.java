@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.esboco_comix.analise.controller.AnaliseController;
 import com.esboco_comix.carrinho.controller.CarrinhoController;
-import com.esboco_comix.chatbot.controller.ChatbotProxyController;
 import com.esboco_comix.cliente.controller.CartaoCreditoController;
 import com.esboco_comix.cliente.controller.ClienteController;
 import com.esboco_comix.cliente.controller.EnderecoController;
@@ -13,6 +12,7 @@ import com.esboco_comix.core.controller.impl.*;
 import com.esboco_comix.core.controller.utils.SpaFilter;
 import com.esboco_comix.cupom.controller.CupomController;
 import com.esboco_comix.estoque.controller.EstoqueController;
+import com.esboco_comix.integracao.controller.ChatbotProxyController;
 import com.esboco_comix.pedido.controller.PedidoController;
 import com.esboco_comix.pedido.controller.PedidoPosVendaController;
 import com.esboco_comix.quadrinho.controller.QuadrinhoController;
