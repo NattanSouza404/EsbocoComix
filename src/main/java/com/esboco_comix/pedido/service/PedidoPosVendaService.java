@@ -1,9 +1,10 @@
 package com.esboco_comix.pedido.service;
 
+import com.esboco_comix.cliente.dominio.entidades.Cliente;
+import com.esboco_comix.cliente.service.ClienteService;
 import com.esboco_comix.cupom.dominio.Cupom;
 import com.esboco_comix.cupom.service.CupomService;
 import com.esboco_comix.estoque.service.EstoqueService;
-import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.pedido.dao.ItemPedidoDAO;
 import com.esboco_comix.pedido.dao.PedidoPosVendaDAO;
 import com.esboco_comix.pedido.dominio.ItemPedido;
@@ -14,7 +15,6 @@ import com.esboco_comix.pedido.dominio.enuns.StatusPedido;
 import com.esboco_comix.pedido.dto.AtualizarPedidoPosVendaDTO;
 import com.esboco_comix.pedido.dto.ItemPedidoDTO;
 import com.esboco_comix.pedido.dto.PedidoPosVendaDTO;
-import com.esboco_comix.service.impl.ClienteService;
 
 import java.util.List;
 

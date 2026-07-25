@@ -2,7 +2,7 @@ package com.esboco_comix.pedido.dto;
 
 import java.util.List;
 
-import com.esboco_comix.model.entidades.Endereco;
+import com.esboco_comix.cliente.dominio.entidades.Endereco;
 import com.esboco_comix.pedido.dominio.CartaoCreditoPedido;
 import com.esboco_comix.pedido.dominio.CupomPedido;
 

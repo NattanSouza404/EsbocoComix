@@ -8,8 +8,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import com.esboco_comix.model.enuns.TipoTelefone;
-import com.esboco_comix.model.value_objects.Telefone;
+import com.esboco_comix.cliente.dominio.enuns.TipoTelefone;
+import com.esboco_comix.cliente.dominio.value_objects.Telefone;
 
 public class TelefoneTest {
 

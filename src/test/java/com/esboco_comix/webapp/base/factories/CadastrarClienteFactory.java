@@ -1,6 +1,6 @@
 package com.esboco_comix.webapp.base.factories;
 
-import com.esboco_comix.dto.CadastrarClienteDTO;
+import com.esboco_comix.cliente.dto.CadastrarClienteDTO;
 
 public class CadastrarClienteFactory {
 

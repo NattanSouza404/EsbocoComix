@@ -8,7 +8,7 @@ import java.util.Base64;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-import com.esboco_comix.model.value_objects.Senha;
+import com.esboco_comix.cliente.dominio.value_objects.Senha;
 
 public class CriptografadorSenha {
 

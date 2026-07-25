@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.esboco_comix.cliente.dominio.entidades.Endereco;
 import com.esboco_comix.cupom.dominio.Cupom;
-import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.pedido.dominio.enuns.StatusPedido;
 
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.esboco_comix.webapp.casos_de_uso;
 
-import com.esboco_comix.dto.FiltrarClienteDTO;
+import com.esboco_comix.cliente.dto.FiltrarClienteDTO;
 import com.esboco_comix.webapp.paginas.admin.clientes.PaginaClientes;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;

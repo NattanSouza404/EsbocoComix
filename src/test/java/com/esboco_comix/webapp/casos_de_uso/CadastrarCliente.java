@@ -1,8 +1,8 @@
 package com.esboco_comix.webapp.casos_de_uso;
 
-import com.esboco_comix.dto.AlterarSenhaDTO;
-import com.esboco_comix.dto.CadastrarClienteDTO;
-import com.esboco_comix.model.entidades.Cliente;
+import com.esboco_comix.cliente.dominio.entidades.Cliente;
+import com.esboco_comix.cliente.dto.AlterarSenhaDTO;
+import com.esboco_comix.cliente.dto.CadastrarClienteDTO;
 import com.esboco_comix.webapp.paginas.admin.clientes.PaginaClientes;
 import com.esboco_comix.webapp.paginas.cliente.cadastrar.PaginaCadastrar;
 import com.esboco_comix.webapp.paginas.cliente.conta.ModaisConta;

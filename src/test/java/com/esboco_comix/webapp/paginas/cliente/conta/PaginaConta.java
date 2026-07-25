@@ -1,7 +1,7 @@
 package com.esboco_comix.webapp.paginas.cliente.conta;
 
-import com.esboco_comix.model.entidades.CartaoCredito;
-import com.esboco_comix.model.entidades.Endereco;
+import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
+import com.esboco_comix.cliente.dominio.entidades.Endereco;
 import com.esboco_comix.webapp.base.AbstractPagina;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;

@@ -1,6 +1,6 @@
 package com.esboco_comix.webapp.paginas.admin.clientes;
 
-import com.esboco_comix.dto.FiltrarClienteDTO;
+import com.esboco_comix.cliente.dto.FiltrarClienteDTO;
 import com.esboco_comix.webapp.base.AbstractPagina;
 
 import java.util.List;

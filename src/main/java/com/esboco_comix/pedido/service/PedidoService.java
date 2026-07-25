@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.carrinho.dominio.Carrinho;
+import com.esboco_comix.cliente.dominio.entidades.*;
+import com.esboco_comix.cliente.service.CartaoCreditoService;
 import com.esboco_comix.cupom.dominio.Cupom;
 import com.esboco_comix.cupom.service.CupomService;
 import com.esboco_comix.estoque.dominio.Estoque;
 import com.esboco_comix.estoque.service.EstoqueService;
-import com.esboco_comix.model.entidades.*;
 import com.esboco_comix.pedido.dao.CartaoCreditoPedidoDAO;
 import com.esboco_comix.pedido.dao.CupomPedidoDAO;
 import com.esboco_comix.pedido.dao.ItemPedidoDAO;
@@ -25,7 +26,6 @@ import com.esboco_comix.pedido.dto.PedidoDTO;
 import com.esboco_comix.pedido.dto.PedidoPosVendaDTO;
 import com.esboco_comix.quadrinho.dto.QuadrinhoDTO;
 import com.esboco_comix.quadrinho.service.QuadrinhoService;
-import com.esboco_comix.service.impl.CartaoCreditoService;
 
 public class PedidoService {
 

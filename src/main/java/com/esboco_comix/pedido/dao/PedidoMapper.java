@@ -4,9 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.esboco_comix.cliente.dominio.entidades.Endereco;
+import com.esboco_comix.cliente.dominio.value_objects.Cep;
 import com.esboco_comix.dao.mapper.ResultSetMapper;
-import com.esboco_comix.model.entidades.Endereco;
-import com.esboco_comix.model.value_objects.Cep;
 import com.esboco_comix.pedido.dominio.Pedido;
 import com.esboco_comix.pedido.dominio.enuns.StatusPedido;
 import com.esboco_comix.pedido.dto.PedidoDTO;

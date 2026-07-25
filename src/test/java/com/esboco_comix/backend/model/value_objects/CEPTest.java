@@ -8,7 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import com.esboco_comix.model.value_objects.Cep;
+import com.esboco_comix.cliente.dominio.value_objects.Cep;
 
 public class CEPTest {
 
