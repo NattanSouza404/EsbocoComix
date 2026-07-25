@@ -9,6 +9,7 @@ import com.esboco_comix.chatbot.controller.ChatbotProxyController;
 import com.esboco_comix.controller.impl.*;
 import com.esboco_comix.controller.utils.SpaFilter;
 import com.esboco_comix.estoque.controller.EstoqueController;
+import com.esboco_comix.quadrinho.controller.QuadrinhoController;
 
 import jakarta.servlet.http.HttpServlet;
 import org.apache.catalina.Context;

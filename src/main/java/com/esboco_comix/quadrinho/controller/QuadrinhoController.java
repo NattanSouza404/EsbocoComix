@@ -1,9 +1,10 @@
-package com.esboco_comix.controller.impl;
+package com.esboco_comix.quadrinho.controller;
 
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.controller.utils.Router;
-import com.esboco_comix.mapper.FiltrarQuadrinhoDTOMapper;
-import com.esboco_comix.service.impl.QuadrinhoService;
+import com.esboco_comix.quadrinho.mapper.FiltrarQuadrinhoDTOMapper;
+import com.esboco_comix.quadrinho.service.QuadrinhoService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

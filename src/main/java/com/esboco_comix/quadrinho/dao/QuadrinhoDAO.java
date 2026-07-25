@@ -1,4 +1,4 @@
-package com.esboco_comix.dao.impl.quadrinho;
+package com.esboco_comix.quadrinho.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,11 +6,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.dao.mapper.impl.CategoriaMapper;
-import com.esboco_comix.dao.mapper.impl.QuadrinhoMapper;
-import com.esboco_comix.dto.FiltrarQuadrinhoDTO;
-import com.esboco_comix.dto.QuadrinhoDTO;
-import com.esboco_comix.model.entidades.Categoria;
+import com.esboco_comix.quadrinho.dominio.Categoria;
+import com.esboco_comix.quadrinho.dto.FiltrarQuadrinhoDTO;
+import com.esboco_comix.quadrinho.dto.QuadrinhoDTO;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class QuadrinhoDAO {

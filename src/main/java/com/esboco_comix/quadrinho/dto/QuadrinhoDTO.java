@@ -1,6 +1,6 @@
-package com.esboco_comix.dto;
+package com.esboco_comix.quadrinho.dto;
 
-import com.esboco_comix.model.entidades.Quadrinho;
+import com.esboco_comix.quadrinho.dominio.Quadrinho;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 import lombok.Getter;

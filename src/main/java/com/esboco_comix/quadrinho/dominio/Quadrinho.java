@@ -1,4 +1,4 @@
-package com.esboco_comix.model.entidades;
+package com.esboco_comix.quadrinho.dominio;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

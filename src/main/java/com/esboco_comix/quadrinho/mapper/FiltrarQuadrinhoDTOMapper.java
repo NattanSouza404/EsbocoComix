@@ -1,9 +1,9 @@
-package com.esboco_comix.mapper;
+package com.esboco_comix.quadrinho.mapper;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 
-import com.esboco_comix.dto.FiltrarQuadrinhoDTO;
+import com.esboco_comix.quadrinho.dto.FiltrarQuadrinhoDTO;
 
 import jakarta.servlet.http.HttpServletRequest;
 

@@ -1,12 +1,12 @@
-package com.esboco_comix.dao.mapper.impl;
+package com.esboco_comix.quadrinho.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.esboco_comix.dao.mapper.ResultSetMapper;
-import com.esboco_comix.dto.QuadrinhoDTO;
-import com.esboco_comix.model.entidades.GrupoPrecificacao;
-import com.esboco_comix.model.entidades.Quadrinho;
+import com.esboco_comix.quadrinho.dominio.GrupoPrecificacao;
+import com.esboco_comix.quadrinho.dominio.Quadrinho;
+import com.esboco_comix.quadrinho.dto.QuadrinhoDTO;
 
 public class QuadrinhoMapper implements ResultSetMapper<Quadrinho, QuadrinhoDTO> {
 

@@ -1,7 +1,7 @@
-package com.esboco_comix.mapper;
+package com.esboco_comix.quadrinho.mapper;
 
-import com.esboco_comix.dto.CategoriaDTO;
-import com.esboco_comix.model.entidades.Categoria;
+import com.esboco_comix.quadrinho.dominio.Categoria;
+import com.esboco_comix.quadrinho.dto.CategoriaDTO;
 
 public class CategoriaMapper {
 

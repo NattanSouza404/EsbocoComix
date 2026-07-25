@@ -1,4 +1,4 @@
-package com.esboco_comix.dto;
+package com.esboco_comix.quadrinho.dto;
 
 import java.time.LocalDate;
 import java.util.List;

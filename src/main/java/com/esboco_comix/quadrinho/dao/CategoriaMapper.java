@@ -1,10 +1,10 @@
-package com.esboco_comix.dao.mapper.impl;
+package com.esboco_comix.quadrinho.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.esboco_comix.dao.mapper.ResultSetMapper;
-import com.esboco_comix.model.entidades.Categoria;
+import com.esboco_comix.quadrinho.dominio.Categoria;
 
 public class CategoriaMapper implements ResultSetMapper<Categoria, Categoria> {
 

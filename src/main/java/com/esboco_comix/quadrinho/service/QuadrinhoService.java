@@ -1,13 +1,13 @@
-package com.esboco_comix.service.impl;
+package com.esboco_comix.quadrinho.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.esboco_comix.dao.impl.quadrinho.QuadrinhoDAO;
-import com.esboco_comix.dto.CategoriaDTO;
-import com.esboco_comix.dto.FiltrarQuadrinhoDTO;
-import com.esboco_comix.dto.QuadrinhoDTO;
-import com.esboco_comix.mapper.CategoriaMapper;
+import com.esboco_comix.quadrinho.dao.QuadrinhoDAO;
+import com.esboco_comix.quadrinho.dto.CategoriaDTO;
+import com.esboco_comix.quadrinho.dto.FiltrarQuadrinhoDTO;
+import com.esboco_comix.quadrinho.dto.QuadrinhoDTO;
+import com.esboco_comix.quadrinho.mapper.CategoriaMapper;
 
 public class QuadrinhoService {
 

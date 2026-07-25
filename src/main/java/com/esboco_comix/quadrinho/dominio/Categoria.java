@@ -1,12 +1,11 @@
-package com.esboco_comix.model.entidades;
+package com.esboco_comix.quadrinho.dominio;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
-public class GrupoPrecificacao {
+public class Categoria {
     private int id;
-    private int porcentagem;
     private String nome;
 }

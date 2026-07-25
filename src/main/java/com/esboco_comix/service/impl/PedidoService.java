@@ -10,11 +10,12 @@ import com.esboco_comix.dto.AtualizarPedidoDTO;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoDTO;
 import com.esboco_comix.dto.PedidoPosVendaDTO;
-import com.esboco_comix.dto.QuadrinhoDTO;
 import com.esboco_comix.estoque.dominio.Estoque;
 import com.esboco_comix.estoque.service.EstoqueService;
 import com.esboco_comix.model.entidades.*;
 import com.esboco_comix.model.enuns.StatusPedido;
+import com.esboco_comix.quadrinho.dto.QuadrinhoDTO;
+import com.esboco_comix.quadrinho.service.QuadrinhoService;
 
 public class PedidoService {
 
