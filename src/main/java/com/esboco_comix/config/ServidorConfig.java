@@ -3,6 +3,8 @@ package com.esboco_comix.config;
 import java.io.File;
 import java.util.Map;
 
+import com.esboco_comix.analise.controller.AnaliseController;
+import com.esboco_comix.carrinho.controller.CarrinhoController;
 import com.esboco_comix.controller.impl.*;
 import com.esboco_comix.controller.utils.SpaFilter;
 

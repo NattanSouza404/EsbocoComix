@@ -1,9 +1,8 @@
-package com.esboco_comix.model;
+package com.esboco_comix.carrinho.dominio;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.dto.ItemCarrinhoDTO;
 import com.esboco_comix.model.entidades.ItemPedido;
 
 import lombok.Getter;

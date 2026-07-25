@@ -1,11 +1,11 @@
-package com.esboco_comix.controller.impl;
+package com.esboco_comix.carrinho.controller;
 
+import com.esboco_comix.carrinho.dominio.Carrinho;
+import com.esboco_comix.carrinho.dominio.ItemCarrinhoDTO;
+import com.esboco_comix.carrinho.service.CarrinhoService;
+import com.esboco_comix.carrinho.sessao.SessaoService;
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.controller.utils.Router;
-import com.esboco_comix.dto.ItemCarrinhoDTO;
-import com.esboco_comix.model.Carrinho;
-import com.esboco_comix.service.impl.CarrinhoService;
-import com.esboco_comix.sessao.SessaoService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

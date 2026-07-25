@@ -1,8 +1,9 @@
-package com.esboco_comix.controller.impl;
+package com.esboco_comix.analise.controller;
 
+import com.esboco_comix.analise.service.AnaliseService;
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.controller.utils.Router;
-import com.esboco_comix.service.impl.AnaliseService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

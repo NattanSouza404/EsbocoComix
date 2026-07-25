@@ -1,7 +1,7 @@
-package com.esboco_comix.service.impl;
+package com.esboco_comix.carrinho.service;
 
-import com.esboco_comix.dto.ItemCarrinhoDTO;
-import com.esboco_comix.model.Carrinho;
+import com.esboco_comix.carrinho.dominio.Carrinho;
+import com.esboco_comix.carrinho.dominio.ItemCarrinhoDTO;
 
 public class CarrinhoService {
 

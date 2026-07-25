@@ -1,6 +1,6 @@
-package com.esboco_comix.sessao;
+package com.esboco_comix.carrinho.sessao;
 
-import com.esboco_comix.model.Carrinho;
+import com.esboco_comix.carrinho.dominio.Carrinho;
 
 import jakarta.servlet.http.HttpSession;
 

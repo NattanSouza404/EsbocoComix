@@ -1,4 +1,4 @@
-package com.esboco_comix.dao.impl.analise;
+package com.esboco_comix.analise.dao;
 
 import com.esboco_comix.dto.ItemVendaDTO;
 import com.esboco_comix.utils.ConexaoFactory;

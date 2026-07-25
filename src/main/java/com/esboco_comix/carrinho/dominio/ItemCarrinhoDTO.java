@@ -1,4 +1,4 @@
-package com.esboco_comix.dto;
+package com.esboco_comix.carrinho.dominio;
 
 import com.esboco_comix.model.entidades.ItemPedido;
 

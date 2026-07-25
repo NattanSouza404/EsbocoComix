@@ -1,7 +1,7 @@
-package com.esboco_comix.service.impl;
+package com.esboco_comix.analise.service;
 
-import com.esboco_comix.dao.impl.analise.AnaliseDAO;
-import com.esboco_comix.dto.AnaliseDTO;
+import com.esboco_comix.analise.dao.AnaliseDAO;
+import com.esboco_comix.analise.dto.AnaliseDTO;
 
 import java.time.LocalDateTime;
 

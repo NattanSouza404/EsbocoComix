@@ -3,6 +3,7 @@ package com.esboco_comix.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.carrinho.dominio.Carrinho;
 import com.esboco_comix.dao.impl.pedido.*;
 import com.esboco_comix.dto.AtualizarPedidoDTO;
 
@@ -10,7 +11,6 @@ import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoDTO;
 import com.esboco_comix.dto.PedidoPosVendaDTO;
 import com.esboco_comix.dto.QuadrinhoDTO;
-import com.esboco_comix.model.Carrinho;
 import com.esboco_comix.model.entidades.*;
 import com.esboco_comix.model.enuns.StatusPedido;
 
