@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.carrinho.dominio.Carrinho;
+import com.esboco_comix.cupom.dominio.Cupom;
+import com.esboco_comix.cupom.service.CupomService;
 import com.esboco_comix.dao.impl.pedido.*;
 import com.esboco_comix.dto.AtualizarPedidoDTO;
 

@@ -1,4 +1,4 @@
-package com.esboco_comix.dao.impl.cupom;
+package com.esboco_comix.cupom.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.dao.mapper.impl.CupomMapper;
-import com.esboco_comix.model.entidades.Cupom;
+import com.esboco_comix.cupom.dominio.Cupom;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class CupomDAO {

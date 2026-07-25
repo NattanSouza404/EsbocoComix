@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import com.esboco_comix.model.entidades.Cupom;
+import com.esboco_comix.cupom.dominio.Cupom;
 
 public class CupomTest {
     

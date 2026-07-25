@@ -1,4 +1,4 @@
-package com.esboco_comix.dao.mapper.impl;
+package com.esboco_comix.dao.impl.pedido;
 
 import com.esboco_comix.dao.mapper.ResultSetMapper;
 import com.esboco_comix.model.entidades.CupomPedido;

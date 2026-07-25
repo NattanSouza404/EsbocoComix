@@ -1,7 +1,7 @@
-package com.esboco_comix.dao.mapper.impl;
+package com.esboco_comix.cupom.dao;
 
+import com.esboco_comix.cupom.dominio.Cupom;
 import com.esboco_comix.dao.mapper.ResultSetMapper;
-import com.esboco_comix.model.entidades.Cupom;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

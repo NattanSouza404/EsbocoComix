@@ -1,5 +1,7 @@
 package com.esboco_comix.service.impl;
 
+import com.esboco_comix.cupom.dominio.Cupom;
+import com.esboco_comix.cupom.service.CupomService;
 import com.esboco_comix.dao.impl.pedido.ItemPedidoDAO;
 import com.esboco_comix.dao.impl.pedido.PedidoPosVendaDAO;
 import com.esboco_comix.dto.AtualizarPedidoPosVendaDTO;
@@ -7,7 +9,6 @@ import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoPosVendaDTO;
 import com.esboco_comix.estoque.service.EstoqueService;
 import com.esboco_comix.model.entidades.Cliente;
-import com.esboco_comix.model.entidades.Cupom;
 import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.model.entidades.PedidoPosVenda;

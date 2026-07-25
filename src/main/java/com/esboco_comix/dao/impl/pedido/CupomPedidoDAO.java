@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import com.esboco_comix.dao.mapper.impl.CupomPedidoMapper;
 import com.esboco_comix.model.entidades.CupomPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 

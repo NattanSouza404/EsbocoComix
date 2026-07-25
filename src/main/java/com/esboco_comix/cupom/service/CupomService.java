@@ -1,9 +1,9 @@
-package com.esboco_comix.service.impl;
+package com.esboco_comix.cupom.service;
 
 import java.util.List;
 
-import com.esboco_comix.dao.impl.cupom.CupomDAO;
-import com.esboco_comix.model.entidades.Cupom;
+import com.esboco_comix.cupom.dao.CupomDAO;
+import com.esboco_comix.cupom.dominio.Cupom;
 
 public class CupomService {
 

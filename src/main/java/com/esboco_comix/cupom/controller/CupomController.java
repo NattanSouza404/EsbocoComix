@@ -1,9 +1,10 @@
-package com.esboco_comix.controller.impl;
+package com.esboco_comix.cupom.controller;
 
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.controller.utils.Router;
-import com.esboco_comix.model.entidades.Cupom;
-import com.esboco_comix.service.impl.CupomService;
+import com.esboco_comix.cupom.dominio.Cupom;
+import com.esboco_comix.cupom.service.CupomService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
