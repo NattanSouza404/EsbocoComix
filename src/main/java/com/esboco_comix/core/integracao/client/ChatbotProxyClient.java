@@ -1,4 +1,4 @@
-package com.esboco_comix.integracao.client;
+package com.esboco_comix.core.integracao.client;
 
 import java.net.URI;
 import java.net.http.HttpClient;
