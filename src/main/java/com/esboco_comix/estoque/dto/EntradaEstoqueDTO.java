@@ -1,6 +1,6 @@
-package com.esboco_comix.dto;
+package com.esboco_comix.estoque.dto;
 
-import com.esboco_comix.model.entidades.EntradaEstoque;
+import com.esboco_comix.estoque.dominio.EntradaEstoque;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 import lombok.Getter;

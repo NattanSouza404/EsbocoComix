@@ -5,6 +5,7 @@ import com.esboco_comix.dao.impl.pedido.PedidoPosVendaDAO;
 import com.esboco_comix.dto.AtualizarPedidoPosVendaDTO;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoPosVendaDTO;
+import com.esboco_comix.estoque.service.EstoqueService;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Cupom;
 import com.esboco_comix.model.entidades.ItemPedido;

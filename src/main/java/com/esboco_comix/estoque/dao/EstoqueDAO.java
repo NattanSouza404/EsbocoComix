@@ -1,4 +1,4 @@
-package com.esboco_comix.dao.impl.quadrinho;
+package com.esboco_comix.estoque.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -8,11 +8,9 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.dao.mapper.impl.EntradaEstoqueMapper;
-import com.esboco_comix.dao.mapper.impl.EstoqueMapper;
-import com.esboco_comix.dto.EntradaEstoqueDTO;
-import com.esboco_comix.model.entidades.EntradaEstoque;
-import com.esboco_comix.model.entidades.Estoque;
+import com.esboco_comix.estoque.dominio.EntradaEstoque;
+import com.esboco_comix.estoque.dominio.Estoque;
+import com.esboco_comix.estoque.dto.EntradaEstoqueDTO;
 import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 

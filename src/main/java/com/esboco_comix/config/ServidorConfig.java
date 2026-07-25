@@ -8,6 +8,7 @@ import com.esboco_comix.carrinho.controller.CarrinhoController;
 import com.esboco_comix.chatbot.controller.ChatbotProxyController;
 import com.esboco_comix.controller.impl.*;
 import com.esboco_comix.controller.utils.SpaFilter;
+import com.esboco_comix.estoque.controller.EstoqueController;
 
 import jakarta.servlet.http.HttpServlet;
 import org.apache.catalina.Context;

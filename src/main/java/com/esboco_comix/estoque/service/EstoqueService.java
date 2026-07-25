@@ -1,14 +1,14 @@
-package com.esboco_comix.service.impl;
+package com.esboco_comix.estoque.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.dao.impl.quadrinho.EstoqueDAO;
-import com.esboco_comix.dto.EntradaEstoqueDTO;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoDTO;
-import com.esboco_comix.model.entidades.EntradaEstoque;
-import com.esboco_comix.model.entidades.Estoque;
+import com.esboco_comix.estoque.dao.EstoqueDAO;
+import com.esboco_comix.estoque.dominio.EntradaEstoque;
+import com.esboco_comix.estoque.dominio.Estoque;
+import com.esboco_comix.estoque.dto.EntradaEstoqueDTO;
 import com.esboco_comix.model.entidades.ItemPedido;
 
 public class EstoqueService {

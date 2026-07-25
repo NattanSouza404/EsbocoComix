@@ -1,7 +1,7 @@
-package com.esboco_comix.dao.mapper.impl;
+package com.esboco_comix.estoque.dao;
 
 import com.esboco_comix.dao.mapper.ResultSetMapper;
-import com.esboco_comix.model.entidades.Estoque;
+import com.esboco_comix.estoque.dominio.Estoque;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -1,9 +1,10 @@
-package com.esboco_comix.controller.impl;
+package com.esboco_comix.estoque.controller;
 
 import com.esboco_comix.controller.utils.AbstractController;
 import com.esboco_comix.controller.utils.Router;
-import com.esboco_comix.model.entidades.EntradaEstoque;
-import com.esboco_comix.service.impl.EstoqueService;
+import com.esboco_comix.estoque.dominio.EntradaEstoque;
+import com.esboco_comix.estoque.service.EstoqueService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
