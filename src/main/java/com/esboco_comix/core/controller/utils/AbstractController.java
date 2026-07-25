@@ -1,10 +1,10 @@
-package com.esboco_comix.controller.utils;
+package com.esboco_comix.core.controller.utils;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.esboco_comix.utils.ConversorJson;
+import com.esboco_comix.core.utils.ConversorJson;
 
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

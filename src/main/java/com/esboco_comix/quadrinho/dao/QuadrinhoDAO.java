@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.core.utils.ConexaoFactory;
 import com.esboco_comix.quadrinho.dominio.Categoria;
 import com.esboco_comix.quadrinho.dto.FiltrarQuadrinhoDTO;
 import com.esboco_comix.quadrinho.dto.QuadrinhoDTO;
-import com.esboco_comix.utils.ConexaoFactory;
 
 public class QuadrinhoDAO {
 

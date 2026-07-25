@@ -1,8 +1,8 @@
-package com.esboco_comix.controller.impl;
+package com.esboco_comix.core.controller.impl;
 
 import java.io.IOException;
 
-import com.esboco_comix.controller.utils.AbstractController;
+import com.esboco_comix.core.controller.utils.AbstractController;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

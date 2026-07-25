@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import com.esboco_comix.core.utils.ConexaoFactory;
 import com.esboco_comix.pedido.dominio.CartaoCreditoPedido;
-import com.esboco_comix.utils.ConexaoFactory;
 
 public class CartaoCreditoPedidoDAO {
 

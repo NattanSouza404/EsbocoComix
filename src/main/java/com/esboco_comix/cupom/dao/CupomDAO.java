@@ -7,8 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.core.utils.ConexaoFactory;
 import com.esboco_comix.cupom.dominio.Cupom;
-import com.esboco_comix.utils.ConexaoFactory;
 
 public class CupomDAO {
 

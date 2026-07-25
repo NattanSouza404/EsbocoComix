@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
-import com.esboco_comix.utils.ConexaoFactory;
+import com.esboco_comix.core.utils.ConexaoFactory;
 
 public class CartaoCreditoDAO {
 

@@ -2,8 +2,8 @@ package com.esboco_comix.cliente.controller;
 
 import com.esboco_comix.cliente.dominio.entidades.Endereco;
 import com.esboco_comix.cliente.service.EnderecoService;
-import com.esboco_comix.controller.utils.AbstractController;
-import com.esboco_comix.controller.utils.Router;
+import com.esboco_comix.core.controller.utils.AbstractController;
+import com.esboco_comix.core.controller.utils.Router;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

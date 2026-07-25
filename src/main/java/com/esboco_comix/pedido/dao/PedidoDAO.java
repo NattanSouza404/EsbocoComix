@@ -4,9 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esboco_comix.core.utils.ConexaoFactory;
 import com.esboco_comix.pedido.dominio.Pedido;
 import com.esboco_comix.pedido.dto.PedidoDTO;
-import com.esboco_comix.utils.ConexaoFactory;
 
 public class PedidoDAO {
 

@@ -1,4 +1,4 @@
-package com.esboco_comix.config;
+package com.esboco_comix.core.config;
 
 import java.io.IOException;
 import java.io.InputStream;

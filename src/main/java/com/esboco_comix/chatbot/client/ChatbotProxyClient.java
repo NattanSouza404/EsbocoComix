@@ -7,8 +7,8 @@ import java.net.http.HttpResponse;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.esboco_comix.config.ConfigController;
-import com.esboco_comix.utils.ConversorJson;
+import com.esboco_comix.core.config.ConfigController;
+import com.esboco_comix.core.utils.ConversorJson;
 
 import jakarta.servlet.http.HttpServletRequest;
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esboco_comix.cliente.dominio.entidades.Endereco;
-import com.esboco_comix.utils.ConexaoFactory;
+import com.esboco_comix.core.utils.ConexaoFactory;
 
 public class EnderecoDAO {
 

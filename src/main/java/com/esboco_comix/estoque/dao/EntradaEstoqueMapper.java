@@ -1,6 +1,6 @@
 package com.esboco_comix.estoque.dao;
 
-import com.esboco_comix.dao.mapper.ResultSetMapper;
+import com.esboco_comix.core.dao.mapper.ResultSetMapper;
 import com.esboco_comix.estoque.dominio.EntradaEstoque;
 import com.esboco_comix.estoque.dto.EntradaEstoqueDTO;
 

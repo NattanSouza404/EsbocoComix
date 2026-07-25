@@ -1,8 +1,8 @@
 package com.esboco_comix.pedido.dao;
 
+import com.esboco_comix.core.utils.ConexaoFactory;
 import com.esboco_comix.pedido.dominio.PedidoPosVenda;
 import com.esboco_comix.pedido.dto.PedidoPosVendaDTO;
-import com.esboco_comix.utils.ConexaoFactory;
 
 import java.sql.*;
 import java.util.ArrayList;

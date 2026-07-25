@@ -1,10 +1,10 @@
-package com.esboco_comix.utils;
+package com.esboco_comix.core.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.esboco_comix.config.BancoConfig;
+import com.esboco_comix.core.config.BancoConfig;
 
 public class ConexaoFactory {
 

@@ -4,7 +4,7 @@ import com.esboco_comix.cliente.dominio.entidades.Endereco;
 import com.esboco_comix.cliente.dominio.enuns.TipoLogradouro;
 import com.esboco_comix.cliente.dominio.enuns.TipoResidencial;
 import com.esboco_comix.cliente.dominio.value_objects.Cep;
-import com.esboco_comix.dao.mapper.ResultSetMapper;
+import com.esboco_comix.core.dao.mapper.ResultSetMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

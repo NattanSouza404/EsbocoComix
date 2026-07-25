@@ -1,4 +1,4 @@
-package com.esboco_comix.controller.utils;
+package com.esboco_comix.core.controller.utils;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
