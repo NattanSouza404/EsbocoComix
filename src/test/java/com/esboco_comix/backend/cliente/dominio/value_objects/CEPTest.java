@@ -1,4 +1,4 @@
-package com.esboco_comix.backend.model.value_objects;
+package com.esboco_comix.backend.cliente.dominio.value_objects;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

@@ -1,4 +1,4 @@
-package com.esboco_comix.backend.model.entidades;
+package com.esboco_comix.backend.pedido.dominio;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
