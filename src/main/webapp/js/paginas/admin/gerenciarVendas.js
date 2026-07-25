@@ -60,16 +60,19 @@ async function confirmarAtualizarStatusPedido(pedido, status){
             return;
         }
 
-        pedido.status = status;
-        pedido.retornarAoEstoque = false;
+        let retornarAoEstoque = false;
 
-        if (['TROCA_CONCLUIDA', 'DEVOLUCAO_CONCLUIDA'].includes(pedido.status)){
+        if (['TROCA_CONCLUIDA', 'DEVOLUCAO_CONCLUIDA'].includes(status)){
             if (confirm('Deseja retornar os itens para o estoque?')){
-                pedido.retornarAoEstoque = true;
+                retornarAoEstoque = true;
             }
         }
 
-        await atualizarStatusPedido(pedido);
+        await atualizarStatusPedido({
+            id: pedido.id,
+            status: status,
+            retornarAoEstoque: retornarAoEstoque
+        });
         alert("Atualizado com sucesso!");
     } catch (error){
         alertarErro(error);

@@ -8,6 +8,8 @@ import java.util.Base64;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+import com.esboco_comix.model.value_objects.Senha;
+
 public class CriptografadorSenha {
 
     private CriptografadorSenha(){}
@@ -16,10 +18,10 @@ public class CriptografadorSenha {
     private static final int TAMANHO_HASH_EM_BITS = 256;
     private static final String ALGORITMO = "PBKDF2WithHmacSHA512";
 
-    public static String hashSenha(String senha, String salt) {
+    public static String hashSenha(Senha senha, String salt) {
         try {
             PBEKeySpec pbeKeySpec = new PBEKeySpec(
-                senha.toCharArray(), salt.getBytes(),
+                senha.valor().toCharArray(), salt.getBytes(),
                 ITERACOES, TAMANHO_HASH_EM_BITS
             );
 

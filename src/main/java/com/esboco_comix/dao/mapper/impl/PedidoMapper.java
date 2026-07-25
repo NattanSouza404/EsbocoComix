@@ -9,6 +9,7 @@ import com.esboco_comix.dto.PedidoDTO;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.model.enuns.StatusPedido;
+import com.esboco_comix.model.value_objects.Cep;
 
 public class PedidoMapper implements ResultSetMapper<Pedido, PedidoDTO> {
 
@@ -26,7 +27,7 @@ public class PedidoMapper implements ResultSetMapper<Pedido, PedidoDTO> {
         endereco.setCidade(rs.getString("end_cidade"));
         endereco.setEstado(rs.getString("end_estado"));
         endereco.setPais(rs.getString("end_pais"));
-        endereco.setCep(rs.getString("end_cep"));
+        endereco.setCep(new Cep(rs.getString("end_cep")));
         pedido.setEnderecoEntrega(endereco);
 
         pedido.setValorFrete(rs.getDouble("ped_valor_frete"));

@@ -3,6 +3,7 @@ package com.esboco_comix.webapp.base.factories;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.model.enuns.TipoLogradouro;
 import com.esboco_comix.model.enuns.TipoResidencial;
+import com.esboco_comix.model.value_objects.Cep;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class EnderecoTesteFactory {
         e.setIsResidencial(true);
         
         e.setNumero("23");
-        e.setCep("22222222");
+        e.setCep(new Cep("22222222"));
         e.setBairro("Brilhante");
         e.setCidade("Ficticialândia");
         e.setEstado("SP");

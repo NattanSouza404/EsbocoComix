@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -31,7 +32,7 @@ public class Quadrinho {
 
     private String urlImagem;
 
-    private List<Categoria> categorias;
+    private List<Categoria> categorias = new ArrayList<>();
 
     private GrupoPrecificacao grupoPrecificacao;
 }

@@ -6,13 +6,12 @@ import com.esboco_comix.dto.AtualizarPedidoPosVendaDTO;
 import com.esboco_comix.dto.ItemPedidoDTO;
 import com.esboco_comix.dto.PedidoPosVendaDTO;
 import com.esboco_comix.model.entidades.Cliente;
+import com.esboco_comix.model.entidades.Cupom;
 import com.esboco_comix.model.entidades.ItemPedido;
 import com.esboco_comix.model.entidades.Pedido;
 import com.esboco_comix.model.entidades.PedidoPosVenda;
 import com.esboco_comix.model.enuns.StatusItemPedido;
 import com.esboco_comix.model.enuns.StatusPedido;
-import com.esboco_comix.service.impl.pedido.CalculadoraPedido;
-import com.esboco_comix.service.impl.pedido.PedidoService;
 
 import java.util.List;
 
@@ -88,15 +87,17 @@ public class PedidoPosVendaService {
 
             Cliente cliente = clienteService.consultarByIDPedido(pedidoPosVenda.getIdPedido());
 
-            ItemPedido item = new ItemPedido();
-            item.setIdPedido(pedidoPosVenda.getIdPedido());
-            item.setIdQuadrinho(pedidoPosVenda.getIdQuadrinho());
-            item.setQuantidade(pedidoPosVenda.getQuantidade());
+            ItemPedido item = ItemPedido.builder()
+                .idPedido(pedidoPosVenda.getIdPedido())
+                .idQuadrinho(pedidoPosVenda.getIdQuadrinho())
+                .quantidade(pedidoPosVenda.getQuantidade())
+            .build();
 
-            cupomService.gerarCupomTroca(
-                cliente.getId(),
-                new CalculadoraPedido(cupomService, new QuadrinhoService(), 
-                new CartaoCreditoService()).calcularItemPedido(item)
+            cupomService.inserir(
+                Cupom.gerarCupomTroca(
+                    cliente.getId(),
+                    item.calcularValor()
+                )
             );
 
             ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO();

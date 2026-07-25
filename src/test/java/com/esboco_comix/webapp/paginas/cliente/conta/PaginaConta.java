@@ -141,7 +141,7 @@ public class PaginaConta extends AbstractPagina {
         preencherInputModal(modal, "cidade", e.getCidade());
         preencherInputModal(modal, "estado", e.getEstado());
         preencherInputModal(modal, "pais", e.getPais());
-        preencherInputModal(modal, "cep", e.getCep());
+        preencherInputModal(modal, "cep", e.getCep().valor());
         preencherInputModal(modal, "observacoes", e.getObservacoes());
         preencherInputModal(modal, "logradouro", e.getLogradouro());
         preencherInputSelectModal(modal, "tipoLogradouro", e.getTipoLogradouro().name());

@@ -16,9 +16,7 @@ public class EstoqueService {
     private final EstoqueDAO estoqueDAO = new EstoqueDAO();
 
     public EntradaEstoque inserir(EntradaEstoque entradaEstoque) {
-        if (entradaEstoque.getQuantidade() <= 0){
-            throw new IllegalArgumentException("Entrada no estoque deve ser maior que 0!");
-        }
+        entradaEstoque.validar();
 
         return estoqueDAO.inserir(entradaEstoque);
     }
@@ -30,9 +28,12 @@ public class EstoqueService {
     public List<ItemPedidoDTO> retornarAoEstoque(PedidoDTO pedido) {
         List<ItemPedidoDTO> lista = new ArrayList<>();
 
-        for (ItemPedidoDTO item : pedido.getItensPedidoDTO()) {
-            retornarAoEstoque(item);
-            lista.add(item);
+        for (ItemPedido item : pedido.getPedido().getItensPedido()) {
+            ItemPedidoDTO dto = new ItemPedidoDTO();
+            dto.setItemPedido(item);
+            
+            retornarAoEstoque(dto);
+            lista.add(dto);
         }
 
         return lista;
@@ -44,15 +45,6 @@ public class EstoqueService {
 
     public Estoque consultarEstoqueByIDQuadrinho(int idQuadrinho) {
         return estoqueDAO.consultarEstoqueByIDQuadrinho(idQuadrinho);
-    }
-
-    public void validarEstoque(ItemPedido item) {
-        Estoque estoque = consultarEstoqueByIDQuadrinho(item.getIdQuadrinho());
-
-        int estoqueAtualizado = estoque.getQuantidadeTotal() - item.getQuantidade();
-        if (estoqueAtualizado < 0){
-            throw new IllegalArgumentException("Quantidade do item excede a quantidade no estoque!");
-        }
     }
 
     public List<EntradaEstoqueDTO> consultarEntradasEstoque() {

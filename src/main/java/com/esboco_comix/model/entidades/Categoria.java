@@ -1,10 +1,10 @@
 package com.esboco_comix.model.entidades;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
+@Builder
 public class Categoria {
     private int id;
     private String nome;

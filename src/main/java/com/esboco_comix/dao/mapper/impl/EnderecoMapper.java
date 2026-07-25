@@ -4,6 +4,7 @@ import com.esboco_comix.dao.mapper.ResultSetMapper;
 import com.esboco_comix.model.entidades.Endereco;
 import com.esboco_comix.model.enuns.TipoLogradouro;
 import com.esboco_comix.model.enuns.TipoResidencial;
+import com.esboco_comix.model.value_objects.Cep;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ public class EnderecoMapper implements ResultSetMapper<Endereco, Endereco> {
         e.setTipoResidencial(TipoResidencial.valueOf(rs.getString("end_tipo_residencial")));
         e.setNumero(rs.getString("end_numero"));
         e.setBairro(rs.getString("end_bairro"));
-        e.setCep(rs.getString("end_cep"));
+        e.setCep(new Cep(rs.getString("end_cep")));
         e.setCidade(rs.getString("end_cidade"));
         e.setEstado(rs.getString("end_estado"));
         e.setPais(rs.getString("end_pais"));

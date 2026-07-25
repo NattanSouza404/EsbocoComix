@@ -1,38 +1,49 @@
 package com.esboco_comix.service.impl;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import com.esboco_comix.dao.impl.cliente.ClienteDAO;
+import com.esboco_comix.mapper.ClienteDTOMapper;
 import com.esboco_comix.dto.AlterarSenhaDTO;
 import com.esboco_comix.dto.CadastrarClienteDTO;
-import com.esboco_comix.dto.FiltrarClienteDTO;
 import com.esboco_comix.model.entidades.CartaoCredito;
 import com.esboco_comix.model.entidades.Cliente;
 import com.esboco_comix.model.entidades.Endereco;
-import com.esboco_comix.model.enuns.Genero;
+import com.esboco_comix.model.value_objects.Senha;
 import com.esboco_comix.utils.CriptografadorSenha;
-import com.esboco_comix.validador.impl.CadastrarClienteValidador;
-import com.esboco_comix.validador.impl.cliente.ClienteValidador;
-import com.esboco_comix.validador.impl.cliente.SenhaValidador;
 
 public class ClienteService {
     private final ClienteDAO clienteDAO = new ClienteDAO();
     private final EnderecoService enderecoService = new EnderecoService();
     private final CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
-    private final SenhaValidador senhaValidador = new SenhaValidador();
 
-    private final ClienteValidador clienteValidador = new ClienteValidador();
-    private final CadastrarClienteValidador cadastrarClienteValidador = new CadastrarClienteValidador();
+    private final ClienteDTOMapper clienteMapper = new ClienteDTOMapper();
 
     public CadastrarClienteDTO inserir(CadastrarClienteDTO pedido) {
-        cadastrarClienteValidador.validar(pedido);
+        Senha senhaNova = new Senha(pedido.getSenhaNova());
+        Senha senhaConfirmacao = new Senha(pedido.getSenhaConfirmacao());
+
+        if (!(senhaNova.equals(senhaConfirmacao))){
+            throw new IllegalArgumentException("Senha e senha de confirmação devem ser iguais!");
+        }
+
+        pedido.getCliente().validar();
+
+        for (Endereco e : pedido.getEnderecos()) {
+            e.validar();
+        }
+
+        for (CartaoCredito c : pedido.getCartoesCredito()) {
+            c.validar();
+        }
 
         Cliente clienteToAdd = pedido.getCliente();
-        inserirNovoHash(clienteToAdd, pedido.getSenhaNova());
+        String saltSenha = CriptografadorSenha.generateSalt();
+        clienteToAdd.setHashSenha(CriptografadorSenha.hashSenha(new Senha(pedido.getSenhaNova()), saltSenha));
+        clienteToAdd.setSaltSenha(saltSenha);
         clienteToAdd.setRanking(0);
         
         Cliente clienteInserido = clienteDAO.inserir(pedido.getCliente());
@@ -61,7 +72,7 @@ public class ClienteService {
     }
 
     public List<Cliente> consultarTodos(HttpServletRequest req) {
-        return clienteDAO.consultarTodos(mapearToFiltrarClienteDTO(req));
+        return clienteDAO.consultarTodos(clienteMapper.mapearToFiltrarClienteDTO(req));
     }
 
     public Cliente consultarByID(int id) {
@@ -69,23 +80,37 @@ public class ClienteService {
     }
 
     public Cliente atualizar(Cliente c) {
-        clienteValidador.validar(c);
+        c.validar();
         return clienteDAO.atualizar(c);
     }
 
-    public Cliente atualizarSenha(AlterarSenhaDTO pedido) {
-        Cliente c = pedido.getCliente();
-        Cliente clienteInserido = clienteDAO.consultarHashSaltPorID(c.getId());
+    public Cliente atualizarSenha(AlterarSenhaDTO dto) {
+        Cliente cliente = clienteDAO.consultarHashSaltPorID(dto.getIdCliente());
 
-        senhaValidador.validar(pedido);
+        Senha senhaNova = new Senha(dto.getSenhaNova());
+        Senha senhaConfirmacao = new Senha(dto.getSenhaConfirmacao());
 
-        String hashGuardado = clienteInserido.getHashSenha();
-        String saltGuardado = clienteInserido.getSaltSenha();
+        if (!(senhaNova.equals(senhaConfirmacao))){
+            throw new IllegalArgumentException(
+                "Senha e senha de confirmação devem ser iguais!"
+            );
+        }
 
-        senhaValidador.validarSenhaAntiga(pedido.getSenhaNova(), hashGuardado, saltGuardado);
+        String hashGuardado = cliente.getHashSenha();
+        String saltGuardado = cliente.getSaltSenha();
+        String hashNovo = CriptografadorSenha.hashSenha(senhaNova, saltGuardado);
 
-        inserirNovoHash(c, pedido.getSenhaNova());
-        return clienteDAO.atualizarSenha(c);
+        if (!hashNovo.equals(hashGuardado)){
+            throw new IllegalArgumentException(
+                "Senha antiga não consta com senha inserida pelo usuário!"
+            );
+        }
+
+        String saltSenha = CriptografadorSenha.generateSalt();
+        cliente.setHashSenha(CriptografadorSenha.hashSenha(senhaNova, saltSenha));
+        cliente.setSaltSenha(saltSenha);
+
+        return clienteDAO.atualizarSenha(cliente);
     }
 
     public Cliente atualizarStatusCadastro(Cliente c) {
@@ -94,53 +119,6 @@ public class ClienteService {
 
     public Cliente consultarByIDPedido(int idPedido) {
         return clienteDAO.consultarByIDPedido(idPedido);
-    }
-
-    private void inserirNovoHash(Cliente c, String senhaNova) {
-        String saltSenha = CriptografadorSenha.generateSalt();
-        c.setHashSenha(CriptografadorSenha.hashSenha(senhaNova, saltSenha));
-        c.setSaltSenha(saltSenha);
-    }
-
-    private FiltrarClienteDTO mapearToFiltrarClienteDTO(HttpServletRequest req) {
-        FiltrarClienteDTO filtro = new FiltrarClienteDTO();
-        
-        String nome = req.getParameter("nome");
-        if (!nome.isBlank()){
-            filtro.setNome(nome);
-        }
-
-        String cpf = req.getParameter("cpf");
-        if (!cpf.isBlank()){
-            filtro.setCpf(cpf);
-        }
-
-        String dataNascimento = req.getParameter("dataNascimento");
-        if (!dataNascimento.isBlank()){
-            filtro.setDataNascimento(LocalDate.parse(dataNascimento));
-        }
-
-        String genero = req.getParameter("genero");
-        if (!genero.isBlank()){
-            filtro.setGenero(Genero.valueOf(genero));
-        }
-
-        String email = req.getParameter("email");
-        if (!email.isBlank()){
-            filtro.setEmail(email);
-        }
-
-        String ranking = req.getParameter("ranking");
-        if (!ranking.isBlank()){
-            filtro.setRanking(Integer.parseInt(ranking));
-        }
-
-        String isAtivo = req.getParameter("isAtivo");
-        if (!isAtivo.isBlank()){
-            filtro.setIsAtivo(Boolean.valueOf(isAtivo));
-        }
-
-        return filtro;
     }
 
 }

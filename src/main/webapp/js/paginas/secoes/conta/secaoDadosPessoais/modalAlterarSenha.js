@@ -33,17 +33,13 @@ export class ModalAlterarSenha extends Modal {
 
         const formData = new FormData(form);
 
-        const pedidoAlterarSenha = {
-            cliente: {
-                id: cliente.id
-            },
-            "senhaAntiga": formData.get('senhaAntiga'),
-            "senhaNova": formData.get('senhaNova'),
-            "senhaConfirmacao": formData.get('senhaConfirmacao')
-        };
-
         try {
-            await atualizarSenha(pedidoAlterarSenha);
+            await atualizarSenha({
+                idCliente: cliente.id,
+                senhaAntiga: formData.get('senhaAntiga'),
+                senhaNova: formData.get('senhaNova'),
+                senhaConfirmacao: formData.get('senhaConfirmacao')
+            });
             alert('Atualizado com sucesso!');
             window.location.reload();
         } catch (error){

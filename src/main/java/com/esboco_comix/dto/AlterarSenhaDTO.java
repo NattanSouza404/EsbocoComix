@@ -1,7 +1,5 @@
 package com.esboco_comix.dto;
 
-import com.esboco_comix.model.entidades.Cliente;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlterarSenhaDTO {
-    private Cliente cliente;
+    private int idCliente;
     private String senhaAntiga;
     private String senhaNova;
     private String senhaConfirmacao;

@@ -34,7 +34,7 @@ public class EnderecoDAO {
             pst.setString(4, e.getTipoResidencial().name());
             pst.setString(5, e.getNumero());
             pst.setString(6, e.getBairro());
-            pst.setString(7, e.getCep());
+            pst.setString(7, e.getCep().valor());
             pst.setString(8, e.getCidade());
             pst.setString(9, e.getEstado());
             pst.setString(10, e.getPais());
@@ -100,7 +100,7 @@ public class EnderecoDAO {
             pst.setString(4, e.getTipoResidencial().name());
             pst.setString(5, e.getNumero());
             pst.setString(6, e.getBairro());
-            pst.setString(7, e.getCep());
+            pst.setString(7, e.getCep().valor());
             pst.setString(8, e.getCidade());
             pst.setString(9, e.getEstado());
             pst.setString(10, e.getPais());

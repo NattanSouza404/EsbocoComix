@@ -33,14 +33,14 @@ public class ClienteDAO {
             pst.setString(1, c.getNome());
             pst.setString(2, c.getGenero().name());
             pst.setDate(3, Date.valueOf(c.getDataNascimento()));
-            pst.setString(4, c.getCpf());
-            pst.setString(5, c.getEmail());
+            pst.setString(4, c.getCpf().valor());
+            pst.setString(5, c.getEmail().valor());
             pst.setString(6, c.getHashSenha());
             pst.setString(7, c.getSaltSenha());
             pst.setInt(8, c.getRanking());
-            pst.setString(9, c.getTelefone().getTipo().name());
-            pst.setString(10, c.getTelefone().getDdd());
-            pst.setString(11, c.getTelefone().getNumero());
+            pst.setString(9, c.getTelefone().tipo().name());
+            pst.setString(10, c.getTelefone().ddd());
+            pst.setString(11, c.getTelefone().numero());
             pst.setBoolean(12, true);
     
             if (pst.executeUpdate() == 0){
@@ -124,11 +124,11 @@ public class ClienteDAO {
             pst.setString(1, c.getNome());
             pst.setString(2, c.getGenero().name());
             pst.setDate(3, Date.valueOf(c.getDataNascimento()));
-            pst.setString(4, c.getCpf());
-            pst.setString(5, c.getEmail());
-            pst.setString(6, c.getTelefone().getTipo().name());
-            pst.setString(7, c.getTelefone().getDdd());
-            pst.setString(8, c.getTelefone().getNumero());
+            pst.setString(4, c.getCpf().valor());
+            pst.setString(5, c.getEmail().valor());
+            pst.setString(6, c.getTelefone().tipo().name());
+            pst.setString(7, c.getTelefone().ddd());
+            pst.setString(8, c.getTelefone().numero());
             pst.setInt(9, c.getId());
         
             if (pst.executeUpdate() == 0) {

@@ -14,4 +14,10 @@ public class EntradaEstoque {
     private int quantidade;
     private double valorCusto;
     private String fornecedor;
+
+    public void validar() {
+        if (quantidade <= 0){
+            throw new IllegalArgumentException("Entrada no estoque deve ser maior que 0!");
+        }
+    }
 }
