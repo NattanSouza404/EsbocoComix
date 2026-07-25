@@ -1,6 +1,6 @@
 package com.esboco_comix.carrinho.dominio;
 
-import com.esboco_comix.model.entidades.ItemPedido;
+import com.esboco_comix.pedido.dominio.ItemPedido;
 
 import lombok.Getter;
 import lombok.Setter;

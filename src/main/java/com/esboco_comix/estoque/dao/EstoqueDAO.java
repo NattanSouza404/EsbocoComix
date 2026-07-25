@@ -11,7 +11,7 @@ import java.util.List;
 import com.esboco_comix.estoque.dominio.EntradaEstoque;
 import com.esboco_comix.estoque.dominio.Estoque;
 import com.esboco_comix.estoque.dto.EntradaEstoqueDTO;
-import com.esboco_comix.model.entidades.ItemPedido;
+import com.esboco_comix.pedido.dominio.ItemPedido;
 import com.esboco_comix.utils.ConexaoFactory;
 
 public class EstoqueDAO {

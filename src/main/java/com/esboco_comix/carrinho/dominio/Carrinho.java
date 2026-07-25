@@ -3,7 +3,7 @@ package com.esboco_comix.carrinho.dominio;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esboco_comix.model.entidades.ItemPedido;
+import com.esboco_comix.pedido.dominio.ItemPedido;
 
 import lombok.Getter;
 import lombok.Setter;

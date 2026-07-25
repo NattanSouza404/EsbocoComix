@@ -1,6 +1,6 @@
 package com.esboco_comix.analise.dao;
 
-import com.esboco_comix.dto.ItemVendaDTO;
+import com.esboco_comix.analise.dto.ItemVendaDTO;
 import com.esboco_comix.utils.ConexaoFactory;
 
 import java.sql.Connection;

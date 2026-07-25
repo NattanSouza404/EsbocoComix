@@ -10,6 +10,8 @@ import com.esboco_comix.controller.impl.*;
 import com.esboco_comix.controller.utils.SpaFilter;
 import com.esboco_comix.cupom.controller.CupomController;
 import com.esboco_comix.estoque.controller.EstoqueController;
+import com.esboco_comix.pedido.controller.PedidoController;
+import com.esboco_comix.pedido.controller.PedidoPosVendaController;
 import com.esboco_comix.quadrinho.controller.QuadrinhoController;
 
 import jakarta.servlet.http.HttpServlet;

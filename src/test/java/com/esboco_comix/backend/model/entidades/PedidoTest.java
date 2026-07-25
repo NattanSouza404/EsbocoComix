@@ -8,10 +8,10 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import com.esboco_comix.cupom.dominio.Cupom;
-import com.esboco_comix.model.entidades.CartaoCreditoPedido;
-import com.esboco_comix.model.entidades.CupomPedido;
-import com.esboco_comix.model.entidades.Pedido;
-import com.esboco_comix.model.enuns.StatusPedido;
+import com.esboco_comix.pedido.dominio.CartaoCreditoPedido;
+import com.esboco_comix.pedido.dominio.CupomPedido;
+import com.esboco_comix.pedido.dominio.Pedido;
+import com.esboco_comix.pedido.dominio.enuns.StatusPedido;
 
 public class PedidoTest {
 

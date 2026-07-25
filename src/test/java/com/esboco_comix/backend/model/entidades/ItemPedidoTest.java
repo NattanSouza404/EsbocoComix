@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import com.esboco_comix.model.entidades.ItemPedido;
+import com.esboco_comix.pedido.dominio.ItemPedido;
 
 public class ItemPedidoTest {
 
