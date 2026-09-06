@@ -16,7 +16,6 @@ import com.esboco_comix.pedido.controller.PedidoController;
 import com.esboco_comix.pedido.controller.PedidoPosVendaController;
 import com.esboco_comix.quadrinho.controller.QuadrinhoController;
 
-import jakarta.servlet.http.HttpServlet;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.tomcat.util.descriptor.web.FilterDef;
@@ -45,28 +44,28 @@ public class ServidorConfig {
     }
 
 	public static void configurarRotas(Context context) {
-		Map<String, HttpServlet> servlets = Map.ofEntries(
-				Map.entry("api/cliente", new ClienteController()),
-				Map.entry("api/endereco", new EnderecoController()),
-				Map.entry("api/cartaocredito", new CartaoCreditoController()),
-				Map.entry("api/quadrinho", new QuadrinhoController()),
-				Map.entry("api/pedido", new PedidoController()),
-				Map.entry("api/carrinho", new CarrinhoController()),
-				Map.entry("api/cupom", new CupomController()),
-				Map.entry("api/estoque", new EstoqueController()),
-				Map.entry("api/analise", new AnaliseController()),
-				Map.entry("api/pedido_pos_venda", new PedidoPosVendaController()),
-				Map.entry("api/chatbot", new ChatbotProxyController())
+		var servlets = Map.ofEntries(
+			Map.entry("api/cliente", new ClienteController()),
+			Map.entry("api/endereco", new EnderecoController()),
+			Map.entry("api/cartaocredito", new CartaoCreditoController()),
+			Map.entry("api/quadrinho", new QuadrinhoController()),
+			Map.entry("api/pedido", new PedidoController()),
+			Map.entry("api/carrinho", new CarrinhoController()),
+			Map.entry("api/cupom", new CupomController()),
+			Map.entry("api/estoque", new EstoqueController()),
+			Map.entry("api/analise", new AnaliseController()),
+			Map.entry("api/pedido_pos_venda", new PedidoPosVendaController()),
+			Map.entry("api/chatbot", new ChatbotProxyController())
 		);
 
-		for (Map.Entry<String, HttpServlet> entry: servlets.entrySet()){
+		for (var entry: servlets.entrySet()){
 			String path = "/" + entry.getKey() + "/*";
 			Tomcat.addServlet(context, entry.getKey(), entry.getValue());
-			context.addServletMappingDecoded(path, entry.getKey());
+			context.addServletMapping(path, entry.getKey());
 		}
 
 		Tomcat.addServlet(context, "spa", new SpaController());
-		context.addServletMappingDecoded("/", "spa");
+		context.addServletMapping("/", "spa");
 
 		FilterDef filterDef = new FilterDef();
 		filterDef.setFilterName("spaFilter");
