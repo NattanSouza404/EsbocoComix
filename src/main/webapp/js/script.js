@@ -1,4 +1,7 @@
 import { loadPage } from "./loadPage.js";
+import { AdminContainerNav } from "@componentes/layout/AdminContainerNav.js";
+import { ContainerFooter } from "@componentes/layout/ContainerFooter.js";
+import { ContainerNav } from "@componentes/layout/ContainerNav.js";
 
 const routes = {
   "/": "/paginas/home.html",
@@ -62,6 +65,8 @@ window.addEventListener("popstate", () => {
 });
 
 navigate(location.pathname + location.search, false);
+
+carregarElementosComuns();
 
 /*import { localStorageKeys } from "./localStorage.js";
 
@@ -223,4 +228,28 @@ export function formToObject(form) {
 
 export function capitalizar(texto) {
   return texto.charAt(0).toUpperCase() + texto.slice(1);
+}
+
+function carregarElementosComuns(){
+  const mainNav = document.getElementById("main-nav");
+  const mainFooter = document.getElementById("main-footer");
+  const url = window.location.pathname;
+
+  if (mainNav){
+    if (url.startsWith("/admin")){
+      mainNav.append(AdminContainerNav());
+
+      document.querySelectorAll(".nav-link").forEach( link => {
+        if (url === window.location.href){
+          link.className = 'nav-link active';
+        }
+      });
+    } else {
+      mainNav.append(ContainerNav());
+    }
+  }
+
+  if (mainFooter){
+    mainFooter.append(ContainerFooter());
+  }
 }

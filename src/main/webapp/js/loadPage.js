@@ -1,7 +1,3 @@
-import { AdminContainerNav } from "@componentes/layout/AdminContainerNav.js";
-import { ContainerFooter } from "@componentes/layout/ContainerFooter.js";
-import { ContainerNav } from "@componentes/layout/ContainerNav.js";
-
 const app = document.getElementById("app");
 
 export async function loadPage(page, url){
@@ -23,8 +19,6 @@ export async function loadPage(page, url){
 
   loadPageJS(cleanPath);
   loadPageCSS(cleanPath);
-
-  carregarElementosComuns();
 }
 
 async function carregar404() {
@@ -61,32 +55,5 @@ async function loadPageJS(path) {
     if (!err.message.includes("Failed to fetch dynamically imported module")) {
       console.error(`Erro no script da página ${path}:`, err);
     }
-  }
-}
-
-function carregarElementosComuns(){
-  const mainNav = document.getElementById("main-nav");
-  const mainFooter = document.getElementById("main-footer");
-  const url = window.location.pathname;
-
-  if (mainNav){
-    if (url.startsWith("/admin")){
-      mainNav.className = "navbar navbar-expand-lg navbar-light";
-      mainNav.append(AdminContainerNav());
-
-      document.querySelectorAll(".nav-link").forEach( link => {
-        if (url === window.location.href){
-          link.className = 'nav-link active';
-        }
-      });
-    } else {
-      mainNav.className = "navbar navbar-expand-lg navbar-light";
-      mainNav.append(ContainerNav());
-    }
-  }
-
-  if (mainFooter){
-    mainFooter.className="text-black text-center py-4"
-    mainFooter.append(ContainerFooter());
   }
 }
