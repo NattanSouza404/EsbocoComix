@@ -1,5 +1,6 @@
-import { formatarDateTime, formatarPreco } from "../../../../js/script.js";
 import { Modal } from "@componentes/common/modal.js";
+import { formatarDateTime } from "@utils/data.utils.js";
+import { formatarPreco } from "@utils/moeda.utils.js";
 
 export default class ModalTransacoes extends Modal {
     constructor(getPedidos){

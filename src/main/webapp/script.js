@@ -96,23 +96,6 @@ async function navigate(path, push = true) {
   }
 }
 
-function resolveRoute(pathname) {
-  const cleanPath = pathname.split("?")[0].split("#")[0];
-  const normalizedPath = cleanPath.endsWith("/") && cleanPath.length > 1
-    ? cleanPath.slice(0, -1)
-    : cleanPath;
-
-  if (routes[normalizedPath]) return routes[normalizedPath];
-
-  const segments = normalizedPath.split("/");
-  if (segments.length > 2) {
-    const basePath = `/${segments[1]}/${segments[2]}`;
-    if (routes[basePath]) return routes[basePath];
-  }
-
-  return null;
-}
-
 document.addEventListener("click", e => {
   const target = /** @type {Element} */ (e.target);
 

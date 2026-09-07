@@ -1,5 +1,5 @@
 import { Modal } from "@componentes/common/modal.js";
-import { formatarDateTime } from "../../../js/script.js";
+import { formatarDateTime } from "@utils/data.utils.js";
 
 export class ModalConsultarPedidosPosVenda extends Modal {
     constructor(){

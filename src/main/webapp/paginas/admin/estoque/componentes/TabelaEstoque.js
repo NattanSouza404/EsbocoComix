@@ -1,4 +1,4 @@
-import { formatarPreco } from "../../../../js/script.js";
+import { formatarPreco } from "@utils/moeda.utils.js";
 
 export function TabelaEstoque(quadrinhos, modalEntradaEstoque){
     const tabela = document.createElement('table');

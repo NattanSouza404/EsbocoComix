@@ -1,5 +1,5 @@
-import { GENEROS, TIPOS_TELEFONE } from "../../dominio/dados.js";
-import { formatarDataParaInput } from "../../script.js";
+import { formatarDataParaInput } from "@utils/data.utils.js";
+import { GENEROS, TIPOS_TELEFONE } from "@dominio/dados.js";
 
 export class FormDadosPessoais extends HTMLFormElement {
     constructor(){

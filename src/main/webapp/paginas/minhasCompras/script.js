@@ -3,7 +3,7 @@ import { inserirPedidoPosVenda, retornarPedidosPosVendaByCliente } from "@api/pe
 import { alertarErro } from "@api/alertErro.js";
 import { CartaoCompra } from "./componentes/CartaoCompra.js";
 import { ModalConsultarPedidosPosVenda } from "./componentes/ModalConsultarPedidosVenda.js";
-import { localStorageKeys } from "../../js/storage/localStorage.js";
+import { localStorageKeys } from "../../storage/localStorage.js";
 
 const getElementos = () => {
     return {

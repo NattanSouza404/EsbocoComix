@@ -8,19 +8,19 @@
     "target": "es2020",
     "module": "node16",
     "paths": {
-      "@api/*": ["./js/api/*"],
+      "@api/*": ["./api/*"],
       "@paginas/*": ["./paginas/*"],
-      "@componentes/*": ["./js/componentes/*"],
-      "@dominio/*": ["./js/dominio/*"],
-      "@storage/*": ["./js/storage/*"],
-      "@utils/*": ["./js/utils/*"]
+      "@componentes/*": ["./componentes/*"],
+      "@dominio/*": ["./dominio/*"],
+      "@storage/*": ["./storage/*"],
+      "@utils/*": ["./utils/*"]
     },
     "lib": ["DOM", "ES2020"]
   },
   "include": [
     "js/**/*.js",
     "paginas/**/*.js"
-  ],
+, "deps/chart.umd.js", "script.js"  ],
   "exclude": [
     "**/bootstrap.bundle.min.js",
     "**/chart.umd.js"
