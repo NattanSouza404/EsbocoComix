@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "noImplicitAny": false,
+    "checkJs": true,
+    "moduleResolution": "bundler",
+    "target": "es2020",
+    "module": "es2020",
+    "paths": {
+      "@api/*": ["./js/api/*"],
+      "@paginas/*": ["./js/paginas/*"],
+      "@componentes/*": ["./js/componentes/*"],
+      "@utils/*": ["./js/utils/*"]
+    },
+    "lib": ["DOM", "ES2020"]
+  },
+  "include": [
+    "js/**/*.js",
+    "paginas/**/*.js"
+  ]
+}

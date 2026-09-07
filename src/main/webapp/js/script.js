@@ -1,21 +1,66 @@
-import { loadPage } from "./loadPage.js";
 import { AdminContainerNav } from "@componentes/layout/AdminContainerNav.js";
 import { ContainerFooter } from "@componentes/layout/ContainerFooter.js";
 import { ContainerNav } from "@componentes/layout/ContainerNav.js";
 
 const routes = {
-  "/": "/paginas/home.html",
-  "/anuncio": "/paginas/anuncio.html",
-  "/cadastrar": "/paginas/cadastrar.html",
-  "/carrinho": "/paginas/carrinho.html",
-  "/compra": "/paginas/compra.html",
-  "/conta": "/paginas/conta.html",
-  "/login": "/paginas/login.html",
-  "/minhasCompras": "/paginas/minhasCompras.html",
-  "/admin/analise": "/paginas/admin/analise.html",
-  "/admin/clientes": "/paginas/admin/clientes.html",
-  "/admin/estoque": "/paginas/admin/estoque.html",
-  "/admin/gerenciarVendas": "/paginas/admin/gerenciarVendas.html",
+  "/": {
+    html: "/paginas/home/index.html",
+    script: "/paginas/home/script.js"
+  },
+
+  "/anuncio": {
+    html: "/paginas/anuncio/index.html",
+    script: "/paginas/anuncio/script.js"
+  },
+
+  "/cadastrar": {
+    html: "/paginas/cadastrar/index.html",
+    script: "/paginas/cadastrar/script.js"
+  },
+
+  "/carrinho": {
+    html: "/paginas/carrinho/index.html",
+    script: "/paginas/carrinho/script.js"
+  },
+
+  "/compra": {
+    html: "/paginas/compra/index.html",
+    script: "/paginas/compra/script.js"
+  },
+
+  "/conta": {
+    html: "/paginas/conta/index.html",
+    script: "/paginas/conta/script.js"
+  },
+
+  "/login": {
+    html: "/paginas/login/index.html",
+  },
+
+  "/minhasCompras": {
+    html: "/paginas/minhasCompras/index.html",
+    script: "/paginas/minhasCompras/script.js"
+  },
+
+  "/admin/analise": {
+    html: "/paginas/admin/analise/index.html",
+    script: "/paginas/admin/analise/script.js"
+  },
+
+  "/admin/clientes": {
+    html: "/paginas/admin/clientes/index.html",
+    script: "/paginas/admin/clientes/script.js"
+  },
+
+  "/admin/estoque": {
+    html: "/paginas/admin/estoque/index.html",
+    script: "/paginas/admin/estoque/script.js"
+  },
+
+  "/admin/gerenciarVendas": {
+    html: "/paginas/admin/gerenciarVendas/index.html",
+    script: "/paginas/admin/gerenciarVendas/script.js"
+  }
 };
 
 async function navigate(path, push = true) {
@@ -25,9 +70,27 @@ async function navigate(path, push = true) {
     history.pushState({}, "", url.pathname + url.search);
   }
 
-  const page = resolveRoute(url.pathname);
+  let route = routes[url.pathname];
 
-  await loadPage(page, url);
+  if (!route) {
+    route = {
+      html: "/paginas/erro/index.html",
+    };
+
+    history.replaceState({}, "", "/erro");
+  }
+
+  const html = await fetch(route.html).then(r => r.text());
+  app.innerHTML = html;
+
+  if (route.script) {
+    const script = document.createElement("script");
+
+    script.type = "module";
+    script.src = route.script;
+
+    app.append(script);
+  }
 }
 
 function resolveRoute(pathname) {
