@@ -1,4 +1,4 @@
-import { formatarPreco } from "../../../js/script.js";
+import { formatarPreco } from "@utils/moeda.utils.js";
 
 export const TabelaCarrinho = (carrinho, confirmarAtualizarItem, confirmarDelecaoItem) => {
     const div = document.createElement('div');

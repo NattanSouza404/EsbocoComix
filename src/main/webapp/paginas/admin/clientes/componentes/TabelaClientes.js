@@ -1,4 +1,5 @@
-import { formatarData, mascararCpf } from "../../../../js/script.js";
+import { mascararCpf } from "@utils/cpf.utils.js";
+import { formatarData } from "@utils/data.utils.js";
 
 export default class TabelaClientes extends HTMLTableElement {
     

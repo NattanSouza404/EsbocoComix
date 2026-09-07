@@ -4,7 +4,7 @@ import { FormCartaoCredito } from "@componentes/forms/FormCartaoCredito.js";
 import { FormEndereco } from "@componentes/forms/FormEndereco.js";
 import { FormCadastrarDadosPessoais } from "./componentes/FormCadastrar.js";
 import { localStorageKeys } from "../../js/storage/localStorage.js";
-import { montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm } from "../../js/script.js";
+import { montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm } from "@utils/form.utils.js";
 
 const getElementos = () => {
     return {

@@ -1,7 +1,7 @@
 import { adicionarItemAoCarrinho } from "@api/carrinho.api.js";
 import { retornarQuadrinho } from "@api/quadrinho.api.js";
 import { AnuncioProduto } from "./componentes/AnuncioProduto.js";
-import { getUrlParam } from "../../js/script.js";
+import { getUrlParam } from "@utils/url.utils.js";
 
 function getElementos() {
   return {

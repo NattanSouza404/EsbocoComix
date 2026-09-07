@@ -1,6 +1,7 @@
 export const localStorageKeys = {
     historicoChatIA: "historico-chat-ia",
     idCliente: "idcliente",
+    primeiraVez: "primeira-vez"
 };
 
 export function getHistorico(){

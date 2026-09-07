@@ -1,4 +1,5 @@
-import { calcularFrete, formatarPreco } from "../../../../js/script.js";
+import { calcularFrete } from "@dominio/calculadora-pedido.js";
+import { formatarPreco } from "@utils/moeda.utils.js";
 
 export class SecaoSelecaoEndereco {
     constructor(){

@@ -1,4 +1,4 @@
-import { mascararNumeroCartao } from "../../../../js/script.js";
+import { mascararNumeroCartao } from "@utils/cartao-credito.utils.js";
 
 export class SelecaoCartaoCredito extends HTMLDivElement {
     constructor(cartoesCredito) {

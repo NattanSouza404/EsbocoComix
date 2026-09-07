@@ -1,4 +1,5 @@
-import { formatarData, formatarPreco } from "../../../js/script.js";
+import { formatarData } from "@utils/data.utils.js";
+import { formatarPreco } from "@utils/moeda.utils.js";
 
 export const AnuncioProduto = (quadrinho, adicionarItem) => {
     const anuncio = document.createElement('div');

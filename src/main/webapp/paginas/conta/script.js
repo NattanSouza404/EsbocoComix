@@ -9,7 +9,7 @@ import { SecaoDadosPessoais } from "@paginas/conta/secoes/secaoDadosPessoais/Sec
 import { SecaoCartaoCredito } from "@paginas/conta/secoes/secaoCartaoCredito/SecaoCartaoCredito.js";
 import { SecaoCupom } from "@paginas/conta/secoes/secaoCupons/secaoCupons.js";
 import { SecaoEndereco } from "@paginas/conta/secoes/secaoEndereco/SecaoEndereco.js";
-import { getUrlParam } from "../../js/script.js";
+import { getUrlParam } from "@utils/url.utils.js";
 
 const getElementos = () => {
     return {

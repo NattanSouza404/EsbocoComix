@@ -1,4 +1,5 @@
-import { formatarPreco, formatarDateTime } from "../../../js/script.js";
+import { formatarDateTime } from "@utils/data.utils.js";
+import { formatarPreco } from "@utils/moeda.utils.js";
 
 export class CartaoCompra extends HTMLDivElement {
     constructor(

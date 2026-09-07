@@ -1,4 +1,4 @@
-import { formatarPreco } from "../../../../js/script.js";
+import { formatarPreco } from "@utils/moeda.utils.js";
 
 export class CartaoCupom extends HTMLElement {
     constructor(cupom){

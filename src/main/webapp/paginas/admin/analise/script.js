@@ -2,7 +2,7 @@ import { alertarErro } from "@api/alertErro.js";
 import { retornarAnalise } from "@api/analise.api.js";
 import GraficoLinha from "./componentes/GraficoLinha.js";
 import FormatadorAnalise from "./utils/FormatadorAnalise.js";
-import { capitalizar } from "../../../js/script.js";
+import { capitalizar } from "@utils/texto.utils.js";
 
 const getElementos = () => {
     return {

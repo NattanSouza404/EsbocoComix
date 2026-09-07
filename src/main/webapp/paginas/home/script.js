@@ -3,8 +3,8 @@ import { consultarTodasCategorias, consultarTodosQuadrinhos, filtrarTodosQuadrin
 import { CarrosselHome } from "./componentes/CarrosselHome.js";
 import { CartaoProduto } from "./componentes/CartaoProduto.js";
 import { CheckCategoria } from "./componentes/CheckCategoria.js";
-import { formToObject } from "../../js/script.js";
 import { InputMaximoPaginas } from "./componentes/InputMaximoPaginas.js";
+import { formToObject } from "@utils/form.utils.js";
 
 const getElementos = () => {
     return {

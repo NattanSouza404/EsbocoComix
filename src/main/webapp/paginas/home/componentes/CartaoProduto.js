@@ -1,6 +1,6 @@
 import { alertarErro } from "@api/alertErro.js";
 import { adicionarItemAoCarrinho } from "@api/carrinho.api.js";
-import { formatarPreco } from "../../../js/script.js";
+import { formatarPreco } from "@utils/moeda.utils.js";
 
 export class CartaoProduto extends HTMLDivElement {
   constructor(quadrinho) {

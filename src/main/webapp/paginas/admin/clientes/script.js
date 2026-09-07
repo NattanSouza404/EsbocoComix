@@ -4,7 +4,7 @@ import { retornarPedidos } from "@api/pedido.api.js";
 import TabelaClientes from "./componentes/TabelaClientes.js";
 import ModalCupomPromocional from "./componentes/ModalCupomPromocional.js";
 import ModalTransacoes from "./componentes/ModalTransacoes.js";
-import { montarClientePorForm } from "../../../js/script.js";
+import { montarClientePorForm } from "@utils/form.utils.js";
 
 const getElementos = () => {
     return {
