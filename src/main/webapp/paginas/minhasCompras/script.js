@@ -13,6 +13,8 @@ const getElementos = () => {
 
 const modalConsultarPedidosPosVenda = new ModalConsultarPedidosPosVenda();
 
+initPagina();
+
 export async function initPagina() {
     try {
         const idCliente = localStorage.getItem(localStorageKeys.idCliente);

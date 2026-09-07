@@ -22,6 +22,39 @@ const getElementos = () => {
     }
 }
 
+const definicoesBotoesSecao = [
+    {
+        id: "trocar-para-dados-pessoais",
+        className: "btn-primary",
+        acao: () => trocarSecao(getElementos().secaoDadosPessoais),
+        img: "/img/imagem-do-usuario-com-fundo-preto.png",
+        texto: "Dados Pessoais"
+    },
+    {
+        id: "trocar-para-endereco",
+        className: "btn-success",
+        acao: () => trocarSecao(getElementos().secaoEndereco),
+        img: "/img/house-fill.svg",
+        texto: "Endereços"
+    },
+    {
+        id: "trocar-para-cartao",
+        className: "btn-secondary",
+        acao: () => trocarSecao(getElementos().secaoCartaoCredito),
+        img: "/img/credit-card.svg",
+        texto: "Cartões de Crédito"
+    },
+    {
+        id: "trocar-para-cupom",
+        className: "btn-warning",
+        acao: () => trocarSecao(getElementos().secaoCupom),
+        img: "/img/ticket.svg",
+        texto: "Cupons"
+    }
+];
+
+initPagina();
+
 export async function initPagina() {
     try {
         const el = getElementos();
@@ -97,34 +130,3 @@ function BotaoSecaoConta(definicao){
 
     return btn;
 }
-
-const definicoesBotoesSecao = [
-    {
-        id: "trocar-para-dados-pessoais",
-        className: "btn-primary",
-        acao: () => trocarSecao(getElementos().secaoDadosPessoais),
-        img: "/img/imagem-do-usuario-com-fundo-preto.png",
-        texto: "Dados Pessoais"
-    },
-    {
-        id: "trocar-para-endereco",
-        className: "btn-success",
-        acao: () => trocarSecao(getElementos().secaoEndereco),
-        img: "/img/house-fill.svg",
-        texto: "Endereços"
-    },
-    {
-        id: "trocar-para-cartao",
-        className: "btn-secondary",
-        acao: () => trocarSecao(getElementos().secaoCartaoCredito),
-        img: "/img/credit-card.svg",
-        texto: "Cartões de Crédito"
-    },
-    {
-        id: "trocar-para-cupom",
-        className: "btn-warning",
-        acao: () => trocarSecao(getElementos().secaoCupom),
-        img: "/img/ticket.svg",
-        texto: "Cupons"
-    }
-];

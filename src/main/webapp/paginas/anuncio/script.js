@@ -9,6 +9,8 @@ function getElementos() {
   };
 }
 
+initPagina();
+
 export async function initPagina() {
     try {
         const id = getUrlParam('id');
