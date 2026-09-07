@@ -1,4 +1,4 @@
-import { formatarPreco } from "../../script.js";
+import { formatarPreco } from "../../../js/script.js";
 
 export const SumarioCarrinho = (valorTotal) => {
     const div = document.createElement('div');

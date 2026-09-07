@@ -1,4 +1,4 @@
-import { formatarDateTime } from "../../script.js";
+import { formatarDateTime } from "../../../../js/script.js";
 
 export const TabelaPedidosPosVenda = (
     pedidosPosVenda,

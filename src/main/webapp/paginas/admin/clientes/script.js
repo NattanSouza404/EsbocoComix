@@ -1,10 +1,10 @@
 import { alertarErro } from "@api/alertErro.js";
 import { inativarCliente, retornarAllClientes } from "@api/cliente.api.js";
 import { retornarPedidos } from "@api/pedido.api.js";
-import TabelaClientes from "@componentes/clientes/TabelaClientes.js";
-import ModalCupomPromocional from "@componentes/cupom/ModalCupomPromocional.js";
-import ModalTransacoes from "@componentes/pedido/ModalTransacoes.js";
-import { montarClientePorForm } from "/js/script.js";
+import TabelaClientes from "./componentes/TabelaClientes.js";
+import ModalCupomPromocional from "./componentes/ModalCupomPromocional.js";
+import ModalTransacoes from "./componentes/ModalTransacoes.js";
+import { montarClientePorForm } from "../../../js/script.js";
 
 const getElementos = () => {
     return {

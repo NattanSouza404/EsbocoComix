@@ -1,8 +1,8 @@
 import { atualizarStatusPedido, retornarPedidos } from "@api/pedido.api.js";
 import { inserirPedidoPosVenda, retornarPedidosPosVendaByCliente } from "@api/pedidoPosVenda.api.js";
 import { alertarErro } from "@api/alertErro.js";
-import { CartaoCompra } from "@componentes/pedido/CartaoCompra.js";
-import { ModalConsultarPedidosPosVenda } from "@componentes/pedido/ModalConsultarPedidosVenda.js";
+import { CartaoCompra } from "./componentes/CartaoCompra.js";
+import { ModalConsultarPedidosPosVenda } from "./componentes/ModalConsultarPedidosVenda.js";
 import { localStorageKeys } from "../../js/localStorage.js";
 
 const getElementos = () => {

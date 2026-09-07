@@ -1,7 +1,7 @@
 import { alertarErro } from "@api/alertErro.js";
 import { atualizarItemCarrinho, deletarItemCarrinho, retornarCarrinho } from "@api/carrinho.api.js";
-import { SumarioCarrinho } from "@componentes/carrinho/SumarioCarrinho.js";
-import { TabelaCarrinho } from "@componentes/carrinho/TabelaCarrinho.js";
+import { SumarioCarrinho } from "./componentes/SumarioCarrinho.js";
+import { TabelaCarrinho } from "./componentes/TabelaCarrinho.js";
 import { calcularValorTotal } from "../../js/script.js";
 
 const getElementos = () => {

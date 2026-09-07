@@ -1,4 +1,4 @@
-import { formatarDateTime, formatarPreco } from "../../script.js";
+import { formatarDateTime, formatarPreco } from "../../../../js/script.js";
 import { Modal } from "@componentes/common/modal.js";
 
 export default class ModalTransacoes extends Modal {

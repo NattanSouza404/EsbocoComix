@@ -2,9 +2,9 @@ import { alertarErro } from "@api/alertErro.js";
 import { inserirCliente } from "@api/cliente.api.js";
 import { FormCartaoCredito } from "@componentes/forms/FormCartaoCredito.js";
 import { FormEndereco } from "@componentes/forms/FormEndereco.js";
-import { FormCadastrarDadosPessoais } from "@componentes/forms/FormCadastrar.js";
-import { localStorageKeys } from "/js/localStorage.js";
-import { montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm } from "/js/script.js";
+import { FormCadastrarDadosPessoais } from "./componentes/FormCadastrar.js";
+import { localStorageKeys } from "../../js/localStorage.js";
+import { montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm } from "../../js/script.js";
 
 const getElementos = () => {
     return {

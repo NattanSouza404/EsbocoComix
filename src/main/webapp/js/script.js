@@ -2,6 +2,8 @@ import { AdminContainerNav } from "@componentes/layout/AdminContainerNav.js";
 import { ContainerFooter } from "@componentes/layout/ContainerFooter.js";
 import { ContainerNav } from "@componentes/layout/ContainerNav.js";
 
+const app = document.getElementById("app");
+
 const routes = {
   "/": {
     html: "/paginas/home/index.html",

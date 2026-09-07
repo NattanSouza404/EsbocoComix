@@ -1,8 +1,8 @@
 import { atualizarStatusPedido, retornarPedidos } from "@api/pedido.api.js";
 import { atualizarStatusPedidoPosVenda, retornarPedidosPosVenda } from "@api/pedidoPosVenda.api.js";
 import { alertarErro } from "@api/alertErro.js";
-import { TabelaPedidos } from "@componentes/pedido/TabelaPedidos.js";
-import { TabelaPedidosPosVenda } from "@componentes/pedidoPosVenda/TabelaPedidosPosVenda.js";
+import { TabelaPedidos } from "./componentes/TabelaPedidos.js";
+import { TabelaPedidosPosVenda } from "./componentes/TabelaPedidosPosVenda.js";
 
 const getElementos = () => {
     return {

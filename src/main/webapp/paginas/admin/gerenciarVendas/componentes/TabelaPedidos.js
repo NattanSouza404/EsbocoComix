@@ -1,4 +1,4 @@
-import { formatarDateTime, formatarPreco } from "../../script.js";
+import { formatarDateTime, formatarPreco } from "../../../../js/script.js";
 
 export const TabelaPedidos = (pedidos, confirmarAtualizarStatusPedido) => {
     const tabela = document.createElement('table');

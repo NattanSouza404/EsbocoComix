@@ -1,4 +1,4 @@
-import { formatarPreco } from "../../script.js";
+import { formatarPreco } from "../../../js/script.js";
 
 export const TabelaCarrinho = (carrinho, confirmarAtualizarItem, confirmarDelecaoItem) => {
     const div = document.createElement('div');
@@ -21,11 +21,15 @@ export const TabelaCarrinho = (carrinho, confirmarAtualizarItem, confirmarDeleca
         </table>
     `;
 
-    div.querySelector('table').append(CorpoTabelaCarrinho(
-        carrinho,
-        confirmarAtualizarItem,
-        confirmarDelecaoItem
-    ));
+    const corpoTabela = div.querySelector('table');
+
+    if (corpoTabela) {
+        corpoTabela.append(CorpoTabelaCarrinho(
+            carrinho,
+            confirmarAtualizarItem,
+            confirmarDelecaoItem
+        ));
+    }
 
     return div;
 }

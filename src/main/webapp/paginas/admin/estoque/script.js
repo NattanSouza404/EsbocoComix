@@ -1,9 +1,9 @@
 import { alertarErro } from "@api/alertErro.js";
 import { consultarEntradasEstoque, inserirEntradaEstoque } from "@api/estoque.api.js";
-import ModalEntradaEstoque from "@componentes/estoque/ModalEntradaEstoque.js";
+import ModalEntradaEstoque from "./componentes/ModalEntradaEstoque.js";
 import { consultarTodosQuadrinhos } from "@api/quadrinho.api.js";
-import { TabelaEntradaEstoque } from "@componentes/estoque/TabelaEntradaEstoque.js";
-import { TabelaEstoque } from "@componentes/estoque/TabelaEstoque.js";
+import { TabelaEntradaEstoque } from "./componentes/TabelaEntradaEstoque.js";
+import { TabelaEstoque } from "./componentes/TabelaEstoque.js";
 
 const getElementos = () => {
     return {
