@@ -1,4 +1,4 @@
-import { BANDEIRAS_CARTAO } from "../../dados.js";
+import { BANDEIRAS_CARTAO } from "../../dominio/dados.js";
 
 export class FormCartaoCredito extends HTMLFormElement {
     constructor(){

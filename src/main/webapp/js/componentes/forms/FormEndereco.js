@@ -1,4 +1,4 @@
-import { TIPOS_LOGRADOURO, TIPOS_RESIDENCIAL } from "../../dados.js";
+import { TIPOS_LOGRADOURO, TIPOS_RESIDENCIAL } from "../../dominio/dados.js";
 
 export class FormEndereco extends HTMLFormElement {
     constructor(){
