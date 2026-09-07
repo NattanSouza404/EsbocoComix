@@ -21,6 +21,7 @@ public class ItemCarrinhoDTO {
             .idPedido(idPedido)
             .idQuadrinho(idQuadrinho)
             .quantidade(quantidade)
+            .preco(preco)
         .build();
     }
 }
