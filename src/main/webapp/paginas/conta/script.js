@@ -3,13 +3,13 @@ import { retornarEnderecos } from "@api/endereco.api.js";
 import { retornarCartoesCredito } from "@api/cartaoCredito.api.js";
 import { alertarErro } from "@api/alertErro.js";
 import { retornarCupons } from "@api/cupom.api.js";
-import { localStorageKeys, removerHistorico } from "../localStorage.js";
+import { localStorageKeys, removerHistorico } from "@storage/localStorage.js";
 
 import { SecaoDadosPessoais } from "@paginas/conta/secoes/secaoDadosPessoais/SecaoDadosPessoais.js";
 import { SecaoCartaoCredito } from "@paginas/conta/secoes/secaoCartaoCredito/SecaoCartaoCredito.js";
 import { SecaoCupom } from "@paginas/conta/secoes/secaoCupons/secaoCupons.js";
 import { SecaoEndereco } from "@paginas/conta/secoes/secaoEndereco/SecaoEndereco.js";
-import { getUrlParam } from "../script.js";
+import { getUrlParam } from "../../js/script.js";
 
 const getElementos = () => {
     return {

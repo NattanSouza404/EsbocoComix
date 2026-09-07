@@ -1,4 +1,4 @@
-import { calcularValorTotal, formatarPreco } from "/js/script.js";
+import { calcularValorTotal, formatarPreco } from "../../../../js/script.js";
 
 export class ResumoPedido {
     constructor(secaoSelecaoEndereco, secaoSelecaoCartao, secaoCupons) {

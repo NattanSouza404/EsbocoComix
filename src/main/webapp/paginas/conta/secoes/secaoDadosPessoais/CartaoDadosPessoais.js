@@ -1,4 +1,4 @@
-import { formatarData } from "../../../../script.js"
+import { formatarData } from "../../../../js/script.js"
 
 export const CartaoDadosPessoais = (cliente) => {
     const div = document.createElement('div');

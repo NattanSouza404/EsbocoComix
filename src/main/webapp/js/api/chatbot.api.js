@@ -1,4 +1,4 @@
-import { localStorageKeys } from "../localStorage.js";
+import { localStorageKeys } from "../storage/localStorage.js";
 import { estourarErroAPI } from "./alertErro.js";
 
 const PATH = "/api/chatbot";

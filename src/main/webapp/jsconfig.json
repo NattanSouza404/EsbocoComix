@@ -4,13 +4,15 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
     "checkJs": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "node16",
     "target": "es2020",
-    "module": "es2020",
+    "module": "node16",
     "paths": {
       "@api/*": ["./js/api/*"],
-      "@paginas/*": ["./js/paginas/*"],
+      "@paginas/*": ["./paginas/*"],
       "@componentes/*": ["./js/componentes/*"],
+      "@dominio/*": ["./js/dominio/*"],
+      "@storage/*": ["./js/storage/*"],
       "@utils/*": ["./js/utils/*"]
     },
     "lib": ["DOM", "ES2020"]
@@ -18,5 +20,9 @@
   "include": [
     "js/**/*.js",
     "paginas/**/*.js"
+  ],
+  "exclude": [
+    "**/bootstrap.bundle.min.js",
+    "**/chart.umd.js"
   ]
 }

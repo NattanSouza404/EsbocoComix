@@ -1,9 +1,9 @@
-import { montarCartaoCreditoPorForm } from "../../../../script.js";
+import { montarCartaoCreditoPorForm } from "../../../../js/script.js";
 import { atualizarCartaoCredito } from "@api/cartaoCredito.api.js";;
 import { Modal } from "@componentes/common/modal.js";
 import { FormCartaoCredito } from "@componentes/forms/FormCartaoCredito.js";
 import { alertarErro } from "@api/alertErro.js";
-import { localStorageKeys } from "../../../../localStorage.js";
+import { localStorageKeys } from "@storage/localStorage.js";
 
 export class ModalAlterarCartaoCredito extends Modal {
     constructor(){

@@ -1,9 +1,9 @@
-import { montarClientePorForm } from "../../../../script.js";
+import { montarClientePorForm } from "../../../../js/script.js";
 import { atualizarCliente } from "@api/cliente.api.js";
 import { FormDadosPessoais } from "@componentes/forms/FormDadosPessoais.js";
 import { Modal } from "@componentes/common/modal.js";
 import { alertarErro } from "@api/alertErro.js";
-import { localStorageKeys } from "../../../../localStorage.js";
+import { localStorageKeys } from "@storage/localStorage.js";
 
 export class ModalAlterarDadosPessoais extends Modal {
 

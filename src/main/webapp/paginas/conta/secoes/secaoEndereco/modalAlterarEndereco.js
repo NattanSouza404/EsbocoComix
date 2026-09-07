@@ -1,9 +1,9 @@
-import { montarEnderecoPorForm } from "../../../../script.js";
+import { montarEnderecoPorForm } from "../../../../js/script.js";
 import { atualizarEndereco } from "@api/endereco.api.js";
 import { Modal } from "@componentes/common/modal.js";
 import { FormEndereco } from "@componentes/forms/FormEndereco.js";
 import { alertarErro } from "@api/alertErro.js";
-import { localStorageKeys } from "../../../../localStorage.js";
+import { localStorageKeys } from "@storage/localStorage.js";
 
 export class ModalAlterarEndereco extends Modal {
 

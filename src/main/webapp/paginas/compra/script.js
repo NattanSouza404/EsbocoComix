@@ -8,7 +8,7 @@ import { SecaoCartaoCredito } from "@paginas/compra/secoes/secaoCartaoCredito/Se
 import { retornarCupons } from "@api/cupom.api.js";
 import { SecaoCupom } from "@paginas/compra/secoes/secaoCupom/SecaoCupons.js";
 import { alertarErro } from "@api/alertErro.js";
-import { localStorageKeys } from "/js/localStorage.js";
+import { localStorageKeys } from "@storage/localStorage.js";
 
 const secaoSelecaoEndereco = new SecaoSelecaoEndereco();
 let secaoSelecaoCartao;

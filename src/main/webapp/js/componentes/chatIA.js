@@ -1,6 +1,6 @@
 import { Modal } from "./common/modal.js";
 import { retornarRespostaIA } from "../api/chatbot.api.js";
-import { adicionarMensagemHistorico, getHistorico, removerHistorico } from "../localStorage.js";
+import { adicionarMensagemHistorico, getHistorico, removerHistorico } from "../storage/localStorage.js";
 
 export class ChatIA extends Modal {
 

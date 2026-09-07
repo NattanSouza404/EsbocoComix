@@ -14,6 +14,8 @@ const getElementos = () => {
         buscaQuadrinhos: document.getElementById('busca-quadrinhos'),
         fieldSetCategorias: document.getElementById('fieldset-categorias'),
         inputMaximoPaginas: document.getElementById("input-maximo-paginas"),
+
+        /** @type {NodeListOf<HTMLInputElement>} */
         checksCategorias: document.querySelectorAll('[name = "categorias"]')
     };
 }
@@ -95,9 +97,7 @@ function listarCategoriasSelecionadas(){
     const categoriasSelecionadas = [];
 
     getElementos().checksCategorias.forEach(
-        (/** @type {HTMLInputElement} */
-            input
-        ) => {
+        (input) => {
             if (input.checked){
                 categoriasSelecionadas.push(input.value);
             }
