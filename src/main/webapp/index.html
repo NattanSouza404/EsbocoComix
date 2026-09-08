@@ -10,19 +10,26 @@
   <script type="importmap">
   {
     "imports": {
-      "@api/": "/js/api/",
-      "@componentes/": "/js/componentes/",
-      "@paginas/": "/js/paginas/",
-      "@utils/": "/js/utils/"
+      "@api/": "/api/",
+      "@componentes/": "/componentes/",
+      "@paginas/": "/paginas/",
+      "@dominio/": "/dominio/",
+      "@storage/": "/storage/",
+      "@utils/": "/utils/"
     }
   }
   </script>
 </head>
 <body>
+  <nav id="main-nav" class="navbar navbar-expand-lg navbar-light"></nav>
+
   <main id="app" class="bg-light d-flex flex-column"></main>
 
-  <script src="/js/bootstrap.bundle.min.js"></script>
-  <script type="module" src="/js/script.js"></script>
-  <script src="/js/chart.umd.js"></script>
+  <footer id="main-footer" class="text-black text-center py-4"></footer>
+
+  <script src="/deps/bootstrap.bundle.min.js"></script>
+  <script src="/deps/chart.umd.js"></script>
+
+  <script type="module" src="/script.js"></script>
 </body>
 </html>

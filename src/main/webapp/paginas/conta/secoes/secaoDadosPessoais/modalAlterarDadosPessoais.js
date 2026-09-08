@@ -1,0 +1,64 @@
+import { atualizarCliente } from "@api/cliente.api.js";
+import { FormDadosPessoais } from "@componentes/forms/FormDadosPessoais.js";
+import { Modal } from "@componentes/common/modal.js";
+import { alertarErro } from "@api/alertErro.js";
+import { localStorageKeys } from "@storage/localStorage.js";
+import { montarClientePorForm } from "@utils/form.utils.js";
+
+export class ModalAlterarDadosPessoais extends Modal {
+
+    constructor(){
+        const conteudoModal = ConteudoModalAlterarDadosPessoais();
+
+        super('modal-alterar-dados-pessoais', "Editar Dados Pessoais", conteudoModal);
+
+        conteudoModal.insertAdjacentHTML('beforeend', `
+            <button class="botao-salvar" type="button">Salvar</button>
+        `);
+
+        /** @type {HTMLButtonElement} */
+        (conteudoModal.querySelector('.botao-salvar')).onclick = () => {
+            this.enviarAtualizacao();
+        };
+
+        this.form = conteudoModal;
+    }
+
+    atualizar(cliente){
+        this.cliente = cliente;
+        this.form.atualizar(cliente);
+    }
+
+    async enviarAtualizacao(){
+        const confirmacaoUsuario = confirm("Deseja mesmo atualizar ?"); 
+
+        if (!confirmacaoUsuario){
+            return;
+        }
+
+        const cliente = montarClientePorForm(this.form);
+        cliente.id = localStorage.getItem(localStorageKeys.idCliente);
+
+        try {
+            await atualizarCliente({
+                cpf:	cliente.cpf,
+                dataNascimento:	cliente.dataNascimento,
+                email:	cliente.email,
+                genero:	cliente.genero,
+                id:	cliente.id,
+                nome:	cliente.nome,
+                telefone:	cliente.telefone,
+            });
+            alert('Atualizado com sucesso!');
+            window.location.reload();
+        } catch (error){
+            alertarErro(error);
+        }
+    }
+}
+
+function ConteudoModalAlterarDadosPessoais(){
+    const form = new FormDadosPessoais();
+    form.id = 'alterar-dados-pessoais';
+    return form;
+}

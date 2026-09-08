@@ -1,10 +1,10 @@
 package com.esboco_comix.webapp.base.factories;
 
-import com.esboco_comix.model.entidades.CartaoCredito;
-import com.esboco_comix.model.enuns.BandeiraCartao;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
+import com.esboco_comix.cliente.dominio.enuns.BandeiraCartao;
 
 public class CartaoCreditoTesteFactory {
     public static CartaoCredito criar(){

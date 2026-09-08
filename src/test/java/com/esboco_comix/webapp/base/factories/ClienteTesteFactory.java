@@ -1,13 +1,13 @@
 package com.esboco_comix.webapp.base.factories;
 
-import com.esboco_comix.model.entidades.Cliente;
-import com.esboco_comix.model.enuns.Genero;
-import com.esboco_comix.model.enuns.TipoTelefone;
-import com.esboco_comix.model.value_objects.Cpf;
-import com.esboco_comix.model.value_objects.Email;
-import com.esboco_comix.model.value_objects.Telefone;
-
 import java.time.LocalDate;
+
+import com.esboco_comix.cliente.dominio.entidades.Cliente;
+import com.esboco_comix.cliente.dominio.enuns.Genero;
+import com.esboco_comix.cliente.dominio.enuns.TipoTelefone;
+import com.esboco_comix.cliente.dominio.value_objects.Cpf;
+import com.esboco_comix.cliente.dominio.value_objects.Email;
+import com.esboco_comix.cliente.dominio.value_objects.Telefone;
 
 public class ClienteTesteFactory {
 

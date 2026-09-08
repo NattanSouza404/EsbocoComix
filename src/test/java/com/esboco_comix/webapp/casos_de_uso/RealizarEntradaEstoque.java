@@ -1,6 +1,6 @@
 package com.esboco_comix.webapp.casos_de_uso;
 
-import com.esboco_comix.model.entidades.EntradaEstoque;
+import com.esboco_comix.estoque.dominio.EntradaEstoque;
 import com.esboco_comix.webapp.paginas.admin.estoque.PaginaEstoque;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;

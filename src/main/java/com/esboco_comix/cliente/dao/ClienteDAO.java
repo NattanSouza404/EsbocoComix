@@ -1,0 +1,337 @@
+package com.esboco_comix.cliente.dao;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.esboco_comix.cliente.dominio.entidades.Cliente;
+import com.esboco_comix.cliente.dto.FiltrarClienteDTO;
+import com.esboco_comix.core.dao.ConexaoFactory;
+
+public class ClienteDAO {
+
+    private final ClienteMapper clienteMapper = new ClienteMapper();
+
+    public Cliente inserir(Connection conn, Cliente c) {
+        try (
+            PreparedStatement pst = conn.prepareStatement(
+                "INSERT INTO clientes("+
+                    "cli_nome, cli_genero, cli_dt_nascimento, cli_cpf, cli_email, "+
+                    "cli_hash_senha, cli_salt_senha, cli_ranking, "+
+                    "cli_tel_tipo, cli_tel_ddd, cli_tel_numero, cli_is_ativo) "+
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                    Statement.RETURN_GENERATED_KEYS
+            )
+        ){
+            pst.setString(1, c.getNome());
+            pst.setString(2, c.getGenero().name());
+            pst.setDate(3, Date.valueOf(c.getDataNascimento()));
+            pst.setString(4, c.getCpf().valor());
+            pst.setString(5, c.getEmail().valor());
+            pst.setString(6, c.getHashSenha());
+            pst.setString(7, c.getSaltSenha());
+            pst.setInt(8, c.getRanking());
+            pst.setString(9, c.getTelefone().tipo().name());
+            pst.setString(10, c.getTelefone().ddd());
+            pst.setString(11, c.getTelefone().numero());
+            pst.setBoolean(12, true);
+    
+            if (pst.executeUpdate() == 0){
+                throw new IllegalStateException("Inserção de cliente não executada!");
+            }
+    
+            ResultSet rs = pst.getGeneratedKeys();
+            Cliente clienteInserido = null;
+            if (rs.next()){
+                clienteInserido = consultarByID(conn, rs.getInt(1));
+            }
+
+            return clienteInserido;   
+        } catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public List<Cliente> consultarTodos() {
+        try (
+            Connection conn = ConexaoFactory.getConexao();
+
+            PreparedStatement pst = conn.prepareStatement(
+                "SELECT * FROM clientes ORDER BY cli_id;",
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+            )
+        ){
+            ResultSet rs = pst.executeQuery();
+
+            if (!rs.next()) {
+                throw new IllegalStateException("Nenhum registro encontrado de cliente.");
+            }
+            rs.beforeFirst();
+
+            List<Cliente> clientes = new ArrayList<>();
+
+            while (rs.next()){                
+                clientes.add(clienteMapper.mapearEntidade(rs));
+            }
+
+            return clientes;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public Cliente consultarByID(int id) {
+        try (
+            Connection conn = ConexaoFactory.getConexao();
+        ){
+            return consultarByID(conn, id);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public Cliente consultarByID(Connection conn, int id) {
+        try (
+            PreparedStatement pst = conn.prepareStatement(
+                "SELECT * FROM clientes WHERE cli_id = ?;"
+            )
+        ) {
+            pst.setInt(1, id);
+
+            ResultSet rs = pst.executeQuery();
+    
+            if (!rs.next()){
+                throw new IllegalStateException("Cliente não encontrado!");
+            }
+            
+            return clienteMapper.mapearEntidade(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public Cliente atualizar(Cliente c) {
+        try (
+            Connection conn = ConexaoFactory.getConexao(); 
+    
+            PreparedStatement pst = conn.prepareStatement(
+                "UPDATE clientes set "+
+                    "cli_nome = ?, cli_genero = ?, cli_dt_nascimento = ?, cli_cpf = ?, cli_email = ?,"+
+                    "cli_tel_tipo = ?, cli_tel_ddd = ?, cli_tel_numero = ? "+
+                    "WHERE cli_id = ?"
+            )
+        ) {
+            pst.setString(1, c.getNome());
+            pst.setString(2, c.getGenero().name());
+            pst.setDate(3, Date.valueOf(c.getDataNascimento()));
+            pst.setString(4, c.getCpf().valor());
+            pst.setString(5, c.getEmail().valor());
+            pst.setString(6, c.getTelefone().tipo().name());
+            pst.setString(7, c.getTelefone().ddd());
+            pst.setString(8, c.getTelefone().numero());
+            pst.setInt(9, c.getId());
+        
+            if (pst.executeUpdate() == 0) {
+                throw new IllegalStateException("Atualização não foi sucedida!");
+            }
+
+            return consultarByID(c.getId());
+        } catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /***
+     * Operador ILIKE somente suportado pelo PostgreSQL
+     */
+    public List<Cliente> consultarTodos(FiltrarClienteDTO filtro) {
+        StringBuilder query = new StringBuilder("SELECT * FROM clientes WHERE 1=1");
+
+        List<Object> params = new ArrayList<>();
+
+        if (filtro.getNome() != null) {
+            query.append(" AND cli_nome ILIKE ?");
+            params.add("%" + filtro.getNome() + "%");
+        }
+
+        if (filtro.getGenero() != null) {
+            query.append(" AND cli_genero = ?");
+            params.add(filtro.getGenero());
+        }
+
+        if (filtro.getDataNascimento() != null) {
+            query.append(" AND cli_dt_nascimento = ?");
+            params.add(filtro.getDataNascimento());
+        }
+
+        if (filtro.getCpf() != null) {
+            query.append(" AND cli_cpf LIKE ?");
+            params.add("%" + filtro.getCpf() + "%");
+        }
+
+        if (filtro.getEmail() != null) {
+            query.append(" AND cli_email ILIKE ?");
+            params.add("%" + filtro.getEmail() + "%");
+        }
+
+        if (filtro.getIsAtivo() != null) {
+            query.append(" AND cli_is_ativo = ?");
+            params.add(filtro.getIsAtivo());
+        }
+
+        if (filtro.getRanking() != null) {
+            query.append(" AND cli_ranking = ?");
+            params.add(filtro.getRanking());
+        }
+
+        query.append(" ORDER BY cli_id;");
+        
+        try (
+            Connection conn = ConexaoFactory.getConexao();
+
+            PreparedStatement pst = conn.prepareStatement(
+                query.toString(),
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+            );
+        ){
+
+            for (int i = 0; i < params.size(); i++) {
+               
+                if (params.get(i) instanceof Enum){
+                    pst.setObject(i + 1, ((Enum<?>) params.get(i)).name());
+                    continue;
+                }
+
+                pst.setObject(i + 1, params.get(i));
+            }
+
+            ResultSet rs = pst.executeQuery();
+
+            if (!rs.next()) {
+                throw new IllegalStateException("Nenhum registro encontrado de cliente.");
+            }
+            rs.beforeFirst();
+
+            List<Cliente> clientes = new ArrayList<>();
+
+            while (rs.next()){                
+                clientes.add(clienteMapper.mapearEntidade(rs));
+            }
+
+            return clientes;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public Cliente consultarByIDPedido(int idPedido) {
+        try (
+            Connection connection = ConexaoFactory.getConexao();
+
+            PreparedStatement pst = connection.prepareStatement(
+                "SELECT * FROM clientes WHERE cli_id = ("+
+                "   SELECT ped_cli_id FROM pedidos"+
+                "   WHERE ped_id = ?"+
+                ");"
+            );
+        ) {
+            pst.setInt(1, idPedido);
+
+            ResultSet rs = pst.executeQuery();
+    
+            if (!rs.next()){
+                throw new IllegalStateException("Cliente não encontrado!");
+            }
+            
+            return clienteMapper.mapearEntidade(rs);
+        } catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public Cliente atualizarSenha(Cliente c) {
+        try (
+            Connection conn = ConexaoFactory.getConexao(); 
+    
+            PreparedStatement pst = conn.prepareStatement(
+                "UPDATE clientes set "+
+                    "cli_hash_senha = ?, cli_salt_senha = ? "+
+                    "WHERE cli_id = ?"
+            );
+        ){
+            pst.setString(1, c.getHashSenha());
+            pst.setString(2, c.getSaltSenha());
+    
+            pst.setInt(3, c.getId());
+        
+            if (pst.executeUpdate() == 0) {
+                throw new IllegalStateException("Atualização não foi sucedida!");
+            }
+    
+            return consultarByID(c.getId());
+
+        } catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public Cliente atualizarStatusCadastro(Cliente c) {
+        try (
+            Connection conn = ConexaoFactory.getConexao(); 
+    
+            PreparedStatement pst = conn.prepareStatement(
+                "UPDATE clientes set "+
+                    "cli_is_ativo = ? WHERE cli_id = ?"
+            )
+        ) {
+            pst.setBoolean(1, !c.getIsAtivo());
+            
+            pst.setInt(2, c.getId());
+        
+            if (pst.executeUpdate() == 0) {
+                throw new IllegalStateException("Atualização não foi sucedida!");
+            }
+    
+            return consultarByID(c.getId());
+
+        } catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /***
+     * Apenas esse método retorna o hash e o salt da senha do ClienteDAO.
+     */
+    public Cliente consultarHashSaltPorID(int id) {
+        try (
+            Connection connection = ConexaoFactory.getConexao();
+
+            PreparedStatement pst = connection.prepareStatement(
+                "SELECT cli_id, cli_hash_senha, cli_salt_senha FROM clientes WHERE cli_id = ?;"
+            );
+        ) {
+            pst.setInt(1, id);
+
+            ResultSet rs = pst.executeQuery();
+    
+            if (!rs.next()){
+                throw new IllegalStateException("Cliente não encontrado!");
+            }
+    
+            Cliente c = new Cliente();
+            c.setId(rs.getInt("cli_id"));
+            c.setHashSenha(rs.getString("cli_hash_senha"));
+            c.setSaltSenha(rs.getString("cli_salt_senha"));
+            return c;
+        } catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
+    
+}

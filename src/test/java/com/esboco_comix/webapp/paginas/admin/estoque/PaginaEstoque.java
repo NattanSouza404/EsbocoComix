@@ -1,12 +1,12 @@
 package com.esboco_comix.webapp.paginas.admin.estoque;
 
-import com.esboco_comix.model.entidades.EntradaEstoque;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.esboco_comix.estoque.dominio.EntradaEstoque;
 import com.esboco_comix.webapp.base.AbstractPagina;
 
 public class PaginaEstoque extends AbstractPagina {

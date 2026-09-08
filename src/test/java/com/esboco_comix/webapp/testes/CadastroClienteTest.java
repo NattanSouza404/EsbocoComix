@@ -1,12 +1,12 @@
 package com.esboco_comix.webapp.testes;
 
-import com.esboco_comix.dto.AlterarSenhaDTO;
-import com.esboco_comix.dto.FiltrarClienteDTO;
-import com.esboco_comix.model.entidades.CartaoCredito;
-import com.esboco_comix.model.entidades.Cliente;
-import com.esboco_comix.model.entidades.Endereco;
-import com.esboco_comix.model.enuns.BandeiraCartao;
-import com.esboco_comix.model.enuns.Genero;
+import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
+import com.esboco_comix.cliente.dominio.entidades.Cliente;
+import com.esboco_comix.cliente.dominio.entidades.Endereco;
+import com.esboco_comix.cliente.dominio.enuns.BandeiraCartao;
+import com.esboco_comix.cliente.dominio.enuns.Genero;
+import com.esboco_comix.cliente.dto.AlterarSenhaDTO;
+import com.esboco_comix.cliente.dto.FiltrarClienteDTO;
 import com.esboco_comix.webapp.base.BaseTest;
 import com.esboco_comix.webapp.base.factories.CadastrarClienteFactory;
 import com.esboco_comix.webapp.base.factories.EnderecoTesteFactory;

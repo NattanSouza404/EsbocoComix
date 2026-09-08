@@ -1,6 +1,6 @@
 package com.esboco_comix.webapp.casos_de_uso;
 
-import com.esboco_comix.model.entidades.Endereco;
+import com.esboco_comix.cliente.dominio.entidades.Endereco;
 import com.esboco_comix.webapp.paginas.cliente.conta.ModaisConta;
 import com.esboco_comix.webapp.paginas.cliente.conta.PaginaConta;
 import com.esboco_comix.webapp.paginas.cliente.conta.SecoesConta;

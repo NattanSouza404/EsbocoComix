@@ -1,12 +1,12 @@
 package com.esboco_comix;
 
-import com.esboco_comix.config.ServidorConfig;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Tomcat;
+
+import com.esboco_comix.core.config.ServidorConfig;
 
 public class Main {
 

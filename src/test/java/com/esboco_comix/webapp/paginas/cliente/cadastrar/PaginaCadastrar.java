@@ -1,9 +1,9 @@
 package com.esboco_comix.webapp.paginas.cliente.cadastrar;
 
-import com.esboco_comix.dto.CadastrarClienteDTO;
-import com.esboco_comix.model.entidades.CartaoCredito;
-import com.esboco_comix.model.entidades.Cliente;
-import com.esboco_comix.model.entidades.Endereco;
+import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
+import com.esboco_comix.cliente.dominio.entidades.Cliente;
+import com.esboco_comix.cliente.dominio.entidades.Endereco;
+import com.esboco_comix.cliente.dto.CadastrarClienteDTO;
 import com.esboco_comix.webapp.base.AbstractPagina;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
