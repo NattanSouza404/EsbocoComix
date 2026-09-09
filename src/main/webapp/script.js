@@ -1,7 +1,7 @@
-import { AdminContainerNav } from "@componentes/layout/AdminContainerNav.js";
-import { ContainerFooter } from "@componentes/layout/ContainerFooter.js";
-import { ContainerNav } from "@componentes/layout/ContainerNav.js";
 import { logarUsuarioTeste } from "./dev/logar-usuario-teste.js";
+import { Nav } from "@componentes/layout/Nav.js";
+import { AdminNav } from "@componentes/layout/AdminNav.js";
+import { Footer } from "@componentes/layout/Footer.js";
 
 const app = document.getElementById("app");
 
@@ -115,13 +115,13 @@ window.addEventListener("popstate", () => {
 
 navigate(location.pathname + location.search, false);
 
-const mainNav = document.getElementById("main-nav");
-const mainFooter = document.getElementById("main-footer");
+const navContainer = document.getElementById("nav-container");
+const footerContainer = document.getElementById("footer-container");
 const url = window.location.pathname;
 
-if (mainNav){
+if (navContainer){
   if (url.startsWith("/admin")){
-    mainNav.append(AdminContainerNav());
+    navContainer.append(AdminNav());
 
     document.querySelectorAll(".nav-link").forEach( link => {
       if (url === window.location.href){
@@ -129,12 +129,12 @@ if (mainNav){
       }
     });
   } else {
-    mainNav.append(ContainerNav());
+    navContainer.append(Nav());
   }
 }
 
-if (mainFooter){
-  mainFooter.append(ContainerFooter());
+if (footerContainer){
+  footerContainer.append(Footer());
 }
 
 logarUsuarioTeste();

@@ -1,7 +1,10 @@
-export const AdminContainerNav = () => {
-    const div = document.createElement('div');
-    div.className = "container";
-    div.innerHTML = /* html */ `
+export const AdminNav = () => {
+    const nav = document.createElement('nav');
+
+    nav.id = "main-nav";
+    nav.className = "navbar navbar-expand-lg navbar-light d-flex";
+
+    nav.innerHTML = /* html */ `
         <div class="container-fluid">
             <a class="navbar-brand fw-bold" href="#">
                 Painel de Controle
@@ -56,5 +59,5 @@ export const AdminContainerNav = () => {
         </div>
     `;
 
-    return div;
+    return nav;
 }
