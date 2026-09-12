@@ -1,14 +1,18 @@
-import { ChatIA } from "@componentes/chatIA.js";
+import { ChatIA } from "@componentes/ChatIA/ChatIA.js";
+import { carregarEstilo } from "@utils/style.utils.js";
 
 export const Nav = () => {
+    carregarEstilo("./Nav.css", import.meta.url);
+    
     const chatIA = new ChatIA();
 
     const nav = document.createElement('nav');
 
     nav.id = "main-nav";
-    nav.className = "navbar navbar-expand-lg navbar-light d-flex";
+    nav.className = "navbar navbar-expand-lg navbar-light d-flex justify-content-around align-items-center";
+    
     nav.innerHTML = /* html */`
-        <div class="container-fluid">
+        <div class="container-fluid mx-4">
         
             <a id="logo-nav" class="navbar-brand" href="/">
                 <img src="/img/logo.png">

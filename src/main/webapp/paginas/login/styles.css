@@ -1,3 +1,11 @@
+#main-header {
+    background-color: #F1F1F1;
+}
+
+#main-header .container {
+    color: black;
+}
+
 .link-usuario button {
     width: 100px;
     max-width: 100px;

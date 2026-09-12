@@ -4,9 +4,9 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
     "checkJs": true,
-    "moduleResolution": "node16",
+    "module": "es2020",
+    "moduleResolution": "bundler",
     "target": "es2020",
-    "module": "node16",
     "paths": {
       "@api/*": ["./api/*"],
       "@paginas/*": ["./paginas/*"],
@@ -18,9 +18,8 @@
     "lib": ["DOM", "ES2020"]
   },
   "include": [
-    "js/**/*.js",
-    "paginas/**/*.js"
-, "deps/chart.umd.js", "script.js"  ],
+    "**/*.js"
+  ],
   "exclude": [
     "**/bootstrap.bundle.min.js",
     "**/chart.umd.js"

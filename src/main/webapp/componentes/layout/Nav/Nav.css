@@ -1,9 +1,4 @@
 #main-nav {
-    display: flex;
-    justify-content: space-around;
-    justify-items: center;
-    align-items: center;
-    
     background-color: var(--verde);
 }
 

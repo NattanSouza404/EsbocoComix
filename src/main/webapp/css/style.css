@@ -1,7 +1,4 @@
-@import url(chat_ia.css);
-@import url(main-nav.css);
 @import url(main-header.css);
-@import url(main-footer.css);
 
 :root {
     --cor-exemplo: #FFFFFF;

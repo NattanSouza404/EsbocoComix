@@ -1,8 +1,12 @@
+import { carregarEstilo } from "@utils/style.utils.js";
+
 export const AdminNav = () => {
+    carregarEstilo("./AdminNav.css", import.meta.url);
+
     const nav = document.createElement('nav');
 
     nav.id = "main-nav";
-    nav.className = "navbar navbar-expand-lg navbar-light d-flex";
+    nav.className = "navbar navbar-expand-lg navbar-light d-flex justify-content-around align-items-center";
 
     nav.innerHTML = /* html */ `
         <div class="container-fluid">

@@ -1,4 +1,8 @@
+import { carregarEstilo } from "@utils/style.utils.js";
+
 export const Footer = () => {
+    carregarEstilo("./Footer.css", import.meta.url);
+
     const footer = document.createElement('footer');
 
     footer.id = "main-footer";

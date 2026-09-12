@@ -1,17 +1,19 @@
-import { Modal } from "./common/modal.js";
-import { retornarRespostaIA } from "../api/chatbot.api.js";
-import { adicionarMensagemHistorico, getHistorico, removerHistorico } from "../storage/localStorage.js";
+import { Modal } from "../common/modal.js";
+import { retornarRespostaIA } from "../../api/chatbot.api.js";
+import { adicionarMensagemHistorico, getHistorico, removerHistorico } from "../../storage/localStorage.js";
+import { carregarEstilo } from "@utils/style.utils.js";
 
 export class ChatIA extends Modal {
 
     constructor(){
+        carregarEstilo("./ChatIA.css", import.meta.url);
         const conteudoModal = ConteudoModal();
 
         super('modal-chat-ia', "Assistente Virtual", conteudoModal);
 
         this.conteudoModal = conteudoModal;
 
-        this.modalElement.querySelector('.modal-footer').innerHTML = `
+        this.modalElement.querySelector('.modal-footer').innerHTML = /* html */ `
             <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="/img/three-dots.svg">
@@ -120,7 +122,9 @@ export class ChatIA extends Modal {
             adicionarMensagemHistorico(mensagemIA.resposta, 'texto-ia');
 
         } catch (error){
-            alert("Erro no assistente virtual: "+error.message);
+            if (error instanceof Error){
+                alert("Erro no assistente virtual: "+error.message);
+            }
         }
     }
 

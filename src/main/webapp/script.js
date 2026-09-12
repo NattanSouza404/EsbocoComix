@@ -1,7 +1,7 @@
 import { logarUsuarioTeste } from "./dev/logar-usuario-teste.js";
-import { Nav } from "@componentes/layout/Nav.js";
-import { AdminNav } from "@componentes/layout/AdminNav.js";
-import { Footer } from "@componentes/layout/Footer.js";
+import { Nav } from "@componentes/layout/Nav/Nav.js";
+import { AdminNav } from "@componentes/layout/AdminNav/AdminNav.js";
+import { Footer } from "@componentes/layout/Footer/Footer.js";
 
 const app = document.getElementById("app");
 
