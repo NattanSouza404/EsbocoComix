@@ -2,8 +2,8 @@ import { atualizarCliente } from "@api/cliente.api.js";
 import { FormDadosPessoais } from "@componentes/forms/FormDadosPessoais.js";
 import { Modal } from "@componentes/common/modal.js";
 import { alertarErro } from "@api/alertErro.js";
-import { localStorageKeys } from "@storage/localStorage.js";
 import { montarClientePorForm } from "@utils/form.utils.js";
+import { ClienteStorage } from "@storage/cliente.storage.js";
 
 export class ModalAlterarDadosPessoais extends Modal {
 
@@ -37,7 +37,7 @@ export class ModalAlterarDadosPessoais extends Modal {
         }
 
         const cliente = montarClientePorForm(this.form);
-        cliente.id = localStorage.getItem(localStorageKeys.idCliente);
+        cliente.id = ClienteStorage.getIdCliente();
 
         try {
             await atualizarCliente({

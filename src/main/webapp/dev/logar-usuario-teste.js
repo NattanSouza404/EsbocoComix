@@ -1,8 +1,9 @@
-import { localStorageKeys } from "@storage/localStorage.js";
+import { ClienteStorage } from "@storage/cliente.storage.js";
+import { LoginStorage } from "@storage/login.storage.js";
 
 export function logarUsuarioTeste() {
-  if (localStorage.getItem(localStorageKeys.primeiraVez) === null) {
-    localStorage.setItem(localStorageKeys.idCliente, "1");
-    localStorage.setItem(localStorageKeys.primeiraVez, "true");
+  if (LoginStorage.getPrimeiraVez() === null) {
+    ClienteStorage.setIdCliente(1);
+    LoginStorage.setPrimeiraVez(true);
   }
 }

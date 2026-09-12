@@ -8,7 +8,7 @@ import { SecaoCartaoCredito } from "@paginas/compra/secoes/secaoCartaoCredito/Se
 import { retornarCupons } from "@api/cupom.api.js";
 import { SecaoCupom } from "@paginas/compra/secoes/secaoCupom/SecaoCupons.js";
 import { alertarErro } from "@api/alertErro.js";
-import { localStorageKeys } from "@storage/localStorage.js";
+import { ClienteStorage } from "@storage/cliente.storage.js";
 
 const secaoSelecaoEndereco = new SecaoSelecaoEndereco();
 let secaoSelecaoCartao;
@@ -24,7 +24,7 @@ initPagina();
 
 export async function initPagina() {
     try {
-        const idCliente = localStorage.getItem(localStorageKeys.idCliente); 
+        const idCliente = ClienteStorage.getIdCliente();
 
         const enderecos = await retornarEnderecos(idCliente);
         const cartoesCredito = await retornarCartoesCredito(idCliente);
@@ -61,7 +61,7 @@ async function confirmarEnvioDePedido(){
             return;
         }
         
-        const idCliente = localStorage.getItem(localStorageKeys.idCliente);
+        const idCliente = ClienteStorage.getIdCliente();
         const endereco = secaoSelecaoEndereco.getEnderecoSelecionado();
 
         const idEndereco = endereco.id;

@@ -3,13 +3,14 @@ import { retornarEnderecos } from "@api/endereco.api.js";
 import { retornarCartoesCredito } from "@api/cartaoCredito.api.js";
 import { alertarErro } from "@api/alertErro.js";
 import { retornarCupons } from "@api/cupom.api.js";
-import { localStorageKeys, removerHistorico } from "@storage/localStorage.js";
 
 import { SecaoDadosPessoais } from "@paginas/conta/secoes/secaoDadosPessoais/SecaoDadosPessoais.js";
 import { SecaoCartaoCredito } from "@paginas/conta/secoes/secaoCartaoCredito/SecaoCartaoCredito.js";
 import { SecaoCupom } from "@paginas/conta/secoes/secaoCupons/secaoCupons.js";
 import { SecaoEndereco } from "@paginas/conta/secoes/secaoEndereco/SecaoEndereco.js";
 import { getUrlParam } from "@utils/url.utils.js";
+import { ClienteStorage } from "@storage/cliente.storage.js";
+import { ChatIAStorage } from "@storage/chatIA.storage.js";
 
 const getElementos = () => {
     return {
@@ -65,7 +66,7 @@ export async function initPagina() {
             el.navLateral.append(BotaoSecaoConta(def));
         });
 
-        const idCliente = localStorage.getItem(localStorageKeys.idCliente);
+        const idCliente = ClienteStorage.getIdCliente();
 
         if (!idCliente || idCliente.length === 0){
             alertarErro("Você deve ter uma conta para acessar essa página!")
@@ -108,8 +109,8 @@ function trocarSecao(secao){
 
 function loginCliente(id){
     if (id !== null && id !== undefined){
-        localStorage.setItem(localStorageKeys.idCliente, id);
-        removerHistorico();
+        ClienteStorage.setIdCliente(id);
+        ChatIAStorage.removerHistorico();
         window.location.href = "/conta";
     }
 }

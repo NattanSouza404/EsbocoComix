@@ -2,8 +2,8 @@ import { atualizarCartaoCredito } from "@api/cartaoCredito.api.js";;
 import { Modal } from "@componentes/common/modal.js";
 import { FormCartaoCredito } from "@componentes/forms/FormCartaoCredito.js";
 import { alertarErro } from "@api/alertErro.js";
-import { localStorageKeys } from "@storage/localStorage.js";
 import { montarCartaoCreditoPorForm } from "@utils/form.utils.js";
+import { ClienteStorage } from "@storage/cliente.storage.js";
 
 export class ModalAlterarCartaoCredito extends Modal {
     constructor(){
@@ -35,7 +35,7 @@ export class ModalAlterarCartaoCredito extends Modal {
         }
 
         try {
-            cartao.idCliente = localStorage.getItem(localStorageKeys.idCliente);
+            cartao.idCliente = ClienteStorage.getIdCliente();
 
             await atualizarCartaoCredito(cartao);
             

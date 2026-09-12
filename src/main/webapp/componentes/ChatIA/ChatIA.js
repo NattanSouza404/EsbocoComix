@@ -1,7 +1,8 @@
 import { Modal } from "../common/modal.js";
 import { retornarRespostaIA } from "../../api/chatbot.api.js";
-import { adicionarMensagemHistorico, getHistorico, removerHistorico } from "../../storage/localStorage.js";
 import { carregarEstilo } from "@utils/style.utils.js";
+import { ClienteStorage } from "@storage/cliente.storage.js";
+import { ChatIAStorage } from "@storage/chatIA.storage.js";
 
 export class ChatIA extends Modal {
 
@@ -54,7 +55,7 @@ export class ChatIA extends Modal {
             this.limparChat();
         };
 
-        getHistorico().forEach(h => {
+        ChatIAStorage.getHistorico().forEach(h => {
             this.adicionarMensagem(h.mensagem, h.tipoMensagem)
         });
     }
@@ -87,7 +88,7 @@ export class ChatIA extends Modal {
 
     limparChat(){
         if (confirm("Deseja realmente deletar o histórico de mensagens? Essa ação não poderá ser revertida.")){
-            removerHistorico();
+            ChatIAStorage.removerHistorico();
             window.location.reload();
         }
     }
@@ -104,7 +105,10 @@ export class ChatIA extends Modal {
         this.scrollar();
 
         try {
-            const mensagemIA = await retornarRespostaIA(mensagem);
+            const mensagemIA = await retornarRespostaIA(
+                ClienteStorage.getIdCliente(),
+                mensagem
+            );
 
             if (mensagemIA === undefined || mensagem === null || mensagem === ''){
                 throw new Error("[Assistente virtual fora de serviço]");
@@ -118,8 +122,8 @@ export class ChatIA extends Modal {
 
             this.scrollar();
 
-            adicionarMensagemHistorico(mensagem, 'texto-usuario');
-            adicionarMensagemHistorico(mensagemIA.resposta, 'texto-ia');
+            ChatIAStorage.adicionarMensagemHistorico(mensagem, 'texto-usuario');
+            ChatIAStorage.adicionarMensagemHistorico(mensagemIA.resposta, 'texto-ia');
 
         } catch (error){
             if (error instanceof Error){

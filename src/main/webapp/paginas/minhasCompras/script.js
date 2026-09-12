@@ -3,7 +3,7 @@ import { inserirPedidoPosVenda, retornarPedidosPosVendaByCliente } from "@api/pe
 import { alertarErro } from "@api/alertErro.js";
 import { CartaoCompra } from "./componentes/CartaoCompra.js";
 import { ModalConsultarPedidosPosVenda } from "./componentes/ModalConsultarPedidosVenda.js";
-import { localStorageKeys } from "../../storage/localStorage.js";
+import { ClienteStorage } from "@storage/cliente.storage.js";
 
 const getElementos = () => {
     return {
@@ -17,7 +17,7 @@ initPagina();
 
 export async function initPagina() {
     try {
-        const idCliente = localStorage.getItem(localStorageKeys.idCliente);
+        const idCliente = ClienteStorage.getIdCliente();
 
         if (!idCliente || idCliente.length === 0){
             alertarErro(new Error("Você deve ter uma conta para acessar essa página!"));

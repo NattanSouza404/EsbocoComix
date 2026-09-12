@@ -2,8 +2,8 @@ import { Modal } from "@componentes/common/modal.js";
 import { FormEndereco } from "@componentes/forms/FormEndereco.js";
 import { inserirEndereco } from "@api/endereco.api.js";
 import { alertarErro } from "@api/alertErro.js";
-import { localStorageKeys } from "@storage/localStorage.js";
 import { montarEnderecoPorForm } from "@utils/form.utils.js";
+import { ClienteStorage } from "@storage/cliente.storage.js";
 
 export class ModalAdicionarEndereco extends Modal {
 
@@ -32,7 +32,7 @@ export class ModalAdicionarEndereco extends Modal {
             this.conteudoModal
         );
 
-        endereco.idCliente = localStorage.getItem(localStorageKeys.idCliente);
+        endereco.idCliente = ClienteStorage.getIdCliente();
 
         try {
             await inserirEndereco(endereco);

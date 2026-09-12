@@ -3,8 +3,8 @@ import { inserirCliente } from "@api/cliente.api.js";
 import { FormCartaoCredito } from "@componentes/forms/FormCartaoCredito.js";
 import { FormEndereco } from "@componentes/forms/FormEndereco.js";
 import { FormCadastrarDadosPessoais } from "./componentes/FormCadastrar.js";
-import { localStorageKeys } from "../../storage/localStorage.js";
 import { montarCartaoCreditoPorForm, montarClientePorForm, montarEnderecoPorForm } from "@utils/form.utils.js";
+import { ClienteStorage } from "@storage/cliente.storage.js";
 
 const getElementos = () => {
     return {
@@ -74,7 +74,8 @@ async function enviarCliente(){
 
         alert('Cadastrado com sucesso');
 
-        localStorage.setItem(localStorageKeys.idCliente, cadastro.cliente.id);
+        ClienteStorage.setIdCliente(cadastro.cliente.id);
+
         window.location.href = "/";
     } catch (error){
         alertarErro(error);
