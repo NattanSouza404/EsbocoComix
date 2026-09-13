@@ -87,13 +87,13 @@ export async function atualizarSenha(cliente){
     
 }
 
-export async function inativarCliente(cliente){
+export async function atualizarStatusCadastro(id, isAtivo){
     let url = `${PATH}/atualizar-status-cadastro`;
 
     const option = {
         method: 'PUT',
         headers:{'Content-Type': 'application/json'},
-        body: JSON.stringify(cliente)
+        body: JSON.stringify({id, isAtivo})
     }
 
     const resposta = await fetch(url, option);

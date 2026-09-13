@@ -1,5 +1,5 @@
 import { alertarErro } from "@api/alertErro.js";
-import { inativarCliente, retornarAllClientes } from "@api/cliente.api.js";
+import { atualizarStatusCadastro, retornarAllClientes } from "@api/cliente.api.js";
 import { retornarPedidos } from "@api/pedido.api.js";
 import TabelaClientes from "./componentes/TabelaClientes.js";
 import ModalCupomPromocional from "./componentes/ModalCupomPromocional.js";
@@ -28,7 +28,7 @@ export async function initPagina() {
         const tabelaClientes = new TabelaClientes(
             modalTransacoes,
             modalCupom,
-            confirmarInativarCliente
+            confirmarAtualizarStatusCadastro
         );
 
         el.tabelaClientes.appendChild(
@@ -73,15 +73,19 @@ async function pesquisarClientes(tabelaClientes){
     }
 }
 
-async function confirmarInativarCliente(cliente){
+async function confirmarAtualizarStatusCadastro(cliente){
     try {
-        const confirmacaoUsuario = confirm("Deseja mesmo ativar/inativar cliente?"); 
+        const confirmacaoUsuario = confirm(
+            cliente.isAtivo ?
+                "Deseja mesmo inativar cliente?" :
+                "Deseja mesmo ativar cliente?"
+        ); 
 
         if (!confirmacaoUsuario){
             return;
         }
     
-        await inativarCliente(cliente);
+        await atualizarStatusCadastro(cliente.id, !(cliente.isAtivo));
         alert('Atualizado com sucesso!');
 
         window.location.reload();

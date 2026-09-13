@@ -6,11 +6,11 @@ export default class TabelaClientes extends HTMLTableElement {
     constructor(
         modalTransacoes,
         modalCupomPromocional,
-        confirmarInativarCliente
+        atualizarStatusCadastro
     ) {
         super();
 
-        this.confirmarInativarCliente = confirmarInativarCliente;
+        this.atualizarStatusCadastro = atualizarStatusCadastro;
         this.id = 'tabela-clientes';
 
         this.innerHTML = /* html */ ` 
@@ -43,7 +43,7 @@ export default class TabelaClientes extends HTMLTableElement {
                     clientes[i],
                     this.modalTransacoes,
                     this.modalCupomPromocional,
-                    this.confirmarInativarCliente
+                    this.atualizarStatusCadastro
                 )
             ); 
         }        
@@ -56,7 +56,7 @@ function LinhaTabelaCliente(
     cliente,
     modalTransacoes,
     modalCupomPromocional,
-    confirmarInativarCliente
+    atualizarStatusCadastro
 ){
     const tr = document.createElement('tr');
 
@@ -103,7 +103,7 @@ function LinhaTabelaCliente(
 
     /** @type {HTMLButtonElement} */
     (tr.querySelector('.btn-inativar')).onclick = async () => {
-        confirmarInativarCliente(cliente);
+        atualizarStatusCadastro(cliente);
     };
 
     return tr;

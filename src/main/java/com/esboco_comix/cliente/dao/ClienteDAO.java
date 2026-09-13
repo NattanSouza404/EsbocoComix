@@ -281,7 +281,7 @@ public class ClienteDAO {
         }
     }
 
-    public Cliente atualizarStatusCadastro(Cliente c) {
+    public Cliente atualizarStatusCadastro(int idCliente, boolean isAtivo) {
         try (
             Connection conn = ConexaoFactory.getConexao(); 
     
@@ -290,15 +290,14 @@ public class ClienteDAO {
                     "cli_is_ativo = ? WHERE cli_id = ?"
             )
         ) {
-            pst.setBoolean(1, !c.getIsAtivo());
-            
-            pst.setInt(2, c.getId());
-        
+            pst.setBoolean(1, isAtivo);
+            pst.setInt(2, idCliente);
+
             if (pst.executeUpdate() == 0) {
                 throw new IllegalStateException("Atualização não foi sucedida!");
             }
     
-            return consultarByID(c.getId());
+            return consultarByID(idCliente);
 
         } catch (Exception e){
             throw new IllegalStateException(e);

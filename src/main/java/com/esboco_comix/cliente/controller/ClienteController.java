@@ -1,8 +1,8 @@
 package com.esboco_comix.cliente.controller;
 
-import com.esboco_comix.cliente.dominio.entidades.Cliente;
 import com.esboco_comix.cliente.dto.AlterarSenhaDTO;
 import com.esboco_comix.cliente.dto.AtualizarClienteDTO;
+import com.esboco_comix.cliente.dto.AtualizarStatusCadastroDTO;
 import com.esboco_comix.cliente.dto.CadastrarClienteDTO;
 import com.esboco_comix.cliente.service.ClienteService;
 import com.esboco_comix.core.controller.AbstractController;
@@ -92,8 +92,9 @@ public class ClienteController extends AbstractController {
     }
 
     private Object cadastrarCliente(HttpServletRequest req) throws Exception {
-        CadastrarClienteDTO pedidoCadastrarCliente = jsonToObject(req, CadastrarClienteDTO.class);
-        return clienteService.inserir(pedidoCadastrarCliente);
+        return clienteService.inserir(
+            jsonToObject(req, CadastrarClienteDTO.class)
+        );
     }
 
     public Object atualizarCliente(HttpServletRequest req) throws Exception {
@@ -103,13 +104,15 @@ public class ClienteController extends AbstractController {
     }
 
     public Object atualizarSenha(HttpServletRequest req) throws Exception {
-        AlterarSenhaDTO pedido = jsonToObject(req, AlterarSenhaDTO.class);
-        return clienteService.atualizarSenha(pedido);
+        return clienteService.atualizarSenha(
+            jsonToObject(req, AlterarSenhaDTO.class)
+        );
     }
 
     public Object atualizarStatusCadastro(HttpServletRequest req) throws Exception {
-        Cliente clienteToUpdateStatus = jsonToObject(req, Cliente.class);
-        return clienteService.atualizarStatusCadastro(clienteToUpdateStatus);
+        return clienteService.atualizarStatusCadastro(
+            jsonToObject(req, AtualizarStatusCadastroDTO.class)
+        );
     }
 
 }

@@ -14,6 +14,7 @@ import com.esboco_comix.cliente.dominio.entidades.Endereco;
 import com.esboco_comix.cliente.dominio.value_objects.Senha;
 import com.esboco_comix.cliente.dto.AlterarSenhaDTO;
 import com.esboco_comix.cliente.dto.AtualizarClienteDTO;
+import com.esboco_comix.cliente.dto.AtualizarStatusCadastroDTO;
 import com.esboco_comix.cliente.dto.CadastrarClienteDTO;
 import com.esboco_comix.cliente.mapper.ClienteDTOMapper;
 import com.esboco_comix.core.dao.TransactionExecutor;
@@ -118,8 +119,10 @@ public class ClienteService {
         return clienteDAO.atualizarSenha(cliente);
     }
 
-    public Cliente atualizarStatusCadastro(Cliente c) {
-        return clienteDAO.atualizarStatusCadastro(c);
+    public Cliente atualizarStatusCadastro(AtualizarStatusCadastroDTO dto) {
+        return clienteDAO.atualizarStatusCadastro(
+            dto.id(), dto.isAtivo()
+        );
     }
 
     public Cliente consultarByIDPedido(int idPedido) {
