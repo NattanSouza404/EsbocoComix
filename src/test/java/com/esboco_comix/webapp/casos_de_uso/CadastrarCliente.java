@@ -25,8 +25,8 @@ public class CadastrarCliente {
     public void cadastrarCliente(CadastrarClienteDTO cadastro) throws InterruptedException {
         paginaCadastrar.abrir();
         paginaCadastrar.preencherCliente(cadastro);
-        paginaCadastrar.preencherEnderecos(cadastro.getEnderecos());
-        paginaCadastrar.preencherCartoesCreditos(cadastro.getCartoesCredito());
+        paginaCadastrar.preencherEnderecos(cadastro.enderecos());
+        paginaCadastrar.preencherCartoesCreditos(cadastro.cartoesCredito());
         paginaCadastrar.enviarCadastro();
     }
 

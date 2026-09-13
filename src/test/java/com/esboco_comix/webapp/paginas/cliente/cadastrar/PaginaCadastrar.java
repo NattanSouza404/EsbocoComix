@@ -1,7 +1,6 @@
 package com.esboco_comix.webapp.paginas.cliente.cadastrar;
 
 import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
-import com.esboco_comix.cliente.dominio.entidades.Cliente;
 import com.esboco_comix.cliente.dominio.entidades.Endereco;
 import com.esboco_comix.cliente.dto.CadastrarClienteDTO;
 import com.esboco_comix.webapp.base.AbstractPagina;
@@ -24,18 +23,17 @@ public class PaginaCadastrar extends AbstractPagina {
             ExpectedConditions.presenceOfElementLocated(By.id("cadastrar-dados-pessoais"))
         );
 
-        Cliente c = pedido.getCliente();
-        form.findElement(By.name("nome")).sendKeys(c.getNome());
-        form.findElement(By.name("cpf")).sendKeys(c.getCpf().valor());
-        form.findElement(By.name("email")).sendKeys(c.getEmail().valor());
-        form.findElement(By.name("tipoTelefone")).sendKeys(c.getTelefone().tipo().name());
-        form.findElement(By.name("ddd")).sendKeys(c.getTelefone().ddd());
-        form.findElement(By.name("numero")).sendKeys(c.getTelefone().numero());
-        form.findElement(By.name("senhaNova")).sendKeys(pedido.getSenhaNova());
-        form.findElement(By.name("senhaConfirmacao")).sendKeys(pedido.getSenhaConfirmacao());
+        form.findElement(By.name("nome")).sendKeys(pedido.nome());
+        form.findElement(By.name("cpf")).sendKeys(pedido.cpf());
+        form.findElement(By.name("email")).sendKeys(pedido.email());
+        form.findElement(By.name("tipoTelefone")).sendKeys(pedido.telefone().tipo().name());
+        form.findElement(By.name("ddd")).sendKeys(pedido.telefone().ddd());
+        form.findElement(By.name("numero")).sendKeys(pedido.telefone().numero());
+        form.findElement(By.name("senhaNova")).sendKeys(pedido.senhaNova());
+        form.findElement(By.name("senhaConfirmacao")).sendKeys(pedido.senhaConfirmacao());
 
-        preencherInputSelect(form, "tipoTelefone", c.getTelefone().tipo().name());
-        preencherInput(form, "dataNascimento", c.getDataNascimento());
+        preencherInputSelect(form, "tipoTelefone", pedido.telefone().tipo().name());
+        preencherInput(form, "dataNascimento", pedido.dataNascimento());
 
         sleep();
     }

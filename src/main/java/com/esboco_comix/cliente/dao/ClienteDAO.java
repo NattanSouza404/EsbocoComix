@@ -19,12 +19,24 @@ public class ClienteDAO {
     public Cliente inserir(Connection conn, Cliente c) {
         try (
             PreparedStatement pst = conn.prepareStatement(
-                "INSERT INTO clientes("+
-                    "cli_nome, cli_genero, cli_dt_nascimento, cli_cpf, cli_email, "+
-                    "cli_hash_senha, cli_salt_senha, cli_ranking, "+
-                    "cli_tel_tipo, cli_tel_ddd, cli_tel_numero, cli_is_ativo) "+
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
-                    Statement.RETURN_GENERATED_KEYS
+                """
+                INSERT INTO clientes(
+                    cli_nome,
+                    cli_genero,
+                    cli_dt_nascimento,
+                    cli_cpf,
+                    cli_email, 
+                    cli_hash_senha,
+                    cli_salt_senha,
+                    cli_ranking, 
+                    cli_tel_tipo,
+                    cli_tel_ddd,
+                    cli_tel_numero,
+                    cli_is_ativo
+                ) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                """,
+                Statement.RETURN_GENERATED_KEYS
             )
         ){
             pst.setString(1, c.getNome());

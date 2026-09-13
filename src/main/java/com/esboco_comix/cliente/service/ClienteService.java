@@ -11,6 +11,8 @@ import com.esboco_comix.cliente.dao.EnderecoDAO;
 import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
 import com.esboco_comix.cliente.dominio.entidades.Cliente;
 import com.esboco_comix.cliente.dominio.entidades.Endereco;
+import com.esboco_comix.cliente.dominio.value_objects.Cpf;
+import com.esboco_comix.cliente.dominio.value_objects.Email;
 import com.esboco_comix.cliente.dominio.value_objects.Senha;
 import com.esboco_comix.cliente.dto.AlterarSenhaDTO;
 import com.esboco_comix.cliente.dto.AtualizarClienteDTO;
@@ -29,9 +31,9 @@ public class ClienteService {
 
     private final ClienteDTOMapper clienteMapper = new ClienteDTOMapper();
 
-    public CadastrarClienteDTO inserir(CadastrarClienteDTO pedido) {
-        Senha senhaNova = new Senha(pedido.getSenhaNova());
-        Senha senhaConfirmacao = new Senha(pedido.getSenhaConfirmacao());
+    public CadastrarClienteDTO inserir(CadastrarClienteDTO dto) {
+        Senha senhaNova = new Senha(dto.senhaNova());
+        Senha senhaConfirmacao = new Senha(dto.senhaConfirmacao());
 
         if (!(senhaNova.equals(senhaConfirmacao))){
             throw new IllegalArgumentException("Senha e senha de confirmação devem ser iguais!");
@@ -39,9 +41,14 @@ public class ClienteService {
 
         String saltSenha = CriptografadorSenha.generateSalt();
 
-        Cliente clienteToAdd = pedido.getCliente();
+        Cliente clienteToAdd = new Cliente();
+        clienteToAdd.setNome(dto.nome());
+        clienteToAdd.setGenero(dto.genero());
+        clienteToAdd.setDataNascimento(dto.dataNascimento());
+        clienteToAdd.setCpf(new Cpf(dto.cpf()));
+        clienteToAdd.setEmail(new Email(dto.email()));
         clienteToAdd.setHashSenha(
-            CriptografadorSenha.hashSenha(new Senha(pedido.getSenhaNova()), saltSenha)
+            CriptografadorSenha.hashSenha(new Senha(dto.senhaNova()), saltSenha)
         );
         clienteToAdd.setSaltSenha(saltSenha);
         clienteToAdd.setRanking(0);
@@ -51,21 +58,25 @@ public class ClienteService {
             Cliente clienteInserido = clienteDAO.inserir(conn, clienteToAdd);
 
             List<Endereco> enderecosInseridos = new ArrayList<>();
-            for (Endereco e : pedido.getEnderecos()) {
+            for (Endereco e : dto.enderecos()) {
                 e.validar();
                 e.setIdCliente(clienteInserido.getId());
                 enderecosInseridos.add(enderecoDAO.inserir(conn, e));
             }
 
             List<CartaoCredito> cartoesCredito = new ArrayList<>();
-            for (CartaoCredito c: pedido.getCartoesCredito()){
+            for (CartaoCredito c: dto.cartoesCredito()){
                 c.validar();
                 c.setIdCliente(clienteInserido.getId());
                 cartoesCredito.add(cartaoCreditoDAO.inserir(conn, c));
             }
 
             return CadastrarClienteDTO.builder()
-                .cliente(clienteInserido)
+                .nome(clienteInserido.getNome())
+                .genero(clienteInserido.getGenero())
+                .dataNascimento(clienteInserido.getDataNascimento())
+                .cpf(clienteInserido.getCpf().valor())
+                .email(clienteInserido.getEmail().valor())
                 .enderecos(enderecosInseridos)
                 .cartoesCredito(cartoesCredito)
             .build();
@@ -85,9 +96,9 @@ public class ClienteService {
     }
 
     public Cliente atualizar(AtualizarClienteDTO c) {
-        Cliente clienteToUpdate = clienteMapper.mapearToCliente(c);
-        clienteToUpdate.validar();
-        return clienteDAO.atualizar(clienteToUpdate);
+        return clienteDAO.atualizar(
+            clienteMapper.mapearToCliente(c)
+        );
     }
 
     public Cliente atualizarSenha(AlterarSenhaDTO dto) {
