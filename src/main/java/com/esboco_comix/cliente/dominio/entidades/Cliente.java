@@ -6,6 +6,7 @@ import java.util.List;
 import com.esboco_comix.cliente.dominio.enuns.Genero;
 import com.esboco_comix.cliente.dominio.value_objects.Cpf;
 import com.esboco_comix.cliente.dominio.value_objects.Email;
+import com.esboco_comix.cliente.dominio.value_objects.Senha;
 import com.esboco_comix.cliente.dominio.value_objects.Telefone;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -51,5 +52,41 @@ public class Cliente {
         if (dataNascimento == null) {
             throw new IllegalArgumentException("Data de nascimento do cliente não pode ser nula!");
         }
+    }
+
+    public void definirSenha(Senha senha, CriptografadorSenha criptografador) { 
+        String saltSenha = criptografador.generateSalt();
+        
+        this.saltSenha = saltSenha;
+        this.hashSenha = criptografador.hashSenha(senha, saltSenha);
+    }
+
+    public void atualizarSenha(
+        Senha senhaAntiga,
+        Senha senhaNova,
+        Senha senhaConfirmacao,
+        CriptografadorSenha criptografador
+    ) {
+        if (!senhaNova.equals(senhaConfirmacao)) {
+            throw new IllegalArgumentException(
+                "Senha e senha de confirmação devem ser iguais!"
+            );
+        }
+
+        String hashGuardado = this.getHashSenha();
+        String saltGuardado = this.getSaltSenha();
+
+        String hashSenhaAntiga = criptografador.hashSenha(
+            senhaAntiga,
+            saltGuardado
+        );
+
+        if (!hashSenhaAntiga.equals(hashGuardado)) {
+            throw new IllegalArgumentException(
+                "Senha antiga incorreta!"
+            );
+        }
+
+        this.definirSenha(senhaNova, criptografador);
     }
 }

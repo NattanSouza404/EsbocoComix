@@ -20,7 +20,7 @@ import com.esboco_comix.cliente.dto.AtualizarStatusCadastroDTO;
 import com.esboco_comix.cliente.dto.CadastrarClienteDTO;
 import com.esboco_comix.cliente.mapper.ClienteDTOMapper;
 import com.esboco_comix.core.dao.TransactionExecutor;
-import com.esboco_comix.core.security.CriptografadorSenha;
+import com.esboco_comix.core.security.CriptografadorSenhaPBKDF2;
 
 public class ClienteService {
     private final ClienteDAO clienteDAO = new ClienteDAO();
@@ -31,6 +31,8 @@ public class ClienteService {
 
     private final ClienteDTOMapper clienteMapper = new ClienteDTOMapper();
 
+    private final CriptografadorSenhaPBKDF2 criptografador = new CriptografadorSenhaPBKDF2();
+
     public CadastrarClienteDTO inserir(CadastrarClienteDTO dto) {
         Senha senhaNova = new Senha(dto.senhaNova());
         Senha senhaConfirmacao = new Senha(dto.senhaConfirmacao());
@@ -39,19 +41,16 @@ public class ClienteService {
             throw new IllegalArgumentException("Senha e senha de confirmação devem ser iguais!");
         }
 
-        String saltSenha = CriptografadorSenha.generateSalt();
-
         Cliente clienteToAdd = new Cliente();
         clienteToAdd.setNome(dto.nome());
         clienteToAdd.setGenero(dto.genero());
         clienteToAdd.setDataNascimento(dto.dataNascimento());
         clienteToAdd.setCpf(new Cpf(dto.cpf()));
         clienteToAdd.setEmail(new Email(dto.email()));
-        clienteToAdd.setHashSenha(
-            CriptografadorSenha.hashSenha(new Senha(dto.senhaNova()), saltSenha)
-        );
-        clienteToAdd.setSaltSenha(saltSenha);
         clienteToAdd.setRanking(0);
+        
+        clienteToAdd.definirSenha(senhaNova, criptografador);
+        
         clienteToAdd.validar();
 
         return transactionManager.execute(conn -> {
@@ -104,28 +103,12 @@ public class ClienteService {
     public Cliente atualizarSenha(AlterarSenhaDTO dto) {
         Cliente cliente = clienteDAO.consultarHashSaltPorID(dto.getIdCliente());
 
-        Senha senhaNova = new Senha(dto.getSenhaNova());
-        Senha senhaConfirmacao = new Senha(dto.getSenhaConfirmacao());
-
-        if (!(senhaNova.equals(senhaConfirmacao))){
-            throw new IllegalArgumentException(
-                "Senha e senha de confirmação devem ser iguais!"
-            );
-        }
-
-        String hashGuardado = cliente.getHashSenha();
-        String saltGuardado = cliente.getSaltSenha();
-        String hashNovo = CriptografadorSenha.hashSenha(senhaNova, saltGuardado);
-
-        if (!hashNovo.equals(hashGuardado)){
-            throw new IllegalArgumentException(
-                "Senha antiga não consta com senha inserida pelo usuário!"
-            );
-        }
-
-        String saltSenha = CriptografadorSenha.generateSalt();
-        cliente.setHashSenha(CriptografadorSenha.hashSenha(senhaNova, saltSenha));
-        cliente.setSaltSenha(saltSenha);
+        cliente.alterarSenha(
+            new Senha(dto.getSenhaAntiga()),
+            new Senha(dto.getSenhaNova()),
+            new Senha(dto.getSenhaConfirmacao()),
+            criptografador
+        );
 
         return clienteDAO.atualizarSenha(cliente);
     }
