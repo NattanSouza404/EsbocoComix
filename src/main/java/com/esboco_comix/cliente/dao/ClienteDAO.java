@@ -73,7 +73,21 @@ public class ClienteDAO {
             Connection conn = ConexaoFactory.getConexao();
 
             PreparedStatement pst = conn.prepareStatement(
-                "SELECT * FROM clientes ORDER BY cli_id;",
+                """
+                SELECT
+                    cli_id,
+                    cli_nome,
+                    cli_genero,
+                    cli_dt_nascimento,
+                    cli_cpf,
+                    cli_email, 
+                    cli_ranking, 
+                    cli_tel_tipo,
+                    cli_tel_ddd,
+                    cli_tel_numero,
+                    cli_is_ativo
+                FROM clientes ORDER BY cli_id;
+                """,
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
             )
@@ -110,7 +124,22 @@ public class ClienteDAO {
     public Cliente consultarByID(Connection conn, int id) {
         try (
             PreparedStatement pst = conn.prepareStatement(
-                "SELECT * FROM clientes WHERE cli_id = ?;"
+                """
+                SELECT
+                    cli_id,
+                    cli_nome,
+                    cli_genero,
+                    cli_dt_nascimento,
+                    cli_cpf,
+                    cli_email, 
+                    cli_ranking, 
+                    cli_tel_tipo,
+                    cli_tel_ddd,
+                    cli_tel_numero,
+                    cli_is_ativo
+                FROM
+                clientes WHERE cli_id = ?;
+                """
             )
         ) {
             pst.setInt(1, id);
@@ -316,15 +345,18 @@ public class ClienteDAO {
         }
     }
 
-    /***
-     * Apenas esse método retorna o hash e o salt da senha do ClienteDAO.
+    /**
+     * Consulta um Cliente incluindo hash e salt da senha.
+     * Este é o único método do DAO que retorna essas informações.
      */
-    public Cliente consultarHashSaltPorID(int id) {
+    public Cliente consultarByIdComHashSalt(int id) {
         try (
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                "SELECT cli_id, cli_hash_senha, cli_salt_senha FROM clientes WHERE cli_id = ?;"
+                """
+                SELECT * FROM clientes WHERE cli_id = ?;
+                """
             );
         ) {
             pst.setInt(1, id);
@@ -334,12 +366,12 @@ public class ClienteDAO {
             if (!rs.next()){
                 throw new IllegalStateException("Cliente não encontrado!");
             }
-    
-            Cliente c = new Cliente();
-            c.setId(rs.getInt("cli_id"));
-            c.setHashSenha(rs.getString("cli_hash_senha"));
-            c.setSaltSenha(rs.getString("cli_salt_senha"));
-            return c;
+
+            Cliente cliente = clienteMapper.mapearEntidade(rs);
+            cliente.setHashSenha(rs.getString("cli_hash_senha"));
+            cliente.setSaltSenha(rs.getString("cli_salt_senha"));
+            
+            return cliente;
         } catch (Exception e){
             throw new IllegalStateException(e);
         }

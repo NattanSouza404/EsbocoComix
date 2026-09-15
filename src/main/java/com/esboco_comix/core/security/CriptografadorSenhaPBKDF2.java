@@ -8,7 +8,7 @@ import java.util.Base64;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-import com.esboco_comix.cliente.dominio.entidades.CriptografadorSenha;
+import com.esboco_comix.cliente.dominio.CriptografadorSenha;
 import com.esboco_comix.cliente.dominio.value_objects.Senha;
 
 public class CriptografadorSenhaPBKDF2 implements CriptografadorSenha {

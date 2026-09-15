@@ -1,4 +1,4 @@
-package com.esboco_comix.cliente.dominio.entidades;
+package com.esboco_comix.cliente.dominio;
 
 import com.esboco_comix.cliente.dominio.value_objects.Senha;
 

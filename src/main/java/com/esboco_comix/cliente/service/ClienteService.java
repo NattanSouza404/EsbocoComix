@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import com.esboco_comix.cliente.dao.CartaoCreditoDAO;
 import com.esboco_comix.cliente.dao.ClienteDAO;
 import com.esboco_comix.cliente.dao.EnderecoDAO;
+import com.esboco_comix.cliente.dominio.CriptografadorSenha;
 import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
 import com.esboco_comix.cliente.dominio.entidades.Cliente;
 import com.esboco_comix.cliente.dominio.entidades.Endereco;
@@ -31,7 +32,7 @@ public class ClienteService {
 
     private final ClienteDTOMapper clienteMapper = new ClienteDTOMapper();
 
-    private final CriptografadorSenhaPBKDF2 criptografador = new CriptografadorSenhaPBKDF2();
+    private final CriptografadorSenha criptografador = new CriptografadorSenhaPBKDF2();
 
     public CadastrarClienteDTO inserir(CadastrarClienteDTO dto) {
         Senha senhaNova = new Senha(dto.senhaNova());
@@ -41,17 +42,16 @@ public class ClienteService {
             throw new IllegalArgumentException("Senha e senha de confirmação devem ser iguais!");
         }
 
-        Cliente clienteToAdd = new Cliente();
-        clienteToAdd.setNome(dto.nome());
-        clienteToAdd.setGenero(dto.genero());
-        clienteToAdd.setDataNascimento(dto.dataNascimento());
-        clienteToAdd.setCpf(new Cpf(dto.cpf()));
-        clienteToAdd.setEmail(new Email(dto.email()));
-        clienteToAdd.setRanking(0);
-        
+        Cliente clienteToAdd = Cliente.builder()
+            .nome(dto.nome())
+            .genero(dto.genero())
+            .dataNascimento(dto.dataNascimento())
+            .cpf(new Cpf(dto.cpf()))
+            .email(new Email(dto.email()))
+            .telefone(dto.telefone())
+        .build();
+
         clienteToAdd.definirSenha(senhaNova, criptografador);
-        
-        clienteToAdd.validar();
 
         return transactionManager.execute(conn -> {
             Cliente clienteInserido = clienteDAO.inserir(conn, clienteToAdd);
@@ -101,7 +101,7 @@ public class ClienteService {
     }
 
     public Cliente atualizarSenha(AlterarSenhaDTO dto) {
-        Cliente cliente = clienteDAO.consultarHashSaltPorID(dto.getIdCliente());
+        Cliente cliente = clienteDAO.consultarByIdComHashSalt(dto.getIdCliente());
 
         cliente.alterarSenha(
             new Senha(dto.getSenhaAntiga()),

@@ -54,14 +54,14 @@ public class ClienteDTOMapper {
     }
 
     public Cliente mapearToCliente(AtualizarClienteDTO dto) {
-        Cliente cliente = new Cliente();
-        cliente.setId(dto.id());
-        cliente.setNome(dto.nome());
-        cliente.setGenero(Genero.valueOf(dto.genero()));
-        cliente.setDataNascimento(LocalDate.parse(dto.dataNascimento()));
-        cliente.setCpf(new Cpf(dto.cpf()));
-        cliente.setEmail(new Email(dto.email()));
-        cliente.setTelefone(dto.telefone());
-        return cliente;
+        return Cliente.builder()
+            .id(dto.id())
+            .nome(dto.nome())
+            .genero(Genero.valueOf(dto.genero()))
+            .dataNascimento(LocalDate.parse(dto.dataNascimento()))
+            .cpf(new Cpf(dto.cpf()))
+            .email(new Email(dto.email()))
+            .telefone(dto.telefone())
+        .build();
     }
 }

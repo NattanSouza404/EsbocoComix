@@ -15,25 +15,24 @@ public class ClienteMapper implements ResultSetMapper<Cliente, Cliente> {
 
     @Override
     public Cliente mapearEntidade(ResultSet rs) throws SQLException {
-        Cliente c = new Cliente();
-        c.setId(rs.getInt("cli_id"));
-        c.setNome(rs.getString("cli_nome"));
-        c.setGenero(Genero.valueOf(rs.getString("cli_genero")));
-        c.setDataNascimento(rs.getDate("cli_dt_nascimento").toLocalDate());
-        c.setCpf(new Cpf(rs.getString("cli_cpf")));
-        c.setEmail(new Email(rs.getString("cli_email")));
-        c.setRanking(rs.getInt("cli_ranking"));
-        c.setIsAtivo(rs.getBoolean("cli_is_ativo"));
+        return Cliente.builder()
+            .id(rs.getInt("cli_id"))
+            .nome(rs.getString("cli_nome"))
+            .genero(Genero.valueOf(rs.getString("cli_genero")))
+            .dataNascimento(rs.getDate("cli_dt_nascimento").toLocalDate())
+            .cpf(new Cpf(rs.getString("cli_cpf")))
+            .email(new Email(rs.getString("cli_email")))
+            .ranking(rs.getInt("cli_ranking"))
+            .isAtivo(rs.getBoolean("cli_is_ativo"))
 
-        c.setTelefone(
-            new Telefone(
-                rs.getString("cli_tel_ddd"),
-                rs.getString("cli_tel_numero"),
-                TipoTelefone.valueOf(rs.getString("cli_tel_tipo"))
+            .telefone(
+                new Telefone(
+                    rs.getString("cli_tel_ddd"),
+                    rs.getString("cli_tel_numero"),
+                    TipoTelefone.valueOf(rs.getString("cli_tel_tipo"))
+                )
             )
-        );
-
-        return c;
+        .build();
     }
 
     @Override

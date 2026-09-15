@@ -5,7 +5,10 @@ import com.esboco_comix.cliente.dominio.entidades.Cliente;
 import com.esboco_comix.cliente.dominio.entidades.Endereco;
 import com.esboco_comix.cliente.dominio.enuns.BandeiraCartao;
 import com.esboco_comix.cliente.dominio.enuns.Genero;
+import com.esboco_comix.cliente.dominio.value_objects.Cpf;
+import com.esboco_comix.cliente.dominio.value_objects.Email;
 import com.esboco_comix.cliente.dto.AlterarSenhaDTO;
+import com.esboco_comix.cliente.dto.CadastrarClienteDTO;
 import com.esboco_comix.cliente.dto.FiltrarClienteDTO;
 import com.esboco_comix.webapp.base.BaseTest;
 import com.esboco_comix.webapp.base.factories.CadastrarClienteFactory;
@@ -26,12 +29,18 @@ public class CadastroClienteTest extends BaseTest {
         try {
             CadastrarCliente fluxo = new CadastrarCliente(driver, wait);
 
-            fluxo.cadastrarCliente(CadastrarClienteFactory.criar());
+            CadastrarClienteDTO cadastro = CadastrarClienteFactory.criar();
+
+            fluxo.cadastrarCliente(cadastro);
             fluxo.mostrarPaginaConta();
 
-            Cliente c = new Cliente();
-            c.setNome("Humberto Neves Pereira");
-            c.setDataNascimento(LocalDate.of(1998, 12, 20));
+            Cliente c = Cliente.builder()
+                .nome("Humberto Neves Alterado")
+                .cpf(new Cpf(cadastro.cpf()))
+                .dataNascimento(LocalDate.of(1998, 12, 20))
+                .genero(cadastro.genero())
+                .email(new Email(cadastro.email()))
+            .build();
 
             fluxo.editarNovoCliente(c);
 

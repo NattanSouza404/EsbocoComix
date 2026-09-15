@@ -83,23 +83,28 @@ public class CartaoCreditoController extends AbstractController {
     }
 
     private Object consultarPorIdCliente(HttpServletRequest req) throws Exception {
-        int id = Integer.parseInt(requireParam(req, "id"));
-        return cartaoCreditoService.consultarByIDCliente(id);
+        return cartaoCreditoService.consultarByIDCliente(
+            Integer.parseInt(requireParam(req, "id"))
+        );
     }
 
     private Object adicionar(HttpServletRequest req) throws Exception {
-        CartaoCredito cartaoCreditoToAdd = jsonToObject(req, CartaoCredito.class);
-        return cartaoCreditoService.inserir(cartaoCreditoToAdd);
+        return cartaoCreditoService.inserir(
+            jsonToObject(req, CartaoCredito.class)
+        );
     }
 
     private Object atualizar(HttpServletRequest req) throws Exception {
-        CartaoCredito cartaoCredito = jsonToObject(req, CartaoCredito.class);   
-        return cartaoCreditoService.atualizar(cartaoCredito);
+        return cartaoCreditoService.atualizar(
+            jsonToObject(req, CartaoCredito.class)
+        );
     }
 
     private Object deletar(HttpServletRequest req) throws Exception {
-        CartaoCredito cartaoCredito = jsonToObject(req, CartaoCredito.class);
-        cartaoCreditoService.deletar(cartaoCredito);
+        cartaoCreditoService.deletar(
+            jsonToObject(req, CartaoCredito.class)
+        );
+
         return null;
     }
 }
