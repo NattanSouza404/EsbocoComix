@@ -35,13 +35,6 @@ public class ClienteService {
     private final CriptografadorSenha criptografador = new CriptografadorSenhaPBKDF2();
 
     public CadastrarClienteDTO inserir(CadastrarClienteDTO dto) {
-        Senha senhaNova = new Senha(dto.senhaNova());
-        Senha senhaConfirmacao = new Senha(dto.senhaConfirmacao());
-
-        if (!(senhaNova.equals(senhaConfirmacao))){
-            throw new IllegalArgumentException("Senha e senha de confirmação devem ser iguais!");
-        }
-
         Cliente clienteToAdd = Cliente.builder()
             .nome(dto.nome())
             .genero(dto.genero())
@@ -51,7 +44,11 @@ public class ClienteService {
             .telefone(dto.telefone())
         .build();
 
-        clienteToAdd.definirSenha(senhaNova, criptografador);
+        clienteToAdd.definirSenha(
+            new Senha(dto.senhaNova()),
+            new Senha(dto.senhaConfirmacao()),
+            criptografador
+        );
 
         return transactionManager.execute(conn -> {
             Cliente clienteInserido = clienteDAO.inserir(conn, clienteToAdd);

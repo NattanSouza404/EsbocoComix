@@ -22,4 +22,12 @@ public record Senha(String valor) {
             throw new IllegalArgumentException("Senha deve conter pelo menos um caractere especial!");
         }
     }
+
+    public void validarSenhaConfirmacao(Senha senhaConfirmacao) {
+        if (!this.equals(senhaConfirmacao)) {
+            throw new IllegalArgumentException(
+                "Senha e senha de confirmação devem ser iguais!"
+            );
+        }
+    }
 }

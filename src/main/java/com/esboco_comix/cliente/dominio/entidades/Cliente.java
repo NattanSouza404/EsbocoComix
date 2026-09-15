@@ -81,7 +81,13 @@ public class Cliente {
         this.saltSenha = saltSenha;
     }
 
-    public void definirSenha(Senha senha, CriptografadorSenha criptografador) { 
+    public void definirSenha(
+        Senha senha,
+        Senha senhaConfirmacao,
+        CriptografadorSenha criptografador
+    ) { 
+        senha.validarSenhaConfirmacao(senhaConfirmacao);
+
         String saltSenha = criptografador.generateSalt();
         
         this.hashSenha = criptografador.hashSenha(senha, saltSenha);
@@ -94,12 +100,6 @@ public class Cliente {
         Senha senhaConfirmacao,
         CriptografadorSenha criptografador
     ) {
-        if (!senhaNova.equals(senhaConfirmacao)) {
-            throw new IllegalArgumentException(
-                "Senha e senha de confirmação devem ser iguais!"
-            );
-        }
-
         String hashSenhaInformada = criptografador.hashSenha(
             senhaAntiga,
             this.getSaltSenha()
@@ -111,6 +111,6 @@ public class Cliente {
             );
         }
 
-        this.definirSenha(senhaNova, criptografador);
+        this.definirSenha(senhaNova, senhaConfirmacao, criptografador);
     }
 }
