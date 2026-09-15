@@ -1,10 +1,7 @@
-import { ChatIA } from "@componentes/ChatIA/ChatIA.js";
 import { carregarEstilo } from "@utils/style.utils.js";
 
-export const Nav = () => {
+export const Nav = (showModalChatIA) => {
     carregarEstilo("./Nav.css", import.meta.url);
-    
-    const chatIA = new ChatIA();
 
     const nav = document.createElement('nav');
 
@@ -115,7 +112,7 @@ export const Nav = () => {
 
     /** @type {HTMLButtonElement} */
     (nav.querySelector('#abrir-chat-ia')).onclick = () => {
-        chatIA.show();
+        showModalChatIA();
     }
 
     const notificationCount = nav.querySelector('#notificationCount');

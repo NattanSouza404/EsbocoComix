@@ -2,6 +2,7 @@ import { logarUsuarioTeste } from "./dev/logar-usuario-teste.js";
 import { Nav } from "@componentes/layout/Nav/Nav.js";
 import { AdminNav } from "@componentes/layout/AdminNav/AdminNav.js";
 import { Footer } from "@componentes/layout/Footer/Footer.js";
+import { ChatIA } from "@componentes/ChatIA/ChatIA.js";
 
 const app = document.getElementById("app");
 
@@ -129,7 +130,11 @@ if (navContainer){
       }
     });
   } else {
-    navContainer.append(Nav());
+    const chatIA = new ChatIA();
+
+    navContainer.append(Nav(() => {
+      chatIA.show();
+    }));
   }
 }
 

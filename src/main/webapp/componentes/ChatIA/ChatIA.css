@@ -1,4 +1,4 @@
-@import url(modais.css);
+@import url(../../css/modais.css);
 
 #modal-chat-ia .modal-body {
     max-height: 60vh;

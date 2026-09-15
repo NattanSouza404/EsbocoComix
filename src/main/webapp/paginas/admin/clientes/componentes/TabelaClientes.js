@@ -12,6 +12,7 @@ export default class TabelaClientes extends HTMLTableElement {
 
         this.atualizarStatusCadastro = atualizarStatusCadastro;
         this.id = 'tabela-clientes';
+        this.className = 'table table-hover';
 
         this.innerHTML = /* html */ ` 
             <thead>
@@ -70,7 +71,7 @@ function LinhaTabelaCliente(
         <td>${cliente.ranking}</td>
         <td>${(cliente.isAtivo === true) ? 'Ativo' : "Inativo"}</td>
 
-        <td>
+        <td id="tabela-clientes-acoes" class="d-flex gap-2 flex-column">
             <button type="button" class="btn-transacoes">
                 Consultar Transações
             </button>
@@ -85,7 +86,10 @@ function LinhaTabelaCliente(
                 Adicionar Cupom
             </button>
 
-            <button type="button" class="btn-inativar">
+            <button
+                type="button"
+                class="btn-inativar ${cliente.isAtivo === true ? 'btn-danger' : 'btn-success'}"
+            >
                 ${cliente.isAtivo === true ? 'Inativar' : 'Ativar'}
             </button>
         </td>
