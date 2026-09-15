@@ -67,15 +67,11 @@ public class ClienteService {
                 cartoesCredito.add(cartaoCreditoDAO.inserir(conn, c));
             }
 
-            return CadastrarClienteDTO.builder()
-                .nome(clienteInserido.getNome())
-                .genero(clienteInserido.getGenero())
-                .dataNascimento(clienteInserido.getDataNascimento())
-                .cpf(clienteInserido.getCpf().valor())
-                .email(clienteInserido.getEmail().valor())
-                .enderecos(enderecosInseridos)
-                .cartoesCredito(cartoesCredito)
-            .build();
+            return clienteMapper.mapearToCadastrarClienteDTO(
+                clienteInserido,
+                enderecosInseridos,
+                cartoesCredito
+            );
         });
     }
 
