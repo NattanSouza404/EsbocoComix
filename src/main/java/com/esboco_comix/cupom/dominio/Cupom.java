@@ -2,6 +2,7 @@ package com.esboco_comix.cupom.dominio;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +23,15 @@ public class Cupom {
 
     private int idCliente;
 
-    public void validar() {
+    @Builder 
+    public Cupom(
+        int id,
+        double valor,
+        boolean isPromocional,
+        boolean isTroca,
+        boolean isAtivo,
+        int idCliente
+    ){
         if (valor <= 0){
             throw new IllegalArgumentException("Cupom deve ter valor maior que 0!");
         }
@@ -32,18 +41,22 @@ public class Cupom {
                 "Cupom deve ser promocional OU de troca!"
             );
         }
+
+        this.id = id;
+        this.valor = valor;
+        this.isPromocional = isPromocional;
+        this.isTroca = isTroca;
+        this.isAtivo = isAtivo;
+        this.idCliente = idCliente;
     }
 
     public static Cupom gerarCupomTroca(int idCliente, double valor) {
-        Cupom cupom = new Cupom();
-        cupom.setAtivo(true);
-        cupom.setIdCliente(idCliente);
-        cupom.setTroca(true);
-        cupom.setPromocional(false);
-        cupom.setValor(valor);
-
-        cupom.validar();
-
-        return cupom;
+        return Cupom.builder()
+            .isAtivo(true)
+            .idCliente(idCliente)
+            .isTroca(true)
+            .isPromocional(false)
+            .valor(valor)
+        .build();
     }
 }

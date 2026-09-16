@@ -10,16 +10,14 @@ public class CupomMapper implements ResultSetMapper<Cupom, Cupom> {
 
     @Override
     public Cupom mapearEntidade(ResultSet rs) throws SQLException {
-        Cupom cupom = new Cupom();
-
-        cupom.setId(rs.getInt("cup_id"));
-        cupom.setIdCliente(rs.getInt("cup_cli_id"));
-        cupom.setAtivo(rs.getBoolean("cup_is_ativo"));
-        cupom.setPromocional(rs.getBoolean("cup_is_promocional"));
-        cupom.setTroca(rs.getBoolean("cup_is_troca"));
-        cupom.setValor(rs.getInt("cup_valor"));
-
-        return cupom;
+        return Cupom.builder()
+            .id(rs.getInt("cup_id"))
+            .idCliente(rs.getInt("cup_cli_id"))
+            .isAtivo(rs.getBoolean("cup_is_ativo"))
+            .isPromocional(rs.getBoolean("cup_is_promocional"))
+            .isTroca(rs.getBoolean("cup_is_troca"))
+            .valor(rs.getInt("cup_valor"))
+        .build();
     }
 
     @Override

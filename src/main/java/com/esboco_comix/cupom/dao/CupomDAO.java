@@ -72,10 +72,17 @@ public class CupomDAO {
             Connection connection = ConexaoFactory.getConexao();
 
             PreparedStatement pst = connection.prepareStatement(
-                "INSERT INTO cupons("+
-                    "cup_cli_id, cup_is_ativo, cup_is_promocional, cup_is_troca, cup_valor) "+
-                    "VALUES (?, ?, ?, ?, ?) ",
-                    Statement.RETURN_GENERATED_KEYS
+                """
+                INSERT INTO cupons(
+                    cup_cli_id,
+                    cup_is_ativo,
+                    cup_is_promocional,
+                    cup_is_troca,
+                    cup_valor
+                )
+                VALUES (?, ?, ?, ?, ?) 
+                """,
+                Statement.RETURN_GENERATED_KEYS
             )
         ) {
             pst.setInt(1, c.getIdCliente());

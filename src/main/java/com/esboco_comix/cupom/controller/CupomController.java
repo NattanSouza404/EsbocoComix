@@ -2,7 +2,7 @@ package com.esboco_comix.cupom.controller;
 
 import com.esboco_comix.core.controller.AbstractController;
 import com.esboco_comix.core.routing.Router;
-import com.esboco_comix.cupom.dominio.Cupom;
+import com.esboco_comix.cupom.dto.CadastrarCupomDTO;
 import com.esboco_comix.cupom.service.CupomService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -54,8 +54,8 @@ public class CupomController extends AbstractController {
     }
 
     private Object adicionar(HttpServletRequest req) throws Exception {
-        Cupom cupom = jsonToObject(req, Cupom.class);
-
-        return cupomService.inserir(cupom);
+        return cupomService.inserir(
+            jsonToObject(req, CadastrarCupomDTO.class)
+        );
     }
 }
