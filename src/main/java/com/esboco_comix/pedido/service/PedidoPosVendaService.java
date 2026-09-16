@@ -2,8 +2,8 @@ package com.esboco_comix.pedido.service;
 
 import com.esboco_comix.cliente.dominio.entidades.Cliente;
 import com.esboco_comix.cliente.service.ClienteService;
+import com.esboco_comix.cupom.dao.CupomDAO;
 import com.esboco_comix.cupom.dominio.Cupom;
-import com.esboco_comix.cupom.service.CupomService;
 import com.esboco_comix.estoque.service.EstoqueService;
 import com.esboco_comix.pedido.dao.ItemPedidoDAO;
 import com.esboco_comix.pedido.dao.PedidoPosVendaDAO;
@@ -21,7 +21,7 @@ import java.util.List;
 public class PedidoPosVendaService {
 
     private final PedidoPosVendaDAO pedidoPosVendaDAO = new PedidoPosVendaDAO();
-    private final CupomService cupomService = new CupomService();
+    private final CupomDAO cupomDAO = new CupomDAO();
     private final ClienteService clienteService = new ClienteService();
     private final EstoqueService estoqueService = new EstoqueService();
     private final PedidoService pedidoService = new PedidoService();
@@ -96,7 +96,7 @@ public class PedidoPosVendaService {
                 .quantidade(pedidoPosVenda.getQuantidade())
             .build();
 
-            cupomService.inserir(
+            cupomDAO.inserir(
                 Cupom.gerarCupomTroca(
                     cliente.getId(),
                     item.calcularValor()

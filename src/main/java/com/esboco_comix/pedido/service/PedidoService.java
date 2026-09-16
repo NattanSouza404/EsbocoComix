@@ -6,8 +6,8 @@ import java.util.List;
 import com.esboco_comix.carrinho.dominio.Carrinho;
 import com.esboco_comix.cliente.dominio.entidades.*;
 import com.esboco_comix.cliente.service.CartaoCreditoService;
+import com.esboco_comix.cupom.dao.CupomDAO;
 import com.esboco_comix.cupom.dominio.Cupom;
-import com.esboco_comix.cupom.service.CupomService;
 import com.esboco_comix.estoque.dominio.Estoque;
 import com.esboco_comix.estoque.service.EstoqueService;
 import com.esboco_comix.pedido.dao.CartaoCreditoPedidoDAO;
@@ -29,7 +29,6 @@ import com.esboco_comix.quadrinho.service.QuadrinhoService;
 
 public class PedidoService {
 
-    private final CupomService cupomService = new CupomService();
     private final QuadrinhoService quadrinhoService = new QuadrinhoService();
     private final EstoqueService estoqueService = new EstoqueService();
     private final CartaoCreditoService cartaoCreditoService = new CartaoCreditoService();
@@ -37,6 +36,7 @@ public class PedidoService {
     private final PedidoDAO pedidoDAO = new PedidoDAO();
     private final ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
     private final CartaoCreditoPedidoDAO cartaoCreditoPedidoDAO = new CartaoCreditoPedidoDAO();
+    private final CupomDAO cupomDAO = new CupomDAO();
     private final CupomPedidoDAO cupomPedidoDAO = new CupomPedidoDAO();
 
     private final PedidoPosVendaDAO pedidoPosVendaDAO = new PedidoPosVendaDAO();
@@ -98,7 +98,7 @@ public class PedidoService {
             cupom.setIdPedido(pedidoInserido.getId());
             CupomPedido cupomPedidoInserido = cupomPedidoDAO.inserir(cupom);
             pedidoInserido.getCuponsPedido().add(cupomPedidoInserido);  
-            cupomService.inativar(cupom.getIdCupom());
+            cupomDAO.inativar(cupom.getIdCupom());
         }
 
         return pedidoInserido;
@@ -137,7 +137,7 @@ public class PedidoService {
 
             pedido.setItensPedido(itensPedido);
 
-            cupomService.inserir(
+            cupomDAO.inserir(
                 Cupom.gerarCupomTroca(
                     pedido.getIdCliente(),
                     pedido.calcularValorTotal()
