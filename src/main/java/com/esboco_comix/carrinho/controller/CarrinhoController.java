@@ -1,7 +1,7 @@
 package com.esboco_comix.carrinho.controller;
 
 import com.esboco_comix.carrinho.dominio.Carrinho;
-import com.esboco_comix.carrinho.dominio.ItemCarrinhoDTO;
+import com.esboco_comix.carrinho.dto.ItemCarrinhoDTO;
 import com.esboco_comix.carrinho.service.CarrinhoService;
 import com.esboco_comix.carrinho.sessao.SessaoService;
 import com.esboco_comix.core.controller.AbstractController;
@@ -86,18 +86,18 @@ public class CarrinhoController extends AbstractController {
         );
     }
 
-    private Object consultarCarrinho(HttpServletRequest req) throws Exception {
+    private Carrinho consultarCarrinho(HttpServletRequest req) throws Exception {
         return sessaoService.retornarCarrinho(req.getSession());
     }
 
-    private Object adicionarItemCarrinho(HttpServletRequest req) throws Exception {
+    private Carrinho adicionarItemCarrinho(HttpServletRequest req) throws Exception {
         Carrinho carrinho = sessaoService.retornarCarrinho(req.getSession());
         ItemCarrinhoDTO itemCarrinho = jsonToObject(req, ItemCarrinhoDTO.class); 
         
         return carrinhoService.adicionar(carrinho, itemCarrinho);
     }
 
-    private Object atualizarItemCarrinho(HttpServletRequest req) throws Exception {
+    private Carrinho atualizarItemCarrinho(HttpServletRequest req) throws Exception {
         Carrinho carrinho = sessaoService.retornarCarrinho(req.getSession());
         ItemCarrinhoDTO itemCarrinho = jsonToObject(req, ItemCarrinhoDTO.class); 
         return carrinhoService.atualizarQuantidade(carrinho, itemCarrinho);

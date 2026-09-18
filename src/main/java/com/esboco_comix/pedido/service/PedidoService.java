@@ -13,6 +13,7 @@ import com.esboco_comix.estoque.service.EstoqueService;
 import com.esboco_comix.pedido.dao.CartaoCreditoPedidoDAO;
 import com.esboco_comix.pedido.dao.CupomPedidoDAO;
 import com.esboco_comix.pedido.dao.ItemPedidoDAO;
+import com.esboco_comix.pedido.mapper.ItemPedidoMapper;
 import com.esboco_comix.pedido.dao.PedidoDAO;
 import com.esboco_comix.pedido.dao.PedidoPosVendaDAO;
 import com.esboco_comix.pedido.dominio.CartaoCreditoPedido;
@@ -41,12 +42,16 @@ public class PedidoService {
 
     private final PedidoPosVendaDAO pedidoPosVendaDAO = new PedidoPosVendaDAO();
 
+    private final ItemPedidoMapper itemPedidoMapper = new ItemPedidoMapper();
+
     public Pedido inserir(Pedido pedido, Carrinho carrinho) {
         if (carrinho.isVazio()) {
             throw new IllegalStateException("Nenhum item presente no carrinho!");
         }
 
-        pedido.setItensPedido(carrinho.getItensPedido());
+        pedido.setItensPedido(itemPedidoMapper.toListaItemPedidos(
+            carrinho.getItensCarrinho()
+        ));
 
         pedido.validarFormaPagamento();
 
@@ -66,7 +71,11 @@ public class PedidoService {
         }
 
         pedido.setStatus(StatusPedido.EM_PROCESSAMENTO);
-        pedido.setItensPedido(carrinho.esvaziar());
+
+        List<ItemPedido> itensCarrinho = itemPedidoMapper.toListaItemPedidos(carrinho.getItensCarrinho());
+        pedido.setItensPedido(itensCarrinho);
+        
+        carrinho.esvaziar();
 
         for (ItemPedido item: pedido.getItensPedido()){
             Estoque estoque = estoqueService.consultarEstoqueByIDQuadrinho(item.getIdQuadrinho());
