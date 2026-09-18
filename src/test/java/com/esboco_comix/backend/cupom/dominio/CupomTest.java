@@ -14,46 +14,38 @@ import com.esboco_comix.cupom.dominio.Cupom;
 public class CupomTest {
     
     @ParameterizedTest
-    @MethodSource("provideCuponsInativos")
-    public void validarCuponsInvalidos(Cupom cupom) {
+    @MethodSource("provideCuponsInvalidos")
+    public void validarCuponsInvalidos(
+        double valor,
+        boolean isTroca,
+        boolean isPromocional
+    ) {
         assertThrows(
             IllegalArgumentException.class,
             () -> {
-                cupom.validar();
+                Cupom.builder()
+                    .valor(valor)
+                    .isTroca(isTroca)
+                    .isPromocional(isPromocional)
+                .build();
             }
         );
     }
 
     @Test
     public void validarCuponsValidos() {
-        Cupom cupomValido = new Cupom();
-        cupomValido.setValor(20);
-        cupomValido.setPromocional(true);
-        cupomValido.setTroca(false);
-
-        cupomValido.validar();
+        Cupom.builder()
+            .valor(20)
+            .isPromocional(true)
+            .isTroca(false)
+        .build();
     }
 
-    public static Stream<Arguments> provideCuponsInativos(){
-        Cupom cupomValorNegativo = new Cupom();
-        cupomValorNegativo.setPromocional(true);
-        cupomValorNegativo.setTroca(true);
-        cupomValorNegativo.setValor(-9);
-
-        Cupom cupomDoisTipos = new Cupom();
-        cupomDoisTipos.setValor(20);
-        cupomDoisTipos.setPromocional(true);
-        cupomDoisTipos.setTroca(true);
-
-        Cupom cupomNenhumTipo = new Cupom();
-        cupomNenhumTipo.setValor(20);
-        cupomNenhumTipo.setPromocional(false);
-        cupomNenhumTipo.setTroca(false);
-
+    public static Stream<Arguments> provideCuponsInvalidos(){
         return Stream.of(
-            Arguments.of(cupomValorNegativo),
-            Arguments.of(cupomDoisTipos),
-            Arguments.of(cupomNenhumTipo)
+            Arguments.of(-9, true, true),
+            Arguments.of(20, true, true),
+            Arguments.of(20, false, false)
         );
     }
 }

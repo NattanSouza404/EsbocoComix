@@ -68,17 +68,21 @@ public class PedidoTest {
             () -> {
                 Pedido pedido = new Pedido();
 
-                Cupom cupomPromocional = new Cupom();
-                cupomPromocional.setPromocional(true);
-                cupomPromocional.setAtivo(true);
+                pedido.aplicarCupom(
+                    Cupom.builder()
+                        .isPromocional(true)
+                        .isAtivo(true)
+                        .valor(20)
+                    .build()
+                );
 
-                pedido.aplicarCupom(cupomPromocional);
-
-                Cupom outroCupomPromocional = new Cupom();
-                outroCupomPromocional.setPromocional(true);
-                outroCupomPromocional.setAtivo(true);
-
-                pedido.aplicarCupom(outroCupomPromocional);
+                pedido.aplicarCupom(
+                    Cupom.builder()
+                        .isPromocional(true)
+                        .isAtivo(true)
+                        .valor(20)
+                    .build()
+                );
             }
         );
     }
