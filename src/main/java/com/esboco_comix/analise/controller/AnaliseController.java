@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class AnaliseController extends AbstractController {
@@ -36,8 +36,8 @@ public class AnaliseController extends AbstractController {
         String dataFinal = req.getParameter("dataFinal");
 
         return analiseService.retornarAnalise(
-            dataInicio != null ? LocalDateTime.parse(dataInicio) : null,
-            dataFinal != null ? LocalDateTime.parse(dataFinal) : null
+            dataInicio != null ? LocalDate.parse(dataInicio) : null,
+            dataFinal != null ? LocalDate.parse(dataFinal) : null
         );
     }
 }
