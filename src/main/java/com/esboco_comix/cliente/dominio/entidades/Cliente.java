@@ -122,6 +122,22 @@ public class Cliente {
         this.definirSenha(senhaNova, senhaConfirmacao, criptografador);
     }
 
+    public void ativar(){
+        if (isAtivo) {
+            throw new IllegalStateException("Cliente já está ativo!");
+        }
+
+        this.isAtivo = true;
+    }
+
+    public void inativar(){
+        if (!isAtivo) {
+            throw new IllegalStateException("Cliente já está inativo!");
+        }
+
+        this.isAtivo = false;
+    }
+
     private void validarNome(String nome){
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("Nome do cliente não pode ser nulo ou vazio!");

@@ -123,8 +123,17 @@ public class ClienteService {
     }
 
     public Cliente atualizarStatusCadastro(AtualizarStatusCadastroDTO dto) {
+        Cliente cliente = clienteDAO.consultarByID(dto.id());
+
+        if (dto.isAtivo()){
+            cliente.ativar();
+        } else {
+            cliente.inativar();
+        }
+
         return clienteDAO.atualizarStatusCadastro(
-            dto.id(), dto.isAtivo()
+            cliente.getId(),
+            cliente.getIsAtivo()
         );
     }
 
