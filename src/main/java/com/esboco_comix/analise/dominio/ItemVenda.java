@@ -1,4 +1,4 @@
-package com.esboco_comix.analise.dto;
+package com.esboco_comix.analise.dominio;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ItemVendaDTO {
+public class ItemVenda {
     private String titulo;
 
     private List<DadosItem> dados = new ArrayList<>();

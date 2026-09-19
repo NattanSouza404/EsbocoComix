@@ -1,6 +1,6 @@
 package com.esboco_comix.analise.dao;
 
-import com.esboco_comix.analise.dto.ItemVendaDTO;
+import com.esboco_comix.analise.dominio.ItemVenda;
 import com.esboco_comix.core.dao.ConexaoFactory;
 
 import java.sql.Connection;
@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnaliseDAO {
-    public List<ItemVendaDTO> consultarProdutos(LocalDateTime dataInicio, LocalDateTime dataFinal) {
+    public List<ItemVenda> consultarProdutos(
+        LocalDateTime dataInicio,
+        LocalDateTime dataFinal
+    ) {
         StringBuilder query = new StringBuilder(
             """
             SELECT * FROM vw_analise_produtos WHERE 1 = 1
@@ -49,17 +52,17 @@ public class AnaliseDAO {
             }
             rs.beforeFirst();
 
-            List<ItemVendaDTO> itensVendidos = new ArrayList<>();
+            List<ItemVenda> itensVendidos = new ArrayList<>();
 
             while (rs.next()){
 
-                ItemVendaDTO.DadosItem dados = new ItemVendaDTO.DadosItem();
+                ItemVenda.DadosItem dados = new ItemVenda.DadosItem();
                 dados.setQuantidade(rs.getInt("quantidade"));
                 dados.setData(rs.getTimestamp("data").toLocalDateTime());
                 dados.setValorTotal(rs.getDouble("valor_total"));
 
                 boolean valorRepetido = false;
-                for (ItemVendaDTO i: itensVendidos){
+                for (ItemVenda i: itensVendidos){
                     if (i.getTitulo().equals(rs.getString("titulo_quadrinho"))){
                         valorRepetido = true;
 
@@ -72,12 +75,12 @@ public class AnaliseDAO {
                     continue;
                 }
 
-                ItemVendaDTO itemVendaDTO = new ItemVendaDTO();
-                itemVendaDTO.setTitulo(rs.getString("titulo_quadrinho"));
+                ItemVenda itemVenda = new ItemVenda();
+                itemVenda.setTitulo(rs.getString("titulo_quadrinho"));
 
-                itemVendaDTO.getDados().add(dados);
+                itemVenda.getDados().add(dados);
 
-                itensVendidos.add(itemVendaDTO);
+                itensVendidos.add(itemVenda);
             }
 
             return itensVendidos;
@@ -86,7 +89,7 @@ public class AnaliseDAO {
         }
     }
 
-    public List<ItemVendaDTO> consultarCategorias(LocalDateTime dataInicio, LocalDateTime dataFinal) {
+    public List<ItemVenda> consultarCategorias(LocalDateTime dataInicio, LocalDateTime dataFinal) {
         StringBuilder query = new StringBuilder( 
             """
             SELECT * FROM vw_analise_categorias WHERE 1 = 1
@@ -124,17 +127,17 @@ public class AnaliseDAO {
             }
             rs.beforeFirst();
 
-            List<ItemVendaDTO> itensVendidos = new ArrayList<>();
+            List<ItemVenda> itensVendidos = new ArrayList<>();
 
             while (rs.next()){
 
-                ItemVendaDTO.DadosItem dados = new ItemVendaDTO.DadosItem();
+                ItemVenda.DadosItem dados = new ItemVenda.DadosItem();
                 dados.setQuantidade(rs.getInt("quantidade"));
                 dados.setData(rs.getTimestamp("data").toLocalDateTime());
                 dados.setValorTotal(rs.getDouble("valor_total"));
 
                 boolean valorRepetido = false;
-                for (ItemVendaDTO i: itensVendidos){
+                for (ItemVenda i: itensVendidos){
                     if (i.getTitulo().equals(rs.getString("categoria"))){
                         valorRepetido = true;
 
@@ -147,7 +150,7 @@ public class AnaliseDAO {
                     continue;
                 }
 
-                ItemVendaDTO itemVendaDTO = new ItemVendaDTO();
+                ItemVenda itemVendaDTO = new ItemVenda();
                 itemVendaDTO.setTitulo(rs.getString("categoria"));
 
                 itemVendaDTO.getDados().add(dados);
