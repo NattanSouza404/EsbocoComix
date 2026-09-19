@@ -161,10 +161,18 @@ public class ClienteDAO {
             Connection conn = ConexaoFactory.getConexao(); 
     
             PreparedStatement pst = conn.prepareStatement(
-                "UPDATE clientes set "+
-                    "cli_nome = ?, cli_genero = ?, cli_dt_nascimento = ?, cli_cpf = ?, cli_email = ?,"+
-                    "cli_tel_tipo = ?, cli_tel_ddd = ?, cli_tel_numero = ? "+
-                    "WHERE cli_id = ?"
+                """
+                UPDATE clientes set
+                    cli_nome = ?,
+                    cli_genero = ?,
+                    cli_dt_nascimento = ?,
+                    cli_cpf = ?,
+                    cli_email = ?,
+                    cli_tel_tipo = ?,
+                    cli_tel_ddd = ?,
+                    cli_tel_numero = ?
+                WHERE cli_id = ?
+                """
             )
         ) {
             pst.setString(1, c.getNome());

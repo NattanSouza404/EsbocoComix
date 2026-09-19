@@ -52,21 +52,9 @@ public class Cliente {
         String hashSenha,
         String saltSenha
     ) {
-        if (nome == null || nome.isBlank()) {
-            throw new IllegalArgumentException("Nome do cliente não pode ser nulo ou vazio!");
-        }
-
-        if (nome.length() > 100){
-            throw new IllegalArgumentException("Nome deve conter menos de 100 caracteres!");
-        }
-
-        if (genero == null) {
-            throw new IllegalArgumentException("Gênero do cliente não pode ser nulo!");
-        }
-
-        if (dataNascimento == null) {
-            throw new IllegalArgumentException("Data de nascimento do cliente não pode ser nula!");
-        }
+        validarNome(nome);
+        validarGenero(genero);
+        validarDataNascimento(dataNascimento);
 
         this.id = id;
         this.nome = nome;
@@ -79,6 +67,26 @@ public class Cliente {
         this.telefone = telefone;
         this.hashSenha = hashSenha;
         this.saltSenha = saltSenha;
+    }
+
+    public void atualizar(
+        String nome,
+        Genero genero,
+        LocalDate dataNascimento,
+        Cpf cpf,
+        Email email,
+        Telefone telefone
+    ){
+        validarNome(nome);
+        validarGenero(genero);
+        validarDataNascimento(dataNascimento);
+
+        this.nome = nome;
+        this.genero = genero;
+        this.dataNascimento = dataNascimento;
+        this.cpf = cpf;
+        this.email = email;
+        this.telefone = telefone;
     }
 
     public void definirSenha(
@@ -112,5 +120,27 @@ public class Cliente {
         }
 
         this.definirSenha(senhaNova, senhaConfirmacao, criptografador);
+    }
+
+    private void validarNome(String nome){
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("Nome do cliente não pode ser nulo ou vazio!");
+        }
+
+        if (nome.length() > 100){
+            throw new IllegalArgumentException("Nome deve conter menos de 100 caracteres!");
+        }
+    }
+
+    private void validarGenero(Genero genero){
+        if (genero == null) {
+            throw new IllegalArgumentException("Gênero do cliente não pode ser nulo!");
+        }
+    }
+
+    private void validarDataNascimento(LocalDate dataNascimento){
+        if (dataNascimento == null) {
+            throw new IllegalArgumentException("Data de nascimento do cliente não pode ser nula!");
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.esboco_comix.cliente.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +13,11 @@ import com.esboco_comix.cliente.dominio.CriptografadorSenha;
 import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
 import com.esboco_comix.cliente.dominio.entidades.Cliente;
 import com.esboco_comix.cliente.dominio.entidades.Endereco;
+import com.esboco_comix.cliente.dominio.enuns.Genero;
 import com.esboco_comix.cliente.dominio.value_objects.Cpf;
 import com.esboco_comix.cliente.dominio.value_objects.Email;
 import com.esboco_comix.cliente.dominio.value_objects.Senha;
+import com.esboco_comix.cliente.dominio.value_objects.Telefone;
 import com.esboco_comix.cliente.dto.AlterarSenhaDTO;
 import com.esboco_comix.cliente.dto.AtualizarClienteDTO;
 import com.esboco_comix.cliente.dto.AtualizarStatusCadastroDTO;
@@ -87,10 +90,23 @@ public class ClienteService {
         return clienteDAO.consultarByID(id);
     }
 
-    public Cliente atualizar(AtualizarClienteDTO c) {
-        return clienteDAO.atualizar(
-            clienteMapper.mapearToCliente(c)
+    public Cliente atualizar(AtualizarClienteDTO dto) {
+        Cliente cliente = clienteDAO.consultarByID(dto.id());
+
+        cliente.atualizar(
+            dto.nome(),
+            Genero.valueOf(dto.genero()),
+            LocalDate.parse(dto.dataNascimento()),
+            new Cpf(dto.cpf()),
+            new Email(dto.email()),
+            new Telefone(
+                dto.telefone().ddd(),
+                dto.telefone().numero(),
+                dto.telefone().tipo()
+            )
         );
+        
+        return clienteDAO.atualizar(cliente);
     }
 
     public Cliente atualizarSenha(AlterarSenhaDTO dto) {
