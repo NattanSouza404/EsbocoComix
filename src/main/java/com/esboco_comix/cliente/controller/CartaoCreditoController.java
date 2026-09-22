@@ -1,6 +1,8 @@
 package com.esboco_comix.cliente.controller;
 
 import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
+import com.esboco_comix.cliente.dto.AtualizarCartaoCreditoDTO;
+import com.esboco_comix.cliente.dto.CadastrarCartaoCreditoDTO;
 import com.esboco_comix.cliente.service.CartaoCreditoService;
 import com.esboco_comix.core.controller.AbstractController;
 import com.esboco_comix.core.routing.Router;
@@ -90,13 +92,13 @@ public class CartaoCreditoController extends AbstractController {
 
     private Object adicionar(HttpServletRequest req) throws Exception {
         return cartaoCreditoService.inserir(
-            jsonToObject(req, CartaoCredito.class)
+            jsonToObject(req, CadastrarCartaoCreditoDTO.class)
         );
     }
 
     private Object atualizar(HttpServletRequest req) throws Exception {
         return cartaoCreditoService.atualizar(
-            jsonToObject(req, CartaoCredito.class)
+            jsonToObject(req, AtualizarCartaoCreditoDTO.class)
         );
     }
 

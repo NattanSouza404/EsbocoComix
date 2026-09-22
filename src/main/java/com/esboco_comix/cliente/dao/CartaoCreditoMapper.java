@@ -10,16 +10,16 @@ import java.sql.SQLException;
 public class CartaoCreditoMapper implements ResultSetMapper<CartaoCredito, CartaoCredito>{
     @Override
     public CartaoCredito mapearEntidade(ResultSet rs) throws SQLException {
-        CartaoCredito c = new CartaoCredito();
-        c.setId(rs.getInt("cre_id"));
-        c.setNumero(rs.getString("cre_numero"));
-        c.setNomeImpresso(rs.getString("cre_nome_impresso"));
-        c.setCodigoSeguranca(rs.getString("cre_codigo_seguranca"));
-        c.setPreferencial(rs.getBoolean("cre_is_preferencial"));
-        c.setBandeiraCartao(BandeiraCartao.valueOf(rs.getString("bcc_nome")));
-        c.setIdCliente(rs.getInt("cre_cli_id"));
-        c.setIsAtivo(rs.getBoolean("cre_is_ativo"));
-        return c;
+        return CartaoCredito.builder()
+            .id(rs.getInt("cre_id"))
+            .numero(rs.getString("cre_numero"))
+            .nomeImpresso(rs.getString("cre_nome_impresso"))
+            .codigoSeguranca(rs.getString("cre_codigo_seguranca"))
+            .isPreferencial(rs.getBoolean("cre_is_preferencial"))
+            .bandeiraCartao(BandeiraCartao.valueOf(rs.getString("bcc_nome")))
+            .idCliente(rs.getInt("cre_cli_id"))
+            .isAtivo(rs.getBoolean("cre_is_ativo"))
+        .build();
     }
 
     @Override

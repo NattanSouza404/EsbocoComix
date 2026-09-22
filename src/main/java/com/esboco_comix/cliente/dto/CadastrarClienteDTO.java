@@ -3,7 +3,6 @@ package com.esboco_comix.cliente.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
 import com.esboco_comix.cliente.dominio.entidades.Endereco;
 import com.esboco_comix.cliente.dominio.enuns.Genero;
 import com.esboco_comix.cliente.dominio.value_objects.Telefone;
@@ -21,7 +20,7 @@ public record CadastrarClienteDTO(
     Telefone telefone,
 
     List<Endereco> enderecos,
-    List<CartaoCredito> cartoesCredito,
+    List<CadastrarCartaoCreditoDTO> cartoesCredito,
 
     String senhaNova,
     String senhaConfirmacao

@@ -1,7 +1,6 @@
 package com.esboco_comix.cliente.service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +20,7 @@ import com.esboco_comix.cliente.dominio.value_objects.Telefone;
 import com.esboco_comix.cliente.dto.AlterarSenhaDTO;
 import com.esboco_comix.cliente.dto.AtualizarClienteDTO;
 import com.esboco_comix.cliente.dto.AtualizarStatusCadastroDTO;
+import com.esboco_comix.cliente.dto.CadastrarCartaoCreditoDTO;
 import com.esboco_comix.cliente.dto.CadastrarClienteDTO;
 import com.esboco_comix.cliente.mapper.ClienteDTOMapper;
 import com.esboco_comix.core.dao.TransactionExecutor;
@@ -37,7 +37,7 @@ public class ClienteService {
 
     private final CriptografadorSenha criptografador = new CriptografadorSenhaPBKDF2();
 
-    public CadastrarClienteDTO inserir(CadastrarClienteDTO dto) {
+    public Cliente inserir(CadastrarClienteDTO dto) {
         Cliente clienteToAdd = Cliente.builder()
             .nome(dto.nome())
             .genero(dto.genero())
@@ -56,25 +56,26 @@ public class ClienteService {
         return transactionManager.execute(conn -> {
             Cliente clienteInserido = clienteDAO.inserir(conn, clienteToAdd);
 
-            List<Endereco> enderecosInseridos = new ArrayList<>();
             for (Endereco e : dto.enderecos()) {
                 e.validar();
                 e.setIdCliente(clienteInserido.getId());
-                enderecosInseridos.add(enderecoDAO.inserir(conn, e));
+                
+                enderecoDAO.inserir(conn, e);
             }
 
-            List<CartaoCredito> cartoesCredito = new ArrayList<>();
-            for (CartaoCredito c: dto.cartoesCredito()){
-                c.validar();
-                c.setIdCliente(clienteInserido.getId());
-                cartoesCredito.add(cartaoCreditoDAO.inserir(conn, c));
+            for (CadastrarCartaoCreditoDTO c: dto.cartoesCredito()){
+                CartaoCredito cartao = CartaoCredito.builder()
+                    .numero(c.numero())
+                    .nomeImpresso(c.nomeImpresso())
+                    .codigoSeguranca(c.codigoSeguranca())
+                    .isPreferencial(c.isPreferencial())
+                    .idCliente(c.idCliente())
+                .build();
+
+                cartaoCreditoDAO.inserir(conn, cartao);
             }
 
-            return clienteMapper.mapearToCadastrarClienteDTO(
-                clienteInserido,
-                enderecosInseridos,
-                cartoesCredito
-            );
+            return clienteInserido;
         });
     }
 

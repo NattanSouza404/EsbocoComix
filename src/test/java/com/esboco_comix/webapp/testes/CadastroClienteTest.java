@@ -103,12 +103,13 @@ public class CadastroClienteTest extends BaseTest {
         try {
             FluxoCadastroCartao fluxo = new FluxoCadastroCartao(driver, wait);
 
-            CartaoCredito c = new CartaoCredito();
-            c.setNumero("1111222233334444");
-            c.setNomeImpresso("JORGE DOS SANTOS MENEZES");
-            c.setCodigoSeguranca("111");
-            c.setBandeiraCartao(BandeiraCartao.MASTERCARD);
-            c.setIsAtivo(false);
+            CartaoCredito c = CartaoCredito.builder()
+                .numero("1111222233334444")
+                .nomeImpresso("JORGE DOS SANTOS MENEZES")
+                .codigoSeguranca("111")
+                .bandeiraCartao(BandeiraCartao.MASTERCARD)
+                .isAtivo(false)
+            .build();
 
             fluxo.adicionarCartao(c);
 

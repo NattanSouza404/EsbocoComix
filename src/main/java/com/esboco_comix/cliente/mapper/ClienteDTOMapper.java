@@ -3,13 +3,13 @@ package com.esboco_comix.cliente.mapper;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
 import com.esboco_comix.cliente.dominio.entidades.Cliente;
 import com.esboco_comix.cliente.dominio.entidades.Endereco;
 import com.esboco_comix.cliente.dominio.enuns.Genero;
 import com.esboco_comix.cliente.dominio.value_objects.Cpf;
 import com.esboco_comix.cliente.dominio.value_objects.Email;
 import com.esboco_comix.cliente.dto.AtualizarClienteDTO;
+import com.esboco_comix.cliente.dto.CadastrarCartaoCreditoDTO;
 import com.esboco_comix.cliente.dto.CadastrarClienteDTO;
 import com.esboco_comix.cliente.dto.FiltrarClienteDTO;
 
@@ -72,7 +72,7 @@ public class ClienteDTOMapper {
     public CadastrarClienteDTO mapearToCadastrarClienteDTO(
         Cliente cliente,
         List<Endereco> enderecos,
-        List<CartaoCredito> cartoesCredito
+        List<CadastrarCartaoCreditoDTO> cartoesCredito
     ){
         return CadastrarClienteDTO.builder()
             .nome(cliente.getNome())

@@ -1,7 +1,7 @@
 package com.esboco_comix.webapp.paginas.cliente.cadastrar;
 
-import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
 import com.esboco_comix.cliente.dominio.entidades.Endereco;
+import com.esboco_comix.cliente.dto.CadastrarCartaoCreditoDTO;
 import com.esboco_comix.cliente.dto.CadastrarClienteDTO;
 import com.esboco_comix.webapp.base.AbstractPagina;
 import org.openqa.selenium.By;
@@ -88,19 +88,21 @@ public class PaginaCadastrar extends AbstractPagina {
         }
     }
 
-    public void preencherCartoesCreditos(List<CartaoCredito> cartoes) throws InterruptedException {
+    public void preencherCartoesCreditos(
+        List<CadastrarCartaoCreditoDTO> cartoes
+    ) throws InterruptedException {
         List<WebElement> forms = wait.until(
                 ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("cartao-credito"))
         );
 
         for (int i = 0; i < cartoes.size(); i++){
-            CartaoCredito c = cartoes.get(i);
+            var c = cartoes.get(i);
             WebElement form = forms.get(i);
 
-            form.findElement(By.name("numero")).sendKeys(c.getNumero());
-            form.findElement(By.name("nomeImpresso")).sendKeys(c.getNomeImpresso());
-            form.findElement(By.name("codigoSeguranca")).sendKeys(c.getCodigoSeguranca());
-            preencherInputSelect(form, "bandeiraCartao", c.getBandeiraCartao().name());
+            form.findElement(By.name("numero")).sendKeys(c.numero());
+            form.findElement(By.name("nomeImpresso")).sendKeys(c.nomeImpresso());
+            form.findElement(By.name("codigoSeguranca")).sendKeys(c.codigoSeguranca());
+            preencherInputSelect(form, "bandeiraCartao", c.bandeiraCartao().name());
             preencherSelectTrueOrFalse(form, "isPreferencial", c.isPreferencial());
 
             sleep();
