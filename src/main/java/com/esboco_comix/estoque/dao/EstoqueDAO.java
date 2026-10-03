@@ -74,11 +74,9 @@ public class EstoqueDAO {
 
     }
 
-    public Estoque consultarEstoqueByIDQuadrinho(int idQuadrinho) {
+    public Estoque consultarByIDQuadrinho(int idQuadrinho, Connection conn) {
         try (
-            Connection connection = ConexaoFactory.getConexao();
-
-            PreparedStatement pst = connection.prepareStatement(
+            PreparedStatement pst = conn.prepareStatement(
                 """
                 SELECT * FROM estoque WHERE est_qua_id = ?;
                 """
@@ -100,15 +98,15 @@ public class EstoqueDAO {
 
     public Estoque retornarAoEstoque(ItemPedido itemPedido) {
         try (
-                Connection conn = ConexaoFactory.getConexao();
+            Connection conn = ConexaoFactory.getConexao();
 
-                PreparedStatement pst = conn.prepareStatement(
-                        """
-                                UPDATE estoque
-                                    SET est_quantidade_total = est_quantidade_total + ?
-                                WHERE est_qua_id = ?;
-                                """
-                );
+            PreparedStatement pst = conn.prepareStatement(
+                """
+                UPDATE estoque
+                    SET est_quantidade_total = est_quantidade_total + ?
+                WHERE est_qua_id = ?;
+                """
+            );
         ) {
             pst.setInt(1, itemPedido.getQuantidade());
             pst.setInt(2, itemPedido.getIdQuadrinho());
@@ -117,16 +115,14 @@ public class EstoqueDAO {
                 throw new IllegalStateException("Atualização não foi sucedida!");
             }
 
-            return consultarEstoqueByIDQuadrinho(itemPedido.getIdQuadrinho());
+            return consultarByIDQuadrinho(itemPedido.getIdQuadrinho(), conn);
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
     }
 
-    public Estoque retirarDoEstoque(ItemPedido item) {
+    public Estoque retirarDoEstoque(ItemPedido item, Connection conn) {
         try (
-            Connection conn = ConexaoFactory.getConexao(); 
-    
             PreparedStatement pst = conn.prepareStatement(
                 """
                 UPDATE estoque
@@ -142,7 +138,7 @@ public class EstoqueDAO {
                 throw new IllegalStateException("Atualização não foi sucedida!");
             }
 
-            return consultarEstoqueByIDQuadrinho(item.getIdQuadrinho());
+            return consultarByIDQuadrinho(item.getIdQuadrinho(), conn);
         } catch (Exception e){
             throw new IllegalStateException(e);
         }

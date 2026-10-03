@@ -12,11 +12,9 @@ public class CartaoCreditoPedidoDAO {
 
     private final CartaoCreditoPedidoMapper cartaoCreditoPedidoMapper = new CartaoCreditoPedidoMapper();
 
-    public CartaoCreditoPedido inserir(CartaoCreditoPedido cartao) {
+    public CartaoCreditoPedido inserir(CartaoCreditoPedido cartao, int idPedido, Connection conn) {
         try (
-            Connection connection = ConexaoFactory.getConexao();
-
-            PreparedStatement pst = connection.prepareStatement(
+            PreparedStatement pst = conn.prepareStatement(
                 "INSERT INTO cartoes_credito_pedido ("+
                     "ccp_cre_id, ccp_ped_id, ccp_valor)"+
                     "VALUES (?, ?, ?);",
@@ -24,7 +22,7 @@ public class CartaoCreditoPedidoDAO {
             );
         ){
             pst.setInt(1, cartao.getIdCartaoCredito());
-            pst.setInt(2, cartao.getIdPedido());
+            pst.setInt(2, idPedido);
             pst.setDouble(3, cartao.getValor());
 
             if (pst.executeUpdate() == 0){

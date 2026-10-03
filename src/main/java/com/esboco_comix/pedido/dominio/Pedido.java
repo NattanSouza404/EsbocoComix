@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.esboco_comix.carrinho.dominio.Carrinho;
+import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
 import com.esboco_comix.cliente.dominio.entidades.Endereco;
 import com.esboco_comix.cupom.dominio.Cupom;
 import com.esboco_comix.pedido.dominio.enuns.StatusPedido;
@@ -31,6 +33,23 @@ public class Pedido {
 
     private List<Cupom> cuponsAplicados = new ArrayList<>();
 
+    public void colocarEmProcessamento(
+        List<ItemPedido> itens,
+        List<CartaoCredito> cartoesCredito,
+        Carrinho carrinho
+    ) {
+        this.itensPedido = itens;
+        
+        for (CartaoCredito c: cartoesCredito){
+            if (idCliente != c.getIdCliente()) {
+                throw new IllegalArgumentException("Cartão de crédito não pertence ao cliente da compra!");
+            }
+        }
+
+        this.status = StatusPedido.EM_PROCESSAMENTO;
+        carrinho.esvaziar();
+    }
+
     public double calcularValorTotal() {
         double valor = 0;
         for (ItemPedido itemPedido : itensPedido) {
@@ -55,7 +74,15 @@ public class Pedido {
     }
 
     public void atualizarValorTotal() {
-        this.valorTotal = calcularValorTotal();
+        this.validarFormaPagamento();
+
+        double valorTotal = this.calcularValorTotal();
+
+        if (valorTotal != this.getValorTotalPago()){
+            throw new IllegalArgumentException("Valor pago não condiz com valor do pedido!");
+        }
+        
+        this.valorTotal = valorTotal;   
     }
 
     public void aplicarCupom(Cupom cupom) {
@@ -108,7 +135,9 @@ public class Pedido {
         }
     }
 
-    public void alterarStatus(StatusPedido novoStatus) {
+    public void alterarStatus(
+        StatusPedido novoStatus
+    ) {
         if (status == StatusPedido.TROCA_CONCLUIDA || status == StatusPedido.DEVOLUCAO_CONCLUIDA){
             throw new IllegalArgumentException(
                 "Não é possível alterar pedido com troca ou devolução já concluída!"
@@ -138,4 +167,16 @@ public class Pedido {
         }
         return false;
     }
+
+    public void adicionarItem(ItemPedido item) {
+        this.itensPedido.add(item);
+    }
+
+    public void adicionarCartaoPedido(CartaoCreditoPedido cartaoCreditoPedido) {
+        this.cartoesCreditoPedido.add(cartaoCreditoPedido);
+    }
+
+	public void adicionarCupom(CupomPedido cupom) {
+		this.cuponsPedido.add(cupom);
+	}
 }

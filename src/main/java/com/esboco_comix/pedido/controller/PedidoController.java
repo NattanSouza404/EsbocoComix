@@ -6,6 +6,7 @@ import com.esboco_comix.core.controller.AbstractController;
 import com.esboco_comix.core.routing.Router;
 import com.esboco_comix.pedido.dominio.Pedido;
 import com.esboco_comix.pedido.dto.AtualizarPedidoDTO;
+import com.esboco_comix.pedido.service.FinalizarPedidoService;
 import com.esboco_comix.pedido.service.PedidoService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +18,8 @@ import java.util.Map;
 public class PedidoController extends AbstractController {
 
     private final PedidoService pedidoService = new PedidoService();
+    private final FinalizarPedidoService finalizarPedidoService = new FinalizarPedidoService();
+
     private final SessaoService sessaoService = new SessaoService();
 
     private final Router rotasGet = new Router(
@@ -84,9 +87,9 @@ public class PedidoController extends AbstractController {
     }
 
     private Object adicionar(HttpServletRequest req) throws Exception {
-        Pedido pedido = jsonToObject(req, Pedido.class);   
+        Pedido pedido = jsonToObject(req, Pedido.class);
         Carrinho carrinho = sessaoService.retornarCarrinho(req.getSession());
-        return pedidoService.inserir(pedido, carrinho);
+        return finalizarPedidoService.executar(pedido, carrinho);
     }
 
     private Object atualizarStatus(HttpServletRequest req) throws Exception {

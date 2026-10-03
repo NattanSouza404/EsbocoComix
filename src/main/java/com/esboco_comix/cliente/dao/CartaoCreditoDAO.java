@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.esboco_comix.cliente.dominio.entidades.CartaoCredito;
@@ -193,6 +194,58 @@ public class CartaoCreditoDAO {
 
             return cartoesCredito;    
         }  catch (Exception e){
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public List<CartaoCredito> consultarByIdList(List<Integer> ids) {
+        if (ids.isEmpty()) {
+            return List.of();
+        }
+
+        String placeholders = String.join(
+            ", ",
+            Collections.nCopies(ids.size(), "?")
+        );
+
+        String sql =
+            """
+                SELECT
+                    *
+                FROM
+                    cartoes_credito
+                JOIN
+                    bandeiras_cartao_credito ON bcc_id = cre_bcc_id
+                WHERE cre_id IN (%s)
+            """
+        .formatted(placeholders);
+
+        try (
+            Connection connection = ConexaoFactory.getConexao();
+
+            PreparedStatement pst = connection.prepareStatement(sql)
+        ) {
+            for (int i = 0; i < ids.size(); i++) {
+                pst.setInt(i + 1, ids.get(i));
+            }
+
+            ResultSet rs = pst.executeQuery();
+
+            List<CartaoCredito> cartoes = new ArrayList<>();
+
+            while (rs.next()) {
+                cartoes.add(cartaoCreditoMapper.mapearEntidade(rs));
+            }
+
+            if (cartoes.isEmpty()) {
+                throw new IllegalStateException(
+                    "Nenhum cartão de crédito encontrado."
+                );
+            }
+
+            return cartoes;
+
+        } catch (Exception e) {
             throw new IllegalStateException(e);
         }
     }

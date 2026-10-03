@@ -15,18 +15,16 @@ public class ItemPedidoDAO {
 
     private final ItemPedidoMapper itemPedidoMapper = new ItemPedidoMapper();
 
-    public ItemPedido inserir(ItemPedido item) {
+    public ItemPedido inserir(ItemPedido item, int idPedido, Connection conn) {
         try (
-            Connection connection = ConexaoFactory.getConexao();
-
-            PreparedStatement pst = connection.prepareStatement(
+            PreparedStatement pst = conn.prepareStatement(
                 "INSERT INTO itens_pedido("+
                     "ite_ped_id, ite_qua_id, ite_quantidade, ite_valor_unitario)"+
                     "VALUES (?, ?, ?, ?);",
                     Statement.RETURN_GENERATED_KEYS
             );
         ){
-            pst.setInt(1, item.getIdPedido());
+            pst.setInt(1, idPedido);
             pst.setInt(2, item.getIdQuadrinho());
             pst.setInt(3, item.getQuantidade());
             pst.setDouble(4, item.getPreco());

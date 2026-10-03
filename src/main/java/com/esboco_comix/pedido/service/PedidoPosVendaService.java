@@ -4,7 +4,7 @@ import com.esboco_comix.cliente.dominio.entidades.Cliente;
 import com.esboco_comix.cliente.service.ClienteService;
 import com.esboco_comix.cupom.dao.CupomDAO;
 import com.esboco_comix.cupom.dominio.Cupom;
-import com.esboco_comix.estoque.service.EstoqueService;
+import com.esboco_comix.estoque.dao.EstoqueDAO;
 import com.esboco_comix.pedido.dao.ItemPedidoDAO;
 import com.esboco_comix.pedido.dao.PedidoPosVendaDAO;
 import com.esboco_comix.pedido.dominio.ItemPedido;
@@ -13,7 +13,6 @@ import com.esboco_comix.pedido.dominio.PedidoPosVenda;
 import com.esboco_comix.pedido.dominio.enuns.StatusItemPedido;
 import com.esboco_comix.pedido.dominio.enuns.StatusPedido;
 import com.esboco_comix.pedido.dto.AtualizarPedidoPosVendaDTO;
-import com.esboco_comix.pedido.dto.ItemPedidoDTO;
 import com.esboco_comix.pedido.dto.PedidoPosVendaDTO;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class PedidoPosVendaService {
     private final PedidoPosVendaDAO pedidoPosVendaDAO = new PedidoPosVendaDAO();
     private final CupomDAO cupomDAO = new CupomDAO();
     private final ClienteService clienteService = new ClienteService();
-    private final EstoqueService estoqueService = new EstoqueService();
+    private final EstoqueDAO estoqueDAO = new EstoqueDAO();
     private final PedidoService pedidoService = new PedidoService();
 
     private final ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
@@ -103,11 +102,8 @@ public class PedidoPosVendaService {
                 )
             );
 
-            ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO();
-            itemPedidoDTO.setItemPedido(item);
-
             if (atualizarPedido.isRetornarAoEstoque()){
-                estoqueService.retornarAoEstoque(itemPedidoDTO);
+                estoqueDAO.retornarAoEstoque(item);
             }
         }
 

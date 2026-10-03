@@ -12,11 +12,9 @@ public class CupomPedidoDAO {
 
     private final CupomPedidoMapper cupomPedidoMapper = new CupomPedidoMapper();
 
-    public CupomPedido inserir(CupomPedido cupom) {
+    public CupomPedido inserir(CupomPedido cupom, int idPedido, Connection conn) {
         try (
-            Connection connection = ConexaoFactory.getConexao();
-
-            PreparedStatement pst = connection.prepareStatement(
+            PreparedStatement pst = conn.prepareStatement(
                 "INSERT INTO cupons_pedido("+
                     "cpe_cup_id, cpe_ped_id)"+
                     "VALUES (?, ?);",
@@ -24,7 +22,7 @@ public class CupomPedidoDAO {
             );
         ) {
             pst.setInt(1, cupom.getIdCupom());
-            pst.setInt(2, cupom.getIdPedido());
+            pst.setInt(2, idPedido);
 
             if (pst.executeUpdate() == 0){
                 throw new IllegalStateException("Inserção de cupom no pedido não executada!");

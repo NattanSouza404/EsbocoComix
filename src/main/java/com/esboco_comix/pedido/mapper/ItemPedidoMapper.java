@@ -7,7 +7,7 @@ import com.esboco_comix.carrinho.dominio.ItemCarrinho;
 import com.esboco_comix.pedido.dominio.ItemPedido;
 
 public class ItemPedidoMapper {
-    public List<ItemPedido> toListaItemPedidos(List<ItemCarrinho> itensCarrinho){
+    public List<ItemPedido> toList(List<ItemCarrinho> itensCarrinho){
         List<ItemPedido> itensPedido = new ArrayList<>();
         for (ItemCarrinho itemCarrinho : itensCarrinho) {
             itensPedido.add(

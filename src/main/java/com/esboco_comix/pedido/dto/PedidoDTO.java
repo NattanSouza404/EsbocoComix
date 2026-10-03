@@ -6,6 +6,7 @@ import com.esboco_comix.pedido.dominio.Pedido;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder 
 public class PedidoDTO {
     @JsonUnwrapped
     private Pedido pedido;

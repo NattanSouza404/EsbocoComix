@@ -2,6 +2,7 @@ package com.esboco_comix.cupom.service;
 
 import java.util.List;
 
+import com.esboco_comix.core.dao.ConexaoFactory;
 import com.esboco_comix.cupom.dao.CupomDAO;
 import com.esboco_comix.cupom.dominio.Cupom;
 import com.esboco_comix.cupom.dto.CadastrarCupomDTO;
@@ -14,7 +15,7 @@ public class CupomService {
         return cupomDAO.consultarByIDCliente(idCliente);
     }
 
-    public Cupom inserir(CadastrarCupomDTO dto) {
+    public Cupom inserir(CadastrarCupomDTO dto){
         Cupom cupomToAdd = Cupom.builder()
             .isAtivo(true)
             .valor(dto.valor())
@@ -23,7 +24,7 @@ public class CupomService {
             .isTroca(dto.isTroca())
         .build();
         
-        return cupomDAO.inserir(cupomToAdd);
+        return cupomDAO.inserir(cupomToAdd, ConexaoFactory.getConexao());
     }
 
 }

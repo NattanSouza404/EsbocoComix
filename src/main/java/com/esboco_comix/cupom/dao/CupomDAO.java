@@ -67,11 +67,17 @@ public class CupomDAO {
         }
     }
 
-    public Cupom inserir(Cupom c) {
-        try (
-            Connection connection = ConexaoFactory.getConexao();
+    public Cupom inserir(Cupom c){
+        try {
+            return inserir(c, ConexaoFactory.getConexao());
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
-            PreparedStatement pst = connection.prepareStatement(
+    public Cupom inserir(Cupom c, Connection conn) {
+        try (
+            PreparedStatement pst = conn.prepareStatement(
                 """
                 INSERT INTO cupons(
                     cup_cli_id,
@@ -106,10 +112,8 @@ public class CupomDAO {
         }
     }
 
-    public Cupom inativar(int id) {
+    public Cupom inativar(int id, Connection conn) {
         try (
-            Connection conn = ConexaoFactory.getConexao(); 
-    
             PreparedStatement pst = conn.prepareStatement(
                 "UPDATE cupons SET cup_is_ativo = false WHERE cup_id = ?;"
             )

@@ -13,11 +13,9 @@ public class PedidoDAO {
     private final PedidoMapper pedidoMapper = new PedidoMapper();
     private final ItemPedidoMapper itemPedidoMapper = new ItemPedidoMapper();
 
-    public Pedido inserir(Pedido pedido) {
+    public Pedido inserir(Pedido pedido, Connection conn) {
         try (
-            Connection connection = ConexaoFactory.getConexao();
-
-            PreparedStatement pst = connection.prepareStatement(
+            PreparedStatement pst = conn.prepareStatement(
                 "INSERT INTO pedidos("+
                     "ped_cli_id, ped_status, ped_end_id, ped_valor_total, ped_valor_frete)"+
                     "VALUES (?, ?, ?, ?, ?);",
